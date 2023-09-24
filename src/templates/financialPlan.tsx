@@ -1,0 +1,267 @@
+import { graphql } from "gatsby";
+import React from "react";
+
+const FinancialPlan: React.FC<any> = ({ data }) => {
+  console.log(data);
+
+  return (
+    <div>
+      <p>Finance</p>
+    </div>
+  );
+};
+
+export default FinancialPlan;
+
+export const pageQuery = graphql`
+  query MyQuery($slug: String!) {
+    financePlanFDO: strapiFinancePlan(biz_cd_fund_distr: { eq: $slug }) {
+      financing_plan_no
+      business_org_type
+      biz_cd_fund_distr
+      fund_distr_grp_cd
+      biz_cd_executive
+      executive_grp_cd
+      business_type_cd
+      business_type_name
+      insert_id
+      financing_pln_type
+      bis_sum
+      bis_a
+      bis_b
+      bis_ado
+      bis_a_ado
+      bis_b_ado_sum
+      bis_ado_direct
+      bis_a_ado_direct
+      bis_b_ado_sum_direct
+      bis_manage_sum
+      bis_a_manage_sum
+      bis_b_manage_sum
+      po_sum_sum
+      po_c_sum
+      eval_sum_sum
+      eval_sum
+      eval_fdo_sum_sum
+      eval_fdo_sum
+      eval_ado_sum_sum
+      eval_ado_sum
+      sum_sum
+      sum_subidy
+      sum_own_funds
+      create_date(formatString: "yyyy/mm/dd")
+    }
+    financePlanADO: strapiFinancePlan(biz_cd_executive: { eq: $slug }) {
+      financing_plan_no
+      business_org_type
+      biz_cd_fund_distr
+      fund_distr_grp_cd
+      biz_cd_executive
+      executive_grp_cd
+      business_type_cd
+      business_type_name
+      insert_id
+      financing_pln_type
+      bis_sum
+      bis_a
+      bis_b
+      bis_ado
+      bis_a_ado
+      bis_b_ado_sum
+      bis_ado_direct
+      bis_a_ado_direct
+      bis_b_ado_sum_direct
+      bis_manage_sum
+      bis_a_manage_sum
+      bis_b_manage_sum
+      po_sum_sum
+      po_c_sum
+      eval_sum_sum
+      eval_sum
+      eval_fdo_sum_sum
+      eval_fdo_sum
+      eval_ado_sum_sum
+      eval_ado_sum
+      sum_sum
+      sum_subidy
+      sum_own_funds
+      create_date(formatString: "yyyy/mm/dd")
+    }
+    financePlanFormerFDO: strapiFinancePlanFormer(
+      biz_cd_fund_distr: { eq: $slug }
+    ) {
+      financing_plan_no
+      business_org_type
+      biz_cd_fund_distr
+      fund_distr_grp_cd
+      biz_cd_executive
+      executive_grp_cd
+      business_type_cd
+      business_type_name
+      financing_pln_type
+      a_plus_b_2020
+      a_plus_b_2021
+      a_plus_b_2022
+      a_plus_b_2023
+      a_plus_b_2024
+      a_plus_b_ttl
+      subsidy_2020
+      subsidy_2021
+      subsidy_2022
+      subsidy_2023
+      subsidy_2024
+      subsidy_ttl
+      own_funds_2020
+      own_funds_2021
+      own_funds_2022
+      own_funds_2023
+      own_funds_2024
+      own_funds_ttl
+      subsidy_rate_2020
+      subsidy_rate_2021
+      subsidy_rate_2022
+      subsidy_rate_2023
+      subsidy_rate_2024
+      subsidy_rate_ttl
+      exception_request
+      po_2020
+      po_2021
+      po_2022
+      po_2023
+      po_2024
+      po_ttl
+      eval_fdo_2020
+      eval_fdo_2021
+      eval_fdo_2022
+      eval_fdo_2023
+      eval_fdo_2024
+      eval_ttl
+      eval_2020
+      eval_2021
+      eval_2022
+      eval_2023
+      eval_2024
+      eval_fdo_ttl
+      eval_fdo_percent
+      eval_ado_2020
+      eval_ado_2021
+      eval_ado_2022
+      eval_ado_2023
+      eval_ado_2024
+      eval_ado_percent
+      eval_ado_ttl
+      abc_2020
+      abc_2021
+      abc_2022
+      abc_2023
+      abc_2024
+      abc_ttl
+      all_2020
+      all_2021
+      all_2022
+      all_2023
+      all_2024
+      all_ttl
+      a_ttl
+      dct_pj_cost_a_ttl
+      dct_pj_cost_a_ttl_ado
+      mg_cost_a_ttl
+      pct_mg_cost_a_ttl
+      b_ttl
+      dct_pj_cost_b_ttl
+      dct_pj_cost_b_ttl_ado
+      mg_cost_b_ttl
+      pct_mg_cost_b_ttl
+      create_date(formatString: "yyyy/mm/dd")
+      insert_id
+    }
+    financePlanFormerADO: strapiFinancePlanFormer(
+      biz_cd_executive: { eq: $slug }
+    ) {
+      financing_plan_no
+      business_org_type
+      biz_cd_fund_distr
+      fund_distr_grp_cd
+      biz_cd_executive
+      executive_grp_cd
+      business_type_cd
+      business_type_name
+      financing_pln_type
+      a_plus_b_2020
+      a_plus_b_2021
+      a_plus_b_2022
+      a_plus_b_2023
+      a_plus_b_2024
+      a_plus_b_ttl
+      subsidy_2020
+      subsidy_2021
+      subsidy_2022
+      subsidy_2023
+      subsidy_2024
+      subsidy_ttl
+      own_funds_2020
+      own_funds_2021
+      own_funds_2022
+      own_funds_2023
+      own_funds_2024
+      own_funds_ttl
+      subsidy_rate_2020
+      subsidy_rate_2021
+      subsidy_rate_2022
+      subsidy_rate_2023
+      subsidy_rate_2024
+      subsidy_rate_ttl
+      exception_request
+      po_2020
+      po_2021
+      po_2022
+      po_2023
+      po_2024
+      po_ttl
+      eval_fdo_2020
+      eval_fdo_2021
+      eval_fdo_2022
+      eval_fdo_2023
+      eval_fdo_2024
+      eval_ttl
+      eval_2020
+      eval_2021
+      eval_2022
+      eval_2023
+      eval_2024
+      eval_fdo_ttl
+      eval_fdo_percent
+      eval_ado_2020
+      eval_ado_2021
+      eval_ado_2022
+      eval_ado_2023
+      eval_ado_2024
+      eval_ado_percent
+      eval_ado_ttl
+      abc_2020
+      abc_2021
+      abc_2022
+      abc_2023
+      abc_2024
+      abc_ttl
+      all_2020
+      all_2021
+      all_2022
+      all_2023
+      all_2024
+      all_ttl
+      a_ttl
+      dct_pj_cost_a_ttl
+      dct_pj_cost_a_ttl_ado
+      mg_cost_a_ttl
+      pct_mg_cost_a_ttl
+      b_ttl
+      dct_pj_cost_b_ttl
+      dct_pj_cost_b_ttl_ado
+      mg_cost_b_ttl
+      pct_mg_cost_b_ttl
+      create_date(formatString: "yyyy/mm/dd")
+      insert_id
+    }
+  }
+`;

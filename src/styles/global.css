@@ -1,0 +1,18 @@
+html {
+  font-size: 16px;
+}
+body {
+  font-family: "Noto Sans JP", sans-serif;
+  color: #333333;
+}
+h1 {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+h2 {
+  font-size: 1.875rem;
+  font-weight: bold;
+}
+button {
+  flex-shrink: 0;
+}
