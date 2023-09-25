@@ -1,11 +1,8 @@
-import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import "twin.macro";
-import { useSearchContext } from "../../context/searchContext";
-import { useAlgoliaStrapiContext } from "../../context/algoliaStrapiContext";
+import { useSearchContext } from "../../../context/searchContext";
+import { useAlgoliaStrapiContext } from "../../../context/algoliaStrapiContext";
 
-const ResetSearchButton = () => {
+const resetSearchParameter = () => {
   const { searchSetState } = useSearchContext();
   const { setWithQuery } = useAlgoliaStrapiContext();
   const {
@@ -59,13 +56,7 @@ const ResetSearchButton = () => {
 
     setWithQuery(false);
   };
-
-  return (
-    <button tw="text-sm" onClick={resetSearchStatus}>
-      <FontAwesomeIcon icon={faCircleXmark} tw="mr-1" />
-      検索条件をリセット
-    </button>
-  );
+  return { resetSearchStatus };
 };
 
-export default ResetSearchButton;
+export default resetSearchParameter;

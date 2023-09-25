@@ -1,13 +1,31 @@
 import { graphql } from "gatsby";
 import React from "react";
+import DetailHeader from "../components/lauout/DetailHeader";
+import Layout from "../components/lauout/Layout";
+import { detailAnchor, detailFlex } from "../styles/detailPage";
+import DetailSidebar from "../components/organisms/DetailSidebar";
+import DetailWrapper from "../components/lauout/DetailWrapper";
+import DetailAnchor from "../components/atoms/DetailAnchor";
 
-const FinancialPlan: React.FC<any> = ({ data }) => {
+const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
+  const { slug } = pageContext;
   console.log(data);
 
   return (
-    <div>
-      <p>Finance</p>
-    </div>
+    <Layout>
+      <DetailHeader business_cd={slug} />
+      <div css={detailFlex}>
+        <DetailSidebar slug={slug} />
+        <DetailWrapper category="資金計画">
+          <div css={detailAnchor}>
+            <DetailAnchor
+              title=""
+              anchor={`/result/${slug}/financial-plan/#firstItem`}
+            />
+          </div>
+        </DetailWrapper>
+      </div>
+    </Layout>
   );
 };
 

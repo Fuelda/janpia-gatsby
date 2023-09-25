@@ -1,13 +1,49 @@
 import { graphql } from "gatsby";
-import React from "react";
+import React, { useState } from "react";
+import Layout from "../components/lauout/Layout";
+import DetailHeader from "../components/lauout/DetailHeader";
+import { detailFlex } from "../styles/detailPage";
+import DetailSidebar from "../components/organisms/DetailSidebar";
+import DetailWrapper from "../components/lauout/DetailWrapper";
+import { Document, Page, pdfjs } from "react-pdf";
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-const ProjectPlan: React.FC<any> = ({ data }) => {
+const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
+  const [selectedTag, setDisplayTag] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const { slug } = pageContext;
+  const {
+    strapiBizPlan,
+    allStrapiBizPlanSub,
+    strapiBizPlanManualFDO,
+    strapiBizPlanManualADO,
+  } = data;
+  const bizPlanManual = strapiBizPlanManualFDO || strapiBizPlanManualADO;
+
+  const encodeUrl = bizPlanManual && bizPlanManual.data.url;
+  const googleDocsViewerUrl = `https://docs.google.com/viewer?url=${encodeUrl}&embedded=true`;
+
   console.log(data);
+  console.log(bizPlanManual);
 
   return (
-    <div>
-      <p>Project plan</p>
-    </div>
+    <Layout>
+      <DetailHeader business_cd={slug} />
+      <div css={detailFlex} tw="relative">
+        <DetailSidebar slug={slug} />
+        <DetailWrapper category="事業計画">
+          {bizPlanManual && googleDocsViewerUrl && (
+            <div>
+              <iframe
+                width="100%"
+                height="500px"
+                src={googleDocsViewerUrl}
+              ></iframe>
+            </div>
+          )}
+        </DetailWrapper>
+      </div>
+    </Layout>
   );
 };
 
@@ -15,6 +51,20 @@ export default ProjectPlan;
 
 export const pageQuery = graphql`
   query MyQuery($slug: String!) {
+    strapiBizPlanManualFDO: strapiBizPlanManual(
+      biz_cd_fund_distr: { eq: $slug }
+    ) {
+      data {
+        url
+      }
+    }
+    strapiBizPlanManualADO: strapiBizPlanManual(
+      biz_cd_executive: { eq: $slug }
+    ) {
+      data {
+        url
+      }
+    }
     strapiBizPlan(business_cd: { eq: $slug }) {
       business_cd
       business_org_type

@@ -91,7 +91,7 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
     <Layout>
       <DetailHeader business_cd={slug} />
       <div css={detailFlex}>
-        <DetailSidebar />
+        <DetailSidebar slug={slug} />
         <DetailWrapper category="事業詳細">
           <div css={detailAnchor}>
             <DetailAnchor
