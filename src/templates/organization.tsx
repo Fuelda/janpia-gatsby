@@ -9,6 +9,7 @@ import DetailAnchor from "../components/atoms/DetailAnchor";
 import "twin.macro";
 import DetailItemWrapper from "../components/lauout/DetailItemWrapper";
 import { table, td, th, tr } from "../styles/table";
+import { legalPersonalityArray } from "../features/search/store/filterContents";
 
 const Organization: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
@@ -18,6 +19,7 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
     allStrapiBizPlanGroupManualFDO,
     allStrapiGroup,
   } = data;
+
   const bizPlanGroupArray = [
     ...allStrapiBizPlanGroup.edges,
     ...allStrapiBizPlanGroupManualFDO.edges,
@@ -35,9 +37,17 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
     : "";
   const mainGroup = allStrapiGroup.edges.find(
     (g: any) => g.node.organization_cd === mainBizPlanGroupCd
+  ) || { node: {} };
+
+  const legalPersonality = legalPersonalityArray.find(
+    (lp) =>
+      mainGroup.node.legal_personality &&
+      mainGroup.node.legal_personality === String(lp.code)
   );
+
   console.log(data);
   console.log(mainGroup);
+  console.log(legalPersonality);
 
   return (
     <Layout>
@@ -61,7 +71,63 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
                   <tbody>
                     <tr css={tr}>
                       <th css={th}>法人格</th>
-                      <td css={td}>{mainGroup.node.legal_personality}</td>
+                      <td css={td}>{legalPersonality?.label}</td>
+                    </tr>
+                    <tr css={tr}>
+                      <th css={th}>団体種別</th>
+                      <td css={td}>
+                        {mainGroup.node.organization_type_cd === "F"
+                          ? "資金分配団体"
+                          : "実行団体"}
+                      </td>
+                    </tr>
+                    <tr css={tr}>
+                      <th css={th}>団体名</th>
+                      <td css={td}>{mainGroup.node.organization_name}</td>
+                    </tr>
+                    <tr css={tr}>
+                      <th css={th}>郵便番号</th>
+                      <td css={td}>{mainGroup.node.organization_name}</td>
+                    </tr>
+                    <tr css={tr}>
+                      <th css={th}>都道府県</th>
+                      <td css={td}>{mainGroup.node.organization_name}</td>
+                    </tr>
+                    <tr css={tr}>
+                      <th css={th}>市区町村</th>
+                      <td css={td}>{mainGroup.node.organization_name}</td>
+                    </tr>
+                    <tr css={tr}>
+                      <th css={th}>番地等</th>
+                      <td css={td}>{mainGroup.node.organization_name}</td>
+                    </tr>
+                    <tr css={tr}>
+                      <th css={th}>電話番号</th>
+                      <td css={td}>{mainGroup.node.organization_name}</td>
+                    </tr>
+                    <tr css={tr}>
+                      <th css={th}>団体Webサイト</th>
+                      <td css={td}>{mainGroup.node.organization_name}</td>
+                    </tr>
+                    <tr css={tr}>
+                      <th css={th}>その他のWebサイト</th>
+                      <td css={td}>{mainGroup.node.organization_name}</td>
+                    </tr>
+                    <tr css={tr}>
+                      <th css={th}>設立年月日</th>
+                      <td css={td}>{mainGroup.node.organization_name}</td>
+                    </tr>
+                    <tr css={tr}>
+                      <th css={th}>法人格取得年月日</th>
+                      <td css={td}>{mainGroup.node.organization_name}</td>
+                    </tr>
+                    <tr css={tr}>
+                      <th css={th}>団体の目的</th>
+                      <td css={td}>{mainGroup.node.organization_name}</td>
+                    </tr>
+                    <tr css={tr}>
+                      <th css={th}>団体の概要・活動・業務</th>
+                      <td css={td}>{mainGroup.node.organization_name}</td>
                     </tr>
                   </tbody>
                 </table>

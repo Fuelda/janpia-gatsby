@@ -13,7 +13,7 @@ const DetailHeader = (props: { business_cd: string }) => {
   const filteredAllBizPlan = useFilteredStrapiContext();
   const filteredSingleBizPlan = filteredAllBizPlan.find(
     (item) => item.bizPlan.business_cd === props.business_cd
-  );
+  ) || { bizPlan: {}, group: [] };
   const { bizPlan, group } = filteredSingleBizPlan;
 
   const {
@@ -35,24 +35,30 @@ const DetailHeader = (props: { business_cd: string }) => {
     businessStatusText = "終了";
   }
 
-  const mainGroup = group.find((g: any) => {
-    const groupRole =
-      g.business_org_type === "F" ? g.org_role_fdo : g.org_role_fdo;
-    return groupRole === 1;
-  });
+  const mainGroup =
+    group.length !== 0 &&
+    group.find((g: any) => {
+      const groupRole =
+        g.business_org_type === "F" ? g.org_role_fdo : g.org_role_fdo;
+      return groupRole === 1;
+    });
   const mainGroupName = mainGroup ? mainGroup.groupData.organization_name : "";
 
   let businessCategoryLabel: string | undefined = "";
-  if (business_category.code === 1) {
-    businessCategoryLabel = business_category.subCode
-      ? businessCategoryProperty.find(
-          (bcp) => business_category.subCode === bcp.subCode
-        )?.label
-      : "草の根活動支援事業";
+  if (business_category) {
+    if (business_category.code === 1) {
+      businessCategoryLabel = business_category.subCode
+        ? businessCategoryProperty.find(
+            (bcp) => business_category.subCode === bcp.subCode
+          )?.label
+        : "草の根活動支援事業";
+    } else {
+      businessCategoryLabel = businessCategoryProperty.find(
+        (bcp) => business_category.code === bcp.code
+      )?.label;
+    }
   } else {
-    businessCategoryLabel = businessCategoryProperty.find(
-      (bcp) => business_category.code === bcp.code
-    )?.label;
+    businessCategoryLabel = "";
   }
 
   return (
