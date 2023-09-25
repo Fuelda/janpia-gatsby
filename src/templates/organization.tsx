@@ -18,7 +18,26 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
     allStrapiBizPlanGroupManualFDO,
     allStrapiGroup,
   } = data;
+  const bizPlanGroupArray = [
+    ...allStrapiBizPlanGroup.edges,
+    ...allStrapiBizPlanGroupManualFDO.edges,
+    ...allStrapiBizPlanGroupManualADO.edges,
+  ];
+  const mainBizPlanGroup = bizPlanGroupArray.find((bpg) => {
+    const groupRole =
+      bpg.node.business_org_type === "F"
+        ? bpg.node.org_role_fdo
+        : bpg.node.org_role_ado;
+    return groupRole === 1;
+  });
+  const mainBizPlanGroupCd = mainBizPlanGroup
+    ? mainBizPlanGroup.node.organization_cd
+    : "";
+  const mainGroup = allStrapiGroup.edges.find(
+    (g: any) => g.node.organization_cd === mainBizPlanGroupCd
+  );
   console.log(data);
+  console.log(mainGroup);
 
   return (
     <Layout>
@@ -35,45 +54,21 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
             <DetailAnchor title="定款" anchor="" />
             <DetailAnchor title="諸規定" anchor="" />
           </div>
+          <div css={detailBody}>
+            <div id="firstItem">
+              <DetailItemWrapper itemName="団体組織情報">
+                <table css={table}>
+                  <tbody>
+                    <tr css={tr}>
+                      <th css={th}>法人格</th>
+                      <td css={td}>{mainGroup.node.legal_personality}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </DetailItemWrapper>
+            </div>
+          </div>
         </DetailWrapper>
-      </div>
-      <div css={detailBody}>
-        <div id="firstItem">
-          <DetailItemWrapper itemName="団体組織情報">
-            <table css={table}>
-              <tbody>
-                {/* <tr css={tr}>
-                      <th css={th}>事業名</th>
-                      <td css={td}>{business_name}</td>
-                    </tr>
-                    <tr css={tr}>
-                      <th css={th}>団体名</th>
-                      <td css={td}>{mainGroupName}</td>
-                    </tr>
-                    <tr css={tr}>
-                      <th css={th}>採択事業年度</th>
-                      <td css={td}>まだ</td>
-                    </tr>
-                    <tr css={tr}>
-                      <th css={th}>事業分類</th>
-                      <td css={td}>{businessCategoryLabel}</td>
-                    </tr>
-                    <tr css={tr}>
-                      <th css={th}>事業対象地域</th>
-                      <td css={td}>{target_area}</td>
-                    </tr>
-                    <tr css={tr}>
-                      <th css={th}>事業ステータス</th>
-                      <td css={td}>{businessStatusText}</td>
-                    </tr>
-                    <tr css={tr}>
-                      <th css={th}>事業概要</th>
-                      <td css={td}>{business_overview}</td>
-                    </tr> */}
-              </tbody>
-            </table>
-          </DetailItemWrapper>
-        </div>
       </div>
     </Layout>
   );
@@ -87,6 +82,11 @@ export const pageQuery = graphql`
     $insert_id: [String]
     $organization_cd: [String]
   ) {
+    # strapiBizPlan(business_cd: { eq: $slug }) {
+    #   business_org_type
+    #   executive_grp_cd
+    #   fund_distr_grp_cd
+    # }
     allStrapiBizPlanGroup(filter: { business_cd: { eq: $slug } }) {
       edges {
         node {

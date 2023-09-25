@@ -44,16 +44,20 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
   const mainGroupName = mainGroup ? mainGroup.groupData.organization_name : "";
 
   let businessCategoryLabel: string | undefined = "";
-  if (business_category.code === 1) {
-    businessCategoryLabel = business_category.subCode
-      ? businessCategoryProperty.find(
-          (bcp) => business_category.subCode === bcp.subCode
-        )?.label
-      : "草の根活動支援事業";
+  if (business_category) {
+    if (business_category.code === 1) {
+      businessCategoryLabel = business_category.subCode
+        ? businessCategoryProperty.find(
+            (bcp) => business_category.subCode === bcp.subCode
+          )?.label
+        : "草の根活動支援事業";
+    } else {
+      businessCategoryLabel = businessCategoryProperty.find(
+        (bcp) => business_category.code === bcp.code
+      )?.label;
+    }
   } else {
-    businessCategoryLabel = businessCategoryProperty.find(
-      (bcp) => business_category.code === bcp.code
-    )?.label;
+    businessCategoryLabel = "";
   }
 
   let businessStatusText = "";
