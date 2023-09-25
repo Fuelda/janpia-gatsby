@@ -19,7 +19,7 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
   const filteredSingleBizPlan = filteredAllBizPlan.find(
     (item) => item.bizPlan.business_cd === slug
-  ) || { bizPlan: {}, group: {} };
+  ) || { bizPlan: {}, group: [] };
   const { bizPlan, group } = filteredSingleBizPlan;
   const { business_name, business_status, target_area, business_category } =
     bizPlan;
@@ -34,11 +34,13 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
 
   const businessCategoryProperty = businessCategoryArray;
 
-  const mainGroup = group.find((g: any) => {
-    const groupRole =
-      g && g.business_org_type === "F" ? g.org_role_fdo : g.org_role_ado;
-    return groupRole === 1;
-  });
+  const mainGroup =
+    group.length !== 0 &&
+    group.find((g: any) => {
+      const groupRole =
+        g.business_org_type === "F" ? g.org_role_fdo : g.org_role_ado;
+      return groupRole === 1;
+    });
   const mainGroupName = mainGroup ? mainGroup.groupData.organization_name : "";
 
   let businessCategoryLabel: string | undefined = "";
