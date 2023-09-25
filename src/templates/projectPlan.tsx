@@ -5,8 +5,6 @@ import DetailHeader from "../components/lauout/DetailHeader";
 import { detailFlex } from "../styles/detailPage";
 import DetailSidebar from "../components/organisms/DetailSidebar";
 import DetailWrapper from "../components/lauout/DetailWrapper";
-import { Document, Page, pdfjs } from "react-pdf";
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
   const [selectedTag, setDisplayTag] = useState(1);

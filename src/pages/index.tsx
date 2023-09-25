@@ -9,6 +9,7 @@ import AlgoliaIndex from "../features/search/api/AlgoliaIndex";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import IndexLink from "../components/atoms/IndexLink";
+import { StaticImage } from "gatsby-plugin-image";
 
 const indexBox = tw`bg-blue-base rounded-10 px-10 pt-7 pb-10`;
 const searchBox = tw`w-[300px] h-[150px] bg-white rounded-10 px-5 py-2.5`;
@@ -33,6 +34,10 @@ const Index = () => {
               to="/search/organization"
             >
               <div tw="bg-red-base w-[174px] h-[125px]" />
+              <StaticImage
+                src="../images/select_search_01.png"
+                alt="団体から探す"
+              />
               <p tw="text-xl">
                 <span tw="text-3xl">団体</span>
                 <br />
@@ -42,7 +47,7 @@ const Index = () => {
             <Link
               css={searchBox}
               tw="flex justify-between"
-              to="/search/organization"
+              to="/search/project"
             >
               <div tw="bg-red-base w-[174px] h-[125px]" />
               <p tw="text-xl">
@@ -51,11 +56,7 @@ const Index = () => {
                 から探す
               </p>
             </Link>
-            <Link
-              css={searchBox}
-              tw="flex justify-between"
-              to="/search/organization"
-            >
+            <Link css={searchBox} tw="flex justify-between" to="/search/issue">
               <div tw="bg-red-base w-[174px] h-[125px]" />
               <p tw="text-xl">
                 <span tw="text-3xl">団体</span>

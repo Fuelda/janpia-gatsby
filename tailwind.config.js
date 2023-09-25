@@ -6,7 +6,10 @@ module.exports = {
       colors: {
         red: {
           base: "#CC0000",
+          kyushu: "#C95B78",
+          okinawa: "#E08A89",
         },
+        orange: { chugoku: "#E28C3A" },
         blue: {
           base: "#EFF3FB",
           button: "#165D94",
@@ -14,8 +17,12 @@ module.exports = {
           fdo: "#5DAEEC",
           pale: "#EEF1F4",
           link: "#004992",
+          hokuriku: "#3D72AF",
+          kanto: "#66B9D6",
         },
-        green: { ado: "#6ACE6C" },
+        green: { ado: "#6ACE6C", kinki: "#AAC25C", tokai: "#5DA052" },
+        purple: { hokkaido: "#A065A0", tohoku: "#666EAE" },
+        yellow: { shikoku: "#EED44E" },
         black: { font: "#333333" },
         gray: { border: "#7F8E99" },
       },
