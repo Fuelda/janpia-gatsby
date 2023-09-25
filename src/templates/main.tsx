@@ -10,18 +10,16 @@ import DetailItemWrapper from "../components/lauout/DetailItemWrapper";
 import { useFilteredStrapiContext } from "../context/filteredStrapiContext";
 import { businessCategoryArray } from "../features/search/store/filterContents";
 import { useStrapiContext } from "../context/strapiContext";
-
-const table = tw`w-full border-collapse border`;
-const tr = tw`border`;
-const th = tw`w-1/4 bg-blue-base py-3 px-3.5 text-start`;
-const td = tw`w-3/4 py-3 px-3.5`;
+import DetailAnchor from "../components/atoms/DetailAnchor";
+import { table, td, th, tr } from "../styles/table";
+import { detailAnchor, detailBody, detailFlex } from "../styles/detailPage";
 
 const Main: React.FC<any> = ({ data, pageContext }) => {
   const filteredAllBizPlan = useFilteredStrapiContext();
   const { slug } = pageContext;
   const filteredSingleBizPlan = filteredAllBizPlan.find(
     (item) => item.bizPlan.business_cd === slug
-  );
+  ) || { bizPlan: {}, group: {} };
   const { bizPlan, group } = filteredSingleBizPlan;
   const { business_name, business_status, target_area, business_category } =
     bizPlan;
@@ -86,75 +84,92 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
   return (
     <Layout>
       <DetailHeader business_cd={slug} />
-      <div tw="flex gap-[5px] mt-6">
+      <div css={detailFlex}>
         <DetailSidebar />
         <DetailWrapper category="事業詳細">
-          <div tw="flex flex-col gap-8">
-            <DetailItemWrapper itemName="事業情報">
-              <table css={table}>
-                <tbody>
-                  <tr css={tr}>
-                    <th css={th}>事業名</th>
-                    <td css={td}>{business_name}</td>
-                  </tr>
-                  <tr css={tr}>
-                    <th css={th}>団体名</th>
-                    <td css={td}>{mainGroupName}</td>
-                  </tr>
-                  <tr css={tr}>
-                    <th css={th}>採択事業年度</th>
-                    <td css={td}>まだ</td>
-                  </tr>
-                  <tr css={tr}>
-                    <th css={th}>事業分類</th>
-                    <td css={td}>{businessCategoryLabel}</td>
-                  </tr>
-                  <tr css={tr}>
-                    <th css={th}>事業対象地域</th>
-                    <td css={td}>{target_area}</td>
-                  </tr>
-                  <tr css={tr}>
-                    <th css={th}>事業ステータス</th>
-                    <td css={td}>{businessStatusText}</td>
-                  </tr>
-                  <tr css={tr}>
-                    <th css={th}>事業概要</th>
-                    <td css={td}>{business_overview}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </DetailItemWrapper>
+          <div css={detailAnchor}>
+            <DetailAnchor
+              title="事業情報"
+              anchor={`/result/${slug}/#firstItem`}
+            />
             {linkedAdo.length !== 0 && (
-              <DetailItemWrapper itemName="実行団体">
-                <div tw="flex flex-col gap-2.5">
-                  {linkedAdo.map((item) => (
-                    <table>
-                      <tbody>
-                        <tr css={tr}>
-                          <th css={th}>実行団体名</th>
-                          <td css={td}>
-                            {pickupLinkedAdoGroupName(
-                              item.node.executive_grp_cd
-                            )}
-                          </td>
-                        </tr>
-                        <tr css={tr}>
-                          <th css={th}>事業名</th>
-                          <td css={td}>
-                            <Link
-                              to={`/result/${item.node.biz_cd_executive}`}
-                              tw="underline"
-                            >
-                              {item.node.business_name}
-                            </Link>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  ))}
-                </div>
-              </DetailItemWrapper>
+              <DetailAnchor
+                title="実行団体"
+                anchor={`/result/${slug}/#secondItem`}
+              />
             )}
+          </div>
+          <div css={detailBody}>
+            <div id="firstItem">
+              <DetailItemWrapper itemName="事業情報">
+                <table css={table}>
+                  <tbody>
+                    <tr css={tr}>
+                      <th css={th}>事業名</th>
+                      <td css={td}>{business_name}</td>
+                    </tr>
+                    <tr css={tr}>
+                      <th css={th}>団体名</th>
+                      <td css={td}>{mainGroupName}</td>
+                    </tr>
+                    <tr css={tr}>
+                      <th css={th}>採択事業年度</th>
+                      <td css={td}>まだ</td>
+                    </tr>
+                    <tr css={tr}>
+                      <th css={th}>事業分類</th>
+                      <td css={td}>{businessCategoryLabel}</td>
+                    </tr>
+                    <tr css={tr}>
+                      <th css={th}>事業対象地域</th>
+                      <td css={td}>{target_area}</td>
+                    </tr>
+                    <tr css={tr}>
+                      <th css={th}>事業ステータス</th>
+                      <td css={td}>{businessStatusText}</td>
+                    </tr>
+                    <tr css={tr}>
+                      <th css={th}>事業概要</th>
+                      <td css={td}>{business_overview}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </DetailItemWrapper>
+            </div>
+
+            <div id="secondItem">
+              {linkedAdo.length !== 0 && (
+                <DetailItemWrapper itemName="実行団体">
+                  <div tw="flex flex-col gap-2.5">
+                    {linkedAdo.map((item) => (
+                      <table key={item}>
+                        <tbody>
+                          <tr css={tr}>
+                            <th css={th}>実行団体名</th>
+                            <td css={td}>
+                              {pickupLinkedAdoGroupName(
+                                item.node.executive_grp_cd
+                              )}
+                            </td>
+                          </tr>
+                          <tr css={tr}>
+                            <th css={th}>事業名</th>
+                            <td css={td}>
+                              <Link
+                                to={`/result/${item.node.biz_cd_executive}`}
+                                tw="underline text-blue-link"
+                              >
+                                {item.node.business_name}
+                              </Link>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    ))}
+                  </div>
+                </DetailItemWrapper>
+              )}
+            </div>
           </div>
         </DetailWrapper>
       </div>

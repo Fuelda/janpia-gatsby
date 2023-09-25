@@ -1,12 +1,74 @@
 import { graphql } from "gatsby";
 import React from "react";
+import Layout from "../components/lauout/Layout";
+import DetailHeader from "../components/lauout/DetailHeader";
+import { detailAnchor, detailBody, detailFlex } from "../styles/detailPage";
+import DetailSidebar from "../components/organisms/DetailSidebar";
+import DetailWrapper from "../components/lauout/DetailWrapper";
+import DetailAnchor from "../components/atoms/DetailAnchor";
+import "twin.macro";
+import DetailItemWrapper from "../components/lauout/DetailItemWrapper";
+import { table, td, th, tr } from "../styles/table";
 
-const Organization: React.FC<any> = ({ data }) => {
+const Organization: React.FC<any> = ({ data, pageContext }) => {
+  const { slug } = pageContext;
   console.log(data);
   return (
-    <div>
-      <p>Organization</p>
-    </div>
+    <Layout>
+      <DetailHeader business_cd={slug} />
+      <div css={detailFlex}>
+        <DetailSidebar />
+        <DetailWrapper category="団体情報">
+          <div css={detailAnchor}>
+            <DetailAnchor title="団体組織情報" anchor="" />
+            <DetailAnchor title="代表者情報" anchor="" />
+            <DetailAnchor title="役員" anchor="" />
+            <DetailAnchor title="職員・従業員" anchor="" />
+            <DetailAnchor title="組織評価" anchor="" />
+            <DetailAnchor title="定款" anchor="" />
+            <DetailAnchor title="諸規定" anchor="" />
+          </div>
+        </DetailWrapper>
+      </div>
+      <div css={detailBody}>
+        <div id="firstItem">
+          <DetailItemWrapper itemName="団体組織情報">
+            <table css={table}>
+              <tbody>
+                {/* <tr css={tr}>
+                      <th css={th}>事業名</th>
+                      <td css={td}>{business_name}</td>
+                    </tr>
+                    <tr css={tr}>
+                      <th css={th}>団体名</th>
+                      <td css={td}>{mainGroupName}</td>
+                    </tr>
+                    <tr css={tr}>
+                      <th css={th}>採択事業年度</th>
+                      <td css={td}>まだ</td>
+                    </tr>
+                    <tr css={tr}>
+                      <th css={th}>事業分類</th>
+                      <td css={td}>{businessCategoryLabel}</td>
+                    </tr>
+                    <tr css={tr}>
+                      <th css={th}>事業対象地域</th>
+                      <td css={td}>{target_area}</td>
+                    </tr>
+                    <tr css={tr}>
+                      <th css={th}>事業ステータス</th>
+                      <td css={td}>{businessStatusText}</td>
+                    </tr>
+                    <tr css={tr}>
+                      <th css={th}>事業概要</th>
+                      <td css={td}>{business_overview}</td>
+                    </tr> */}
+              </tbody>
+            </table>
+          </DetailItemWrapper>
+        </div>
+      </div>
+    </Layout>
   );
 };
 
