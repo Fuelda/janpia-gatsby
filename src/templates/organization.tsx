@@ -12,7 +12,14 @@ import { table, td, th, tr } from "../styles/table";
 
 const Organization: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
+  const {
+    allStrapiBizPlanGroup,
+    allStrapiBizPlanGroupManualADO,
+    allStrapiBizPlanGroupManualFDO,
+    allStrapiGroup,
+  } = data;
   console.log(data);
+
   return (
     <Layout>
       <DetailHeader business_cd={slug} />
@@ -86,13 +93,38 @@ export const pageQuery = graphql`
           business_cd
           organization_cd
           business_org_type
-          biz_cd_fund_distr
-          fund_distr_grp_cd
           org_role_fdo
-          biz_cd_executive
-          executive_grp_cd
           org_role_ado
-          create_date
+        }
+      }
+    }
+    allStrapiBizPlanGroupManualFDO: allStrapiBizPlanGroupManual(
+      filter: { biz_cd_fund_distr: { eq: $slug } }
+    ) {
+      edges {
+        node {
+          biz_cd_executive
+          biz_cd_fund_distr
+          business_org_type
+          executive_grp_cd
+          fund_distr_grp_cd
+          org_role_ado
+          org_role_fdo
+        }
+      }
+    }
+    allStrapiBizPlanGroupManualADO: allStrapiBizPlanGroupManual(
+      filter: { biz_cd_executive: { eq: $slug } }
+    ) {
+      edges {
+        node {
+          biz_cd_executive
+          biz_cd_fund_distr
+          business_org_type
+          executive_grp_cd
+          fund_distr_grp_cd
+          org_role_ado
+          org_role_fdo
         }
       }
     }

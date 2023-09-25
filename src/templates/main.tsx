@@ -36,7 +36,7 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
 
   const mainGroup = group.find((g: any) => {
     const groupRole =
-      g.business_org_type === "F" ? g.org_role_fdo : g.org_role_fdo;
+      g && g.business_org_type === "F" ? g.org_role_fdo : g.org_role_ado;
     return groupRole === 1;
   });
   const mainGroupName = mainGroup ? mainGroup.groupData.organization_name : "";
