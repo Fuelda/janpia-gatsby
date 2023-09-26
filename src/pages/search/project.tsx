@@ -18,6 +18,7 @@ import TargetArea from "../../features/search/component/main/Business/TargetArea
 import SubsidyAmount from "../../features/search/component/main/Business/SubsidyAmount";
 import TopicKeyword from "../../features/search/component/main/Business/TopicKeyword";
 import { useSearchContext } from "../../context/searchContext";
+import BusinessTypeName from "../../features/search/component/main/Business/BusinessTypeName";
 
 const Project = () => {
   const { resetSearchStatus } = useSearchContext();
@@ -38,6 +39,7 @@ const Project = () => {
         <div css={vCenter} tw="gap-11">
           <div>
             <BusinessOrgType />
+            <BusinessTypeName />
             <BusinessCategory />
             <BusinessStatus />
 

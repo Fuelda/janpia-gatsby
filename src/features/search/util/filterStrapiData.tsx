@@ -90,8 +90,14 @@ export const filterStrapiData = () => {
             item.bizPlan.business_org_type
           ))) &&
       //事業年度/事業枠
-      (searchState.business_type_name === "" ||
-        item.bizPlan.business_type_name === searchState.business_type_name) &&
+      // (searchState.business_type_name === "" ||
+      //   item.bizPlan.business_type_name === searchState.business_type_name) &&
+      //事業年度
+      (searchState.btnYear === "" ||
+        item.bizPlan.business_type_name?.includes(searchState.btnYear)) &&
+      //事業枠
+      (searchState.btnCategory === "" ||
+        item.bizPlan.business_type_name?.includes(searchState.btnCategory)) &&
       //事業分類
       (searchState.business_category.length === 0 ||
         searchState.business_category.some(

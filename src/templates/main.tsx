@@ -21,8 +21,13 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
     (item) => item.bizPlan.business_cd === slug
   ) || { bizPlan: {}, group: [] };
   const { bizPlan, group } = filteredSingleBizPlan;
-  const { business_name, business_status, target_area, business_category } =
-    bizPlan;
+  const {
+    business_name,
+    business_status,
+    target_area,
+    business_category,
+    business_type_name,
+  } = bizPlan;
   const {
     strapiBizPlan,
     strapiBizPlanManualFDO,
@@ -120,7 +125,9 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
                     </tr>
                     <tr css={tr}>
                       <th css={th}>採択事業年度</th>
-                      <td css={td}>まだ</td>
+                      <td css={td}>
+                        {business_type_name.label || business_type_name}
+                      </td>
                     </tr>
                     <tr css={tr}>
                       <th css={th}>事業分類</th>

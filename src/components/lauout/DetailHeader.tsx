@@ -22,6 +22,7 @@ const DetailHeader = (props: { business_cd: string }) => {
     business_status,
     target_area,
     business_category,
+    business_type_name,
   } = bizPlan;
 
   const businessCategoryProperty = businessCategoryArray;
@@ -61,6 +62,15 @@ const DetailHeader = (props: { business_cd: string }) => {
     businessCategoryLabel = "";
   }
 
+  const businessTypeNameLabel = business_type_name
+    ? business_type_name.label || business_type_name || ""
+    : "";
+  const splitBusinessTypeName = businessTypeNameLabel.match(/(\d+年度)(.+)/);
+  const businessTypeNameYear =
+    splitBusinessTypeName && splitBusinessTypeName[1];
+  const businessTypeNameCategory =
+    splitBusinessTypeName && splitBusinessTypeName[2];
+
   return (
     <div tw="w-full p-2.5 flex gap-2 ">
       <div tw="w-[100px] h-[100px] shrink-0">
@@ -80,6 +90,17 @@ const DetailHeader = (props: { business_cd: string }) => {
       </div>
       <div tw="">
         <div tw="flex gap-[5px]">
+          <p
+            css={[
+              resultCardTip,
+              businessTypeNameCategory === "通常枠"
+                ? tw`border-blue-button text-blue-button bg-blue-base`
+                : tw`border-red-base text-red-base `,
+            ]}
+          >
+            {businessTypeNameCategory}
+          </p>
+          <p css={resultCardTip}>{businessTypeNameYear}</p>
           <p css={resultCardTip}>{businessStatusText}</p>
           <p css={resultCardTip}>{target_area}</p>
         </div>

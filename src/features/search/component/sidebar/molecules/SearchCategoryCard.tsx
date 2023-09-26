@@ -15,6 +15,7 @@ import TopicKeyword from "../../main/Business/TopicKeyword";
 import SocialIssue from "../../main/Issue/SocialIssue";
 import SdgsGoal from "../../main/Issue/SdgsGoal";
 import SidebarPrefectures from "../Organization/SidebarPrefectures";
+import BusinessTypeName from "../../main/Business/BusinessTypeName";
 
 const SearchCategoryCard = (props: { category: string }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -54,6 +55,7 @@ const SearchCategoryCard = (props: { category: string }) => {
           css={!isOpen && tw`h-0 overflow-hidden`}
           tw="transition-[height] duration-300 ease-in"
         >
+          <BusinessTypeName />
           <BusinessOrgType />
           <BusinessCategory />
           <SubsidyAmount />

@@ -18,6 +18,7 @@ const ResultCard = (props: any) => {
     business_status,
     target_area,
     business_category,
+    business_type_name,
   } = bizPlan;
   const businessCategoryProperty = businessCategoryArray;
 
@@ -50,6 +51,11 @@ const ResultCard = (props: any) => {
     )?.label;
   }
 
+  const businessTypeNameLabel = business_type_name.label || business_type_name;
+  const splitBusinessTypeName = businessTypeNameLabel.match(/(\d+年度)(.+)/);
+  const businessTypeNameYear = splitBusinessTypeName[1];
+  const businessTypeNameCategory = splitBusinessTypeName[2];
+
   return (
     <Link
       to={`/result/${business_cd}`}
@@ -72,6 +78,17 @@ const ResultCard = (props: any) => {
       </div>
       <div tw="">
         <div tw="flex gap-[5px]">
+          <p
+            css={[
+              resultCardTip,
+              businessTypeNameCategory === "通常枠"
+                ? tw`border-blue-button text-blue-button bg-blue-base`
+                : tw`border-red-base text-red-base `,
+            ]}
+          >
+            {businessTypeNameCategory}
+          </p>
+          <p css={resultCardTip}>{businessTypeNameYear}</p>
           <p css={resultCardTip}>{businessStatusText}</p>
           <p css={resultCardTip}>{target_area}</p>
         </div>

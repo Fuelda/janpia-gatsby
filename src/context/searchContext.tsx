@@ -20,6 +20,8 @@ type searchStateType = {
 
   business_org_type: string[];
   business_type_name: string;
+  btnYear: string;
+  btnCategory: string;
   business_category: businessCategoryType[] | [];
   business_status: number | null;
   target_area: string[];
@@ -44,6 +46,8 @@ type searchSetStateType = {
 
   setBusinessOrgType: Dispatch<string[]>;
   setBusinessTypeName: Dispatch<string>;
+  setBtnYear: Dispatch<string>;
+  setBtnCategory: Dispatch<string>;
   setBusinessCategory: Dispatch<businessCategoryType[]>;
   setBusinessStatus: Dispatch<number | null>;
   setTargetArea: Dispatch<string[]>;
@@ -77,6 +81,8 @@ const SearchContext = createContext<searchType>({
 
     business_org_type: [],
     business_type_name: "",
+    btnYear: "",
+    btnCategory: "",
     business_category: [],
     business_status: null,
     target_area: [],
@@ -102,6 +108,8 @@ const SearchContext = createContext<searchType>({
 
     setBusinessOrgType: () => {},
     setBusinessTypeName: () => {},
+    setBtnYear: () => {},
+    setBtnCategory: () => {},
     setBusinessCategory: () => {},
     setBusinessStatus: () => {},
     setTargetArea: () => {},
@@ -128,6 +136,8 @@ const SearchProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [legal_personality, setLegalPersonality] = useState<number[]>([]);
   const [business_org_type, setBusinessOrgType] = useState<string[]>([]);
   const [business_type_name, setBusinessTypeName] = useState("");
+  const [btnYear, setBtnYear] = useState<string>("");
+  const [btnCategory, setBtnCategory] = useState<string>("");
   const [business_category, setBusinessCategory] = useState<
     businessCategoryType[]
   >([]);
@@ -156,6 +166,8 @@ const SearchProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
     setBusinessOrgType([]);
     setBusinessTypeName("");
+    setBtnYear("");
+    setBtnCategory("");
     setBusinessCategory([]);
     setBusinessStatus(null);
     setTargetArea([]);
@@ -184,6 +196,8 @@ const SearchProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
       business_org_type,
       business_type_name,
+      btnYear,
+      btnCategory,
       business_category,
       business_status,
       target_area,
@@ -209,6 +223,8 @@ const SearchProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
       setBusinessOrgType,
       setBusinessTypeName,
+      setBtnYear,
+      setBtnCategory,
       setBusinessCategory,
       setBusinessStatus,
       setTargetArea,
