@@ -23,46 +23,58 @@ const SearchPrefectureCard = (props: { area: string }) => {
 
   let area: string[] = [];
   let areaName = "";
+  let areaColor = tw``;
+
   switch (props.area) {
     case "hokkaido":
       area = checkboxArray.hokkaido;
       areaName = "北海道";
+      areaColor = tw`bg-purple-hokkaido`;
       break;
     case "tohoku":
       area = checkboxArray.tohoku;
       areaName = "東北";
+      areaColor = tw`bg-purple-tohoku`;
       break;
     case "kanto":
       area = checkboxArray.kanto;
       areaName = "関東";
+      areaColor = tw`bg-blue-kanto`;
       break;
     case "hokuriku":
       area = checkboxArray.hokuriku;
       areaName = "北陸";
+      areaColor = tw`bg-blue-hokuriku`;
       break;
     case "tokai":
       area = checkboxArray.tokai;
       areaName = "東海";
+      areaColor = tw`bg-green-tokai`;
       break;
     case "kinki":
       area = checkboxArray.kinki;
       areaName = "近畿";
+      areaColor = tw`bg-green-kinki`;
       break;
     case "chugoku":
       area = checkboxArray.chugoku;
       areaName = "中国";
+      areaColor = tw`bg-orange-chugoku`;
       break;
     case "shikoku":
       area = checkboxArray.shikoku;
       areaName = "四国";
+      areaColor = tw`bg-yellow-shikoku`;
       break;
     case "kyushu":
       area = checkboxArray.kyushu;
       areaName = "九州";
+      areaColor = tw`bg-red-kyushu`;
       break;
     case "okinawa":
       area = checkboxArray.okinawa;
       areaName = "沖縄";
+      areaColor = tw`bg-red-okinawa`;
       break;
     default:
       area = [];
@@ -98,7 +110,7 @@ const SearchPrefectureCard = (props: { area: string }) => {
   };
 
   return (
-    <div tw="rounded-[8px] bg-red-base p-[5px]">
+    <div tw="rounded-[8px] p-[5px]" css={areaColor}>
       <div css={hCenter} tw="gap-[7px]">
         <Checkbox.Root
           id={props.area}

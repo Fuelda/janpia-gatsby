@@ -14,6 +14,7 @@ import SubsidyAmount from "../../main/Business/SubsidyAmount";
 import TopicKeyword from "../../main/Business/TopicKeyword";
 import SocialIssue from "../../main/Issue/SocialIssue";
 import SdgsGoal from "../../main/Issue/SdgsGoal";
+import SidebarPrefectures from "../Organization/SidebarPrefectures";
 
 const SearchCategoryCard = (props: { category: string }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -44,6 +45,7 @@ const SearchCategoryCard = (props: { category: string }) => {
         >
           <OrganizationName path="result" />
           <OrganizationTypeCd />
+          <SidebarPrefectures />
           <LegalPersonality />
         </div>
       )}

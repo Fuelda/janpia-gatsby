@@ -24,7 +24,7 @@ module.exports = {
         purple: { hokkaido: "#A065A0", tohoku: "#666EAE" },
         yellow: { shikoku: "#EED44E" },
         black: { font: "#333333" },
-        gray: { border: "#7F8E99" },
+        gray: { border: "#7F8E99", base: "#666666", black: "#999999" },
       },
       borderRadius: {
         50: "50px",

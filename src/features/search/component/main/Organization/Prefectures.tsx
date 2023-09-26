@@ -16,8 +16,7 @@ const Prefectures = () => {
       <StaticImage
         alt="団体所在地"
         src="../../../../../images/map.png"
-        tw="w-[930px] h-[630px]"
-        objectFit="contain"
+        tw="w-[80%] h-[630px] "
       />
 
       <div tw="absolute bottom-0 right-0 flex gap-6 flex-row-reverse items-end">

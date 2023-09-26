@@ -52,6 +52,7 @@
     "react-dom": "^18.2.0",
     "react-instantsearch": "^7.0.3",
     "react-instantsearch-hooks-web": "^6.47.3",
+    "react-modal": "^3.16.1",
     "styled-components": "^5.3.11",
     "twin.macro": "^3.4.0"
   },

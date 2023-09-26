@@ -9,7 +9,7 @@ const TargetArea = () => {
       <StaticImage
         alt="事業対象地域"
         src="../../../../../images/map.png"
-        tw="w-[930px] h-[630px]"
+        tw="w-[80%] h-[630px]"
         objectFit="contain"
       />
 

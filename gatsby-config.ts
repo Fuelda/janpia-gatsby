@@ -100,16 +100,6 @@ const config: GatsbyConfig = {
         indexName: "janpia_search",
         queries: [
           {
-            query: algoliaQuery.attachedFiles,
-            transformer: ({ data }: any) =>
-              data.allStrapiAttachedFile.edges.map(({ node }: any) => {
-                return {
-                  id: node.id,
-                  ...node,
-                };
-              }),
-          },
-          {
             query: algoliaQuery.attachedFileText,
             transformer: ({ data }: any) =>
               data.allStrapiAttachedFileText.edges.map(({ node }: any) => {
