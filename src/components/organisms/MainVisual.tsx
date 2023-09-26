@@ -8,7 +8,7 @@ const MainVisual = () => {
       <StaticImage
         src="../../images/kv-summer.png"
         alt="シンボル"
-        tw="w-full absolute top-0"
+        tw="w-full absolute top-0 left-0"
       />
       <div>
         <p tw="text-[45px] font-bold text-center">休眠預金を、社会のために。</p>
