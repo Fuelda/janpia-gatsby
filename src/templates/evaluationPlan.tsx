@@ -37,10 +37,12 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
               title="評価スケジュール・実施体制"
               anchor={`/result/${slug}/evaluation-plan/#firstItem`}
             />
-            <DetailAnchor
-              title="事業設計図"
-              anchor={`/result/${slug}/evaluation-plan/#secondItem`}
-            />
+            {evaluationFile.length !== 0 && (
+              <DetailAnchor
+                title="事業設計図"
+                anchor={`/result/${slug}/evaluation-plan/#secondItem`}
+              />
+            )}
           </div>
           <div css={detailBody}>
             <div id="firstItem">
@@ -149,19 +151,21 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                 </table>
               </DetailItemWrapper>
             </div>
-            <div id="secondItem">
-              <DetailItemWrapper itemName="事業設計図">
-                <div tw="flex gap-[5px] flex-wrap">
-                  {evaluationFile.map((ef: any) => (
-                    <AttachedFileLink
-                      filePath={ef.node.data.url}
-                      fileName={ef.node.file_name}
-                      key={ef.node.data.url}
-                    />
-                  ))}
-                </div>
-              </DetailItemWrapper>
-            </div>
+            {evaluationFile.length !== 0 && (
+              <div id="secondItem">
+                <DetailItemWrapper itemName="事業設計図">
+                  <div tw="flex gap-[5px] flex-wrap">
+                    {evaluationFile.map((ef: any) => (
+                      <AttachedFileLink
+                        filePath={ef.node.data.url}
+                        fileName={ef.node.file_name}
+                        key={ef.node.data.url}
+                      />
+                    ))}
+                  </div>
+                </DetailItemWrapper>
+              </div>
+            )}
           </div>
         </DetailWrapper>
       </div>
