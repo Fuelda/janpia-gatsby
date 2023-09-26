@@ -1,14 +1,16 @@
 import { graphql } from "gatsby";
-import React from "react";
+import React, { useState } from "react";
 import DetailHeader from "../components/lauout/DetailHeader";
 import Layout from "../components/lauout/Layout";
-import { detailAnchor, detailFlex } from "../styles/detailPage";
+import { detailAnchor, detailFlex, detailTabBtn } from "../styles/detailPage";
 import DetailSidebar from "../components/organisms/DetailSidebar";
 import DetailWrapper from "../components/lauout/DetailWrapper";
 import DetailAnchor from "../components/atoms/DetailAnchor";
+import { hCenter } from "../styles/base";
 
 const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
+  const [currentTab, setCurrentTab] = useState(1);
   console.log(data);
 
   return (
@@ -17,6 +19,11 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
       <div css={detailFlex}>
         <DetailSidebar slug={slug} />
         <DetailWrapper category="資金計画">
+          <div css={hCenter}>
+            <button css={detailTabBtn}>調達の内訳</button>
+            <button css={detailTabBtn}>自己資金・民間資金</button>
+            <button css={detailTabBtn}>事業費</button>
+          </div>
           <div css={detailAnchor}>
             <DetailAnchor
               title=""

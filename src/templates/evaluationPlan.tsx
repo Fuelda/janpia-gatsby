@@ -19,7 +19,6 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
   } = data;
 
   const { slug, insert_id } = pageContext;
-  console.log(insert_id);
 
   const evaluationFile = allStrapiAttachedFile.edges.filter(
     (af: any) => af.node.item_id === "attach_fileupload_item2"

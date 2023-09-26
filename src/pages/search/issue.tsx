@@ -25,7 +25,7 @@ const Issue = () => {
         <div tw="text-sm p-2 bg-blue-base gap-2" css={hCenter}>
           <Link to="/">ホーム</Link>
           <FontAwesomeIcon icon={faAngleRight} />
-          <p>社会課題から探す</p>
+          <p tw="font-bold">社会課題から探す</p>
         </div>
         <h2 tw="text-xl py-6 px-3.5">社会課題から探す</h2>
         <div css={vCenter} tw="gap-11">

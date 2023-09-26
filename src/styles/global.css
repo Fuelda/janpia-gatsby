@@ -2,7 +2,8 @@ html {
   font-size: 16px;
 }
 body {
-  font-family: "Noto Sans JP", sans-serif;
+  /* font-family: "Noto Sans JP", sans-serif; */
+  font-family: "Noto Sans JP Variable", sans-serif;
   color: #333333;
 }
 h1 {
@@ -15,4 +16,5 @@ h2 {
 }
 button {
   flex-shrink: 0;
+  background-color: white;
 }

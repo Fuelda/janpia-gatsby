@@ -2,7 +2,7 @@ import React from "react";
 import * as Checkbox from "@radix-ui/react-checkbox";
 import { CheckIcon } from "@radix-ui/react-icons";
 import { hCenter, vCenter } from "../../styles/base";
-import { checkBox } from "../../styles/form";
+import { checkBox, checkBoxPref } from "../../styles/form";
 import { prefecturesArray } from "../../features/search/store/filterContents";
 import { useSearchContext } from "../../context/searchContext";
 import "twin.macro";
@@ -136,16 +136,16 @@ const SearchPrefectureCard = (props: { area: string }) => {
             <Checkbox.Root
               id={checkbox}
               onCheckedChange={() => handleCheckbox(checkbox)}
-              css={checkBox}
+              css={checkBoxPref}
               checked={prefectures.includes(checkbox)}
             >
               <Checkbox.Indicator>
                 <CheckIcon />
               </Checkbox.Indicator>
             </Checkbox.Root>
-            <label htmlFor={checkbox} tw="text-sm font-bold">
-              <p>{checkbox}</p>
-              <p>({pickupPref(checkbox)})</p>
+            <label htmlFor={checkbox}>
+              <p tw="text-sm font-bold">{checkbox}</p>
+              <p tw="text-xs">({pickupPref(checkbox)})</p>
             </label>
           </div>
         ))}

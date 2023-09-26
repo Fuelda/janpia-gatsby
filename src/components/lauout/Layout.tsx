@@ -1,5 +1,6 @@
 import React from "react";
-import "@fontsource/noto-sans-jp";
+// import "@fontsource/noto-sans-jp";
+import "@fontsource-variable/noto-sans-jp";
 import "../../styles/global.css";
 import Header from "./Header";
 import Footer from "./Footer";

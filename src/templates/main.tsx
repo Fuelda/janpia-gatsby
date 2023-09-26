@@ -37,8 +37,6 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
     allStrapiGroup,
   } = data;
 
-  const businessCategoryProperty = businessCategoryArray;
-
   const mainGroup =
     group.length !== 0 &&
     group.find((g: any) => {
@@ -52,12 +50,12 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
   if (business_category) {
     if (business_category.code === 1) {
       businessCategoryLabel = business_category.subCode
-        ? businessCategoryProperty.find(
+        ? businessCategoryArray.find(
             (bcp) => business_category.subCode === bcp.subCode
           )?.label
         : "草の根活動支援事業";
     } else {
-      businessCategoryLabel = businessCategoryProperty.find(
+      businessCategoryLabel = businessCategoryArray.find(
         (bcp) => business_category.code === bcp.code
       )?.label;
     }

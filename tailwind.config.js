@@ -20,6 +20,7 @@ module.exports = {
           link: "#004992",
           hokuriku: "#3D72AF",
           kanto: "#66B9D6",
+          vivid: "#0090FF",
         },
         green: { ado: "#6ACE6C", kinki: "#AAC25C", tokai: "#5DA052" },
         purple: { hokkaido: "#A065A0", tohoku: "#666EAE" },
@@ -30,6 +31,7 @@ module.exports = {
           base: "#666666",
           black: "#999999",
           font: "#AFBAC3",
+          pale: "#EEEEEE",
         },
       },
       borderRadius: {

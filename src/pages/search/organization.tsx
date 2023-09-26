@@ -27,7 +27,7 @@ const Organization = () => {
         <div tw="text-sm p-2 bg-blue-base gap-2" css={hCenter}>
           <Link to="/">ホーム</Link>
           <FontAwesomeIcon icon={faAngleRight} />
-          <p>団体から探す</p>
+          <p tw="font-bold">団体から探す</p>
         </div>
         <h2 tw="text-xl py-6 px-3.5">団体から探す</h2>
         <div css={vCenter} tw="gap-11">

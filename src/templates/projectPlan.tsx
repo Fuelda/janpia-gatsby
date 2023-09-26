@@ -51,40 +51,47 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
       .filter((bps: any) => bps.node.info_type === "50")
       .sort((a: any, b: any) => a.node.row_no - b.node.row_no);
   const shortOutcomeFinance =
-    allStrapiBizPlanSub.edges.length !== 0 &&
-    allStrapiBizPlanSub.edges
-      .filter((bps: any) => bps.node.info_type === "11")
-      .sort((a: any, b: any) => a.node.row_no - b.node.row_no);
+    allStrapiBizPlanSub.edges.length !== 0
+      ? allStrapiBizPlanSub.edges
+          .filter((bps: any) => bps.node.info_type === "11")
+          .sort((a: any, b: any) => a.node.row_no - b.node.row_no)
+      : [];
   const shortOutcomeNonFinance =
-    allStrapiBizPlanSub.edges.length !== 0 &&
-    allStrapiBizPlanSub.edges
-      .filter((bps: any) => bps.node.info_type === "12")
-      .sort((a: any, b: any) => a.node.row_no - b.node.row_no);
+    allStrapiBizPlanSub.edges.length !== 0
+      ? allStrapiBizPlanSub.edges
+          .filter((bps: any) => bps.node.info_type === "12")
+          .sort((a: any, b: any) => a.node.row_no - b.node.row_no)
+      : [];
   const shortOutcomeAdo =
-    allStrapiBizPlanSub.edges.length !== 0 &&
-    allStrapiBizPlanSub.edges
-      .filter((bps: any) => bps.node.info_type === "13")
-      .sort((a: any, b: any) => a.node.row_no - b.node.row_no);
+    allStrapiBizPlanSub.edges.length !== 0
+      ? allStrapiBizPlanSub.edges
+          .filter((bps: any) => bps.node.info_type === "13")
+          .sort((a: any, b: any) => a.node.row_no - b.node.row_no)
+      : [];
   const shortOutcomeCovid =
-    allStrapiBizPlanSub.edges.length !== 0 &&
-    allStrapiBizPlanSub.edges
-      .filter((bps: any) => bps.node.info_type === "14")
-      .sort((a: any, b: any) => a.node.row_no - b.node.row_no);
+    allStrapiBizPlanSub.edges.length !== 0
+      ? allStrapiBizPlanSub.edges
+          .filter((bps: any) => bps.node.info_type === "14")
+          .sort((a: any, b: any) => a.node.row_no - b.node.row_no)
+      : [];
   const outputFinance =
-    allStrapiBizPlanSub.edges.length !== 0 &&
-    allStrapiBizPlanSub.edges
-      .filter((bps: any) => bps.node.info_type === "21")
-      .sort((a: any, b: any) => a.node.row_no - b.node.row_no);
+    allStrapiBizPlanSub.edges.length !== 0
+      ? allStrapiBizPlanSub.edges
+          .filter((bps: any) => bps.node.info_type === "21")
+          .sort((a: any, b: any) => a.node.row_no - b.node.row_no)
+      : [];
   const outputNonFinance =
-    allStrapiBizPlanSub.edges.length !== 0 &&
-    allStrapiBizPlanSub.edges
-      .filter((bps: any) => bps.node.info_type === "22")
-      .sort((a: any, b: any) => a.node.row_no - b.node.row_no);
+    allStrapiBizPlanSub.edges.length !== 0
+      ? allStrapiBizPlanSub.edges
+          .filter((bps: any) => bps.node.info_type === "22")
+          .sort((a: any, b: any) => a.node.row_no - b.node.row_no)
+      : [];
   const outputAdo =
-    allStrapiBizPlanSub.edges.length !== 0 &&
-    allStrapiBizPlanSub.edges
-      .filter((bps: any) => bps.node.info_type === "23")
-      .sort((a: any, b: any) => a.node.row_no - b.node.row_no);
+    allStrapiBizPlanSub.edges.length !== 0
+      ? allStrapiBizPlanSub.edges
+          .filter((bps: any) => bps.node.info_type === "23")
+          .sort((a: any, b: any) => a.node.row_no - b.node.row_no)
+      : [];
 
   console.log(data);
   console.log(shortOutcomeFinance);
