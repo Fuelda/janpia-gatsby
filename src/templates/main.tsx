@@ -126,7 +126,8 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
                     <tr css={tr}>
                       <th css={th}>採択事業年度</th>
                       <td css={td}>
-                        {business_type_name.label || business_type_name}
+                        {business_type_name &&
+                          (business_type_name.label || business_type_name)}
                       </td>
                     </tr>
                     <tr css={tr}>
