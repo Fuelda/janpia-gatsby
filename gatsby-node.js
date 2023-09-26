@@ -91,6 +91,12 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         ? item.node.fund_distr_grp_cd
         : item.node.executive_grp_cd
     );
+    const insert_id_group = organization_cd.map((code) => {
+      const groupItem = group.find(
+        (item) => item.node.organization_cd === code
+      );
+      return groupItem ? groupItem.node.insert_id : "";
+    });
 
     createPage({
       path: `/result/${business_cd}/`,
@@ -103,6 +109,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       context: {
         slug: business_cd,
         organization_cd: organization_cd,
+        insert_id: insert_id_group,
       },
     });
     createPage({
