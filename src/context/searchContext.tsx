@@ -6,6 +6,7 @@ import React, {
   useContext,
   useState,
 } from "react";
+import { useAlgoliaStrapiContext } from "./algoliaStrapiContext";
 
 type businessCategoryType = {
   code: number;
@@ -64,6 +65,7 @@ type searchSetStateType = {
 type searchType = {
   searchState: searchStateType;
   searchSetState: searchSetStateType;
+  resetSearchStatus: () => void;
 };
 
 const SearchContext = createContext<searchType>({
@@ -116,6 +118,7 @@ const SearchContext = createContext<searchType>({
     setField3_8: () => {},
     setSdgsGoal: () => {},
   },
+  resetSearchStatus: () => {},
 });
 
 const SearchProvider: FC<{ children: ReactNode }> = ({ children }) => {
@@ -143,6 +146,34 @@ const SearchProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [field3_7, setField3_7] = useState(false);
   const [field3_8, setField3_8] = useState(false);
   const [sdgs_goal, setSdgsGoal] = useState<string[]>([]);
+  const { setWithQuery } = useAlgoliaStrapiContext();
+
+  const resetSearchStatus = () => {
+    setOrganizationName("");
+    setOrganizationTypeCd([]);
+    setPrefectures([]);
+    setLegalPersonality([]);
+
+    setBusinessOrgType([]);
+    setBusinessTypeName("");
+    setBusinessCategory([]);
+    setBusinessStatus(null);
+    setTargetArea([]);
+    setSubsidyAmount([]);
+    setTopicKeywords([]);
+
+    setField1_1(false);
+    setField1_2(false);
+    setField1_3(false);
+    setField2_4(false);
+    setField2_5(false);
+    setField2_6(false);
+    setField3_7(false);
+    setField3_8(false);
+    setSdgsGoal([]);
+
+    setWithQuery(false);
+  };
 
   const value = {
     searchState: {
@@ -194,6 +225,8 @@ const SearchProvider: FC<{ children: ReactNode }> = ({ children }) => {
       setField3_8,
       setSdgsGoal,
     },
+
+    resetSearchStatus: resetSearchStatus,
   };
 
   return (

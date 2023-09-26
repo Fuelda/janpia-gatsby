@@ -11,11 +11,17 @@ import ResultCard from "../components/molecules/ResultCard";
 import PageNav from "../features/pagenation/component/molecules/PageNav";
 import ItemPerPage from "../features/pagenation/component/atoms/ItemPerPage";
 import PageNavTiny from "../features/pagenation/component/molecules/PageNavTiny";
+import Modal from "react-modal";
+import { useModalContext } from "../context/modalContext";
+import ModalPrefectures from "../features/search/component/sidebar/modal/ModalPrefectures";
+
+Modal.setAppElement("#___gatsby");
 
 const Result = () => {
   const filteredAllBizPlan = useFilteredStrapiContext();
   const [currentPageNo, setCurrentPageNo] = useState(1);
   const [itemPerPage, setItemPerPage] = useState(30);
+  const { isModalOpen, setIsModalOpen } = useModalContext();
 
   const itemNum = filteredAllBizPlan.length;
   const totalPageNum = Math.ceil(itemNum / itemPerPage);
@@ -83,6 +89,16 @@ const Result = () => {
           </div>
         </div>
       </div>
+
+      <Modal
+        isOpen={isModalOpen !== ""}
+        onRequestClose={() => setIsModalOpen("")}
+        shouldCloseOnEsc={true}
+        className="ResultModal"
+        overlayClassName="ResultOverlay"
+      >
+        <ModalPrefectures />
+      </Modal>
     </Layout>
   );
 };

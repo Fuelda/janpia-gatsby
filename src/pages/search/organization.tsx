@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Layout from "../../components/lauout/Layout";
 import "twin.macro";
 import { h3, hCenter, vCenter } from "../../styles/base";
@@ -11,8 +11,16 @@ import Prefectures from "../../features/search/component/main/Organization/Prefe
 import { Link } from "gatsby";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import { useSearchContext } from "../../context/searchContext";
+import { useAlgoliaStrapiContext } from "../../context/algoliaStrapiContext";
 
 const Organization = () => {
+  const { resetSearchStatus } = useSearchContext();
+
+  useEffect(() => {
+    resetSearchStatus();
+  }, []);
+
   return (
     <Layout>
       <div tw="mb-32">

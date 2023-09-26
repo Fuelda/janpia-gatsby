@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Layout from "../components/lauout/Layout";
 import MainVisual from "../components/organisms/MainVisual";
 import tw from "twin.macro";
@@ -10,11 +10,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import IndexLink from "../components/atoms/IndexLink";
 import { StaticImage } from "gatsby-plugin-image";
+import { useSearchContext } from "../context/searchContext";
 
 const indexBox = tw`bg-blue-base rounded-10 px-10 pt-7 pb-10`;
 const searchBox = tw`w-[300px] h-[150px] bg-white rounded-10 px-5 py-2.5`;
 
 const Index = () => {
+  const { resetSearchStatus } = useSearchContext();
+
+  useEffect(() => {
+    resetSearchStatus();
+  }, []);
+
   return (
     <Layout>
       <div tw="mb-24">
@@ -33,12 +40,12 @@ const Index = () => {
               tw="flex justify-between"
               to="/search/organization"
             >
-              <div tw="bg-red-base w-[174px] h-[125px]" />
               <StaticImage
                 src="../images/select_search_01.png"
                 alt="団体から探す"
+                tw=" w-[174px] h-[125px]"
               />
-              <p tw="text-xl">
+              <p tw="text-xl text-center mt-7">
                 <span tw="text-3xl">団体</span>
                 <br />
                 から探す
@@ -49,17 +56,29 @@ const Index = () => {
               tw="flex justify-between"
               to="/search/project"
             >
-              <div tw="bg-red-base w-[174px] h-[125px]" />
-              <p tw="text-xl">
-                <span tw="text-3xl">団体</span>
+              <StaticImage
+                src="../images/select_search_02.png"
+                alt="団体から探す"
+                tw=" w-[174px] h-[125px]"
+              />
+              <p tw="text-xl text-center mt-7">
+                <span tw="text-3xl">事業</span>
                 <br />
                 から探す
               </p>
             </Link>
-            <Link css={searchBox} tw="flex justify-between" to="/search/issue">
-              <div tw="bg-red-base w-[174px] h-[125px]" />
-              <p tw="text-xl">
-                <span tw="text-3xl">団体</span>
+            <Link
+              css={searchBox}
+              tw="flex justify-between relative"
+              to="/search/issue"
+            >
+              <StaticImage
+                src="../images/select_search_03.png"
+                alt="団体から探す"
+                tw=" w-[174px] h-[125px]"
+              />
+              <p tw="text-xl text-center mt-7 absolute right-6">
+                <span tw="text-3xl">社会課題</span>
                 <br />
                 から探す
               </p>

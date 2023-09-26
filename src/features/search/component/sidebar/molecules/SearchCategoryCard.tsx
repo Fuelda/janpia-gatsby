@@ -45,7 +45,7 @@ const SearchCategoryCard = (props: { category: string }) => {
         >
           <OrganizationName path="result" />
           <OrganizationTypeCd />
-          <SidebarPrefectures />
+          <SidebarPrefectures category="prefectures" />
           <LegalPersonality />
         </div>
       )}
@@ -56,8 +56,9 @@ const SearchCategoryCard = (props: { category: string }) => {
         >
           <BusinessOrgType />
           <BusinessCategory />
-          <BusinessStatus />
           <SubsidyAmount />
+          <BusinessStatus />
+          <SidebarPrefectures category="targetArea" />
         </div>
       )}
       {props.category === "issue" && (

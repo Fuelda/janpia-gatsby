@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Layout from "../../components/lauout/Layout";
 import "twin.macro";
 import { h3, hCenter, vCenter } from "../../styles/base";
@@ -10,8 +10,15 @@ import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import TopicKeyword from "../../features/search/component/main/Business/TopicKeyword";
 import SocialIssue from "../../features/search/component/main/Issue/SocialIssue";
 import SdgsGoal from "../../features/search/component/main/Issue/SdgsGoal";
+import { useSearchContext } from "../../context/searchContext";
 
 const Issue = () => {
+  const { resetSearchStatus } = useSearchContext();
+
+  useEffect(() => {
+    resetSearchStatus();
+  }, []);
+
   return (
     <Layout>
       <div tw="mb-32">

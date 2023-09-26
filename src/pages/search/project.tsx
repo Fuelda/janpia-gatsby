@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Layout from "../../components/lauout/Layout";
 import "twin.macro";
 import { h3, hCenter, vCenter } from "../../styles/base";
@@ -17,8 +17,15 @@ import BusinessCategory from "../../features/search/component/main/Business/Busi
 import TargetArea from "../../features/search/component/main/Business/TargetArea";
 import SubsidyAmount from "../../features/search/component/main/Business/SubsidyAmount";
 import TopicKeyword from "../../features/search/component/main/Business/TopicKeyword";
+import { useSearchContext } from "../../context/searchContext";
 
 const Project = () => {
+  const { resetSearchStatus } = useSearchContext();
+
+  useEffect(() => {
+    resetSearchStatus();
+  }, []);
+
   return (
     <Layout>
       <div tw="mb-32">
