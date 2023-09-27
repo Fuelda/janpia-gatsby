@@ -180,8 +180,8 @@ const SearchTargetAreaCard = (props: { area: string }) => {
               </Checkbox.Indicator>
             </Checkbox.Root>
             <label htmlFor={checkbox} tw="text-sm font-bold">
-              <p>{checkbox}</p>
-              <p>({pickupPref(checkbox)})</p>
+              <p tw="text-sm font-bold">{checkbox}</p>
+              <p tw="text-xs">({pickupPref(checkbox)})</p>
             </label>
           </div>
         ))}

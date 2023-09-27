@@ -11,7 +11,7 @@ const currentPath = tw`p-[7px] bg-blue-vivid bg-opacity-10`;
 const Header = () => {
   const location = useLocation();
   const path = location.pathname;
-  console.log(location);
+
   return (
     <div tw="fixed top-0 w-screen bg-white z-30">
       <div css={wrapper}>

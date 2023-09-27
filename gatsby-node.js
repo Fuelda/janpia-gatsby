@@ -55,6 +55,11 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       },
     });
     createPage({
+      path: `/result/${business_cd}/selected-project`,
+      component: path.resolve("./src/templates/selectedProject.tsx"),
+      context: { slug: business_cd },
+    });
+    createPage({
       path: `/result/${business_cd}/project-plan`,
       component: path.resolve("./src/templates/projectPlan.tsx"),
       context: { slug: business_cd },
@@ -70,6 +75,41 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     createPage({
       path: `/result/${business_cd}/financial-plan`,
       component: path.resolve("./src/templates/financialPlan.tsx"),
+      context: { slug: business_cd },
+    });
+    createPage({
+      path: `/result/${business_cd}/exante-evaluation-report`,
+      component: path.resolve("./src/templates/exanteEvaluationReport.tsx"),
+      context: { slug: business_cd },
+    });
+    createPage({
+      path: `/result/${business_cd}/progress-report`,
+      component: path.resolve("./src/templates/progressReport.tsx"),
+      context: { slug: business_cd },
+    });
+    createPage({
+      path: `/result/${business_cd}/year-end-report`,
+      component: path.resolve("./src/templates/yearEndReport.tsx"),
+      context: { slug: business_cd },
+    });
+    createPage({
+      path: `/result/${business_cd}/interim-report`,
+      component: path.resolve("./src/templates/interimReport.tsx"),
+      context: { slug: business_cd },
+    });
+    createPage({
+      path: `/result/${business_cd}/expost-evaluation-report`,
+      component: path.resolve("./src/templates/expostEvaluationReport.tsx"),
+      context: { slug: business_cd },
+    });
+    createPage({
+      path: `/result/${business_cd}/financial-report`,
+      component: path.resolve("./src/templates/financialReport.tsx"),
+      context: { slug: business_cd },
+    });
+    createPage({
+      path: `/result/${business_cd}/completion-report`,
+      component: path.resolve("./src/templates/completionReport.tsx"),
       context: { slug: business_cd },
     });
   });
@@ -113,6 +153,11 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       },
     });
     createPage({
+      path: `/result/${business_cd}/selected-project`,
+      component: path.resolve("./src/templates/selectedProject.tsx"),
+      context: { slug: business_cd },
+    });
+    createPage({
       path: `/result/${business_cd}/project-plan`,
       component: path.resolve("./src/templates/projectPlan.tsx"),
       context: { slug: business_cd },
@@ -125,6 +170,41 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     createPage({
       path: `/result/${business_cd}/financial-plan`,
       component: path.resolve("./src/templates/financialPlan.tsx"),
+      context: { slug: business_cd },
+    });
+    createPage({
+      path: `/result/${business_cd}/exante-evaluation-report`,
+      component: path.resolve("./src/templates/exanteEvaluationReport.tsx"),
+      context: { slug: business_cd },
+    });
+    createPage({
+      path: `/result/${business_cd}/progress-report`,
+      component: path.resolve("./src/templates/progressReport.tsx"),
+      context: { slug: business_cd },
+    });
+    createPage({
+      path: `/result/${business_cd}/year-end-report`,
+      component: path.resolve("./src/templates/yearEndReport.tsx"),
+      context: { slug: business_cd },
+    });
+    createPage({
+      path: `/result/${business_cd}/interim-report`,
+      component: path.resolve("./src/templates/interimReport.tsx"),
+      context: { slug: business_cd },
+    });
+    createPage({
+      path: `/result/${business_cd}/expost-evaluation-report`,
+      component: path.resolve("./src/templates/expostEvaluationReport.tsx"),
+      context: { slug: business_cd },
+    });
+    createPage({
+      path: `/result/${business_cd}/financial-report`,
+      component: path.resolve("./src/templates/financialReport.tsx"),
+      context: { slug: business_cd },
+    });
+    createPage({
+      path: `/result/${business_cd}/completion-report`,
+      component: path.resolve("./src/templates/completionReport.tsx"),
       context: { slug: business_cd },
     });
   });

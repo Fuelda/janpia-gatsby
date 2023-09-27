@@ -23,7 +23,7 @@ const ResultCard = (props: any) => {
   const businessCategoryProperty = businessCategoryArray;
 
   let businessStatusText = "";
-  if (typeof business_status === "string" && business_status === "1") {
+  if (typeof business_status === "number" && business_status === 0) {
     businessStatusText = "実施中";
   } else if (typeof business_status === "boolean" && business_status) {
     businessStatusText = "実施中";
@@ -83,7 +83,7 @@ const ResultCard = (props: any) => {
               resultCardTip,
               businessTypeNameCategory === "通常枠"
                 ? tw`border-blue-button text-blue-button bg-blue-base`
-                : tw`border-red-base text-red-base `,
+                : tw`border-red-base text-red-base bg-red-pale`,
             ]}
           >
             {businessTypeNameCategory}

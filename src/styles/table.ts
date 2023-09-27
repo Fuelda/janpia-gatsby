@@ -19,11 +19,18 @@ export const th2Sub_2 = tw`w-[12.5%] bg-blue-base `;
 export const th3_2 = tw`w-[16%] bg-blue-base py-3 px-3.5 text-start border-gray-border border`;
 export const th3Sub_2 = tw`w-[16%] bg-blue-base border-gray-border border-l`;
 
+export const theadLshape = tw`bg-blue-base py-3 px-3.5 border-gray-border border`;
 export const trLshape = tw`flex w-full`;
 export const thLshape = tw`py-3 px-3.5 font-bold`;
 export const thLshapeSub = tw`w-[6%]`;
 export const tdLshape = tw`py-3 px-3.5 border-gray-border border w-full block`;
 export const tdLshapeWrapper = tw`w-full`;
-export const theadLshape = tw`bg-blue-base py-3 px-3.5 border-gray-border border`;
 
 export const td3col = tw`py-3 px-3.5 border-gray-border border w-[37%]`;
+
+export const th5col = tw`w-[28%] bg-blue-base py-3 px-3.5 text-start border-gray-border border-t`;
+export const th25col = tw`w-[26%] bg-blue-base py-3 px-3.5 text-start border-gray-border border`;
+export const th2Sub5col = tw`w-[2%] bg-blue-base `;
+export const th6col = tw`w-[21%] bg-blue-base py-3 px-3.5 text-start border-gray-border border-t`;
+export const td6col = tw`w-[7%] py-3 px-3.5 border-gray-border border text-start`;
+export const th26col = tw`w-[19%] bg-blue-base py-3 px-3.5 text-start border-gray-border border`;

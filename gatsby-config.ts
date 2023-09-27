@@ -27,7 +27,7 @@ const strapiConfig = {
     "finance-plan-manual",
     "group",
     "mid-report-manual",
-    "offering-result-manual",
+    "offering-report-manual",
     "post-report-manual",
     "pre-report-manual",
     "progress-report-manual",

@@ -76,8 +76,8 @@ export const businessCategoryArray = [
 ];
 
 export const businessStatusArray = [
-  { code: 1, label: "実施中" },
-  { code: 0, label: "終了" },
+  { code: 0, label: "実施中" },
+  { code: 1, label: "終了" },
 ];
 
 export const subsidyAmountArray = [

@@ -42,8 +42,9 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
   } = data;
   const bizPlanManual = strapiBizPlanManualFDO || strapiBizPlanManualADO;
 
-  const encodeUrl = bizPlanManual && bizPlanManual.data.url;
-  const googleDocsViewerUrl = `https://docs.google.com/viewer?url=${encodeUrl}&embedded=true`;
+  const pdfUrl = bizPlanManual && bizPlanManual.data.url;
+  const encodeUrl = pdfUrl && encodeURIComponent(pdfUrl);
+  const googleDocsViewerUrl = `https://docs.google.com/viewer?url=${pdfUrl}&embedded=true`;
 
   const bizPlanSubSdgs =
     allStrapiBizPlanSub.edges.length !== 0 &&
@@ -94,7 +95,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
       : [];
 
   console.log(data);
-  console.log(shortOutcomeFinance);
+  console.log(shortOutcomeAdo);
 
   return (
     <Layout>
@@ -544,7 +545,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                         </div>
                       </DetailItemWrapper>
                     </div>
-                    {strapiBizPlan.business_org_type && (
+                    {strapiBizPlan.business_org_type === "F" && (
                       <div css={detailBody}>
                         <div id="six-secondItem">
                           <DetailItemWrapper itemName="短期アウトカム (資金支援)">
@@ -766,6 +767,154 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                           <DetailItemWrapper itemName="アウトプット (非資金支援)">
                             <table css={table}>
                               {outputNonFinance.map((item: any, i: number) => (
+                                <tbody key={item}>
+                                  <tr>
+                                    <th css={th2Sub} rowSpan={6}>
+                                      {i}
+                                    </th>
+                                    <td css={td} colSpan={2}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output.data
+                                              .childMarkdownRemark.html,
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                  <tr css={tr}>
+                                    <th css={th}>モニタリング</th>
+                                    <td css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_monitor.data
+                                              .childMarkdownRemark.html,
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                  <tr css={tr}>
+                                    <th css={th}>初期値/初期状態</th>
+                                    <td css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_initial.data
+                                              .childMarkdownRemark.html,
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                  <tr css={tr}>
+                                    <th css={th}>中間評価時の値/状態</th>
+                                    <td css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_mid_eval.data
+                                              .childMarkdownRemark.html,
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                  <tr css={tr}>
+                                    <th css={th}>事後評価時の値/状態</th>
+                                    <td css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_aft_eval.data
+                                              .childMarkdownRemark.html,
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              ))}
+                            </table>
+                          </DetailItemWrapper>
+                        </div>
+                      </div>
+                    )}
+                    {strapiBizPlan.business_org_type === "A" && (
+                      <div css={detailBody}>
+                        <div id="six-secondItem">
+                          <DetailItemWrapper itemName="短期アウトカム (ADO)">
+                            <table css={table}>
+                              {shortOutcomeAdo.map((item: any, i: number) => (
+                                <tbody key={item}>
+                                  <tr>
+                                    <th css={th2Sub} rowSpan={6}>
+                                      {i}
+                                    </th>
+                                    <td css={td} colSpan={2}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.business_goals.data
+                                              .childMarkdownRemark.html,
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                  <tr css={tr}>
+                                    <th css={th}>モニタリング</th>
+                                    <td css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.goals_monitoring.data
+                                              .childMarkdownRemark.html,
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                  <tr css={tr}>
+                                    <th css={th}>初期値/初期状態</th>
+                                    <td css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.goals_initial.data
+                                              .childMarkdownRemark.html,
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                  <tr css={tr}>
+                                    <th css={th}>中間評価時の値/状態</th>
+                                    <td css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.goals_mid_eval.data
+                                              .childMarkdownRemark.html,
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                  <tr css={tr}>
+                                    <th css={th}>事後評価時の値/状態</th>
+                                    <td css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.goals_aft_eval.data
+                                              .childMarkdownRemark.html,
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              ))}
+                            </table>
+                          </DetailItemWrapper>
+                        </div>
+                        <div id="six-thirdItem" css={detailBody}>
+                          <DetailItemWrapper itemName="アウトプット (ADO)">
+                            <table css={table}>
+                              {outputAdo.map((item: any, i: number) => (
                                 <tbody key={item}>
                                   <tr>
                                     <th css={th2Sub} rowSpan={6}>

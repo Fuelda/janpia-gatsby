@@ -3,9 +3,11 @@ import { StaticImage } from "gatsby-plugin-image";
 import React, { useState } from "react";
 import "twin.macro";
 import tw from "twin.macro";
-import { hCenter } from "../../styles/base";
+import { hCenter, pankuzu } from "../../styles/base";
 import { businessCategoryArray } from "../../features/search/store/filterContents";
 import { useFilteredStrapiContext } from "../../context/filteredStrapiContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
 const resultCardTip = tw`text-xs py-1 px-1.5 border`;
 
@@ -28,7 +30,7 @@ const DetailHeader = (props: { business_cd: string }) => {
   const businessCategoryProperty = businessCategoryArray;
 
   let businessStatusText = "";
-  if (typeof business_status === "string" && business_status === "1") {
+  if (typeof business_status === "number" && business_status === 0) {
     businessStatusText = "実施中";
   } else if (typeof business_status === "boolean" && business_status) {
     businessStatusText = "実施中";
@@ -72,60 +74,69 @@ const DetailHeader = (props: { business_cd: string }) => {
     splitBusinessTypeName && splitBusinessTypeName[2];
 
   return (
-    <div tw="w-full p-2.5 flex gap-2 ">
-      <div tw="w-[100px] h-[100px] shrink-0">
-        {business_org_type === "F" ? (
-          <StaticImage
-            src="../../images/thumbnail_shikinbunpai.png"
-            alt="サムネイル"
-            tw="w-full"
-          />
-        ) : (
-          <StaticImage
-            src="../../images/thumbnail_jikkou.png"
-            alt="サムネイル"
-            tw="w-full"
-          />
-        )}
+    <div>
+      <div css={pankuzu}>
+        <Link to="/">ホーム</Link>
+        <FontAwesomeIcon icon={faAngleRight} />
+        <Link to="/result">検索結果</Link>
+        <FontAwesomeIcon icon={faAngleRight} />
+        <p>{business_name}</p>
       </div>
-      <div tw="">
-        <div tw="flex gap-[5px]">
-          <p
-            css={[
-              resultCardTip,
-              businessTypeNameCategory === "通常枠"
-                ? tw`border-blue-button text-blue-button bg-blue-base`
-                : tw`border-red-base text-red-base `,
-            ]}
-          >
-            {businessTypeNameCategory}
-          </p>
-          <p css={resultCardTip}>{businessTypeNameYear}</p>
-          <p css={resultCardTip}>{businessStatusText}</p>
-          <p css={resultCardTip}>{target_area}</p>
+      <div tw="w-full p-2.5 flex gap-2 mt-3.5">
+        <div tw="w-[100px] h-[100px] shrink-0">
+          {business_org_type === "F" ? (
+            <StaticImage
+              src="../../images/thumbnail_shikinbunpai.png"
+              alt="サムネイル"
+              tw="w-full"
+            />
+          ) : (
+            <StaticImage
+              src="../../images/thumbnail_jikkou.png"
+              alt="サムネイル"
+              tw="w-full"
+            />
+          )}
         </div>
-        <p tw="text-lg font-bold break-words">{business_name}</p>
-        <div tw="mt-3.5 flex gap-7">
-          {mainGroup && (
-            <div css={hCenter} tw="gap-1.5">
-              <StaticImage
-                src="../../images/office.svg"
-                alt="オフィスアイコン"
-                tw="w-4 h-4"
-              />
-              <p>{mainGroupName}</p>
-            </div>
-          )}
-          {businessCategoryLabel && (
-            <div css={hCenter} tw="gap-1.5">
-              <StaticImage
-                src="../../images/note.svg"
-                alt="ノートアイコン"
-                tw="w-4 h-4"
-              />
-              <p>{businessCategoryLabel}</p>
-            </div>
-          )}
+        <div tw="">
+          <div tw="flex gap-[5px]">
+            <p
+              css={[
+                resultCardTip,
+                businessTypeNameCategory === "通常枠"
+                  ? tw`border-blue-button text-blue-button bg-blue-base`
+                  : tw`border-red-base text-red-base bg-red-pale`,
+              ]}
+            >
+              {businessTypeNameCategory}
+            </p>
+            <p css={resultCardTip}>{businessTypeNameYear}</p>
+            <p css={resultCardTip}>{businessStatusText}</p>
+            <p css={resultCardTip}>{target_area}</p>
+          </div>
+          <p tw="text-lg font-bold break-words">{business_name}</p>
+          <div tw="mt-3.5 flex gap-7">
+            {mainGroup && (
+              <div css={hCenter} tw="gap-1.5">
+                <StaticImage
+                  src="../../images/office.svg"
+                  alt="オフィスアイコン"
+                  tw="w-4 h-4"
+                />
+                <p>{mainGroupName}</p>
+              </div>
+            )}
+            {businessCategoryLabel && (
+              <div css={hCenter} tw="gap-1.5">
+                <StaticImage
+                  src="../../images/note.svg"
+                  alt="ノートアイコン"
+                  tw="w-4 h-4"
+                />
+                <p>{businessCategoryLabel}</p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Layout from "../../components/lauout/Layout";
 import "twin.macro";
-import { h3, hCenter, vCenter } from "../../styles/base";
+import { h3, hCenter, pankuzu, vCenter } from "../../styles/base";
 import OrganizationName from "../../features/search/component/main/Organization/OrganizationName";
 import OrganizationTypeCd from "../../features/search/component/main/Organization/OrganizationTypeCd";
 import LegalPersonality from "../../features/search/component/main/Organization/LegalPersonality";
@@ -30,12 +30,12 @@ const Project = () => {
   return (
     <Layout>
       <div tw="mb-32">
-        <div tw="text-sm p-2 bg-blue-base gap-2" css={hCenter}>
+        <div css={pankuzu}>
           <Link to="/">ホーム</Link>
           <FontAwesomeIcon icon={faAngleRight} />
-          <p tw="font-bold">事業から探す</p>
+          <p>事業から探す</p>
         </div>
-        <h2 tw="text-xl py-6 px-3.5">事業から探す</h2>
+        <h2 tw="text-xl py-6 px-3.5 font-bold">事業から探す</h2>
         <div css={vCenter} tw="gap-11">
           <div>
             <BusinessOrgType />

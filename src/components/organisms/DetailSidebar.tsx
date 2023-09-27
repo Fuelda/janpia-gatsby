@@ -15,6 +15,12 @@ const DetailSidebar = (props: { slug: string }) => {
       <Link css={detailSidebarBlock} to={`/result/${props.slug}/organization`}>
         団体情報
       </Link>
+      <Link
+        css={detailSidebarBlock}
+        to={`/result/${props.slug}/selected-project`}
+      >
+        公募結果報告
+      </Link>
       <Link css={detailSidebarBlock} to={`/result/${props.slug}/project-plan`}>
         事業計画
       </Link>
@@ -23,6 +29,12 @@ const DetailSidebar = (props: { slug: string }) => {
         to={`/result/${props.slug}/evaluation-plan`}
       >
         評価計画
+      </Link>
+      <Link
+        css={detailSidebarBlock}
+        to={`/result/${props.slug}/financial-plan`}
+      >
+        資金計画
       </Link>
     </div>
   );

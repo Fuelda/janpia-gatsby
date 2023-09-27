@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Layout from "../../components/lauout/Layout";
 import "twin.macro";
-import { h3, hCenter, vCenter } from "../../styles/base";
+import { h3, hCenter, pankuzu, vCenter } from "../../styles/base";
 import ToResultButton from "../../components/atoms/ToResultButton";
 import ResetSearchButton from "../../components/atoms/ResetSearchButton";
 import { Link } from "gatsby";
@@ -22,12 +22,12 @@ const Issue = () => {
   return (
     <Layout>
       <div tw="mb-32">
-        <div tw="text-sm p-2 bg-blue-base gap-2" css={hCenter}>
+        <div css={pankuzu}>
           <Link to="/">ホーム</Link>
           <FontAwesomeIcon icon={faAngleRight} />
-          <p tw="font-bold">社会課題から探す</p>
+          <p>社会課題から探す</p>
         </div>
-        <h2 tw="text-xl py-6 px-3.5">社会課題から探す</h2>
+        <h2 tw="text-xl py-6 px-3.5 font-bold">社会課題から探す</h2>
         <div css={vCenter} tw="gap-11">
           <div>
             <SocialIssue />
