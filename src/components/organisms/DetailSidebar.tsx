@@ -3,10 +3,18 @@ import React from "react";
 import "twin.macro";
 import { hCenter, vCenter } from "../../styles/base";
 import tw from "twin.macro";
+import { useDetailContext } from "../../context/detailContext";
+import { useLocation } from "@reach/router";
 
 const detailSidebarBlock = tw`block border py-3 px-3.5 w-full font-bold`;
+// const currentSidebar = tw`bg`
 
 const DetailSidebar = (props: { slug: string }) => {
+  const { withORM } = useDetailContext();
+  const location = useLocation();
+  const path = location.pathname;
+  console.log(path);
+
   return (
     <div tw="w-[205px] justify-start gap-[5px] sticky top-0" css={vCenter}>
       <Link css={detailSidebarBlock} to={`/result/${props.slug}`}>
@@ -15,12 +23,14 @@ const DetailSidebar = (props: { slug: string }) => {
       <Link css={detailSidebarBlock} to={`/result/${props.slug}/organization`}>
         団体情報
       </Link>
-      <Link
-        css={detailSidebarBlock}
-        to={`/result/${props.slug}/selected-project`}
-      >
-        公募結果報告
-      </Link>
+      {withORM && (
+        <Link
+          css={detailSidebarBlock}
+          to={`/result/${props.slug}/selected-project`}
+        >
+          公募結果報告
+        </Link>
+      )}
       <Link css={detailSidebarBlock} to={`/result/${props.slug}/project-plan`}>
         事業計画
       </Link>

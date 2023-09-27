@@ -1,5 +1,5 @@
 import { Link, graphql } from "gatsby";
-import React from "react";
+import React, { useEffect } from "react";
 import Layout from "../components/lauout/Layout";
 import DetailHeader from "../components/lauout/DetailHeader";
 import DetailSidebar from "../components/organisms/DetailSidebar";
@@ -13,9 +13,11 @@ import { useStrapiContext } from "../context/strapiContext";
 import DetailAnchor from "../components/atoms/DetailAnchor";
 import { table, td, th, tr } from "../styles/table";
 import { detailAnchor, detailBody, detailFlex } from "../styles/detailPage";
+import { useDetailContext } from "../context/detailContext";
 
 const Main: React.FC<any> = ({ data, pageContext }) => {
   const filteredAllBizPlan = useFilteredStrapiContext();
+  const { setWithORM } = useDetailContext();
   const { slug } = pageContext;
   const filteredSingleBizPlan = filteredAllBizPlan.find(
     (item) => item.bizPlan.business_cd === slug
@@ -35,6 +37,7 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
     strapiBizPlanLinkADO,
     strapiBizPlanManualLinkADO,
     allStrapiGroup,
+    strapiOfferingReportManualFDO,
   } = data;
 
   const mainGroup =
@@ -89,6 +92,10 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
     );
     return linkedAdoGroup ? linkedAdoGroup.node.organization_name : "";
   };
+
+  useEffect(() => {
+    strapiOfferingReportManualFDO ? setWithORM(true) : setWithORM(false);
+  }, []);
 
   return (
     <Layout>
@@ -253,6 +260,11 @@ export const pageQuery = graphql`
           organization_cd
         }
       }
+    }
+    strapiOfferingReportManualFDO: strapiOfferingReportManual(
+      biz_cd_fund_distr: { eq: $slug }
+    ) {
+      id
     }
   }
 `;
