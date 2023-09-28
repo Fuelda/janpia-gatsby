@@ -12,7 +12,6 @@ import { Link } from "gatsby";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { useSearchContext } from "../../context/searchContext";
-import { useAlgoliaStrapiContext } from "../../context/algoliaStrapiContext";
 
 const Organization = () => {
   const { resetSearchStatus } = useSearchContext();

@@ -9,25 +9,25 @@ import {
 import { hCenter } from "../../../../styles/base";
 import tw from "twin.macro";
 
-type ItemPerPageType = {
-  itemPerPage: number;
-  setItemPerPage: Dispatch<number>;
+type SortSelectorType = {
+  currentSort: string;
+  setCurrentSort: Dispatch<string>;
 };
 
 const selectItem = tw`ml-4`;
 const selectCheck = tw`absolute left-1 inline-flex items-center justify-center`;
 
-const ItemPerPage = ({ itemPerPage, setItemPerPage }: ItemPerPageType) => {
+const SortSelector = ({ currentSort, setCurrentSort }: SortSelectorType) => {
   return (
     <div css={hCenter} tw="gap-2">
-      <p tw="text-sm">表示件数：</p>
-      <Select.Root onValueChange={(e) => setItemPerPage(parseInt(e))}>
+      <p tw="text-sm">表示順：</p>
+      <Select.Root onValueChange={(e) => setCurrentSort(e)}>
         <Select.Trigger
-          aria-label="itemPerPage"
-          tw="w-[75px] border justify-between rounded-[3px] py-1 px-2 border-gray-border"
+          aria-label="sortSelector"
+          tw="w-[200px] border justify-between rounded-[3px] py-1 px-2 border-gray-border"
           css={hCenter}
         >
-          <Select.Value placeholder={itemPerPage} />
+          <Select.Value placeholder="選択してください" />
           <Select.Icon>
             <ChevronDownIcon />
           </Select.Icon>
@@ -35,26 +35,20 @@ const ItemPerPage = ({ itemPerPage, setItemPerPage }: ItemPerPageType) => {
         <Select.Portal>
           <Select.Content tw="bg-white rounded shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]">
             <Select.Viewport tw="p-1.5">
-              <Select.Item value="10" css={selectItem}>
-                <Select.ItemText>10</Select.ItemText>
+              <Select.Item value="bizPlan" css={selectItem}>
+                <Select.ItemText>事業名順</Select.ItemText>
                 <Select.ItemIndicator css={selectCheck}>
                   <CheckIcon />
                 </Select.ItemIndicator>
               </Select.Item>
-              <Select.Item value="30" css={selectItem}>
-                <Select.ItemText>30</Select.ItemText>
+              <Select.Item value="group" css={selectItem}>
+                <Select.ItemText>団体名順</Select.ItemText>
                 <Select.ItemIndicator css={selectCheck}>
                   <CheckIcon />
                 </Select.ItemIndicator>
               </Select.Item>
-              <Select.Item value="50" css={selectItem}>
-                <Select.ItemText>50</Select.ItemText>
-                <Select.ItemIndicator css={selectCheck}>
-                  <CheckIcon />
-                </Select.ItemIndicator>
-              </Select.Item>
-              <Select.Item value="100" css={selectItem}>
-                <Select.ItemText>100</Select.ItemText>
+              <Select.Item value="year" css={selectItem}>
+                <Select.ItemText>採択事業年度順</Select.ItemText>
                 <Select.ItemIndicator css={selectCheck}>
                   <CheckIcon />
                 </Select.ItemIndicator>
@@ -67,4 +61,4 @@ const ItemPerPage = ({ itemPerPage, setItemPerPage }: ItemPerPageType) => {
   );
 };
 
-export default ItemPerPage;
+export default SortSelector;

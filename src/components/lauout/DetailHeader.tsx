@@ -43,7 +43,7 @@ const DetailHeader = (props: { business_cd: string }) => {
     group.find((g: any) => {
       const groupRole =
         g.business_org_type === "F" ? g.org_role_fdo : g.org_role_fdo;
-      return groupRole === 1;
+      return groupRole === 0 || 1;
     });
   const mainGroupName = mainGroup ? mainGroup.groupData.organization_name : "";
 
@@ -71,7 +71,8 @@ const DetailHeader = (props: { business_cd: string }) => {
   const businessTypeNameYear =
     splitBusinessTypeName && splitBusinessTypeName[1];
   const businessTypeNameCategory =
-    splitBusinessTypeName && splitBusinessTypeName[2];
+    (splitBusinessTypeName[2] === "通常枠" && "通常枠") ||
+    (splitBusinessTypeName[2] === "コロナ枠" && "緊急支援枠");
 
   return (
     <div>

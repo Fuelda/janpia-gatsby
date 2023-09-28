@@ -24,9 +24,9 @@ const LegalPersonality = () => {
   return (
     <div>
       <h3 css={h3}>法人格</h3>
-      <div tw="flex gap-12 gap-y-2.5 flex-wrap px-3.5 py-2.5">
+      <div tw="flex gap-4 gap-y-2.5 flex-wrap px-3.5 py-2.5">
         {checkboxArray.map((checkbox) => (
-          <div key={checkbox.code} css={hCenter} tw="gap-2">
+          <div key={checkbox.code} css={hCenter} tw="gap-2 w-[124px]">
             <Checkbox.Root
               id={String(checkbox.code)}
               onCheckedChange={() => handleCheckbox(checkbox.code)}

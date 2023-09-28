@@ -22,28 +22,51 @@ const SdgsGoal = (props: { path: string }) => {
     }
   };
 
+  const allSdgs = sdgsGoalArray.map((sdgs) => sdgs.code);
+
   return (
     <div>
       <h3 css={h3}>SDGs</h3>
-      <div
-        tw="gap-y-2.5 px-3.5 py-2.5"
-        css={props.path === "search" ? tw`grid grid-cols-3` : tw`flex flex-col`}
-      >
-        {checkboxArray.map((checkbox) => (
-          <div key={checkbox.code} css={hCenter} tw="gap-1.5">
+      <div>
+        <div tw="mt-[5px] px-3.5 pt-2.5">
+          <div css={hCenter} tw="gap-2">
             <Checkbox.Root
-              id={checkbox.code}
-              onCheckedChange={() => handleCheckbox(checkbox.code)}
+              id="allSdgs"
+              onCheckedChange={() => setSdgsGoal(allSdgs)}
               css={checkBox}
-              checked={sdgs_goal.includes(checkbox.code)}
+              checked={
+                sdgs_goal.sort().toString() === allSdgs.sort().toString()
+              }
             >
               <Checkbox.Indicator>
                 <CheckIcon />
               </Checkbox.Indicator>
             </Checkbox.Root>
-            <label htmlFor={checkbox.code}>{checkbox.label}</label>
+            <label htmlFor="allSdgs">すべてにチェック</label>
           </div>
-        ))}
+        </div>
+        <div
+          tw="gap-y-2.5 px-3.5 py-2.5"
+          css={
+            props.path === "search" ? tw`grid grid-cols-3` : tw`flex flex-col`
+          }
+        >
+          {checkboxArray.map((checkbox) => (
+            <div key={checkbox.code} css={hCenter} tw="gap-1.5">
+              <Checkbox.Root
+                id={checkbox.code}
+                onCheckedChange={() => handleCheckbox(checkbox.code)}
+                css={checkBox}
+                checked={sdgs_goal.includes(checkbox.code)}
+              >
+                <Checkbox.Indicator>
+                  <CheckIcon />
+                </Checkbox.Indicator>
+              </Checkbox.Root>
+              <label htmlFor={checkbox.code}>{checkbox.label}</label>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

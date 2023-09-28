@@ -9,7 +9,7 @@ const ResetSearchButton = () => {
   const { resetSearchStatus } = useSearchContext();
 
   return (
-    <button tw="text-sm" onClick={() => resetSearchStatus()}>
+    <button tw="text-sm text-gray-border" onClick={() => resetSearchStatus()}>
       <FontAwesomeIcon icon={faCircleXmark} tw="mr-1" />
       検索条件をリセット
     </button>

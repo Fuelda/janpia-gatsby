@@ -36,7 +36,11 @@ type searchStateType = {
   field2_6: boolean;
   field3_7: boolean;
   field3_8: boolean;
+  region1: boolean;
+  region2: boolean;
+  region3: boolean;
   sdgs_goal: string[];
+  allFieldCheck: boolean;
 };
 type searchSetStateType = {
   setOrganizationName: Dispatch<string>;
@@ -64,7 +68,11 @@ type searchSetStateType = {
   setField2_6: Dispatch<boolean>;
   setField3_7: Dispatch<boolean>;
   setField3_8: Dispatch<boolean>;
+  setRegion1: Dispatch<boolean>;
+  setRegion2: Dispatch<boolean>;
+  setRegion3: Dispatch<boolean>;
   setSdgsGoal: Dispatch<string[]>;
+  setAllFieldCheck: Dispatch<boolean>;
 };
 type searchType = {
   searchState: searchStateType;
@@ -97,7 +105,11 @@ const SearchContext = createContext<searchType>({
     field2_6: false,
     field3_7: false,
     field3_8: false,
+    region1: false,
+    region2: false,
+    region3: false,
     sdgs_goal: [],
+    allFieldCheck: false,
   },
 
   searchSetState: {
@@ -124,7 +136,11 @@ const SearchContext = createContext<searchType>({
     setField2_6: () => {},
     setField3_7: () => {},
     setField3_8: () => {},
+    setRegion1: () => {},
+    setRegion2: () => {},
+    setRegion3: () => {},
     setSdgsGoal: () => {},
+    setAllFieldCheck: () => {},
   },
   resetSearchStatus: () => {},
 });
@@ -155,7 +171,11 @@ const SearchProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [field2_6, setField2_6] = useState(false);
   const [field3_7, setField3_7] = useState(false);
   const [field3_8, setField3_8] = useState(false);
+  const [region1, setRegion1] = useState(false);
+  const [region2, setRegion2] = useState(false);
+  const [region3, setRegion3] = useState(false);
   const [sdgs_goal, setSdgsGoal] = useState<string[]>([]);
+  const [allFieldCheck, setAllFieldCheck] = useState(false);
   const { setWithQuery } = useAlgoliaStrapiContext();
 
   const resetSearchStatus = () => {
@@ -182,7 +202,11 @@ const SearchProvider: FC<{ children: ReactNode }> = ({ children }) => {
     setField2_6(false);
     setField3_7(false);
     setField3_8(false);
+    setRegion1(false);
+    setRegion2(false);
+    setRegion3(false);
     setSdgsGoal([]);
+    setAllFieldCheck(false);
 
     setWithQuery(false);
   };
@@ -212,7 +236,11 @@ const SearchProvider: FC<{ children: ReactNode }> = ({ children }) => {
       field2_6,
       field3_7,
       field3_8,
+      region1,
+      region2,
+      region3,
       sdgs_goal,
+      allFieldCheck,
     },
 
     searchSetState: {
@@ -239,7 +267,11 @@ const SearchProvider: FC<{ children: ReactNode }> = ({ children }) => {
       setField2_6,
       setField3_7,
       setField3_8,
+      setRegion1,
+      setRegion2,
+      setRegion3,
       setSdgsGoal,
+      setAllFieldCheck,
     },
 
     resetSearchStatus: resetSearchStatus,

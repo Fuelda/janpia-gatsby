@@ -11,6 +11,7 @@ import TopicKeyword from "../../features/search/component/main/Business/TopicKey
 import SocialIssue from "../../features/search/component/main/Issue/SocialIssue";
 import SdgsGoal from "../../features/search/component/main/Issue/SdgsGoal";
 import { useSearchContext } from "../../context/searchContext";
+import BusinessTypeName from "../../features/search/component/main/Issue/BusinessTypeName";
 
 const Issue = () => {
   const { resetSearchStatus } = useSearchContext();
@@ -30,6 +31,7 @@ const Issue = () => {
         <h2 tw="text-xl py-6 px-3.5 font-bold">社会課題から探す</h2>
         <div css={vCenter} tw="gap-11">
           <div>
+            <BusinessTypeName />
             <SocialIssue />
             <SdgsGoal path="search" />
             <TopicKeyword />

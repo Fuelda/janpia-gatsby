@@ -6,7 +6,7 @@ import tw from "twin.macro";
 import { hCenter } from "../../styles/base";
 import { businessCategoryArray } from "../../features/search/store/filterContents";
 
-const resultCardTip = tw`text-xs py-1 px-1.5 border`;
+const resultCardTip = tw`text-xs py-1 px-1.5 border border-gray-border`;
 
 const ResultCard = (props: any) => {
   const { content } = props;
@@ -34,9 +34,10 @@ const ResultCard = (props: any) => {
   const mainGroup = group.find((g: any) => {
     const groupRole =
       g.business_org_type === "F" ? g.org_role_fdo : g.org_role_fdo;
-    return groupRole === 1;
+    return groupRole === 0 || 1;
   });
   const mainGroupName = mainGroup ? mainGroup.groupData.organization_name : "";
+  const mainGroupPrefecture = mainGroup && mainGroup.groupData.prefectures;
 
   let businessCategoryLabel: string | undefined = "";
   if (business_category.code === 1) {
@@ -54,12 +55,14 @@ const ResultCard = (props: any) => {
   const businessTypeNameLabel = business_type_name.label || business_type_name;
   const splitBusinessTypeName = businessTypeNameLabel.match(/(\d+年度)(.+)/);
   const businessTypeNameYear = splitBusinessTypeName[1];
-  const businessTypeNameCategory = splitBusinessTypeName[2];
+  const businessTypeNameCategory =
+    (splitBusinessTypeName[2] === "通常枠" && "通常枠") ||
+    (splitBusinessTypeName[2] === "コロナ枠" && "緊急支援枠");
 
   return (
     <Link
       to={`/result/${business_cd}`}
-      tw="border border-black-font w-full p-2.5 flex gap-2 "
+      tw="border border-gray-border w-full p-2.5 flex gap-2 "
     >
       <div tw="w-[100px] h-[100px] shrink-0">
         {business_org_type === "F" ? (
@@ -90,7 +93,9 @@ const ResultCard = (props: any) => {
           </p>
           <p css={resultCardTip}>{businessTypeNameYear}</p>
           <p css={resultCardTip}>{businessStatusText}</p>
-          <p css={resultCardTip}>{target_area}</p>
+          {mainGroupPrefecture && (
+            <p css={resultCardTip}>{mainGroupPrefecture}</p>
+          )}
         </div>
         <p tw="text-lg font-bold break-words">{business_name}</p>
         {mainGroup && (
@@ -104,7 +109,7 @@ const ResultCard = (props: any) => {
           </div>
         )}
         {businessCategoryLabel && (
-          <div css={hCenter} tw="gap-1.5">
+          <div css={hCenter} tw="gap-1.5 text-sm">
             <StaticImage
               src="../../images/note.svg"
               alt="ノートアイコン"

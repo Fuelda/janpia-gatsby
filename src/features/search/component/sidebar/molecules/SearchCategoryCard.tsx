@@ -18,7 +18,7 @@ import SidebarPrefectures from "../Organization/SidebarPrefectures";
 import BusinessTypeName from "../../main/Business/BusinessTypeName";
 
 const SearchCategoryCard = (props: { category: string }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   let categoryName = "";
   if (props.category === "organization") {

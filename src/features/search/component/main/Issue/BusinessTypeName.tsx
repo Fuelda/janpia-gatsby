@@ -55,7 +55,7 @@ const BusinessTypeName = () => {
 
   return (
     <div>
-      <div>
+      {/* <div>
         <h3 css={h3}>採択事業年度</h3>
         <div css={checkBoxList} tw="flex-wrap gap-y-2.5 px-3.5 py-2.5">
           {uniqueYearBusinessTypeNameYear.map((checkbox) => (
@@ -74,7 +74,7 @@ const BusinessTypeName = () => {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
       <div>
         <h3 css={h3}>事業枠</h3>
         <div css={checkBoxList} tw="px-3.5 py-2.5">
@@ -90,10 +90,7 @@ const BusinessTypeName = () => {
                   <CheckIcon />
                 </Checkbox.Indicator>
               </Checkbox.Root>
-              <label htmlFor={checkbox}>
-                {(checkbox === "通常枠" && "通常枠") ||
-                  (checkbox === "コロナ枠" && "緊急支援枠")}
-              </label>
+              <label htmlFor={checkbox}>{checkbox}</label>
             </div>
           ))}
         </div>

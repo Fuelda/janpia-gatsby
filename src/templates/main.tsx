@@ -17,7 +17,14 @@ import { useDetailContext } from "../context/detailContext";
 
 const Main: React.FC<any> = ({ data, pageContext }) => {
   const filteredAllBizPlan = useFilteredStrapiContext();
-  const { setWithORM } = useDetailContext();
+  const {
+    setWithORM,
+    setWithPreRM,
+    setWithMRM,
+    setWithPostRM,
+    setWithProRM,
+    setWithCRM,
+  } = useDetailContext();
   const { slug } = pageContext;
   const filteredSingleBizPlan = filteredAllBizPlan.find(
     (item) => item.bizPlan.business_cd === slug
@@ -37,7 +44,19 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
     strapiBizPlanLinkADO,
     strapiBizPlanManualLinkADO,
     allStrapiGroup,
+
+    //サイドバーチェック用
     strapiOfferingReportManualFDO,
+    strapiPreReportManualFDO,
+    strapiPreReportManualADO,
+    strapiMidReportManualFDO,
+    strapiMidReportManualADO,
+    strapiPostReportManualFDO,
+    strapiPostReportManualADO,
+    strapiProgressReportManualFDO,
+    strapiProgressReportManualADO,
+    strapiCompleteReportManualFDO,
+    strapiCompleteReportManualADO,
   } = data;
 
   const mainGroup =
@@ -94,7 +113,14 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
   };
 
   useEffect(() => {
-    strapiOfferingReportManualFDO ? setWithORM(true) : setWithORM(false);
+    setWithORM(strapiOfferingReportManualFDO);
+    setWithPreRM(strapiPreReportManualFDO || strapiPreReportManualADO);
+    setWithMRM(strapiMidReportManualFDO || strapiMidReportManualADO);
+    setWithPostRM(strapiPostReportManualFDO || strapiPostReportManualADO);
+    setWithProRM(
+      strapiProgressReportManualFDO || strapiProgressReportManualADO
+    );
+    setWithCRM(strapiCompleteReportManualFDO || strapiCompleteReportManualADO);
   }, []);
 
   return (
@@ -263,6 +289,60 @@ export const pageQuery = graphql`
     }
     strapiOfferingReportManualFDO: strapiOfferingReportManual(
       biz_cd_fund_distr: { eq: $slug }
+    ) {
+      id
+    }
+    strapiPreReportManualFDO: strapiPreReportManual(
+      biz_cd_fund_distr: { eq: $slug }
+    ) {
+      id
+    }
+    strapiPreReportManualADO: strapiPreReportManual(
+      biz_cd_executive: { eq: $slug }
+    ) {
+      id
+    }
+    strapiMidReportManualFDO: strapiMidReportManual(
+      biz_cd_fund_distr: { eq: $slug }
+    ) {
+      id
+    }
+    strapiMidReportManualADO: strapiMidReportManual(
+      biz_cd_executive: { eq: $slug }
+    ) {
+      id
+    }
+    strapiPostReportManualFDO: strapiPostReportManual(
+      biz_cd_fund_distr: { eq: $slug }
+    ) {
+      id
+    }
+    strapiPostReportManualADO: strapiPostReportManual(
+      biz_cd_executive: { eq: $slug }
+    ) {
+      id
+    }
+    strapiProgressReportManualFDO: strapiProgressReportManual(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiProgressReportManualADO: strapiProgressReportManual(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
+    ) {
+      id
+    }
+    strapiCompleteReportManualFDO: strapiCompleteReportManual(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiCompleteReportManualADO: strapiCompleteReportManual(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "F" }
     ) {
       id
     }

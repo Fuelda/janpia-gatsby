@@ -23,7 +23,6 @@ type ormType = {
     biz_cd_fund_distr: string | null;
     business_org_type: string;
     data: { url: string };
-    fund_distr_grp_cd: string;
     round: number;
   };
 };
@@ -31,7 +30,9 @@ type ormType = {
 const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
   const [currentTab, setCurrentTab] = useState(1);
-  const { allStrapiOfferingReportManual } = data;
+  const { allStrapiOfferingReportManualFDO } = data;
+
+  const allStrapiOfferingReportManual = allStrapiOfferingReportManualFDO;
 
   const roundArray = allStrapiOfferingReportManual
     ? allStrapiOfferingReportManual.edges.map((orm: ormType) => orm.node.round)
@@ -43,7 +44,6 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
       (orm: ormType) => orm.node.round === currentTab
     );
   const currentPdfUrl = currentItem && currentItem.node.data.url;
-
   const googleDocsViewerUrl = `https://docs.google.com/viewer?url=${currentPdfUrl}&embedded=true`;
 
   return (
@@ -90,7 +90,7 @@ export default SelectedProject;
 
 export const pageQuery = graphql`
   query MyQuery($slug: String!) {
-    allStrapiOfferingReportManual(
+    allStrapiOfferingReportManualFDO: allStrapiOfferingReportManual(
       filter: { biz_cd_fund_distr: { eq: $slug } }
     ) {
       edges {
@@ -100,7 +100,6 @@ export const pageQuery = graphql`
           }
           biz_cd_fund_distr
           business_org_type
-          fund_distr_grp_cd
           round
         }
       }

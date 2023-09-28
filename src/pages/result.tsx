@@ -14,18 +14,64 @@ import PageNavTiny from "../features/pagenation/component/molecules/PageNavTiny"
 import Modal from "react-modal";
 import { useModalContext } from "../context/modalContext";
 import ModalPrefectures from "../features/search/component/sidebar/modal/ModalPrefectures";
+import SortSelector from "../features/sort/component/atoms/SortSelector";
 
 Modal.setAppElement("#___gatsby");
 
 const Result = () => {
   const filteredAllBizPlan = useFilteredStrapiContext();
+  const [currentSort, setCurrentSort] = useState("bizPlan");
   const [currentPageNo, setCurrentPageNo] = useState(1);
   const [itemPerPage, setItemPerPage] = useState(30);
+
   const { isModalOpen, setIsModalOpen } = useModalContext();
 
-  const itemNum = filteredAllBizPlan.length;
+  const sortByBizPlan = (a: any, b: any) => {
+    const bizNameA = a.bizPlan.business_name.toLowerCase();
+    const bizNameB = b.bizPlan.business_name.toLowerCase();
+    return bizNameA < bizNameB ? -1 : 1;
+  };
+  const sortByGroup = (a: any, b: any) => {
+    const mainGroupA = a.group.find((g: any) => {
+      const groupRole =
+        g.business_org_type === "F" ? g.org_role_fdo : g.org_role_fdo;
+      return groupRole === 0 || 1;
+    });
+    const mainGroupNameA = mainGroupA
+      ? mainGroupA.groupData.organization_name.toLowerCase()
+      : "";
+    const mainGroupB = b.group.find((g: any) => {
+      const groupRole =
+        g.business_org_type === "F" ? g.org_role_fdo : g.org_role_fdo;
+      return groupRole === 0 || 1;
+    });
+    const mainGroupNameB = mainGroupB
+      ? mainGroupB.groupData.organization_name.toLowerCase()
+      : "";
+    return mainGroupNameA < mainGroupNameB ? -1 : 1;
+  };
+  const sortByYear = (a: any, b: any) => {
+    const yearA =
+      (a.bizPlan.business_type_name.label &&
+        a.bizPlan.business_type_name.label.toLowerCase()) ||
+      a.bizPlan.business_type_name.toLowerCase();
+    const yearB =
+      (b.bizPlan.business_type_name.label &&
+        b.bizPlan.business_type_name.label.toLowerCase()) ||
+      b.bizPlan.business_type_name.toLowerCase();
+    return yearA > yearB ? -1 : 1;
+  };
+
+  const sortFunction =
+    (currentSort === "bizPlan" && sortByBizPlan) ||
+    (currentSort === "group" && sortByGroup) ||
+    (currentSort === "year" && sortByYear) ||
+    ((a: any, b: any) => 1 | -1);
+  const sortedBizPlan = filteredAllBizPlan.sort(sortFunction);
+
+  const itemNum = sortedBizPlan.length;
   const totalPageNum = Math.ceil(itemNum / itemPerPage);
-  const displayBizPlan = filteredAllBizPlan.slice(
+  const displayBizPlan = sortedBizPlan.slice(
     itemPerPage * (currentPageNo - 1),
     itemPerPage * currentPageNo
   );
@@ -51,12 +97,14 @@ const Result = () => {
                 件
               </p>
             </div>
-            <div>
-              <ItemPerPage
-                itemPerPage={itemPerPage}
-                setItemPerPage={setItemPerPage}
-              />
-            </div>
+            <SortSelector
+              currentSort={currentSort}
+              setCurrentSort={setCurrentSort}
+            />
+            <ItemPerPage
+              itemPerPage={itemPerPage}
+              setItemPerPage={setItemPerPage}
+            />
           </div>
           <div>
             <PageNavTiny

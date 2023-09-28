@@ -45,13 +45,13 @@ const PageNav = ({
         {!(currentPageNo === 1) && (
           <div>
             <button tw="mr-4" onClick={() => setCurrentPageNo(1)}>
-              <FontAwesomeIcon icon={faAnglesLeft} />
+              <FontAwesomeIcon tw="text-gray-black" icon={faAnglesLeft} />
             </button>
             <button
               tw="mr-6"
               onClick={() => setCurrentPageNo(currentPageNo - 1)}
             >
-              <FontAwesomeIcon icon={faAngleLeft} />
+              <FontAwesomeIcon tw="text-gray-black" icon={faAngleLeft} />
             </button>
           </div>
         )}
@@ -64,10 +64,10 @@ const PageNav = ({
               tw="ml-6"
               onClick={() => setCurrentPageNo(currentPageNo + 1)}
             >
-              <FontAwesomeIcon icon={faAngleRight} />
+              <FontAwesomeIcon tw="text-gray-black" icon={faAngleRight} />
             </button>
             <button tw="ml-4" onClick={() => setCurrentPageNo(totalPageNum)}>
-              <FontAwesomeIcon icon={faAnglesRight} />
+              <FontAwesomeIcon tw="text-gray-black" icon={faAnglesRight} />
             </button>
           </div>
         )}
