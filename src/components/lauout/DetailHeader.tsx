@@ -71,8 +71,14 @@ const DetailHeader = (props: { business_cd: string }) => {
   const businessTypeNameYear =
     splitBusinessTypeName && splitBusinessTypeName[1];
   const businessTypeNameCategory =
-    (splitBusinessTypeName[2] === "通常枠" && "通常枠") ||
-    (splitBusinessTypeName[2] === "コロナ枠" && "緊急支援枠");
+    (splitBusinessTypeName &&
+      splitBusinessTypeName.length >= 2 &&
+      splitBusinessTypeName[2] === "通常枠" &&
+      "通常枠") ||
+    (splitBusinessTypeName &&
+      splitBusinessTypeName.length >= 2 &&
+      splitBusinessTypeName[2] === "コロナ枠" &&
+      "緊急支援枠");
 
   return (
     <div>
