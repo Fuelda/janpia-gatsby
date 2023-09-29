@@ -1,6 +1,7 @@
 import tw from "twin.macro";
 
 export const table = tw`w-full border-collapse border border-gray-border`;
+export const tableWide = tw`border-collapse border border-gray-border`;
 export const thead = tw`bg-blue-base`;
 export const tr = tw``;
 export const th = tw`w-1/4 bg-blue-base py-3 px-3.5 text-start border-gray-border border`;
@@ -34,3 +35,7 @@ export const th2Sub5col = tw`w-[2%] bg-blue-base `;
 export const th6col = tw`w-[21%] bg-blue-base py-3 px-3.5 text-start border-gray-border border-t`;
 export const td6col = tw`w-[7%] py-3 px-3.5 border-gray-border border text-start`;
 export const th26col = tw`w-[19%] bg-blue-base py-3 px-3.5 text-start border-gray-border border`;
+
+export const thead8col = tw`bg-blue-base text-center text-[13px]`;
+export const th8col = tw`w-[120px] bg-blue-base py-3 px-2.5 text-center border-gray-border border`;
+export const td8col = tw`w-[120px] py-3 px-3.5 border-gray-border border text-start`;

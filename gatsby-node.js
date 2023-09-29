@@ -10,6 +10,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const evaluationPlanQuery = await graphql(nodeQuery.evaluationPlan);
   const bizPlanManualQuery = await graphql(nodeQuery.bizPlanManual);
   const bizPlanGroupManualQuery = await graphql(nodeQuery.bizPlanGroupManual);
+  const newsQuery = await graphql(nodeQuery.news);
 
   const group = groupQuery.data.allStrapiGroup.edges;
   const bizPlan = bizPlanQuery.data.allStrapiBizPlan.edges;
@@ -18,6 +19,17 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const bizPlanManual = bizPlanManualQuery.data.allStrapiBizPlanManual.edges;
   const bizPlanGroupManual =
     bizPlanGroupManualQuery.data.allStrapiBizPlanGroupManual.edges;
+  const news = newsQuery.data.allStrapiNew.edges;
+
+  news.forEach((newsItem) => {
+    const newsId = newsItem.node.id;
+    console.log(newsId);
+    createPage({
+      path: `/news/${newsId}/`,
+      component: path.resolve("./src/templates/newsPage.tsx"),
+      context: { slug: newsId },
+    });
+  });
 
   bizPlan.forEach((bizPlanItem) => {
     const business_cd = bizPlanItem.node.business_cd;

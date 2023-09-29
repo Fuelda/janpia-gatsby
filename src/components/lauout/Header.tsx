@@ -49,9 +49,13 @@ const Header = () => {
             >
               社会課題から探す
             </Link>
-            {/* <Link to="/result" tw="p-[7px]" css={path === "/" && currentPath}>
+            <Link
+              to="/news/"
+              tw="p-[7px]"
+              css={path.includes("/news/") && currentPath}
+            >
               お知らせ
-            </Link> */}
+            </Link>
           </nav>
         </div>
       </div>

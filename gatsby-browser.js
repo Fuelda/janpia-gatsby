@@ -6,6 +6,7 @@ import AlgoliaStrapiProvider from "./src/context/algoliaStrapiContext";
 import ModalProvider from "./src/context/modalContext";
 import DetailProvider from "./src/context/detailContext";
 import "./src/styles/modal.scss";
+import "./src/styles/news.scss";
 
 export const wrapRootElement = ({ element }) => (
   <StrapiProvider>

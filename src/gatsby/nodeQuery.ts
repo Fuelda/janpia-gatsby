@@ -65,6 +65,15 @@ const nodeQuery = {
       }
     }
   }`,
+  news: `{
+    allStrapiNew {
+      edges {
+        node {
+          id 
+        }
+      }
+    }
+  }`,
 };
 
 module.exports = nodeQuery;

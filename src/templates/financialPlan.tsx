@@ -92,315 +92,318 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                   anchor={`/result/${slug}/financial-plan/#one-fourthItem`}
                 />
               </div>
-              <div css={detailBody}>
-                <div id="one-firstItem">
-                  <DetailItemWrapper itemName="事業費調達計画">
-                    <table css={table}>
-                      <thead css={thead}>
-                        <tr css={tr}>
-                          <th css={th5col} colSpan={2}></th>
-                          <td css={td}>2021年度</td>
-                          <td css={td}>2022年度</td>
-                          <td css={td}>2023年度</td>
-                          <td css={td}>2024年度</td>
-                          <td css={td}>合計</td>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr css={tr}>
-                          <th css={th5col} colSpan={2}>
-                            事業費（A+B）
-                          </th>
-                          <td css={td}>
-                            {financePlanFormer &&
-                              financePlanFormer.a_plus_b_2021}
-                          </td>
-                          <td css={td}>
-                            {financePlanFormer &&
-                              financePlanFormer.a_plus_b_2022}
-                          </td>
-                          <td css={td}>
-                            {financePlanFormer &&
-                              financePlanFormer.a_plus_b_2023}
-                          </td>
-                          <td css={td}>
-                            {financePlanFormer &&
-                              financePlanFormer.a_plus_b_2024}
-                          </td>
-                          <td css={td}>
-                            {financePlanFormer &&
-                              financePlanFormer.a_plus_b_ttl}
-                          </td>
-                        </tr>
-                        <tr css={tr}>
-                          <th css={th2Sub5col}></th>
-                          <th css={th25col}>A. 助成金</th>
-                          <td css={td}>
-                            {financePlanFormer &&
-                              financePlanFormer.subsidy_2021}
-                          </td>
-                          <td css={td}>
-                            {financePlanFormer &&
-                              financePlanFormer.subsidy_2022}
-                          </td>
-                          <td css={td}>
-                            {financePlanFormer &&
-                              financePlanFormer.subsidy_2023}
-                          </td>
-                          <td css={td}>
-                            {financePlanFormer &&
-                              financePlanFormer.subsidy_2024}
-                          </td>
-                          <td css={td}>
-                            {financePlanFormer && financePlanFormer.subsidy_ttl}
-                          </td>
-                        </tr>
-                        <tr css={tr}>
-                          <th css={th2Sub5col}></th>
-                          <th css={th25col}>B. 自己資金・民間資金</th>
-                          <td css={td}>
-                            {financePlanFormer &&
-                              financePlanFormer.own_funds_2021}
-                          </td>
-                          <td css={td}>
-                            {financePlanFormer &&
-                              financePlanFormer.own_funds_2022}
-                          </td>
-                          <td css={td}>
-                            {financePlanFormer &&
-                              financePlanFormer.own_funds_2023}
-                          </td>
-                          <td css={td}>
-                            {financePlanFormer &&
-                              financePlanFormer.own_funds_2024}
-                          </td>
-                          <td css={td}>
-                            {financePlanFormer &&
-                              financePlanFormer.own_funds_ttl}
-                          </td>
-                        </tr>
-                        <tr css={tr}>
-                          <th css={th2Sub5col}></th>
-                          <th css={th25col}>補助率 （ A/(A+B)% ）</th>
-                          <td css={td}>
-                            {financePlanFormer &&
-                              financePlanFormer.subsidy_rate_2021}
-                          </td>
-                          <td css={td}>
-                            {financePlanFormer &&
-                              financePlanFormer.subsidy_rate_2022}
-                          </td>
-                          <td css={td}>
-                            {financePlanFormer &&
-                              financePlanFormer.subsidy_rate_2023}
-                          </td>
-                          <td css={td}>
-                            {financePlanFormer &&
-                              financePlanFormer.subsidy_rate_2024}
-                          </td>
-                          <td css={td}>
-                            {financePlanFormer &&
-                              financePlanFormer.subsidy_rate_ttl}
-                          </td>
-                        </tr>
-                        <tr css={tr}>
-                          <th css={th5col} colSpan={2}>
-                            特例申請の有無
-                          </th>
-                          <td css={td} colSpan={5}>
-                            {financePlanFormer &&
-                            financePlanFormer.exception_request === "A"
-                              ? "希望する"
-                              : "希望しない"}
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </DetailItemWrapper>
+              {financePlanFormer && (
+                <div css={detailBody}>
+                  <div id="one-firstItem">
+                    <DetailItemWrapper itemName="事業費調達計画">
+                      <table css={table}>
+                        <thead css={thead}>
+                          <tr css={tr}>
+                            <th css={th5col} colSpan={2}></th>
+                            <td css={td}>2021年度</td>
+                            <td css={td}>2022年度</td>
+                            <td css={td}>2023年度</td>
+                            <td css={td}>2024年度</td>
+                            <td css={td}>合計</td>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr css={tr}>
+                            <th css={th5col} colSpan={2}>
+                              事業費（A+B）
+                            </th>
+                            <td css={td}>
+                              {financePlanFormer &&
+                                financePlanFormer.a_plus_b_2021}
+                            </td>
+                            <td css={td}>
+                              {financePlanFormer &&
+                                financePlanFormer.a_plus_b_2022}
+                            </td>
+                            <td css={td}>
+                              {financePlanFormer &&
+                                financePlanFormer.a_plus_b_2023}
+                            </td>
+                            <td css={td}>
+                              {financePlanFormer &&
+                                financePlanFormer.a_plus_b_2024}
+                            </td>
+                            <td css={td}>
+                              {financePlanFormer &&
+                                financePlanFormer.a_plus_b_ttl}
+                            </td>
+                          </tr>
+                          <tr css={tr}>
+                            <th css={th2Sub5col}></th>
+                            <th css={th25col}>A. 助成金</th>
+                            <td css={td}>
+                              {financePlanFormer &&
+                                financePlanFormer.subsidy_2021}
+                            </td>
+                            <td css={td}>
+                              {financePlanFormer &&
+                                financePlanFormer.subsidy_2022}
+                            </td>
+                            <td css={td}>
+                              {financePlanFormer &&
+                                financePlanFormer.subsidy_2023}
+                            </td>
+                            <td css={td}>
+                              {financePlanFormer &&
+                                financePlanFormer.subsidy_2024}
+                            </td>
+                            <td css={td}>
+                              {financePlanFormer &&
+                                financePlanFormer.subsidy_ttl}
+                            </td>
+                          </tr>
+                          <tr css={tr}>
+                            <th css={th2Sub5col}></th>
+                            <th css={th25col}>B. 自己資金・民間資金</th>
+                            <td css={td}>
+                              {financePlanFormer &&
+                                financePlanFormer.own_funds_2021}
+                            </td>
+                            <td css={td}>
+                              {financePlanFormer &&
+                                financePlanFormer.own_funds_2022}
+                            </td>
+                            <td css={td}>
+                              {financePlanFormer &&
+                                financePlanFormer.own_funds_2023}
+                            </td>
+                            <td css={td}>
+                              {financePlanFormer &&
+                                financePlanFormer.own_funds_2024}
+                            </td>
+                            <td css={td}>
+                              {financePlanFormer &&
+                                financePlanFormer.own_funds_ttl}
+                            </td>
+                          </tr>
+                          <tr css={tr}>
+                            <th css={th2Sub5col}></th>
+                            <th css={th25col}>補助率 （ A/(A+B)% ）</th>
+                            <td css={td}>
+                              {financePlanFormer &&
+                                financePlanFormer.subsidy_rate_2021}
+                            </td>
+                            <td css={td}>
+                              {financePlanFormer &&
+                                financePlanFormer.subsidy_rate_2022}
+                            </td>
+                            <td css={td}>
+                              {financePlanFormer &&
+                                financePlanFormer.subsidy_rate_2023}
+                            </td>
+                            <td css={td}>
+                              {financePlanFormer &&
+                                financePlanFormer.subsidy_rate_2024}
+                            </td>
+                            <td css={td}>
+                              {financePlanFormer &&
+                                financePlanFormer.subsidy_rate_ttl}
+                            </td>
+                          </tr>
+                          <tr css={tr}>
+                            <th css={th5col} colSpan={2}>
+                              特例申請の有無
+                            </th>
+                            <td css={td} colSpan={5}>
+                              {financePlanFormer &&
+                              financePlanFormer.exception_request === "A"
+                                ? "希望する"
+                                : "希望しない"}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </DetailItemWrapper>
+                  </div>
+                  <div id="one-secondItem">
+                    <DetailItemWrapper itemName="プログラムオフィサー関連経費">
+                      <table css={table}>
+                        <thead css={thead}>
+                          <tr css={tr}>
+                            <th css={th5col} colSpan={2}></th>
+                            <td css={td}>2021年度</td>
+                            <td css={td}>2022年度</td>
+                            <td css={td}>2023年度</td>
+                            <td css={td}>2024年度</td>
+                            <td css={td}>2025年度</td>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr css={tr}>
+                            <th css={th5col} colSpan={2}>
+                              C. プログラムオフィサー 関連経費
+                            </th>
+                            <td css={td}>
+                              {financePlanFormer && financePlanFormer.po_2021}
+                            </td>
+                            <td css={td}>
+                              {financePlanFormer && financePlanFormer.po_2022}
+                            </td>
+                            <td css={td}>
+                              {financePlanFormer && financePlanFormer.po_2023}
+                            </td>
+                            <td css={td}>
+                              {financePlanFormer && financePlanFormer.po_2024}
+                            </td>
+                            <td css={td}>
+                              {financePlanFormer && financePlanFormer.po_ttl}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </DetailItemWrapper>
+                  </div>
+                  <div id="one-thirdItem">
+                    <DetailItemWrapper itemName="評価関連経費">
+                      <table css={table}>
+                        <thead css={thead}>
+                          <tr css={tr}>
+                            <th css={th6col} colSpan={2}></th>
+                            <td css={td6col}>%</td>
+                            <td css={td}>2021年度</td>
+                            <td css={td}>2022年度</td>
+                            <td css={td}>2023年度</td>
+                            <td css={td}>2024年度</td>
+                            <td css={td}>合計</td>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr css={tr}>
+                            <th css={th6col} colSpan={2}>
+                              D. 評価関連経費計
+                            </th>
+                            <td css={td6col}>-</td>
+                            <td css={td}>
+                              {financePlanFormer && financePlanFormer.eval_2021}
+                            </td>
+                            <td css={td}>
+                              {financePlanFormer && financePlanFormer.eval_2022}
+                            </td>
+                            <td css={td}>
+                              {financePlanFormer && financePlanFormer.eval_2023}
+                            </td>
+                            <td css={td}>
+                              {financePlanFormer && financePlanFormer.eval_2024}
+                            </td>
+                            <td css={td}>
+                              {financePlanFormer && financePlanFormer.eval_ttl}
+                            </td>
+                          </tr>
+                          <tr css={tr}>
+                            <th css={th2Sub5col}></th>
+                            <th css={th26col}>資金分配団体</th>
+                            <td css={td6col}>
+                              {financePlanFormer &&
+                                financePlanFormer.eval_fdo_percent}
+                            </td>
+                            <td css={td}>
+                              {financePlanFormer &&
+                                financePlanFormer.eval_fdo_2021}
+                            </td>
+                            <td css={td}>
+                              {financePlanFormer &&
+                                financePlanFormer.eval_fdo_2022}
+                            </td>
+                            <td css={td}>
+                              {financePlanFormer &&
+                                financePlanFormer.eval_fdo_2023}
+                            </td>
+                            <td css={td}>
+                              {financePlanFormer &&
+                                financePlanFormer.eval_fdo_2024}
+                            </td>
+                            <td css={td}>
+                              {financePlanFormer &&
+                                financePlanFormer.eval_fdo_ttl}
+                            </td>
+                          </tr>
+                          <tr css={tr}>
+                            <th css={th2Sub5col}></th>
+                            <th css={th26col}>実行団体</th>
+                            <td css={td6col}>
+                              {financePlanFormer &&
+                                financePlanFormer.eval_ado_percent}
+                            </td>
+                            <td css={td}>
+                              {financePlanFormer &&
+                                financePlanFormer.eval_ado_2021}
+                            </td>
+                            <td css={td}>
+                              {financePlanFormer &&
+                                financePlanFormer.eval_ado_2022}
+                            </td>
+                            <td css={td}>
+                              {financePlanFormer &&
+                                financePlanFormer.eval_ado_2023}
+                            </td>
+                            <td css={td}>
+                              {financePlanFormer &&
+                                financePlanFormer.eval_ado_2024}
+                            </td>
+                            <td css={td}>
+                              {financePlanFormer &&
+                                financePlanFormer.eval_ado_ttl}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </DetailItemWrapper>
+                  </div>
+                  <div id="one-fourthItem">
+                    <DetailItemWrapper itemName="合計">
+                      <table css={table}>
+                        <thead css={thead}>
+                          <tr css={tr}>
+                            <th css={th5col} colSpan={2}></th>
+                            <td css={td}>2021年度</td>
+                            <td css={td}>2022年度</td>
+                            <td css={td}>2023年度</td>
+                            <td css={td}>2024年度</td>
+                            <td css={td}>合計</td>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr css={tr}>
+                            <th css={th5col} colSpan={2}>
+                              助成金計（A+C+D）
+                            </th>
+                            <td css={td}>
+                              {financePlanFormer && financePlanFormer.abc_2021}
+                            </td>
+                            <td css={td}>
+                              {financePlanFormer && financePlanFormer.abc_2022}
+                            </td>
+                            <td css={td}>
+                              {financePlanFormer && financePlanFormer.abc_2023}
+                            </td>
+                            <td css={td}>
+                              {financePlanFormer && financePlanFormer.abc_2024}
+                            </td>
+                            <td css={td}>
+                              {financePlanFormer && financePlanFormer.abc_ttl}
+                            </td>
+                          </tr>
+                          <tr css={tr}>
+                            <th css={th5col} colSpan={2}>
+                              総事業費（A+B+C+D）
+                            </th>
+                            <td css={td}>2021年度</td>
+                            <td css={td}>2022年度</td>
+                            <td css={td}>2023年度</td>
+                            <td css={td}>2024年度</td>
+                            <td css={td}>2025年度</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </DetailItemWrapper>
+                  </div>
                 </div>
-                <div id="one-secondItem">
-                  <DetailItemWrapper itemName="プログラムオフィサー関連経費">
-                    <table css={table}>
-                      <thead css={thead}>
-                        <tr css={tr}>
-                          <th css={th5col} colSpan={2}></th>
-                          <td css={td}>2021年度</td>
-                          <td css={td}>2022年度</td>
-                          <td css={td}>2023年度</td>
-                          <td css={td}>2024年度</td>
-                          <td css={td}>2025年度</td>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr css={tr}>
-                          <th css={th5col} colSpan={2}>
-                            C. プログラムオフィサー 関連経費
-                          </th>
-                          <td css={td}>
-                            {financePlanFormer && financePlanFormer.po_2021}
-                          </td>
-                          <td css={td}>
-                            {financePlanFormer && financePlanFormer.po_2022}
-                          </td>
-                          <td css={td}>
-                            {financePlanFormer && financePlanFormer.po_2023}
-                          </td>
-                          <td css={td}>
-                            {financePlanFormer && financePlanFormer.po_2024}
-                          </td>
-                          <td css={td}>
-                            {financePlanFormer && financePlanFormer.po_ttl}
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </DetailItemWrapper>
-                </div>
-                <div id="one-thirdItem">
-                  <DetailItemWrapper itemName="評価関連経費">
-                    <table css={table}>
-                      <thead css={thead}>
-                        <tr css={tr}>
-                          <th css={th6col} colSpan={2}></th>
-                          <td css={td6col}>%</td>
-                          <td css={td}>2021年度</td>
-                          <td css={td}>2022年度</td>
-                          <td css={td}>2023年度</td>
-                          <td css={td}>2024年度</td>
-                          <td css={td}>合計</td>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr css={tr}>
-                          <th css={th6col} colSpan={2}>
-                            D. 評価関連経費計
-                          </th>
-                          <td css={td6col}>-</td>
-                          <td css={td}>
-                            {financePlanFormer && financePlanFormer.eval_2021}
-                          </td>
-                          <td css={td}>
-                            {financePlanFormer && financePlanFormer.eval_2022}
-                          </td>
-                          <td css={td}>
-                            {financePlanFormer && financePlanFormer.eval_2023}
-                          </td>
-                          <td css={td}>
-                            {financePlanFormer && financePlanFormer.eval_2024}
-                          </td>
-                          <td css={td}>
-                            {financePlanFormer && financePlanFormer.eval_ttl}
-                          </td>
-                        </tr>
-                        <tr css={tr}>
-                          <th css={th2Sub5col}></th>
-                          <th css={th26col}>資金分配団体</th>
-                          <td css={td6col}>
-                            {financePlanFormer &&
-                              financePlanFormer.eval_fdo_percent}
-                          </td>
-                          <td css={td}>
-                            {financePlanFormer &&
-                              financePlanFormer.eval_fdo_2021}
-                          </td>
-                          <td css={td}>
-                            {financePlanFormer &&
-                              financePlanFormer.eval_fdo_2022}
-                          </td>
-                          <td css={td}>
-                            {financePlanFormer &&
-                              financePlanFormer.eval_fdo_2023}
-                          </td>
-                          <td css={td}>
-                            {financePlanFormer &&
-                              financePlanFormer.eval_fdo_2024}
-                          </td>
-                          <td css={td}>
-                            {financePlanFormer &&
-                              financePlanFormer.eval_fdo_ttl}
-                          </td>
-                        </tr>
-                        <tr css={tr}>
-                          <th css={th2Sub5col}></th>
-                          <th css={th26col}>実行団体</th>
-                          <td css={td6col}>
-                            {financePlanFormer &&
-                              financePlanFormer.eval_ado_percent}
-                          </td>
-                          <td css={td}>
-                            {financePlanFormer &&
-                              financePlanFormer.eval_ado_2021}
-                          </td>
-                          <td css={td}>
-                            {financePlanFormer &&
-                              financePlanFormer.eval_ado_2022}
-                          </td>
-                          <td css={td}>
-                            {financePlanFormer &&
-                              financePlanFormer.eval_ado_2023}
-                          </td>
-                          <td css={td}>
-                            {financePlanFormer &&
-                              financePlanFormer.eval_ado_2024}
-                          </td>
-                          <td css={td}>
-                            {financePlanFormer &&
-                              financePlanFormer.eval_ado_ttl}
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </DetailItemWrapper>
-                </div>
-                <div id="one-fourthItem">
-                  <DetailItemWrapper itemName="合計">
-                    <table css={table}>
-                      <thead css={thead}>
-                        <tr css={tr}>
-                          <th css={th5col} colSpan={2}></th>
-                          <td css={td}>2021年度</td>
-                          <td css={td}>2022年度</td>
-                          <td css={td}>2023年度</td>
-                          <td css={td}>2024年度</td>
-                          <td css={td}>合計</td>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr css={tr}>
-                          <th css={th5col} colSpan={2}>
-                            助成金計（A+C+D）
-                          </th>
-                          <td css={td}>
-                            {financePlanFormer && financePlanFormer.abc_2021}
-                          </td>
-                          <td css={td}>
-                            {financePlanFormer && financePlanFormer.abc_2022}
-                          </td>
-                          <td css={td}>
-                            {financePlanFormer && financePlanFormer.abc_2023}
-                          </td>
-                          <td css={td}>
-                            {financePlanFormer && financePlanFormer.abc_2024}
-                          </td>
-                          <td css={td}>
-                            {financePlanFormer && financePlanFormer.abc_ttl}
-                          </td>
-                        </tr>
-                        <tr css={tr}>
-                          <th css={th5col} colSpan={2}>
-                            総事業費（A+B+C+D）
-                          </th>
-                          <td css={td}>2021年度</td>
-                          <td css={td}>2022年度</td>
-                          <td css={td}>2023年度</td>
-                          <td css={td}>2024年度</td>
-                          <td css={td}>2025年度</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </DetailItemWrapper>
-                </div>
-              </div>
+              )}
             </div>
           )}
           {currentTab === 2 && (
@@ -512,7 +515,10 @@ export default FinancialPlan;
 
 export const pageQuery = graphql`
   query MyQuery($slug: String!) {
-    financePlanFDO: strapiFinancePlan(biz_cd_fund_distr: { eq: $slug }) {
+    financePlanFDO: strapiFinancePlan(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
       financing_plan_no
       business_org_type
       biz_cd_fund_distr
@@ -548,7 +554,10 @@ export const pageQuery = graphql`
       sum_own_funds
       create_date(formatString: "yyyy/mm/dd")
     }
-    financePlanADO: strapiFinancePlan(biz_cd_executive: { eq: $slug }) {
+    financePlanADO: strapiFinancePlan(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
+    ) {
       financing_plan_no
       business_org_type
       biz_cd_fund_distr

@@ -132,6 +132,15 @@ const DetailSidebar = (props: { slug: string }) => {
           事業完了報告
         </Link>
       )}
+      <Link
+        css={[
+          detailSidebarBlock,
+          path === `/result/${props.slug}/financial-report/` && currentSidebar,
+        ]}
+        to={`/result/${props.slug}/financial-report`}
+      >
+        事業完了時精算報告
+      </Link>
     </div>
   );
 };

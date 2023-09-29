@@ -33,9 +33,11 @@ const strapiConfig = {
     "progress-report-manual",
     "progress-round",
     "sdgs-goal",
+    "settle-report",
     "settle-report-manual",
     "subsidy-amount",
     "topic-keyword",
+    "new",
   ],
   singleTypes: [],
   remoteFileHeaders: {

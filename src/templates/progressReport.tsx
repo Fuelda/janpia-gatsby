@@ -129,6 +129,7 @@ export const pageQuery = graphql`
           }
           progress_round {
             code
+            label
           }
         }
       }
