@@ -22,12 +22,12 @@ const OrganizationName = (props: { path: string }) => {
         <input
           onChange={(e) => handleTextfield(e)}
           type="text"
-          css={props.path === "search" ? textField : textFieldSide}
+          css={props.path.includes("search") ? textField : textFieldSide}
           placeholder="団体名を入力してください"
           value={organization_name}
         />
         <button
-          tw="absolute top-[35%] right-2.5"
+          tw="absolute top-1/2 transform -translate-y-1/2 right-8"
           onClick={() => setOrganizationName("")}
         >
           <FontAwesomeIcon icon={faCircleXmark} />

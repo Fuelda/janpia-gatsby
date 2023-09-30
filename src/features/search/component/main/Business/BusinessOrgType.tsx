@@ -4,10 +4,15 @@ import React from "react";
 import { useSearchContext } from "../../../../../context/searchContext";
 import { OrganizationTypeCdArray } from "../../../store/filterContents";
 import "twin.macro";
-import { checkBox, checkBoxList } from "../../../../../styles/form";
+import {
+  checkBox,
+  checkBoxList,
+  checkBoxSet,
+} from "../../../../../styles/form";
 import { h3, hCenter } from "../../../../../styles/base";
+import tw from "twin.macro";
 
-const BusinessOrgType = () => {
+const BusinessOrgType = (props: { path: string }) => {
   const { searchState, searchSetState } = useSearchContext();
   const { business_org_type } = searchState;
   const { setBusinessOrgType } = searchSetState;
@@ -24,9 +29,12 @@ const BusinessOrgType = () => {
   return (
     <div>
       <h3 css={h3}>団体種別</h3>
-      <div css={checkBoxList} tw="px-3.5 py-2.5">
+      <div
+        tw="flex gap-y-2.5 flex-wrap px-3.5 py-2.5"
+        css={props.path.includes("search") ? tw`gap-x-14` : tw`gap-x-3`}
+      >
         {checkboxArray.map((checkbox) => (
-          <div key={checkbox.code} css={hCenter} tw="gap-2">
+          <div key={checkbox.code} css={[hCenter, checkBoxSet]}>
             <Checkbox.Root
               id={checkbox.label}
               onCheckedChange={() => handleCheckbox(checkbox.code)}

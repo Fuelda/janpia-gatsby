@@ -4,10 +4,15 @@ import React, { useEffect, useState } from "react";
 import { useSearchContext } from "../../../../../context/searchContext";
 import { useStrapiContext } from "../../../../../context/strapiContext";
 import { h3, hCenter } from "../../../../../styles/base";
-import { checkBox, checkBoxList } from "../../../../../styles/form";
+import {
+  checkBox,
+  checkBoxList,
+  checkBoxSet,
+} from "../../../../../styles/form";
 import "twin.macro";
+import tw from "twin.macro";
 
-const BusinessTypeName = () => {
+const BusinessTypeName = (props: { path: string }) => {
   const { searchState, searchSetState } = useSearchContext();
   const { allStrapiBizPlan, allStrapiBizPlanManual } = useStrapiContext();
   const { business_type_name, btnYear, btnCategory } = searchState;
@@ -57,9 +62,12 @@ const BusinessTypeName = () => {
     <div>
       <div>
         <h3 css={h3}>採択事業年度</h3>
-        <div css={checkBoxList} tw="flex-wrap gap-y-2.5 px-3.5 py-2.5">
+        <div
+          tw="flex gap-y-2.5 flex-wrap px-3.5 py-2.5"
+          css={props.path.includes("search") ? tw`gap-x-14` : tw`gap-x-3`}
+        >
           {uniqueYearBusinessTypeNameYear.map((checkbox) => (
-            <div key={checkbox} css={hCenter} tw="gap-2">
+            <div key={checkbox} css={[hCenter, checkBoxSet]} tw="gap-2">
               <Checkbox.Root
                 id={checkbox}
                 onClick={() => handleYearCheckbox(checkbox)}
@@ -77,9 +85,12 @@ const BusinessTypeName = () => {
       </div>
       <div>
         <h3 css={h3}>事業枠</h3>
-        <div css={checkBoxList} tw="px-3.5 py-2.5">
+        <div
+          tw="flex gap-y-2.5 flex-wrap px-3.5 py-2.5"
+          css={props.path.includes("search") ? tw`gap-x-14` : tw`gap-x-3`}
+        >
           {businessTypeNameCategory.map((checkbox) => (
-            <div key={checkbox} css={hCenter} tw="gap-2">
+            <div key={checkbox} css={[hCenter, checkBoxSet]} tw="gap-2">
               <Checkbox.Root
                 id={checkbox}
                 onClick={() => handleCategoryCheckbox(checkbox)}

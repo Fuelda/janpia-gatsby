@@ -8,18 +8,20 @@ import { GlobalStyles } from "twin.macro";
 import "twin.macro";
 import { wrapper } from "../../styles/base";
 import { useFilteredStrapiContext } from "../../context/filteredStrapiContext";
+import ToPageTopButton from "../atoms/ToPageTopButton";
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const filteredAllBizPlan = useFilteredStrapiContext();
   console.log(filteredAllBizPlan);
   return (
-    <div>
+    <div tw="relative">
       <GlobalStyles />
       <Header />
       <main css={wrapper} tw="pt-[82px]">
         {children}
       </main>
       <Footer />
+      <ToPageTopButton />
     </div>
   );
 };

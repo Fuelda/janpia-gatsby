@@ -64,7 +64,10 @@ const SearchBoxIndex = (props: UseSearchBoxProps) => {
           }}
           autoFocus
         />
-        <div css={hCenter} tw="absolute right-1 top-1 gap-4">
+        <div
+          css={hCenter}
+          tw="absolute right-1 top-1/2 transform -translate-y-1/2 gap-4"
+        >
           <button
             type="reset"
             tw=""
@@ -74,10 +77,9 @@ const SearchBoxIndex = (props: UseSearchBoxProps) => {
           </button>
           <Link
             to="/result"
-            tw=" text-lg  p-2.5 bg-blue-button rounded text-white"
+            tw=" text-lg  p-2.5 bg-blue-button rounded text-white tracking-widest"
           >
-            <FontAwesomeIcon icon={faMagnifyingGlass} tw="mr-1.5" />
-            検索
+            <FontAwesomeIcon icon={faMagnifyingGlass} tw="mr-1.5" />検 索
           </Link>
         </div>
       </form>

@@ -12,9 +12,12 @@ import { Link } from "gatsby";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { useSearchContext } from "../../context/searchContext";
+import { useLocation } from "@reach/router";
 
 const Organization = () => {
   const { resetSearchStatus } = useSearchContext();
+  const location = useLocation();
+  const path = location.pathname;
 
   useEffect(() => {
     resetSearchStatus();
@@ -31,15 +34,15 @@ const Organization = () => {
         <h2 tw="text-xl py-6 px-3.5 font-bold">団体から探す</h2>
         <div css={vCenter} tw="gap-11">
           <div>
-            <OrganizationName path="search" />
-            <OrganizationTypeCd />
+            <OrganizationName path={path} />
+            <OrganizationTypeCd path={path} />
 
             <h3 css={h3}>団体所在地</h3>
             <div tw="px-11 py-4">
               <Prefectures />
             </div>
 
-            <LegalPersonality />
+            <LegalPersonality path={path} />
           </div>
           <div css={vCenter} tw="gap-6">
             <ToResultButton />

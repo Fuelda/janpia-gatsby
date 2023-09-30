@@ -36,10 +36,15 @@ export const prefecturesArray = {
 };
 
 export const legalPersonalityArray = [
-  { code: 1, label: "NPO法人" },
+  { code: 1, label: "NPO" },
+  { code: 12, label: "株式会社" },
+  { code: 3, label: "社団法人" },
+  { code: 4, label: "財団法人" },
+  { code: 20, label: "社会福祉法人" },
+  { code: 14, label: "更生保護法人" },
+  { code: 24, label: "任意団体" },
+  { code: 99, label: "その他" },
   // { code: 2, label: "認定NPO法人" },
-  { code: 3, label: "一般社団法人" },
-  { code: 4, label: "一般財団法人" },
   // { code: 5, label: "労働金庫" },
   // { code: 6, label: "信用金庫" },
   // { code: 7, label: "公益社団法人" },
@@ -47,32 +52,27 @@ export const legalPersonalityArray = [
   // { code: 9, label: "医療法人" },
   // { code: 10, label: "合同会社" },
   // { code: 11, label: "合名会社" },
-  { code: 12, label: "株式会社" },
   // { code: 13, label: "宗教法人" },
-  { code: 14, label: "更生保護法人" },
   // { code: 15, label: "消費者生活協同組合" },
   // { code: 16, label: "独立行政法人" },
   // { code: 17, label: "地方独立行政法人" },
   // { code: 18, label: "協業組合" },
   // { code: 19, label: "相互会社" },
-  { code: 20, label: "社会福祉法人" },
   // { code: 21, label: "認可地縁団体" },
   // { code: 22, label: "農業協同組合" },
   // { code: 23, label: "森林組合" },
-  { code: 24, label: "任意団体" },
-  { code: 99, label: "その他" },
 ];
 
 export const businessCategoryArray = [
   { label: "草の根活動支援事業 (全国)", code: 1, subCode: 21 },
-  { label: "草の根活動支援事業 (地域)", code: 1, subCode: 22 },
+  { label: "災害支援事業", code: 4, subCode: -3 },
   {
-    label: "新規企画支援事業 (イノベーション企画支援事業)",
+    label: "イノベーション企画支援事業",
     code: 2,
     subCode: -1,
   },
   { label: "ソーシャルビジネス支援事業", code: 3, subCode: -2 },
-  { label: "災害支援事業", code: 4, subCode: -3 },
+  { label: "草の根活動支援事業 (地域)", code: 1, subCode: 22 },
 ];
 
 export const businessStatusArray = [
@@ -86,7 +86,7 @@ export const subsidyAmountArray = [
   { min: 10000000, max: 50000000, label: "~5,000万円" },
   { min: 50000000, max: 100000000, label: "~1億円" },
   { min: 100000000, max: 500000000, label: "~5億円" },
-  { min: 500000000, max: 9999999999999999, label: "~5億円以上" },
+  { min: 500000000, max: 9999999999999999, label: "5億円以上" },
 ];
 
 export const topicKeywordArray = [

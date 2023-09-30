@@ -2,6 +2,9 @@
 module.exports = {
   content: [],
   theme: {
+    screens: {
+      lg: { max: "1020px" },
+    },
     extend: {
       colors: {
         red: {

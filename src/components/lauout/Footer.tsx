@@ -14,14 +14,14 @@ const Footer = () => {
             <div tw="mt-3.5 flex gap-9">
               <div tw="flex flex-col  gap-4">
                 <Link to="/">ホーム</Link>
-                <Link to="/">団体から探す</Link>
-                <Link to="/">事業から探す</Link>
-                <Link to="/">社会課題から探す</Link>
+                <Link to="/search/organization/">団体から探す</Link>
+                <Link to="/search/project/">事業から探す</Link>
+                <Link to="/search/issue/">社会課題から探す</Link>
               </div>
               <div tw="flex flex-col  gap-4">
-                <Link to="/">お知らせ</Link>
-                <Link to="/">個人情報保護について</Link>
-                <Link to="/">サイトポリシー</Link>
+                <Link to="/news/">お知らせ</Link>
+                <Link to="/privacy-policy/">個人情報保護について</Link>
+                <Link to="/site-policy/">サイトポリシー</Link>
               </div>
             </div>
           </div>

@@ -5,6 +5,7 @@ import { wrapper, hCenter } from "../../styles/base";
 import { StaticImage } from "gatsby-plugin-image";
 import { useLocation } from "@reach/router";
 import tw from "twin.macro";
+//
 
 const currentPath = tw`p-[7px] bg-blue-vivid bg-opacity-10`;
 

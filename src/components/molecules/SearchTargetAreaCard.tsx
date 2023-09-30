@@ -102,7 +102,8 @@ const SearchTargetAreaCard = (props: { area: string }) => {
       (item) => item.bizPlan.target_area === pref
     ).length;
     const allPrefLength = filteredAllBizPlan.length;
-    return props.area !== "zenkoku" ? prefLength : allPrefLength;
+    // return props.area !== "zenkoku" ? prefLength : allPrefLength;
+    return prefLength;
   };
 
   const isAllPrefInArea = area.every((ap) => target_area.includes(ap));
@@ -164,15 +165,17 @@ const SearchTargetAreaCard = (props: { area: string }) => {
             <Checkbox.Root
               id={checkbox}
               onCheckedChange={() =>
-                props.area !== "zenkoku"
-                  ? handleCheckbox(checkbox)
-                  : addAllPref()
+                // props.area !== "zenkoku"
+                //   ? handleCheckbox(checkbox)
+                //   : addAllPref()
+                handleCheckbox(checkbox)
               }
               css={checkBox}
               checked={
-                props.area !== "zenkoku"
-                  ? target_area.includes(checkbox)
-                  : isAllPref
+                // props.area !== "zenkoku"
+                //   ? target_area.includes(checkbox)
+                //   : isAllPref
+                target_area.includes(checkbox)
               }
             >
               <Checkbox.Indicator>

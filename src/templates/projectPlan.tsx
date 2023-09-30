@@ -228,6 +228,24 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                         </div>
                       </div>
                     )}
+                    {strapiBizPlan.region4 === "1" && (
+                      <div css={table}>
+                        <p css={thLshape}>その他</p>
+                        <div css={trLshape}>
+                          <div css={thLshapeSub} />
+                          <div css={tdLshapeWrapper}>
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html:
+                                  strapiBizPlan.field_other.data
+                                    .childMarkdownRemark.html,
+                              }}
+                              css={tdLshape}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    )}
                     {strapiBizPlan.other_problem === "1" && (
                       <div css={table}>
                         <p css={thLshape}>その他の解決すべき社会の課題</p>
@@ -613,7 +631,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               <table css={table}>
                                 {shortOutcomeFinance.map(
                                   (item: any, i: number) => (
-                                    <tbody key={item}>
+                                    <tbody key={"shortOutcomeFinance" + i}>
                                       <tr>
                                         <th css={th2Sub} rowSpan={6}>
                                           {i + 1}
@@ -687,7 +705,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               <table css={table}>
                                 {shortOutcomeNonFinance.map(
                                   (item: any, i: number) => (
-                                    <tbody key={item}>
+                                    <tbody key={"shortOutcomeNonFinance" + i}>
                                       <tr>
                                         <th css={th2Sub} rowSpan={6}>
                                           {i + 1}
@@ -762,7 +780,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                             {outputFinance.length !== 0 && (
                               <table css={table}>
                                 {outputFinance.map((item: any, i: number) => (
-                                  <tbody key={item}>
+                                  <tbody key={"outputFinance" + i}>
                                     <tr>
                                       <th css={th2Sub} rowSpan={6}>
                                         {i + 1}
@@ -835,7 +853,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               <table css={table}>
                                 {outputNonFinance.map(
                                   (item: any, i: number) => (
-                                    <tbody key={item}>
+                                    <tbody key={"outputNonFinance" + i}>
                                       <tr>
                                         <th css={th2Sub} rowSpan={6}>
                                           {i + 1}
@@ -914,7 +932,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                             {shortOutcomeAdo.length !== 0 && (
                               <table css={table}>
                                 {shortOutcomeAdo.map((item: any, i: number) => (
-                                  <tbody key={item}>
+                                  <tbody key={"shortOutcomeAdo" + i}>
                                     <tr>
                                       <th css={th2Sub} rowSpan={6}>
                                         {i + 1}
@@ -988,7 +1006,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                             {outputAdo.length !== 0 && (
                               <table css={table}>
                                 {outputAdo.map((item: any, i: number) => (
-                                  <tbody key={item}>
+                                  <tbody key={"outputAdo" + i}>
                                     <tr>
                                       <th css={th2Sub} rowSpan={6}>
                                         {i + 1}
@@ -1451,6 +1469,7 @@ export const pageQuery = graphql`
       region1
       region2
       region3
+      region4
       field1_1
       field1_2
       field1_3

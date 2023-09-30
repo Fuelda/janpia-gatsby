@@ -19,9 +19,13 @@ import SubsidyAmount from "../../features/search/component/main/Business/Subsidy
 import TopicKeyword from "../../features/search/component/main/Business/TopicKeyword";
 import { useSearchContext } from "../../context/searchContext";
 import BusinessTypeName from "../../features/search/component/main/Business/BusinessTypeName";
+import { useLocation } from "@reach/router";
 
 const Project = () => {
-  const { resetSearchStatus } = useSearchContext();
+  const { resetSearchStatus, searchState } = useSearchContext();
+  const { btnCategory } = searchState;
+  const location = useLocation();
+  const path = location.pathname;
 
   useEffect(() => {
     resetSearchStatus();
@@ -38,18 +42,18 @@ const Project = () => {
         <h2 tw="text-xl py-6 px-3.5 font-bold">事業から探す</h2>
         <div css={vCenter} tw="gap-11">
           <div>
-            <BusinessOrgType />
-            <BusinessTypeName />
-            <BusinessCategory />
-            <BusinessStatus />
+            <BusinessOrgType path={path} />
+            <BusinessTypeName path={path} />
+            {btnCategory === "通常枠" && <BusinessCategory path={path} />}
+            <BusinessStatus path={path} />
 
             <h3 css={h3}>事業対象地域</h3>
             <div tw="px-11 py-4">
               <TargetArea />
             </div>
 
-            <SubsidyAmount />
-            <TopicKeyword />
+            <SubsidyAmount path={path} />
+            <TopicKeyword path={path} />
           </div>
           <div css={vCenter} tw="gap-6">
             <ToResultButton />

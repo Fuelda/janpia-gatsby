@@ -15,6 +15,16 @@ import { useSearchContext } from "../context/searchContext";
 const indexBox = tw`bg-blue-base rounded-10 px-10 pt-7 pb-10`;
 const searchBox = tw`w-[300px] h-[150px] bg-white rounded-10 px-5 py-2.5`;
 
+const linkArray = [
+  { label: "休眠預金活用とは", url: "https://www.janpia.or.jp/kyumin/" },
+  { label: "資金分配団体の公募", url: "https://www.janpia.or.jp/koubo/" },
+  { label: "休眠預金活用事業サイト", url: "https://kyuminyokin.info/" },
+  {
+    label: "民間公益活動促進のための休眠預金等活用（内閣府）",
+    url: "https://www5.cao.go.jp/kyumin_yokin/index.html",
+  },
+];
+
 const Index = () => {
   const { resetSearchStatus } = useSearchContext();
 
@@ -108,12 +118,9 @@ const Index = () => {
         <div tw="mt-14">
           <h2 tw="text-center">関連情報</h2>
           <div tw="mt-7 flex flex-wrap gap-5">
-            <IndexLink label="休眠預金活用とは" url="/" />
-            <IndexLink label="休眠預金活用とは" url="/" />
-            <IndexLink label="休眠預金活用とは" url="/" />
-            <IndexLink label="休眠預金活用とは" url="/" />
-            <IndexLink label="休眠預金活用とは" url="/" />
-            <IndexLink label="休眠預金活用とは" url="/" />
+            {linkArray.map((link) => (
+              <IndexLink label={link.label} url={link.url} />
+            ))}
           </div>
         </div>
       </div>

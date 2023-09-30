@@ -3,11 +3,16 @@ import * as Checkbox from "@radix-ui/react-checkbox";
 import { CheckIcon } from "@radix-ui/react-icons";
 import { useSearchContext } from "../../../../../context/searchContext";
 import { subsidyAmountArray } from "../../../store/filterContents";
-import { checkBox, checkBoxList } from "../../../../../styles/form";
+import {
+  checkBox,
+  checkBoxList,
+  checkBoxSet,
+} from "../../../../../styles/form";
 import "twin.macro";
 import { h3, hCenter } from "../../../../../styles/base";
+import tw from "twin.macro";
 
-const SubsidyAmount = () => {
+const SubsidyAmount = (props: { path: string }) => {
   const { searchState, searchSetState } = useSearchContext();
   const { subsidy_amount } = searchState;
   const { setSubsidyAmount } = searchSetState;
@@ -25,9 +30,12 @@ const SubsidyAmount = () => {
   return (
     <div>
       <h3 css={h3}>助成額</h3>
-      <div css={checkBoxList} tw="flex-wrap gap-y-2.5 px-3.5 py-2.5">
+      <div
+        tw="flex gap-y-2.5 flex-wrap px-3.5 py-2.5"
+        css={props.path.includes("search") ? tw`gap-x-14` : tw`gap-x-3`}
+      >
         {checkboxArray.map((checkbox) => (
-          <div key={checkbox.label} css={hCenter} tw="gap-2">
+          <div key={checkbox.label} css={[hCenter, checkBoxSet]}>
             <Checkbox.Root
               id={checkbox.label}
               onCheckedChange={() => handleCheckbox(checkbox.min, checkbox.max)}
