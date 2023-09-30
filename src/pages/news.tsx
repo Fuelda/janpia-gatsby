@@ -14,8 +14,20 @@ type NewsType = {
 };
 
 const newsSample = [
-  { node: { id: "aaa", createdAt: "2023.09.28", title: "あああ" } },
-  { node: { id: "aaa", createdAt: "2023.09.28", title: "あああ" } },
+  {
+    node: {
+      id: "aaa",
+      createdAt: "2023.09.28",
+      title: "ああaaaaaaaaaaaaaaaaaaaabeefabbbbbbbbbbbbbあ",
+    },
+  },
+  {
+    node: {
+      id: "aaa",
+      createdAt: "2023.09.28",
+      title: "あああaaaaaaaaaaaaaaabeefabbbbaaaaaaaaaaaaaaabeefabbbb",
+    },
+  },
   { node: { id: "aaa", createdAt: "2023.09.28", title: "あああ" } },
   { node: { id: "aaa", createdAt: "2023.09.28", title: "あああ" } },
   { node: { id: "aaa", createdAt: "2023.09.28", title: "あああ" } },
@@ -79,11 +91,11 @@ const News: React.FC<any> = ({ data }) => {
               <Link
                 key={news.node.id}
                 to={`/news/${news.node.id}/`}
-                tw="flex gap-3.5"
+                tw="flex gap-3.5 lg:(flex-col items-start gap-0)"
                 css={hCenter}
               >
                 <p tw="text-sm text-gray-base">{news.node.createdAt}</p>
-                <p>{news.node.title}</p>
+                <p tw="break-all">{news.node.title}</p>
               </Link>
             ))}
           </div>

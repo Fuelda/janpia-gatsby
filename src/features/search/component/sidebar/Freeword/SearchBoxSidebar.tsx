@@ -79,8 +79,7 @@ const SearchBoxSidebar = (props: UseSearchBoxProps) => {
           to="/result"
           tw="block text-lg p-2.5 bg-blue-button rounded text-white mt-2.5 text-center"
         >
-          <FontAwesomeIcon icon={faMagnifyingGlass} tw="mr-1.5" />
-          検索
+          <FontAwesomeIcon icon={faMagnifyingGlass} tw="mr-1.5" />検 索
         </Link>
       </form>
     </div>

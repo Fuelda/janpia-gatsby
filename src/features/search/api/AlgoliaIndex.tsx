@@ -45,7 +45,14 @@ const AlgoliaIndex = (props: { path: string }) => {
   return (
     <InstantSearch indexName="janpia_search" searchClient={searchClient}>
       {props.path === "/" ? (
-        <SearchBoxIndex queryHook={queryHook} />
+        <div>
+          <div tw="lg:(hidden)">
+            <SearchBoxIndex queryHook={queryHook} />
+          </div>
+          <div tw="hidden lg:(block)">
+            <SearchBoxSidebar queryHook={queryHook} />
+          </div>
+        </div>
       ) : (
         <SearchBoxSidebar queryHook={queryHook} />
       )}

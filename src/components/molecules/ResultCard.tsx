@@ -40,7 +40,7 @@ const ResultCard = (props: any) => {
   const mainGroupPrefecture = mainGroup && mainGroup.groupData.prefectures;
 
   let businessCategoryLabel: string | undefined = "";
-  if (business_category.code === 1) {
+  if (business_category && business_category.code === 1) {
     businessCategoryLabel = business_category.subCode
       ? businessCategoryProperty.find(
           (bcp) => business_category.subCode === bcp.subCode
@@ -48,7 +48,7 @@ const ResultCard = (props: any) => {
       : "草の根活動支援事業";
   } else {
     businessCategoryLabel = businessCategoryProperty.find(
-      (bcp) => business_category.code === bcp.code
+      (bcp) => business_category && business_category.code === bcp.code
     )?.label;
   }
 
@@ -68,42 +68,68 @@ const ResultCard = (props: any) => {
   return (
     <Link
       to={`/result/${business_cd}`}
-      tw="border border-gray-border w-full p-2.5 flex gap-2 "
+      tw="border border-gray-border w-full p-2.5 "
     >
-      <div tw="w-[100px] h-[100px] shrink-0">
-        {business_org_type === "F" ? (
-          <StaticImage
-            src="../../images/thumbnail_shikinbunpai.png"
-            alt="サムネイル"
-            tw="w-full"
-          />
-        ) : (
-          <StaticImage
-            src="../../images/thumbnail_jikkou.png"
-            alt="サムネイル"
-            tw="w-full"
-          />
-        )}
-      </div>
-      <div tw="">
-        <div tw="flex gap-[5px]">
-          <p
-            css={[
-              resultCardTip,
-              businessTypeNameCategory === "通常枠"
-                ? tw`border-blue-button text-blue-button bg-blue-base`
-                : tw`border-red-base text-red-base bg-red-pale`,
-            ]}
-          >
-            {businessTypeNameCategory}
-          </p>
-          <p css={resultCardTip}>{businessTypeNameYear}</p>
-          <p css={resultCardTip}>{businessStatusText}</p>
-          {mainGroupPrefecture && (
-            <p css={resultCardTip}>{mainGroupPrefecture}</p>
+      <div tw="flex gap-2 ">
+        <div tw="w-[100px] h-[100px] shrink-0 lg:(w-[24%] h-auto)">
+          {business_org_type === "F" ? (
+            <StaticImage
+              src="../../images/thumbnail_shikinbunpai.png"
+              alt="サムネイル"
+              tw="w-full"
+            />
+          ) : (
+            <StaticImage
+              src="../../images/thumbnail_jikkou.png"
+              alt="サムネイル"
+              tw="w-full"
+            />
           )}
         </div>
-        <p tw="text-lg font-bold break-words">{business_name}</p>
+        <div tw="">
+          <div tw="flex gap-[5px]">
+            <p
+              css={[
+                resultCardTip,
+                businessTypeNameCategory === "通常枠"
+                  ? tw`border-blue-button text-blue-button bg-blue-base`
+                  : tw`border-red-base text-red-base bg-red-pale`,
+              ]}
+            >
+              {businessTypeNameCategory}
+            </p>
+            <p css={resultCardTip}>{businessTypeNameYear}</p>
+            <p css={resultCardTip}>{businessStatusText}</p>
+            {mainGroupPrefecture && (
+              <p css={resultCardTip}>{mainGroupPrefecture}</p>
+            )}
+          </div>
+          <p tw="text-lg font-bold break-words">{business_name}</p>
+          <div tw="lg:(hidden)">
+            {mainGroup && (
+              <div css={hCenter} tw="gap-1.5">
+                <StaticImage
+                  src="../../images/office.svg"
+                  alt="オフィスアイコン"
+                  tw="w-4 h-4"
+                />
+                <p>{mainGroupName}</p>
+              </div>
+            )}
+            {businessCategoryLabel && (
+              <div css={hCenter} tw="gap-1.5 text-sm">
+                <StaticImage
+                  src="../../images/note.svg"
+                  alt="ノートアイコン"
+                  tw="w-4 h-4"
+                />
+                <p>{businessCategoryLabel}</p>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+      <div tw="hidden lg:(block mt-1.5)">
         {mainGroup && (
           <div css={hCenter} tw="gap-1.5">
             <StaticImage

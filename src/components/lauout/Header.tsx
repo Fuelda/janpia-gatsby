@@ -1,7 +1,7 @@
 import { Link } from "gatsby";
 import React from "react";
 import "twin.macro";
-import { wrapper, hCenter } from "../../styles/base";
+import { wrapper, hCenter, wrapperSp } from "../../styles/base";
 import { StaticImage } from "gatsby-plugin-image";
 import { useLocation } from "@reach/router";
 import tw from "twin.macro";
@@ -15,17 +15,17 @@ const Header = () => {
 
   return (
     <div tw="fixed top-0 w-screen bg-white z-30">
-      <div css={wrapper}>
+      <div css={[wrapper, wrapperSp]}>
         <div css={hCenter} tw="justify-between py-1.5">
           <Link to="/" tw="gap-3" css={hCenter}>
             <StaticImage
               src="../../images/symbol.png"
               alt="シンボル"
-              tw="w-[72px] h-[70px]"
+              tw="w-[72px] h-[70px] lg:(w-16 h-16)"
             />
             <h1>休眠預金活用事業 情報公開サイト</h1>
           </Link>
-          <nav css={hCenter} tw="gap-6">
+          <nav css={hCenter} tw="gap-6 lg:(hidden)">
             <Link to="/" tw="p-[7px]" css={path === "/" && currentPath}>
               ホーム
             </Link>

@@ -48,7 +48,9 @@ const SdgsGoal = (props: { path: string }) => {
         <div
           tw="gap-y-2.5 px-3.5 py-2.5"
           css={
-            props.path === "search" ? tw`grid grid-cols-3` : tw`flex flex-col`
+            props.path === "search"
+              ? tw`grid grid-cols-3 lg:(flex flex-col)`
+              : tw`flex flex-col`
           }
         >
           {checkboxArray.map((checkbox) => (

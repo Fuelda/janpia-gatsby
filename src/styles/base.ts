@@ -1,6 +1,7 @@
 import tw from "twin.macro";
 
 export const wrapper = tw`max-w-[1020px] mx-auto`;
+export const wrapperSp = tw`lg:(px-2.5)`;
 export const hCenter = tw`flex items-center`;
 export const vCenter = tw`flex flex-col justify-between items-center`;
 

@@ -13,6 +13,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { useSearchContext } from "../../context/searchContext";
 import { useLocation } from "@reach/router";
+import SidebarPrefectures from "../../features/search/component/sidebar/Organization/SidebarPrefectures";
 
 const Organization = () => {
   const { resetSearchStatus } = useSearchContext();
@@ -37,9 +38,14 @@ const Organization = () => {
             <OrganizationName path={path} />
             <OrganizationTypeCd path={path} />
 
-            <h3 css={h3}>団体所在地</h3>
-            <div tw="px-11 py-4">
+            <h3 css={h3} tw="lg:(hidden)">
+              団体所在地
+            </h3>
+            <div tw="px-11 py-4 lg:(hidden)">
               <Prefectures />
+            </div>
+            <div tw="hidden lg:(block)">
+              <SidebarPrefectures category="prefectures" />
             </div>
 
             <LegalPersonality path={path} />

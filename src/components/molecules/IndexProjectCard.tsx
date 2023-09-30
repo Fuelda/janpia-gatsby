@@ -30,16 +30,16 @@ const IndexProjectCard = ({ isFdo }: IndexProjectCardType) => {
 
   return (
     <div
-      tw="border-4 rounded-10 w-[450px] "
+      tw="border-4 rounded-10 w-[450px] lg:(w-full)"
       css={isFdo ? tw`border-blue-fdo` : tw`border-green-ado`}
     >
       <p
-        tw="text-3xl text-white pt-4 pb-3.5 text-center"
+        tw="text-3xl text-white pt-4 pb-3.5 text-center lg:(text-2xl)"
         css={isFdo ? tw`bg-blue-fdo` : tw`bg-green-ado`}
       >
         {isFdo ? "資金分配団体" : "実行団体"}
       </p>
-      <div tw="flex pt-4 pb-5 px-5 gap-3.5">
+      <div tw="flex pt-4 pb-5 px-5 gap-3.5 lg:(flex-col justify-between items-center)">
         {isFdo ? (
           <StaticImage
             src="../../images/icon_shikinbunpai.png"
@@ -53,12 +53,14 @@ const IndexProjectCard = ({ isFdo }: IndexProjectCardType) => {
             tw="w-[105px] h-[105px]"
           />
         )}
-        <div css={vCenter} tw="w-64 justify-around">
-          <p tw="text-2xl font-bold text-center">
+        <div css={vCenter} tw="w-64 justify-around lg:(w-full)">
+          <p tw="text-2xl font-bold text-center lg:(text-lg)">
             事業数：
-            <span tw="text-5xl">{project.length + projectManual.length}</span>
+            <span tw="text-5xl lg:(text-2xl)">
+              {project.length + projectManual.length}
+            </span>
           </p>
-          <div tw="flex gap-5">
+          <div tw="flex gap-5 lg:(flex-col gap-0)">
             <p tw="text-lg">
               実施数：
               <span tw="text-2xl">

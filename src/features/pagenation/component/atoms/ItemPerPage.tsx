@@ -19,7 +19,7 @@ const selectCheck = tw`absolute left-1 inline-flex items-center justify-center`;
 
 const ItemPerPage = ({ itemPerPage, setItemPerPage }: ItemPerPageType) => {
   return (
-    <div css={hCenter} tw="gap-2">
+    <div css={hCenter} tw="gap-2 lg:(gap-0)">
       <p tw="text-sm">表示件数：</p>
       <Select.Root onValueChange={(e) => setItemPerPage(parseInt(e))}>
         <Select.Trigger

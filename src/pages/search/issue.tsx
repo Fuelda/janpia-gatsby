@@ -12,9 +12,12 @@ import SocialIssue from "../../features/search/component/main/Issue/SocialIssue"
 import SdgsGoal from "../../features/search/component/main/Issue/SdgsGoal";
 import { useSearchContext } from "../../context/searchContext";
 import BusinessTypeName from "../../features/search/component/main/Issue/BusinessTypeName";
+import { useLocation } from "@reach/router";
 
 const Issue = () => {
   const { resetSearchStatus } = useSearchContext();
+  const location = useLocation();
+  const path = location.pathname;
 
   useEffect(() => {
     resetSearchStatus();
@@ -31,10 +34,10 @@ const Issue = () => {
         <h2 tw="text-xl py-6 px-3.5 font-bold">社会課題から探す</h2>
         <div css={vCenter} tw="gap-11">
           <div>
-            <BusinessTypeName />
+            <BusinessTypeName path={path} />
             <SocialIssue />
             <SdgsGoal path="search" />
-            <TopicKeyword />
+            <TopicKeyword path="search" />
           </div>
           <div css={vCenter} tw="gap-6">
             <ToResultButton />

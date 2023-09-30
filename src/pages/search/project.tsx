@@ -20,6 +20,7 @@ import TopicKeyword from "../../features/search/component/main/Business/TopicKey
 import { useSearchContext } from "../../context/searchContext";
 import BusinessTypeName from "../../features/search/component/main/Business/BusinessTypeName";
 import { useLocation } from "@reach/router";
+import SidebarPrefectures from "../../features/search/component/sidebar/Organization/SidebarPrefectures";
 
 const Project = () => {
   const { resetSearchStatus, searchState } = useSearchContext();
@@ -47,9 +48,14 @@ const Project = () => {
             {btnCategory === "通常枠" && <BusinessCategory path={path} />}
             <BusinessStatus path={path} />
 
-            <h3 css={h3}>事業対象地域</h3>
-            <div tw="px-11 py-4">
+            <h3 css={h3} tw="lg:(hidden)">
+              事業対象地域
+            </h3>
+            <div tw="px-11 py-4 lg:(hidden)">
               <TargetArea />
+            </div>
+            <div tw="hidden lg:(block)">
+              <SidebarPrefectures category="targetArea" />
             </div>
 
             <SubsidyAmount path={path} />

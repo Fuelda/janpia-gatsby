@@ -7,7 +7,7 @@ import { vCenter } from "../../styles/base";
 
 const SearchSideBar = () => {
   return (
-    <div tw="w-[300px]">
+    <div tw="w-[300px] lg:(w-full)">
       <FreewordCard />
       <ParameterCard />
       <div css={vCenter} tw="mt-4">

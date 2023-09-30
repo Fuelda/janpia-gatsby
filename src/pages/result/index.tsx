@@ -1,30 +1,29 @@
 import { Link, PageProps, graphql } from "gatsby";
 import React, { useEffect, useState } from "react";
-import SearchSideBar from "../components/organisms/SearchSideBar";
-import Layout from "../components/lauout/Layout";
+import SearchSideBar from "../../components/organisms/SearchSideBar";
+import Layout from "../../components/lauout/Layout";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
-import { hCenter } from "../styles/base";
+import { hCenter } from "../../styles/base";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "twin.macro";
-import { useFilteredStrapiContext } from "../context/filteredStrapiContext";
-import ResultCard from "../components/molecules/ResultCard";
-import PageNav from "../features/pagenation/component/molecules/PageNav";
-import ItemPerPage from "../features/pagenation/component/atoms/ItemPerPage";
-import PageNavTiny from "../features/pagenation/component/molecules/PageNavTiny";
+import { useFilteredStrapiContext } from "../../context/filteredStrapiContext";
+import ResultCard from "../../components/molecules/ResultCard";
+import PageNav from "../../features/pagenation/component/molecules/PageNav";
+import ItemPerPage from "../../features/pagenation/component/atoms/ItemPerPage";
+import PageNavTiny from "../../features/pagenation/component/molecules/PageNavTiny";
 import Modal from "react-modal";
-import { useModalContext } from "../context/modalContext";
-import ModalPrefectures from "../features/search/component/sidebar/modal/ModalPrefectures";
-import SortSelector from "../features/sort/component/atoms/SortSelector";
-
-Modal.setAppElement("#___gatsby");
+import { useModalContext } from "../../context/modalContext";
+import ModalPrefectures from "../../features/search/component/sidebar/modal/ModalPrefectures";
+import SortSelector from "../../features/sort/component/atoms/SortSelector";
+import ChangeSearchStatusButton from "../../components/atoms/ChangeSearchStatusButton";
+import SearchSpBar from "../../components/organisms/SearchSpBar";
 
 const Result = () => {
   const filteredAllBizPlan = useFilteredStrapiContext();
   const [currentSort, setCurrentSort] = useState("bizPlan");
   const [currentPageNo, setCurrentPageNo] = useState(1);
   const [itemPerPage, setItemPerPage] = useState(30);
-
-  const { isModalOpen, setIsModalOpen } = useModalContext();
+  const [isSpBarOpen, setIsSpBarOpen] = useState(false);
 
   const sortByBizPlan = (a: any, b: any) => {
     const bizNameA = a.bizPlan.business_name.toLowerCase();
@@ -89,24 +88,26 @@ const Result = () => {
           <p>検索結果</p>
         </div>
 
-        <div tw="flex justify-between py-5 px-2.5">
-          <div css={hCenter} tw="gap-8">
+        <div tw="flex justify-between py-5 px-2.5 lg:(py-3)">
+          <div css={hCenter} tw="gap-8 lg:(flex-col items-start w-full gap-2)">
             <div>
               <p tw="text-sm">
                 検索結果：<span tw="text-xl">{filteredAllBizPlan.length}</span>
                 件
               </p>
             </div>
-            <SortSelector
-              currentSort={currentSort}
-              setCurrentSort={setCurrentSort}
-            />
-            <ItemPerPage
-              itemPerPage={itemPerPage}
-              setItemPerPage={setItemPerPage}
-            />
+            <div css={hCenter} tw="gap-8 lg:(w-full)">
+              <SortSelector
+                currentSort={currentSort}
+                setCurrentSort={setCurrentSort}
+              />
+              <ItemPerPage
+                itemPerPage={itemPerPage}
+                setItemPerPage={setItemPerPage}
+              />
+            </div>
           </div>
-          <div>
+          <div tw="lg:(hidden)">
             <PageNavTiny
               totalPageNum={totalPageNum}
               itemNum={itemNum}
@@ -117,10 +118,16 @@ const Result = () => {
           </div>
         </div>
 
-        <div tw="flex gap-2.5">
-          <SearchSideBar />
+        <div tw="hidden lg:(block px-2.5 pb-2.5)">
+          <ChangeSearchStatusButton />
+        </div>
 
-          <div tw="w-[70%]">
+        <div tw="flex gap-2.5">
+          <div tw="lg:(hidden)">
+            <SearchSideBar />
+          </div>
+
+          <div tw="w-[70%] lg:(w-full px-2.5)">
             <div tw="flex flex-col gap-2.5">
               {displayBizPlan.map((item, i) => (
                 <ResultCard key={i} content={item} />
@@ -137,16 +144,6 @@ const Result = () => {
           </div>
         </div>
       </div>
-
-      <Modal
-        isOpen={isModalOpen !== ""}
-        onRequestClose={() => setIsModalOpen("")}
-        shouldCloseOnEsc={true}
-        className="ResultModal"
-        overlayClassName="ResultOverlay"
-      >
-        <ModalPrefectures />
-      </Modal>
     </Layout>
   );
 };

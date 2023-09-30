@@ -19,8 +19,8 @@ const PrivacyPolicy = () => {
           <p>個人情報保護について</p>
         </div>
         <div tw="px-3.5">
-          <h2 tw="text-xl py-6 font-bold">個人情報保護について</h2>
-          <div tw="mt-[25px]">
+          <h2 tw="text-xl py-6 font-bold lg:(py-3)">個人情報保護について</h2>
+          <div tw="mt-[25px] lg:(mt-0)">
             <div>
               <p>
                 一般財団法人日本民間公益活動連携機構（以下「当機構」という。）は、国及び地方公共団体が対応することが困難な社会的課題の解決を図るための民間公益活動を促進することを目的とする団体です。

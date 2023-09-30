@@ -1,18 +1,18 @@
 import { Link } from "gatsby";
 import React from "react";
 import "twin.macro";
-import { hCenter, wrapper } from "../../styles/base";
+import { hCenter, wrapper, wrapperSp } from "../../styles/base";
 import { StaticImage } from "gatsby-plugin-image";
 
 const Footer = () => {
   return (
     <div tw="bg-blue-base w-full pt-6 pb-4">
-      <div css={wrapper}>
-        <div tw="flex justify-between">
+      <div css={[wrapper, wrapperSp]}>
+        <div tw="flex justify-between lg:(flex-col gap-8)">
           <div>
             <p tw="text-lg font-bold">休眠預金活用事業 情報公開サイト</p>
             <div tw="mt-3.5 flex gap-9">
-              <div tw="flex flex-col  gap-4">
+              <div tw="flex flex-col gap-4">
                 <Link to="/">ホーム</Link>
                 <Link to="/search/organization/">団体から探す</Link>
                 <Link to="/search/project/">事業から探す</Link>
@@ -31,7 +31,7 @@ const Footer = () => {
               alt="ロゴ"
               tw="w-[298px] h-[61px]"
             />
-            <p tw="mt-4 leading-5">
+            <p tw="mt-4 leading-5 lg:(mt-8)">
               〒100-0011
               <br />
               東京都千代田区内幸町2－2－3 日比谷国際ビル314

@@ -19,12 +19,12 @@ const selectCheck = tw`absolute left-1 inline-flex items-center justify-center`;
 
 const SortSelector = ({ currentSort, setCurrentSort }: SortSelectorType) => {
   return (
-    <div css={hCenter} tw="gap-2">
+    <div css={hCenter} tw="gap-2 lg:(gap-0)">
       <p tw="text-sm">表示順：</p>
       <Select.Root onValueChange={(e) => setCurrentSort(e)}>
         <Select.Trigger
           aria-label="sortSelector"
-          tw="w-[200px] border justify-between rounded-[3px] py-1 px-2 border-gray-border"
+          tw="w-[200px] border justify-between rounded-[3px] py-1 px-2 border-gray-border lg:(w-[164px])"
           css={hCenter}
         >
           <Select.Value placeholder="選択してください" />

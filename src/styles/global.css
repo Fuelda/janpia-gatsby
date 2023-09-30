@@ -29,3 +29,9 @@ th {
 td {
   border: solid 1px #7f8e99;
 }
+
+@media (max-width: 1020px) {
+  h1 {
+    font-size: 1.25rem;
+  }
+}

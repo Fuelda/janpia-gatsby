@@ -2,7 +2,7 @@ import React from "react";
 import Layout from "../components/lauout/Layout";
 import { Link, graphql } from "gatsby";
 import "twin.macro";
-import { hCenter, vCenter } from "../styles/base";
+import { hCenter, vCenter, wrapperSp } from "../styles/base";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import ReverseButton from "../components/atoms/ReverseButton";
@@ -32,8 +32,8 @@ const NewsPage: React.FC<any> = ({ data, pageContext }) => {
             />
           </div>
         </div>
-        <div tw="mt-10" css={vCenter}>
-          <ReverseButton path="/news/" label="お知らせ一覧" />
+        <div tw="mt-10" css={[vCenter, wrapperSp]}>
+          <ReverseButton path="/news/" label="お知らせ一覧に戻る" />
         </div>
       </div>
     </Layout>
