@@ -21,6 +21,7 @@ module.exports = {
           hokuriku: "#3D72AF",
           kanto: "#66B9D6",
           vivid: "#0090FF",
+          link: "#1F4D9C",
         },
         green: { ado: "#6ACE6C", kinki: "#AAC25C", tokai: "#5DA052" },
         purple: { hokkaido: "#A065A0", tohoku: "#666EAE" },

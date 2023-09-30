@@ -1,0 +1,31 @@
+.table {
+  &__main {
+    &__info {
+    }
+  }
+  &__group {
+  }
+  &__settleReport {
+    &__exective {
+      width: 780px;
+      td {
+        padding: 12px 13px;
+        width: 14%;
+      }
+      &--textCenter {
+        text-align: center;
+      }
+    }
+    &__exective2 {
+      width: 100%;
+      tbody {
+        td {
+          padding: 12px 13px;
+        }
+      }
+      &--textCenter {
+        text-align: center;
+      }
+    }
+  }
+}

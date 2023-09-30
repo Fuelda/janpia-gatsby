@@ -7,6 +7,7 @@ import ModalProvider from "./src/context/modalContext";
 import DetailProvider from "./src/context/detailContext";
 import "./src/styles/modal.scss";
 import "./src/styles/news.scss";
+import "./src/styles/table.scss";
 
 export const wrapRootElement = ({ element }) => (
   <StrapiProvider>

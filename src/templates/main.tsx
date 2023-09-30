@@ -64,7 +64,7 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
     group.find((g: any) => {
       const groupRole =
         g.business_org_type === "F" ? g.org_role_fdo : g.org_role_ado;
-      return groupRole === 1;
+      return groupRole === 0 || 1;
     });
   const mainGroupName = mainGroup ? mainGroup.groupData.organization_name : "";
 
@@ -144,39 +144,49 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
           <div css={detailBody}>
             <div id="firstItem">
               <DetailItemWrapper itemName="事業情報">
-                <table css={table}>
+                <table className="table__main__info">
                   <tbody>
-                    <tr css={tr}>
+                    <tr>
                       <th css={th}>事業名</th>
                       <td css={td}>{business_name}</td>
                     </tr>
-                    <tr css={tr}>
-                      <th css={th}>団体名</th>
-                      <td css={td}>{mainGroupName}</td>
-                    </tr>
-                    <tr css={tr}>
-                      <th css={th}>採択事業年度</th>
-                      <td css={td}>
-                        {business_type_name &&
-                          (business_type_name.label || business_type_name)}
-                      </td>
-                    </tr>
-                    <tr css={tr}>
-                      <th css={th}>事業分類</th>
-                      <td css={td}>{businessCategoryLabel}</td>
-                    </tr>
-                    <tr css={tr}>
-                      <th css={th}>事業対象地域</th>
-                      <td css={td}>{target_area}</td>
-                    </tr>
-                    <tr css={tr}>
+                    {mainGroup && (
+                      <tr>
+                        <th css={th}>団体名</th>
+                        <td css={td}>{mainGroupName}</td>
+                      </tr>
+                    )}
+                    {business_type_name && (
+                      <tr>
+                        <th css={th}>採択事業年度</th>
+                        <td css={td}>
+                          {business_type_name &&
+                            (business_type_name.label || business_type_name)}
+                        </td>
+                      </tr>
+                    )}
+                    {businessCategoryLabel && (
+                      <tr>
+                        <th css={th}>事業分類</th>
+                        <td css={td}>{businessCategoryLabel}</td>
+                      </tr>
+                    )}
+                    {target_area && (
+                      <tr>
+                        <th css={th}>事業対象地域</th>
+                        <td css={td}>{target_area}</td>
+                      </tr>
+                    )}
+                    <tr>
                       <th css={th}>事業ステータス</th>
                       <td css={td}>{businessStatusText}</td>
                     </tr>
-                    <tr css={tr}>
-                      <th css={th}>事業概要</th>
-                      <td css={td}>{business_overview}</td>
-                    </tr>
+                    {business_overview && (
+                      <tr>
+                        <th css={th}>事業概要</th>
+                        <td css={td}>{business_overview}</td>
+                      </tr>
+                    )}
                   </tbody>
                 </table>
               </DetailItemWrapper>
@@ -189,7 +199,7 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
                     {linkedAdo.map((item) => (
                       <table key={item}>
                         <tbody>
-                          <tr css={tr}>
+                          <tr>
                             <th css={th}>実行団体名</th>
                             <td css={td}>
                               {pickupLinkedAdoGroupName(
@@ -197,7 +207,7 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
                               )}
                             </td>
                           </tr>
-                          <tr css={tr}>
+                          <tr>
                             <th css={th}>事業名</th>
                             <td css={td}>
                               <Link

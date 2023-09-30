@@ -24,7 +24,7 @@ export const theadLshape = tw`bg-blue-base py-3 px-3.5 border-gray-border border
 export const trLshape = tw`flex w-full`;
 export const thLshape = tw`py-3 px-3.5 font-bold`;
 export const thLshapeSub = tw`w-[6%]`;
-export const tdLshape = tw`py-3 px-3.5 border-gray-border border w-full block`;
+export const tdLshape = tw`py-3 px-3.5 border-gray-border border-t border-l w-full block`;
 export const tdLshapeWrapper = tw`w-full`;
 
 export const td3col = tw`py-3 px-3.5 border-gray-border border w-[37%]`;

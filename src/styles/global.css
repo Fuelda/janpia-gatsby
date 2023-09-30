@@ -18,6 +18,14 @@ button {
   flex-shrink: 0;
   background-color: white;
 }
+table {
+  width: 100%;
+  border: solid 1px #7f8e99;
+}
 th {
   font-weight: normal;
+  font-size: 15px;
+}
+td {
+  border: solid 1px #7f8e99;
 }
