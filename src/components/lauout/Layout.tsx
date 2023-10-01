@@ -12,6 +12,7 @@ import ToPageTopButton from "../atoms/ToPageTopButton";
 import Modal from "react-modal";
 import { useModalContext } from "../../context/modalContext";
 import ModalPrefectures from "../../features/search/component/sidebar/modal/ModalPrefectures";
+import ModalPrefecturesSp from "../../features/search/component/sidebar/modal/ModalPrefecturesSp";
 
 Modal.setAppElement("#___gatsby");
 
@@ -30,13 +31,24 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       <ToPageTopButton />
 
       <Modal
-        isOpen={isModalOpen !== ""}
+        isOpen={isModalOpen === "prefectures" || isModalOpen === "targetArea"}
         onRequestClose={() => setIsModalOpen("")}
         shouldCloseOnEsc={true}
         className="ResultModal"
         overlayClassName="ResultOverlay"
       >
         <ModalPrefectures />
+      </Modal>
+      <Modal
+        isOpen={
+          isModalOpen === "prefecturesSp" || isModalOpen === "targetAreaSp"
+        }
+        onRequestClose={() => setIsModalOpen("")}
+        shouldCloseOnEsc={true}
+        className="SearchSpModal"
+        overlayClassName="ResultOverlay"
+      >
+        <ModalPrefecturesSp />
       </Modal>
     </div>
   );

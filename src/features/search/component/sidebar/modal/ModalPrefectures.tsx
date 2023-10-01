@@ -14,7 +14,8 @@ const ModalPrefectures = () => {
       <p tw="text-xl font-bold text-center mb-6">
         団体所在地を選択してください。
       </p>
-      {isModalOpen === "prefectures" ? <Prefectures /> : <TargetArea />}
+      {(isModalOpen === "prefectures" && <Prefectures />) ||
+        (isModalOpen === "targetArea" && <TargetArea />)}
       <button
         onClick={() => setIsModalOpen("")}
         tw="w-4 h-4 absolute top-0 right-0"

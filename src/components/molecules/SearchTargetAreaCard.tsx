@@ -6,12 +6,18 @@ import { checkBox } from "../../styles/form";
 import { prefecturesArray } from "../../features/search/store/filterContents";
 import { useSearchContext } from "../../context/searchContext";
 import "twin.macro";
-import { useFilteredStrapiContext } from "../../context/filteredStrapiContext";
 import tw from "twin.macro";
+import { filterStrapiDataWithoutPref } from "../../features/search/util/withoutPrefectrues/filterStrapiDataWithoutPref";
+import { filterStrapiManualDataWithoutPref } from "../../features/search/util/withoutPrefectrues/filterStrapiManualDataWithputPref";
 
 const SearchTargetAreaCard = (props: { area: string }) => {
   const { searchState, searchSetState } = useSearchContext();
-  const filteredAllBizPlan = useFilteredStrapiContext();
+  const filteredBizplanWithoutPref = filterStrapiDataWithoutPref();
+  const filteredBizPlanManualWithoutPref = filterStrapiManualDataWithoutPref();
+  const filteredAllBizPlan = [
+    ...filteredBizplanWithoutPref,
+    ...filteredBizPlanManualWithoutPref,
+  ];
   const { target_area } = searchState;
   const { setTargetArea } = searchSetState;
   const checkboxArray = prefecturesArray;

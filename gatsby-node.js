@@ -33,6 +33,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
   bizPlan.forEach((bizPlanItem) => {
     const business_cd = bizPlanItem.node.business_cd;
+    const biz_cd_fund_distr = bizPlanItem.node.biz_cd_fund_distr;
     const bizPlanGroupArray = bizPlanGroup.filter(
       (item) => item.node.business_cd === business_cd
     );
@@ -55,7 +56,11 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     createPage({
       path: `/result/${business_cd}/`,
       component: path.resolve("./src/templates/main.tsx"),
-      context: { slug: business_cd, organization_cd: organization_cd },
+      context: {
+        slug: business_cd,
+        organization_cd: organization_cd,
+        biz_cd_fund_distr: biz_cd_fund_distr,
+      },
     });
     createPage({
       path: `/result/${business_cd}/organization`,
@@ -131,6 +136,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       bizPlanManualItem.node.business_org_type === "F"
         ? bizPlanManualItem.node.biz_cd_fund_distr
         : bizPlanManualItem.node.biz_cd_executive;
+    const biz_cd_fund_distr = bizPlanManualItem.node.biz_cd_fund_distr;
     const bizPlanGroupManualArray = bizPlanGroupManual.filter((item) => {
       const business_cd_manual =
         item.node.business_org_type === "F"
@@ -153,7 +159,11 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     createPage({
       path: `/result/${business_cd}/`,
       component: path.resolve("./src/templates/main.tsx"),
-      context: { slug: business_cd, organization_cd: organization_cd },
+      context: {
+        slug: business_cd,
+        organization_cd: organization_cd,
+        biz_cd_fund_distr: biz_cd_fund_distr,
+      },
     });
     createPage({
       path: `/result/${business_cd}/organization`,

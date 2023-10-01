@@ -14,6 +14,7 @@ import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { useSearchContext } from "../../context/searchContext";
 import { useLocation } from "@reach/router";
 import SidebarPrefectures from "../../features/search/component/sidebar/Organization/SidebarPrefectures";
+import PrefecturesSp from "../../features/search/component/main/Organization/PrefecturesSp";
 
 const Organization = () => {
   const { resetSearchStatus } = useSearchContext();
@@ -45,7 +46,7 @@ const Organization = () => {
               <Prefectures />
             </div>
             <div tw="hidden lg:(block)">
-              <SidebarPrefectures category="prefectures" />
+              <PrefecturesSp category="prefectures" />
             </div>
 
             <LegalPersonality path={path} />

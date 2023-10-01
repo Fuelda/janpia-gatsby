@@ -42,7 +42,9 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
     strapiBizPlanManualFDO,
     strapiBizPlanManualADO,
     strapiBizPlanLinkADO,
+    strapiBizPlanLinkFDO,
     strapiBizPlanManualLinkADO,
+    strapiBizPlanManualLinkFDO,
     allStrapiGroup,
 
     //サイドバーチェック用
@@ -104,6 +106,8 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
   const linkedAdo = [
     ...strapiBizPlanLinkADO.edges,
     ...strapiBizPlanManualLinkADO.edges,
+    ...strapiBizPlanLinkFDO.edges,
+    ...strapiBizPlanManualLinkFDO.edges,
   ];
   const pickupLinkedAdoGroupName = (organization_cd: string) => {
     const linkedAdoGroup = allStrapiGroup.edges.find(
@@ -122,6 +126,8 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
     );
     setWithCRM(strapiCompleteReportManualFDO || strapiCompleteReportManualADO);
   }, []);
+
+  console.log(linkedAdo);
 
   return (
     <Layout>
@@ -196,14 +202,15 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
               {linkedAdo.length !== 0 && (
                 <DetailItemWrapper itemName="実行団体">
                   <div tw="flex flex-col gap-2.5">
-                    {linkedAdo.map((item) => (
-                      <table key={item}>
+                    {linkedAdo.map((item, i) => (
+                      <table key={i}>
                         <tbody>
                           <tr>
                             <th css={th}>実行団体名</th>
                             <td css={td}>
                               {pickupLinkedAdoGroupName(
-                                item.node.executive_grp_cd
+                                item.node.executive_grp_cd ||
+                                  item.node.fund_distr_grp_cd
                               )}
                             </td>
                           </tr>
@@ -211,7 +218,10 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
                             <th css={th}>事業名</th>
                             <td css={td}>
                               <Link
-                                to={`/result/${item.node.biz_cd_executive}`}
+                                to={`/result/${
+                                  item.node.biz_cd_executive ||
+                                  item.node.biz_cd_fund_distr
+                                }`}
                                 tw="underline text-blue-link"
                               >
                                 {item.node.business_name}
@@ -235,7 +245,7 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
 export default Main;
 
 export const pageQuery = graphql`
-  query MyQuery($slug: String!) {
+  query MyQuery($slug: String!, $biz_cd_fund_distr: String!) {
     strapiBizPlan(business_cd: { eq: $slug }) {
       business_overview {
         data {
@@ -253,6 +263,20 @@ export const pageQuery = graphql`
         node {
           biz_cd_executive
           executive_grp_cd
+          business_name
+        }
+      }
+    }
+    strapiBizPlanLinkFDO: allStrapiBizPlan(
+      filter: {
+        biz_cd_fund_distr: { eq: $biz_cd_fund_distr }
+        business_org_type: { eq: "F" }
+      }
+    ) {
+      edges {
+        node {
+          biz_cd_fund_distr
+          fund_distr_grp_cd
           business_name
         }
       }
@@ -285,6 +309,20 @@ export const pageQuery = graphql`
         node {
           biz_cd_executive
           executive_grp_cd
+          business_name
+        }
+      }
+    }
+    strapiBizPlanManualLinkFDO: allStrapiBizPlanManual(
+      filter: {
+        biz_cd_fund_distr: { eq: $biz_cd_fund_distr }
+        business_org_type: { eq: "F" }
+      }
+    ) {
+      edges {
+        node {
+          biz_cd_fund_distr
+          fund_distr_grp_cd
           business_name
         }
       }

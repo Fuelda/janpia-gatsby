@@ -68,7 +68,7 @@ const ResultCard = (props: any) => {
   return (
     <Link
       to={`/result/${business_cd}`}
-      tw="border border-gray-border w-full p-2.5 "
+      tw="border border-gray-border w-full p-2.5"
     >
       <div tw="flex gap-2 ">
         <div tw="w-[100px] h-[100px] shrink-0 lg:(w-[24%] h-auto)">
@@ -104,7 +104,7 @@ const ResultCard = (props: any) => {
               <p css={resultCardTip}>{mainGroupPrefecture}</p>
             )}
           </div>
-          <p tw="text-lg font-bold break-words">{business_name}</p>
+          <p tw="text-lg font-bold break-all">{business_name}</p>
           <div tw="lg:(hidden)">
             {mainGroup && (
               <div css={hCenter} tw="gap-1.5">

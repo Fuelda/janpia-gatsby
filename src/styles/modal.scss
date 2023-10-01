@@ -25,6 +25,19 @@
   }
 }
 
+.SearchSpModal {
+  width: 100vw;
+  height: 100vh;
+  // margin-top: 50px;
+  padding: 72px 0;
+  background-color: white;
+  // border-radius: 16px;
+  overflow-y: scroll;
+  // @media screen and (max-width: 1024px) {
+  //   width: 100%;
+  // }
+}
+
 .ContactOverlay {
   position: fixed;
   top: 0;

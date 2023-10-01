@@ -1,13 +1,6 @@
 import React from "react";
-import { useSearchContext } from "../../../../../context/searchContext";
-import { prefecturesArray } from "../../../store/filterContents";
 import { StaticImage } from "gatsby-plugin-image";
-import { useFilteredStrapiContext } from "../../../../../context/filteredStrapiContext";
-import * as Checkbox from "@radix-ui/react-checkbox";
-import { CheckIcon } from "@radix-ui/react-icons";
 import "twin.macro";
-import { checkBox } from "../../../../../styles/form";
-import { hCenter, vCenter } from "../../../../../styles/base";
 import SearchPrefectureCard from "../../../../../components/molecules/SearchPrefectureCard";
 
 const Prefectures = () => {

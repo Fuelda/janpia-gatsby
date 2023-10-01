@@ -5,7 +5,7 @@ import { StaticImage } from "gatsby-plugin-image";
 import { useModalContext } from "../../../../../context/modalContext";
 import { useSearchContext } from "../../../../../context/searchContext";
 
-const SidebarPrefectures = (props: { category: string }) => {
+const PrefecturesSp = (props: { category: string }) => {
   const { setIsModalOpen } = useModalContext();
   const { searchState } = useSearchContext();
   const { prefectures, target_area } = searchState;
@@ -26,8 +26,8 @@ const SidebarPrefectures = (props: { category: string }) => {
           tw="mt-3 border border-blue-button rounded py-2.5 w-full"
           onClick={() => {
             props.category === "prefectures"
-              ? setIsModalOpen("prefectures")
-              : setIsModalOpen("targetArea");
+              ? setIsModalOpen("prefecturesSp")
+              : setIsModalOpen("targetAreaSp");
           }}
         >
           <div tw="flex gap-2.5">
@@ -47,4 +47,4 @@ const SidebarPrefectures = (props: { category: string }) => {
   );
 };
 
-export default SidebarPrefectures;
+export default PrefecturesSp;

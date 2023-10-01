@@ -28,6 +28,7 @@ th {
 }
 td {
   border: solid 1px #7f8e99;
+  word-break: break-all;
 }
 
 @media (max-width: 1020px) {

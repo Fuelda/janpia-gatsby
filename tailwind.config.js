@@ -4,6 +4,7 @@ module.exports = {
   theme: {
     screens: {
       lg: { max: "1020px" },
+      md: { max: "480px" },
     },
     extend: {
       colors: {

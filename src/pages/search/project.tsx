@@ -21,6 +21,7 @@ import { useSearchContext } from "../../context/searchContext";
 import BusinessTypeName from "../../features/search/component/main/Business/BusinessTypeName";
 import { useLocation } from "@reach/router";
 import SidebarPrefectures from "../../features/search/component/sidebar/Organization/SidebarPrefectures";
+import PrefecturesSp from "../../features/search/component/main/Organization/PrefecturesSp";
 
 const Project = () => {
   const { resetSearchStatus, searchState } = useSearchContext();
@@ -55,7 +56,7 @@ const Project = () => {
               <TargetArea />
             </div>
             <div tw="hidden lg:(block)">
-              <SidebarPrefectures category="targetArea" />
+              <PrefecturesSp category="targetArea" />
             </div>
 
             <SubsidyAmount path={path} />

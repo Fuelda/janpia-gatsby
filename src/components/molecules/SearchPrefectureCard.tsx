@@ -6,12 +6,19 @@ import { checkBox, checkBoxPref } from "../../styles/form";
 import { prefecturesArray } from "../../features/search/store/filterContents";
 import { useSearchContext } from "../../context/searchContext";
 import "twin.macro";
-import { useFilteredStrapiContext } from "../../context/filteredStrapiContext";
 import tw from "twin.macro";
+import { filterStrapiDataWithoutPref } from "../../features/search/util/withoutPrefectrues/filterStrapiDataWithoutPref";
+import { filterStrapiManualDataWithoutPref } from "../../features/search/util/withoutPrefectrues/filterStrapiManualDataWithputPref";
+import { StaticImage } from "gatsby-plugin-image";
 
 const SearchPrefectureCard = (props: { area: string }) => {
   const { searchState, searchSetState } = useSearchContext();
-  const filteredAllBizPlan = useFilteredStrapiContext();
+  const filteredBizplanWithoutPref = filterStrapiDataWithoutPref();
+  const filteredBizPlanManualWithoutPref = filterStrapiManualDataWithoutPref();
+  const filteredAllBizPlan = [
+    ...filteredBizplanWithoutPref,
+    ...filteredBizPlanManualWithoutPref,
+  ];
   const { prefectures } = searchState;
   const { setPrefectures } = searchSetState;
   const checkboxArray = prefecturesArray;
@@ -140,7 +147,11 @@ const SearchPrefectureCard = (props: { area: string }) => {
               checked={prefectures.includes(checkbox)}
             >
               <Checkbox.Indicator>
-                <CheckIcon />
+                {/* <CheckIcon /> */}
+                <StaticImage
+                  src="../../images/checkbox.svg"
+                  alt="チェックボックス"
+                />
               </Checkbox.Indicator>
             </Checkbox.Root>
             <label htmlFor={checkbox}>

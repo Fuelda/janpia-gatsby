@@ -4,6 +4,7 @@ const nodeQuery = {
       edges {
         node {
           business_cd
+          biz_cd_fund_distr
         }
       }
     }
