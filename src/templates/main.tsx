@@ -134,7 +134,7 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
       <DetailHeader business_cd={slug} />
       <div css={detailFlex}>
         <DetailSidebar slug={slug} />
-        <DetailWrapper category="事業詳細">
+        <DetailWrapper category="事業詳細" slug={slug}>
           <div css={detailAnchor}>
             <DetailAnchor
               title="事業情報"
@@ -150,7 +150,29 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
           <div css={detailBody}>
             <div id="firstItem">
               <DetailItemWrapper itemName="事業情報">
-                <table className="table__main__info">
+                <div tw="hidden lg:(block)">
+                  <p css={th}>事業名</p>
+                  <p css={td}>{business_name}</p>
+                  <p css={th}>採択事業年度</p>
+                  <p css={td}>
+                    {business_type_name &&
+                      (business_type_name.label || business_type_name)}
+                  </p>
+                  <p css={th}>採択事業年度</p>
+                  <p css={td}>
+                    {business_type_name &&
+                      (business_type_name.label || business_type_name)}
+                  </p>
+                  <p css={th}>事業分類</p>
+                  <p css={td}>{businessCategoryLabel}</p>
+                  <p css={th}>事業対象地域</p>
+                  <p css={td}>{target_area}</p>
+                  <p css={th}>事業ステータス</p>
+                  <p css={td}>{businessStatusText}</p>
+                  <p css={th}>事業概要</p>
+                  <p css={td}>{business_overview}</p>
+                </div>
+                <table tw="lg:hidden">
                   <tbody>
                     <tr>
                       <th css={th}>事業名</th>
@@ -203,33 +225,56 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
                 <DetailItemWrapper itemName="実行団体">
                   <div tw="flex flex-col gap-2.5">
                     {linkedAdo.map((item, i) => (
-                      <table key={i}>
-                        <tbody>
-                          <tr>
-                            <th css={th}>実行団体名</th>
-                            <td css={td}>
-                              {pickupLinkedAdoGroupName(
-                                item.node.executive_grp_cd ||
-                                  item.node.fund_distr_grp_cd
-                              )}
-                            </td>
-                          </tr>
-                          <tr>
-                            <th css={th}>事業名</th>
-                            <td css={td}>
-                              <Link
-                                to={`/result/${
-                                  item.node.biz_cd_executive ||
-                                  item.node.biz_cd_fund_distr
-                                }`}
-                                tw="underline text-blue-link"
-                              >
-                                {item.node.business_name}
-                              </Link>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
+                      <div key={i}>
+                        <div tw="hidden lg:(block)">
+                          <p css={th}>実行団体名</p>
+                          <p css={td}>
+                            {pickupLinkedAdoGroupName(
+                              item.node.executive_grp_cd ||
+                                item.node.fund_distr_grp_cd
+                            )}
+                          </p>
+                          <p css={th}>事業名</p>
+                          <p css={td}>
+                            <Link
+                              to={`/result/${
+                                item.node.biz_cd_executive ||
+                                item.node.biz_cd_fund_distr
+                              }`}
+                              tw="underline text-blue-link"
+                            >
+                              {item.node.business_name}
+                            </Link>
+                          </p>
+                        </div>
+                        <table tw="lg:hidden">
+                          <tbody>
+                            <tr>
+                              <th css={th}>実行団体名</th>
+                              <td css={td}>
+                                {pickupLinkedAdoGroupName(
+                                  item.node.executive_grp_cd ||
+                                    item.node.fund_distr_grp_cd
+                                )}
+                              </td>
+                            </tr>
+                            <tr>
+                              <th css={th}>事業名</th>
+                              <td css={td}>
+                                <Link
+                                  to={`/result/${
+                                    item.node.biz_cd_executive ||
+                                    item.node.biz_cd_fund_distr
+                                  }`}
+                                  tw="underline text-blue-link"
+                                >
+                                  {item.node.business_name}
+                                </Link>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
                     ))}
                   </div>
                 </DetailItemWrapper>

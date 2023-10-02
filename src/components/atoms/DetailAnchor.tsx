@@ -6,7 +6,7 @@ import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 
 const DetailAnchor = (props: { title: string; anchor: string }) => {
   return (
-    <AnchorLink to={props.anchor} tw="mb-1 border-b">
+    <AnchorLink to={props.anchor} tw="mb-1 border-b border-gray-black">
       <FontAwesomeIcon icon={faAngleDown} tw="mr-1.5" />
       {props.title}
     </AnchorLink>

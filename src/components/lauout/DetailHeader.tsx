@@ -9,7 +9,7 @@ import { useFilteredStrapiContext } from "../../context/filteredStrapiContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
-const resultCardTip = tw`text-xs py-1 px-1.5 border`;
+const resultCardTip = tw`text-xs py-1 px-1.5 border border-gray-base text-gray-base`;
 
 const DetailHeader = (props: { business_cd: string }) => {
   const filteredAllBizPlan = useFilteredStrapiContext();
@@ -83,14 +83,18 @@ const DetailHeader = (props: { business_cd: string }) => {
   return (
     <div>
       <div css={pankuzu}>
-        <Link to="/">ホーム</Link>
+        <Link to="/" tw="break-keep">
+          ホーム
+        </Link>
         <FontAwesomeIcon icon={faAngleRight} />
-        <Link to="/result">検索結果</Link>
+        <Link to="/result" tw="break-keep">
+          検索結果
+        </Link>
         <FontAwesomeIcon icon={faAngleRight} />
-        <p>{business_name}</p>
+        <p tw="truncate">{business_name}</p>
       </div>
-      <div tw="w-full p-2.5 flex gap-2 mt-3.5">
-        <div tw="w-[100px] h-[100px] shrink-0">
+      <div tw="w-full p-2.5 flex gap-2 mt-3.5 lg:(py-0)">
+        <div tw="w-[100px] h-[100px] shrink-0 lg:(w-[23%])">
           {business_org_type === "F" ? (
             <StaticImage
               src="../../images/thumbnail_shikinbunpai.png"
@@ -122,7 +126,7 @@ const DetailHeader = (props: { business_cd: string }) => {
             <p css={resultCardTip}>{target_area}</p>
           </div>
           <p tw="text-lg font-bold break-words">{business_name}</p>
-          <div tw="mt-3.5 flex gap-7">
+          <div tw="mt-3.5 flex gap-7 lg:hidden">
             {mainGroup && (
               <div css={hCenter} tw="gap-1.5">
                 <StaticImage
@@ -145,6 +149,28 @@ const DetailHeader = (props: { business_cd: string }) => {
             )}
           </div>
         </div>
+      </div>
+      <div tw="hidden lg:(block px-2.5)">
+        {mainGroup && (
+          <div css={hCenter} tw="gap-1.5">
+            <StaticImage
+              src="../../images/office.svg"
+              alt="オフィスアイコン"
+              tw="w-4 h-4"
+            />
+            <p>{mainGroupName}</p>
+          </div>
+        )}
+        {businessCategoryLabel && (
+          <div css={hCenter} tw="gap-1.5">
+            <StaticImage
+              src="../../images/note.svg"
+              alt="ノートアイコン"
+              tw="w-4 h-4"
+            />
+            <p>{businessCategoryLabel}</p>
+          </div>
+        )}
       </div>
     </div>
   );

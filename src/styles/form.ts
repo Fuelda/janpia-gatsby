@@ -7,3 +7,4 @@ export const checkBox = tw`h-5 w-5 border-gray-border border rounded-[3px] bg-wh
 export const checkBoxList = tw`flex`;
 export const checkBoxPref = tw`h-10 w-5 border-gray-border border rounded-[3px] `;
 export const checkBoxSet = tw`w-[124px] gap-2`;
+export const checkMark = tw`fill-blue-button`;

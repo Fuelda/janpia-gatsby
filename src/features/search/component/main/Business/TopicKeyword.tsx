@@ -11,6 +11,7 @@ import {
   checkBox,
   checkBoxList,
   checkBoxSet,
+  checkMark,
 } from "../../../../../styles/form";
 import { h3, hCenter } from "../../../../../styles/base";
 import tw from "twin.macro";
@@ -44,8 +45,20 @@ const TopicKeyword = (props: { path: string }) => {
               css={checkBox}
               checked={topic_keywords.includes(checkbox)}
             >
-              <Checkbox.Indicator>
-                <CheckIcon />
+              <Checkbox.Indicator tw="flex justify-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="15.003"
+                  height="11.252"
+                  viewBox="0 0 15.003 11.252"
+                  css={checkMark}
+                >
+                  <path
+                    id="check"
+                    d="M300.625,135.16l-1.876-1.876h0L295,129.533l1.875-1.875,3.751,3.751,7.5-7.5L310,125.783Z"
+                    transform="translate(-294.999 -123.908)"
+                  />
+                </svg>
               </Checkbox.Indicator>
             </Checkbox.Root>
             <label htmlFor={checkbox}>{checkbox}</label>

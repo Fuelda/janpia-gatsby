@@ -80,7 +80,7 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
       <DetailHeader business_cd={slug} />
       <div css={detailFlex}>
         <DetailSidebar slug={slug} />
-        <DetailWrapper category="団体情報">
+        <DetailWrapper category="団体情報" slug={slug}>
           <div css={detailAnchor}>
             <DetailAnchor
               title="団体組織情報"
@@ -114,6 +114,76 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
           <div css={detailBody}>
             <div id="firstItem">
               <DetailItemWrapper itemName="団体組織情報">
+                <div tw="hidden lg:(block)">
+                  {legalPersonality && (
+                    <div>
+                      <p css={th}>法人格</p>
+                      <p css={td}>{legalPersonality?.label}</p>
+                    </div>
+                  )}
+                  <p css={th}>団体種別</p>
+                  <p css={td}>
+                    {mainGroup.node.organization_type_cd === "F"
+                      ? "資金分配団体"
+                      : "実行団体"}
+                  </p>
+                  {mainGroup.node.organization_name && (
+                    <div>
+                      <p css={th}>団体名</p>
+                      <p css={td}>{mainGroup.node.organization_name}</p>
+                    </div>
+                  )}
+                  {mainGroup.node.post_code && (
+                    <div>
+                      <p css={th}>郵便番号</p>
+                      <p css={td}>{mainGroup.node.post_code}</p>
+                    </div>
+                  )}
+                  {mainGroup.node.prefectures && (
+                    <div>
+                      <p css={th}>都道府県</p>
+                      <p css={td}>{mainGroup.node.prefectures}</p>
+                    </div>
+                  )}
+                  {mainGroup.node.city && (
+                    <div>
+                      <p css={th}>市区町村</p>
+                      <p css={td}>{mainGroup.node.city}</p>
+                    </div>
+                  )}
+                  {mainGroup.node.address && (
+                    <div>
+                      <p css={th}>番地等</p>
+                      <p css={td}>{mainGroup.node.address}</p>
+                    </div>
+                  )}
+                  {mainGroup.node.tel && (
+                    <div>
+                      <p css={th}>電話番号</p>
+                      <p css={td}>{mainGroup.node.tel}</p>
+                    </div>
+                  )}
+                  {mainGroup.node.group_web_url && (
+                    <div>
+                      <p css={th}>団体Webサイト</p>
+                      <p css={td}>
+                        <a href={mainGroup.node.group_web_url} target="_blank">
+                          {mainGroup.node.group_web_url}
+                        </a>
+                      </p>
+                    </div>
+                  )}
+                  {mainGroup.node.etc_web_url1 && (
+                    <div>
+                      <p css={th}>その他のWebサイト</p>
+                      <p css={td}>
+                        <a href={mainGroup.node.etc_web_url1} target="_blank">
+                          {mainGroup.node.etc_web_url1}
+                        </a>
+                      </p>
+                    </div>
+                  )}
+                </div>
                 <table css={table}>
                   <tbody>
                     {legalPersonality && (
@@ -268,6 +338,26 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
             </div>
             <div id="secondItem">
               <DetailItemWrapper itemName="代表者情報">
+                <div tw="hidden lg:block">
+                  {mainGroup.node.representative_kana && (
+                    <div>
+                      <p css={th}>フリガナ</p>
+                      <p css={td}>{mainGroup.node.representative_kana}</p>
+                    </div>
+                  )}
+                  {mainGroup.node.representative_name && (
+                    <div>
+                      <p css={th}>氏名</p>
+                      <p css={td}>{mainGroup.node.representative_name}</p>
+                    </div>
+                  )}
+                  {mainGroup.node.representative_post && (
+                    <div>
+                      <p css={th}>役職</p>
+                      <p css={td}>{mainGroup.node.representative_post}</p>
+                    </div>
+                  )}
+                </div>
                 <table css={table}>
                   <tbody>
                     {mainGroup.node.representative_kana && (
@@ -291,35 +381,84 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
                   </tbody>
                 </table>
                 {mainGroup.node.representative_name2 && (
-                  <table css={table} tw="mt-2.5">
-                    <tbody>
+                  <div>
+                    <div tw="hidden lg:block">
                       {mainGroup.node.representative_kana2 && (
-                        <tr css={tr}>
-                          <th css={th}>フリガナ</th>
-                          <td css={td}>
-                            {mainGroup.node.representative_kana2}
-                          </td>
-                        </tr>
+                        <div>
+                          <p css={th}>フリガナ</p>
+                          <p css={td}>{mainGroup.node.representative_kana2}</p>
+                        </div>
                       )}
-                      <tr css={tr}>
-                        <th css={th}>氏名</th>
-                        <td css={td}>{mainGroup.node.representative_name2}</td>
-                      </tr>
+                      <div>
+                        <p css={th}>氏名</p>
+                        <p css={td}>{mainGroup.node.representative_name2}</p>
+                      </div>
                       {mainGroup.node.representative_post2 && (
+                        <div>
+                          <p css={th}>役職</p>
+                          <p css={td}>{mainGroup.node.representative_post2}</p>
+                        </div>
+                      )}
+                    </div>
+                    <table css={table} tw="mt-2.5 ">
+                      <tbody>
+                        {mainGroup.node.representative_kana2 && (
+                          <tr css={tr}>
+                            <th css={th}>フリガナ</th>
+                            <td css={td}>
+                              {mainGroup.node.representative_kana2}
+                            </td>
+                          </tr>
+                        )}
                         <tr css={tr}>
-                          <th css={th}>役職</th>
+                          <th css={th}>氏名</th>
                           <td css={td}>
-                            {mainGroup.node.representative_post2}
+                            {mainGroup.node.representative_name2}
                           </td>
                         </tr>
-                      )}
-                    </tbody>
-                  </table>
+                        {mainGroup.node.representative_post2 && (
+                          <tr css={tr}>
+                            <th css={th}>役職</th>
+                            <td css={td}>
+                              {mainGroup.node.representative_post2}
+                            </td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
                 )}
               </DetailItemWrapper>
             </div>
             <div id="thirdItem">
               <DetailItemWrapper itemName="役員">
+                <div tw="hidden lg:block">
+                  {mainGroup.node.number_of_officers && (
+                    <div>
+                      <p css={th1}>役員数</p>
+                      <p css={td}>{mainGroup.node.number_of_officers}名</p>
+                    </div>
+                  )}
+                  {mainGroup.node.people_director && (
+                    <div>
+                      <p css={th2Sub}></p>
+                      <p css={th2}>理事・取締役数</p>
+                      <p css={td}>{mainGroup.node.people_director}名</p>
+                    </div>
+                  )}
+                  {mainGroup.node.councilor && (
+                    <div>
+                      <p css={th2}>評議員数</p>
+                      <p css={td}>{mainGroup.node.councilor}名</p>
+                    </div>
+                  )}
+                  {mainGroup.node.auditor_people && (
+                    <div>
+                      <p css={th2}>監事/監査役・会計参与数</p>
+                      <p css={td}>{mainGroup.node.auditor_people}名</p>
+                    </div>
+                  )}
+                </div>
                 <table css={table}>
                   <tbody>
                     {mainGroup.node.number_of_officers && (
@@ -355,6 +494,59 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
             </div>
             <div id="fourthItem">
               <DetailItemWrapper itemName="職員・従業員">
+                <div tw="hidden lg:block">
+                  {mainGroup.node.number_of_employees && (
+                    <div>
+                      <p css={th1}>職員・従業員数</p>
+                      <p css={td}>{mainGroup.node.number_of_employees}名</p>
+                    </div>
+                  )}
+                  {mainGroup.node.fulltime_employees && (
+                    <div>
+                      <p css={th2Sub}></p>
+                      <p css={th3}>常勤職員・従業員数</p>
+                      <p css={td}>{mainGroup.node.fulltime_employees}名</p>
+                    </div>
+                  )}
+                  <div tw="flex w-full">
+                    {mainGroup.node.fulltime_paid && (
+                      <div tw="flex w-full">
+                        <p css={th3} tw="w-[40%] py-2">
+                          有給数
+                        </p>
+                        <p css={td}>{mainGroup.node.fulltime_paid}名</p>
+                      </div>
+                    )}
+                    <div tw="flex w-full">
+                      <p css={th3} tw="w-[40%] py-2">
+                        無給数
+                      </p>
+                      <p css={td}>{mainGroup.node.fulltime_unpaid}名</p>
+                    </div>
+                  </div>
+                  {mainGroup.node.parttime_employees && (
+                    <div>
+                      <p css={th3}>非常勤職員・従業員数</p>
+                      <p css={td}>{mainGroup.node.parttime_employees}名</p>
+                    </div>
+                  )}
+                  <div tw="flex w-full">
+                    {mainGroup.node.parttime_paid && (
+                      <div tw="flex w-full">
+                        <p css={th3} tw="w-[40%] py-2">
+                          有給数
+                        </p>
+                        <p css={td}>{mainGroup.node.parttime_paid}名</p>
+                      </div>
+                    )}
+                    <div tw="flex w-full">
+                      <p css={th3} tw="w-[40%] py-2">
+                        無給数
+                      </p>
+                      <p css={td}>{mainGroup.node.parttime_unpaid}名</p>
+                    </div>
+                  </div>
+                </div>
                 <table css={table}>
                   <tbody>
                     {mainGroup.node.number_of_employees && (
@@ -381,12 +573,10 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
                         <td css={td}>{mainGroup.node.fulltime_paid}名</td>
                       </tr>
                     )}
-                    {mainGroup.node.fulltime_unpaid && (
-                      <tr css={tr}>
-                        <th css={th3}>無給数</th>
-                        <td css={td}>{mainGroup.node.fulltime_unpaid}名</td>
-                      </tr>
-                    )}
+                    <tr css={tr}>
+                      <th css={th3}>無給数</th>
+                      <td css={td}>{mainGroup.node.fulltime_unpaid}名</td>
+                    </tr>
                     {mainGroup.node.parttime_employees && (
                       <tr css={tr}>
                         <th css={th3} colSpan={2}>
@@ -402,18 +592,34 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
                         <td css={td}>{mainGroup.node.parttime_paid}名</td>
                       </tr>
                     )}
-                    {mainGroup.node.parttime_unpaid && (
-                      <tr css={tr}>
-                        <th css={th3}>無給数</th>
-                        <td css={td}>{mainGroup.node.parttime_unpaid}名</td>
-                      </tr>
-                    )}
+                    <tr css={tr}>
+                      <th css={th3}>無給数</th>
+                      <td css={td}>{mainGroup.node.parttime_unpaid}名</td>
+                    </tr>
                   </tbody>
                 </table>
               </DetailItemWrapper>
             </div>
             <div id="fifthItem">
-              <DetailItemWrapper itemName="代表者情報">
+              <DetailItemWrapper itemName="組織評価">
+                <div tw="hidden lg:block">
+                  {mainGroup.node.organization_measure && (
+                    <div>
+                      <p css={thLong}>過去3年以内に組織評価を受けているか</p>
+                      <p css={td}>
+                        {mainGroup.node.organization_measure === "1"
+                          ? "受けている"
+                          : "受けていない"}
+                      </p>
+                    </div>
+                  )}
+                  {mainGroup.node.certification_body && (
+                    <div>
+                      <p css={thLong}>認証機関/認証制度名/認証年度</p>
+                      <p css={td}>{mainGroup.node.certification_body}</p>
+                    </div>
+                  )}
+                </div>
                 <table css={table}>
                   <tbody>
                     {mainGroup.node.organization_measure && (
