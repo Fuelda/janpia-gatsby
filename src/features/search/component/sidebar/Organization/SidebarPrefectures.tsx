@@ -15,7 +15,7 @@ const SidebarPrefectures = (props: { category: string }) => {
       : target_area.join(" / ");
 
   return (
-    <div>
+    <div tw="lg:hidden">
       <h3 css={h3}>
         {props.category === "prefectures" ? "団体所在地" : "事業対象地域"}
       </h3>

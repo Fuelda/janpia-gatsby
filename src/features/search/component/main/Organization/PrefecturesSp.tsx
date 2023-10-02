@@ -15,7 +15,7 @@ const PrefecturesSp = (props: { category: string }) => {
       : target_area.join(" / ");
 
   return (
-    <div>
+    <div tw="hidden lg:block">
       <h3 css={h3}>
         {props.category === "prefectures" ? "団体所在地" : "事業対象地域"}
       </h3>

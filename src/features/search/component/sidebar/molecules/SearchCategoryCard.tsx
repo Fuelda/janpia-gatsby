@@ -17,6 +17,7 @@ import SdgsGoal from "../../main/Issue/SdgsGoal";
 import SidebarPrefectures from "../Organization/SidebarPrefectures";
 import BusinessTypeName from "../../main/Business/BusinessTypeName";
 import { useLocation } from "@reach/router";
+import PrefecturesSp from "../../main/Organization/PrefecturesSp";
 
 const SearchCategoryCard = (props: { category: string }) => {
   const [isOpen, setIsOpen] = useState(true);
@@ -50,6 +51,7 @@ const SearchCategoryCard = (props: { category: string }) => {
           <OrganizationName path={path} />
           <OrganizationTypeCd path={path} />
           <SidebarPrefectures category="prefectures" />
+          <PrefecturesSp category="prefectures" />
           <LegalPersonality path={path} />
         </div>
       )}
@@ -64,6 +66,7 @@ const SearchCategoryCard = (props: { category: string }) => {
           <SubsidyAmount path={path} />
           <BusinessStatus path={path} />
           <SidebarPrefectures category="targetArea" />
+          <PrefecturesSp category="targetArea" />
         </div>
       )}
       {props.category === "issue" && (

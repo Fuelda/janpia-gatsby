@@ -14,7 +14,10 @@ const Header = () => {
   const path = location.pathname;
 
   return (
-    <div tw="fixed top-0 w-screen bg-white z-30">
+    <div
+      tw="fixed top-0 w-screen bg-white z-30"
+      css={path === "/result/status/" && tw`hidden`}
+    >
       <div css={[wrapper, wrapperSp]}>
         <div css={hCenter} tw="justify-between py-1.5">
           <Link to="/" tw="gap-3" css={hCenter}>

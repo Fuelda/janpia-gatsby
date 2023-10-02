@@ -4,7 +4,7 @@ import "@fontsource-variable/noto-sans-jp";
 import "../../styles/global.css";
 import Header from "./Header";
 import Footer from "./Footer";
-import { GlobalStyles } from "twin.macro";
+import tw, { GlobalStyles } from "twin.macro";
 import "twin.macro";
 import { wrapper } from "../../styles/base";
 import { useFilteredStrapiContext } from "../../context/filteredStrapiContext";
@@ -13,18 +13,28 @@ import Modal from "react-modal";
 import { useModalContext } from "../../context/modalContext";
 import ModalPrefectures from "../../features/search/component/sidebar/modal/ModalPrefectures";
 import ModalPrefecturesSp from "../../features/search/component/sidebar/modal/ModalPrefecturesSp";
+import { useLocation } from "@reach/router";
 
 Modal.setAppElement("#___gatsby");
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const filteredAllBizPlan = useFilteredStrapiContext();
   const { isModalOpen, setIsModalOpen } = useModalContext();
+  const location = useLocation();
+  const path = location.pathname;
+
   console.log(filteredAllBizPlan);
+
   return (
     <div tw="relative">
       <GlobalStyles />
       <Header />
-      <main css={wrapper} tw="pt-[82px] lg:(pt-[100px])">
+      <main
+        css={[
+          wrapper,
+          path === "/result/status/" ? tw`pt-0` : tw`pt-[82px] lg:(pt-[100px])`,
+        ]}
+      >
         {children}
       </main>
       <Footer />

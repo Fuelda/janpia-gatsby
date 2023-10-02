@@ -3,10 +3,17 @@ import React from "react";
 import "twin.macro";
 import { hCenter, wrapper, wrapperSp } from "../../styles/base";
 import { StaticImage } from "gatsby-plugin-image";
+import { useLocation } from "@reach/router";
+import tw from "twin.macro";
 
 const Footer = () => {
+  const location = useLocation();
+  const path = location.pathname;
   return (
-    <div tw="bg-blue-base w-full pt-6 pb-4">
+    <div
+      tw="bg-blue-base w-full pt-6 pb-4"
+      css={path === "/result/status/" && tw`hidden`}
+    >
       <div css={[wrapper, wrapperSp]}>
         <div tw="flex justify-between lg:(flex-col gap-8)">
           <div>

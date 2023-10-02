@@ -8,6 +8,7 @@ import { businessCategoryArray } from "../../features/search/store/filterContent
 import { useFilteredStrapiContext } from "../../context/filteredStrapiContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import DetailSelector from "../organisms/DetailSelector";
 
 const resultCardTip = tw`text-xs py-1 px-1.5 border border-gray-base text-gray-base`;
 
@@ -171,6 +172,9 @@ const DetailHeader = (props: { business_cd: string }) => {
             <p>{businessCategoryLabel}</p>
           </div>
         )}
+      </div>
+      <div>
+        <DetailSelector slug={props.business_cd} />
       </div>
     </div>
   );

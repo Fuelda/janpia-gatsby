@@ -8,10 +8,11 @@ import "twin.macro";
 import "@fontsource-variable/noto-sans-jp";
 import "../../styles/global.css";
 import { GlobalStyles } from "twin.macro";
+import Layout from "../../components/lauout/Layout";
 
 const Status = () => {
   return (
-    <div>
+    <Layout>
       <GlobalStyles />
       <div tw="py-5" css={wrapperSp}>
         <div tw="justify-between" css={hCenter}>
@@ -24,7 +25,7 @@ const Status = () => {
           <SearchSideBar />
         </div>
       </div>
-    </div>
+    </Layout>
   );
 };
 
