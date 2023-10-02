@@ -24,7 +24,7 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
       <DetailHeader business_cd={slug} />
       <div css={detailFlex}>
         <DetailSidebar slug={slug} />
-        <DetailWrapper category="事業完了報告">
+        <DetailWrapper category="事業完了報告" slug={slug}>
           <div css={detailBody}>
             {strapiCompleteReportManual ? (
               <div>

@@ -9,10 +9,12 @@ import DetailAnchor from "../components/atoms/DetailAnchor";
 import DetailItemWrapper from "../components/lauout/DetailItemWrapper";
 import {
   table,
+  tableScroll,
   td,
   td3col,
   tdLshape,
   tdLshapeWrapper,
+  tdScroll,
   th,
   th1,
   th1_2,
@@ -22,6 +24,7 @@ import {
   th2_2,
   thLshape,
   thLshapeSub,
+  thScroll,
   thead,
   theadLshape,
   tr,
@@ -100,7 +103,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
       <DetailHeader business_cd={slug} />
       <div css={detailFlex} tw="relative">
         <DetailSidebar slug={slug} />
-        <DetailWrapper category="事業計画">
+        <DetailWrapper category="事業計画" slug={slug}>
           {strapiBizPlan && (
             <div>
               <div css={detailAnchor}>
@@ -263,44 +266,80 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                 </div>
                 <div id="secondItem">
                   <DetailItemWrapper itemName="SDGsとの関連">
-                    <table css={table}>
-                      <thead css={thead}>
-                        <tr css={tr}>
-                          <th css={th}>ゴール</th>
-                          <td css={td}>ターゲット</td>
-                          <td css={td}>関連性の説明</td>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {bizPlanSubSdgs &&
-                          bizPlanSubSdgs.map((sdgs: any) => (
-                            <tr key={sdgs}>
-                              <th css={td}>
-                                {
-                                  sdgsGoalArray.find(
-                                    (sg) => sg.code === sdgs.node.sdgs_goal
-                                  )?.label
-                                }
-                              </th>
-                              <td css={td3col}>{sdgs.node.sdgs_target}</td>
-                              <td css={td3col}>
-                                <div
-                                  dangerouslySetInnerHTML={{
-                                    __html:
-                                      sdgs.node.sdgs_description.data
-                                        .childMarkdownRemark.html,
-                                  }}
-                                />
-                              </td>
-                            </tr>
-                          ))}
-                      </tbody>
-                    </table>
+                    <div tw="overflow-scroll">
+                      <table css={[table, tableScroll]}>
+                        <thead css={thead}>
+                          <tr css={tr}>
+                            <th css={thScroll}>ゴール</th>
+                            <td css={tdScroll}>ターゲット</td>
+                            <td css={tdScroll}>関連性の説明</td>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {bizPlanSubSdgs &&
+                            bizPlanSubSdgs.map((sdgs: any) => (
+                              <tr key={sdgs}>
+                                <th css={tdScroll}>
+                                  {
+                                    sdgsGoalArray.find(
+                                      (sg) => sg.code === sdgs.node.sdgs_goal
+                                    )?.label
+                                  }
+                                </th>
+                                <td css={td3col}>{sdgs.node.sdgs_target}</td>
+                                <td css={td3col}>
+                                  <div
+                                    dangerouslySetInnerHTML={{
+                                      __html:
+                                        sdgs.node.sdgs_description.data
+                                          .childMarkdownRemark.html,
+                                    }}
+                                  />
+                                </td>
+                              </tr>
+                            ))}
+                        </tbody>
+                      </table>
+                    </div>
                   </DetailItemWrapper>
                 </div>
                 <div id="thirdItem">
                   <DetailItemWrapper itemName="団体の社会的役割">
-                    <table css={table}>
+                    <div tw="hidden lg:block">
+                      {strapiBizPlan.vision &&
+                        strapiBizPlan.vision.data.childMarkdownRemark.html !==
+                          "" && (
+                          <div>
+                            <p css={th}>団体の役割</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.vision.data
+                                      .childMarkdownRemark.html,
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.mission &&
+                        strapiBizPlan.mission.data.childMarkdownRemark.html !==
+                          "" && (
+                          <div>
+                            <p css={th}>団体の概要・活動・業務</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.mission.data
+                                      .childMarkdownRemark.html,
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                    </div>
+                    <table css={table} tw="lg:hidden">
                       <tbody>
                         {strapiBizPlan.vision &&
                           strapiBizPlan.vision.data.childMarkdownRemark.html !==
@@ -340,7 +379,52 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                 </div>
                 <div id="fourthItem">
                   <DetailItemWrapper itemName="概要">
-                    <table css={table}>
+                    <div tw="hidden lg:block">
+                      {strapiBizPlan.business_overview &&
+                        strapiBizPlan.business_overview.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div>
+                            <p css={th}>事業概要</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.business_overview.data
+                                      .childMarkdownRemark.html,
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.business_period_s && (
+                        <div>
+                          <p css={th}>事業期間</p>
+                          <div tw="flex w-full">
+                            <p tw="bg-blue-base border border-gray-border text-sm w-24 py-2 px-2">
+                              開始日{" "}
+                            </p>
+                            <p css={td} tw="text-sm">
+                              {formatDate(strapiBizPlan.business_period_s)}
+                            </p>
+                          </div>
+                          <div tw="flex w-full">
+                            <p tw="bg-blue-base border border-gray-border text-sm w-24 py-2 px-2">
+                              終了日{" "}
+                            </p>
+                            <p css={td} tw="text-sm">
+                              {formatDate(strapiBizPlan.business_period_e)}
+                            </p>
+                          </div>
+                        </div>
+                      )}
+                      {strapiBizPlan.target_area && (
+                        <div>
+                          <p css={th}>対象地域</p>
+                          <p css={td}>{strapiBizPlan.target_area}</p>
+                        </div>
+                      )}
+                    </div>
+                    <table css={table} tw="lg:hidden">
                       <tbody>
                         {strapiBizPlan.business_overview &&
                           strapiBizPlan.business_overview.data
@@ -381,7 +465,73 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                         )}
                       </tbody>
                     </table>
-                    <table css={table}>
+                    <div tw="hidden lg:block">
+                      {strapiBizPlan.direct_target_grp &&
+                        strapiBizPlan.direct_target_grp.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div>
+                            <p css={th1_2}>直接的対象グループ</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.direct_target_grp.data
+                                      .childMarkdownRemark.html,
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.direct_target_cnt &&
+                        strapiBizPlan.direct_target_cnt.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div tw="flex w-full">
+                            <p css={th2_2}>人数</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.direct_target_cnt.data
+                                      .childMarkdownRemark.html,
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.beneficiary &&
+                        strapiBizPlan.beneficiary.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div>
+                            <p css={th1_2}>最終受益者</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.beneficiary.data
+                                      .childMarkdownRemark.html,
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.beneficiary_cnt &&
+                        strapiBizPlan.beneficiary_cnt.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div tw="flex w-full">
+                            <p css={th2_2}>人数</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.beneficiary_cnt.data
+                                      .childMarkdownRemark.html,
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                    </div>
+                    <table css={table} tw="lg:hidden">
                       <tbody>
                         {strapiBizPlan.direct_target_grp &&
                           strapiBizPlan.direct_target_grp.data
@@ -455,7 +605,58 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                           )}
                       </tbody>
                     </table>
-                    <table css={table}>
+                    <div tw="hidden lg:block">
+                      {strapiBizPlan.business_target_fdo &&
+                        strapiBizPlan.business_target_fdo.data
+                          .childMarkdownRemark.html !== "" && (
+                          <div>
+                            <p css={th}>
+                              事業対象者（助成で見込む最終受益者）・内容
+                            </p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.business_target_fdo.data
+                                      .childMarkdownRemark.html,
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.business_target_ado &&
+                        strapiBizPlan.business_target_ado.data
+                          .childMarkdownRemark.html !== "" && (
+                          <div>
+                            <p css={th}>
+                              事業対象者（事業で直接介入する対象者と、その他最終受益者を含む）・
+                              内容
+                            </p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.business_target_ado.data
+                                      .childMarkdownRemark.html,
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.buy_real_estate && (
+                        <div>
+                          <p css={th}>
+                            本事業における、不動産（土地・建物）購入の有無
+                          </p>
+                          <p css={td}>
+                            {strapiBizPlan.buy_real_estate === "1"
+                              ? "あり"
+                              : "なし"}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                    <table css={table} tw="lg:hidden">
                       <tbody>
                         {strapiBizPlan.business_target_fdo &&
                           strapiBizPlan.business_target_fdo.data
@@ -512,7 +713,77 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                 </div>
                 <div id="fifthItem">
                   <DetailItemWrapper itemName="事業の背景・課題">
-                    <table css={table}>
+                    <div tw="hidden lg:block">
+                      {strapiBizPlan.social_issues &&
+                        strapiBizPlan.social_issues.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div>
+                            <p css={th}>社会課題</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.social_issues.data
+                                      .childMarkdownRemark.html,
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.task_administration &&
+                        strapiBizPlan.task_administration.data
+                          .childMarkdownRemark.html !== "" && (
+                          <div>
+                            <p css={th}>
+                              課題に対する行政等による既存の取組み状況
+                            </p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.task_administration.data
+                                      .childMarkdownRemark.html,
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.task_request_account &&
+                        strapiBizPlan.task_request_account.data
+                          .childMarkdownRemark.html !== "" && (
+                          <div>
+                            <p css={th}>課題に対する申請団体の既存の取組状況</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.task_request_account.data
+                                      .childMarkdownRemark.html,
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.significance &&
+                        strapiBizPlan.significance.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div>
+                            <p css={th}>
+                              休眠預金等交付金に係わる資金の活用により本事業を実施する意義
+                            </p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.significance.data
+                                      .childMarkdownRemark.html,
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                    </div>
+                    <table css={table} tw="lg:hidden">
                       <tbody>
                         {strapiBizPlan.social_issues &&
                           strapiBizPlan.social_issues.data.childMarkdownRemark
@@ -646,7 +917,57 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           />
                                         </td>
                                       </tr>
-                                      <tr css={tr}>
+
+                                      <tr css={tr} tw="hidden lg:block">
+                                        <p css={th}>モニタリング</p>
+                                        <p css={td}>
+                                          <div
+                                            dangerouslySetInnerHTML={{
+                                              __html:
+                                                item.node.goals_monitoring.data
+                                                  .childMarkdownRemark.html,
+                                            }}
+                                          />
+                                        </p>
+                                      </tr>
+                                      <tr css={tr} tw="hidden lg:block">
+                                        <p css={th}>初期値/初期状態</p>
+                                        <p css={td}>
+                                          <div
+                                            dangerouslySetInnerHTML={{
+                                              __html:
+                                                item.node.goals_initial.data
+                                                  .childMarkdownRemark.html,
+                                            }}
+                                          />
+                                        </p>
+                                      </tr>
+                                      <tr css={tr} tw="hidden lg:block">
+                                        <p css={th}>中間評価時の値/状態</p>
+                                        <p css={td}>
+                                          <div
+                                            dangerouslySetInnerHTML={{
+                                              __html:
+                                                item.node.goals_mid_eval.data
+                                                  .childMarkdownRemark.html,
+                                            }}
+                                          />
+                                        </p>
+                                      </tr>
+                                      <tr css={tr} tw="hidden lg:block">
+                                        <p css={th}>事後評価時の値/状態</p>
+                                        <p css={td}>
+                                          <div
+                                            dangerouslySetInnerHTML={{
+                                              __html:
+                                                item.node.goals_aft_eval.data
+                                                  .childMarkdownRemark.html,
+                                            }}
+                                          />
+                                        </p>
+                                      </tr>
+
+                                      <tr css={tr} tw="lg:hidden">
                                         <th css={th}>モニタリング</th>
                                         <td css={td}>
                                           <div
@@ -658,7 +979,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           />
                                         </td>
                                       </tr>
-                                      <tr css={tr}>
+                                      <tr css={tr} tw="lg:hidden">
                                         <th css={th}>初期値/初期状態</th>
                                         <td css={td}>
                                           <div
@@ -670,7 +991,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           />
                                         </td>
                                       </tr>
-                                      <tr css={tr}>
+                                      <tr css={tr} tw="lg:hidden">
                                         <th css={th}>中間評価時の値/状態</th>
                                         <td css={td}>
                                           <div
@@ -682,7 +1003,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           />
                                         </td>
                                       </tr>
-                                      <tr css={tr}>
+                                      <tr css={tr} tw="lg:hidden">
                                         <th css={th}>事後評価時の値/状態</th>
                                         <td css={td}>
                                           <div
@@ -720,7 +1041,57 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           />
                                         </td>
                                       </tr>
-                                      <tr css={tr}>
+
+                                      <tr css={tr} tw="hidden lg:block">
+                                        <p css={th}>モニタリング</p>
+                                        <p css={td}>
+                                          <div
+                                            dangerouslySetInnerHTML={{
+                                              __html:
+                                                item.node.goals_monitoring.data
+                                                  .childMarkdownRemark.html,
+                                            }}
+                                          />
+                                        </p>
+                                      </tr>
+                                      <tr css={tr} tw="hidden lg:block">
+                                        <p css={th}>初期値/初期状態</p>
+                                        <p css={td}>
+                                          <div
+                                            dangerouslySetInnerHTML={{
+                                              __html:
+                                                item.node.goals_initial.data
+                                                  .childMarkdownRemark.html,
+                                            }}
+                                          />
+                                        </p>
+                                      </tr>
+                                      <tr css={tr} tw="hidden lg:block">
+                                        <p css={th}>中間評価時の値/状態</p>
+                                        <p css={td}>
+                                          <div
+                                            dangerouslySetInnerHTML={{
+                                              __html:
+                                                item.node.goals_mid_eval.data
+                                                  .childMarkdownRemark.html,
+                                            }}
+                                          />
+                                        </p>
+                                      </tr>
+                                      <tr css={tr} tw="hidden lg:block">
+                                        <p css={th}>事後評価時の値/状態</p>
+                                        <p css={td}>
+                                          <div
+                                            dangerouslySetInnerHTML={{
+                                              __html:
+                                                item.node.goals_aft_eval.data
+                                                  .childMarkdownRemark.html,
+                                            }}
+                                          />
+                                        </p>
+                                      </tr>
+
+                                      <tr css={tr} tw="lg:hidden">
                                         <th css={th}>モニタリング</th>
                                         <td css={td}>
                                           <div
@@ -732,7 +1103,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           />
                                         </td>
                                       </tr>
-                                      <tr css={tr}>
+                                      <tr css={tr} tw="lg:hidden">
                                         <th css={th}>初期値/初期状態</th>
                                         <td css={td}>
                                           <div
@@ -744,7 +1115,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           />
                                         </td>
                                       </tr>
-                                      <tr css={tr}>
+                                      <tr css={tr} tw="lg:hidden">
                                         <th css={th}>中間評価時の値/状態</th>
                                         <td css={td}>
                                           <div
@@ -756,7 +1127,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           />
                                         </td>
                                       </tr>
-                                      <tr css={tr}>
+                                      <tr css={tr} tw="lg:hidden">
                                         <th css={th}>事後評価時の値/状態</th>
                                         <td css={td}>
                                           <div
@@ -795,7 +1166,57 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         />
                                       </td>
                                     </tr>
-                                    <tr css={tr}>
+
+                                    <tr css={tr} tw="hidden lg:block">
+                                      <p css={th}>モニタリング</p>
+                                      <p css={td}>
+                                        <div
+                                          dangerouslySetInnerHTML={{
+                                            __html:
+                                              item.node.output_monitor.data
+                                                .childMarkdownRemark.html,
+                                          }}
+                                        />
+                                      </p>
+                                    </tr>
+                                    <tr css={tr} tw="hidden lg:block">
+                                      <p css={th}>初期値/初期状態</p>
+                                      <p css={td}>
+                                        <div
+                                          dangerouslySetInnerHTML={{
+                                            __html:
+                                              item.node.output_initial.data
+                                                .childMarkdownRemark.html,
+                                          }}
+                                        />
+                                      </p>
+                                    </tr>
+                                    <tr css={tr} tw="hidden lg:block">
+                                      <p css={th}>中間評価時の値/状態</p>
+                                      <p css={td}>
+                                        <div
+                                          dangerouslySetInnerHTML={{
+                                            __html:
+                                              item.node.output_mid_eval.data
+                                                .childMarkdownRemark.html,
+                                          }}
+                                        />
+                                      </p>
+                                    </tr>
+                                    <tr css={tr} tw="hidden lg:block">
+                                      <p css={th}>事後評価時の値/状態</p>
+                                      <p css={td}>
+                                        <div
+                                          dangerouslySetInnerHTML={{
+                                            __html:
+                                              item.node.output_aft_eval.data
+                                                .childMarkdownRemark.html,
+                                          }}
+                                        />
+                                      </p>
+                                    </tr>
+
+                                    <tr css={tr} tw="lg:hidden">
                                       <th css={th}>モニタリング</th>
                                       <td css={td}>
                                         <div
@@ -807,7 +1228,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         />
                                       </td>
                                     </tr>
-                                    <tr css={tr}>
+                                    <tr css={tr} tw="lg:hidden">
                                       <th css={th}>初期値/初期状態</th>
                                       <td css={td}>
                                         <div
@@ -819,7 +1240,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         />
                                       </td>
                                     </tr>
-                                    <tr css={tr}>
+                                    <tr css={tr} tw="lg:hidden">
                                       <th css={th}>中間評価時の値/状態</th>
                                       <td css={td}>
                                         <div
@@ -831,7 +1252,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         />
                                       </td>
                                     </tr>
-                                    <tr css={tr}>
+                                    <tr css={tr} tw="lg:hidden">
                                       <th css={th}>事後評価時の値/状態</th>
                                       <td css={td}>
                                         <div
@@ -868,7 +1289,57 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           />
                                         </td>
                                       </tr>
-                                      <tr css={tr}>
+
+                                      <tr css={tr} tw="hidden lg:block">
+                                        <p css={th}>モニタリング</p>
+                                        <p css={td}>
+                                          <div
+                                            dangerouslySetInnerHTML={{
+                                              __html:
+                                                item.node.output_monitor.data
+                                                  .childMarkdownRemark.html,
+                                            }}
+                                          />
+                                        </p>
+                                      </tr>
+                                      <tr css={tr} tw="hidden lg:block">
+                                        <p css={th}>初期値/初期状態</p>
+                                        <p css={td}>
+                                          <div
+                                            dangerouslySetInnerHTML={{
+                                              __html:
+                                                item.node.output_initial.data
+                                                  .childMarkdownRemark.html,
+                                            }}
+                                          />
+                                        </p>
+                                      </tr>
+                                      <tr css={tr} tw="hidden lg:block">
+                                        <p css={th}>中間評価時の値/状態</p>
+                                        <p css={td}>
+                                          <div
+                                            dangerouslySetInnerHTML={{
+                                              __html:
+                                                item.node.output_mid_eval.data
+                                                  .childMarkdownRemark.html,
+                                            }}
+                                          />
+                                        </p>
+                                      </tr>
+                                      <tr css={tr} tw="hidden lg:block">
+                                        <p css={th}>事後評価時の値/状態</p>
+                                        <p css={td}>
+                                          <div
+                                            dangerouslySetInnerHTML={{
+                                              __html:
+                                                item.node.output_aft_eval.data
+                                                  .childMarkdownRemark.html,
+                                            }}
+                                          />
+                                        </p>
+                                      </tr>
+
+                                      <tr css={tr} tw="lg:hidden">
                                         <th css={th}>モニタリング</th>
                                         <td css={td}>
                                           <div
@@ -880,7 +1351,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           />
                                         </td>
                                       </tr>
-                                      <tr css={tr}>
+                                      <tr css={tr} tw="lg:hidden">
                                         <th css={th}>初期値/初期状態</th>
                                         <td css={td}>
                                           <div
@@ -892,7 +1363,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           />
                                         </td>
                                       </tr>
-                                      <tr css={tr}>
+                                      <tr css={tr} tw="lg:hidden">
                                         <th css={th}>中間評価時の値/状態</th>
                                         <td css={td}>
                                           <div
@@ -904,7 +1375,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           />
                                         </td>
                                       </tr>
-                                      <tr css={tr}>
+                                      <tr css={tr} tw="lg:hidden">
                                         <th css={th}>事後評価時の値/状態</th>
                                         <td css={td}>
                                           <div
@@ -947,7 +1418,57 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         />
                                       </td>
                                     </tr>
-                                    <tr css={tr}>
+
+                                    <tr css={tr} tw="hidden lg:block">
+                                      <p css={th}>モニタリング</p>
+                                      <p css={td}>
+                                        <div
+                                          dangerouslySetInnerHTML={{
+                                            __html:
+                                              item.node.goals_monitoring.data
+                                                .childMarkdownRemark.html,
+                                          }}
+                                        />
+                                      </p>
+                                    </tr>
+                                    <tr css={tr} tw="hidden lg:block">
+                                      <p css={th}>初期値/初期状態</p>
+                                      <p css={td}>
+                                        <div
+                                          dangerouslySetInnerHTML={{
+                                            __html:
+                                              item.node.goals_initial.data
+                                                .childMarkdownRemark.html,
+                                          }}
+                                        />
+                                      </p>
+                                    </tr>
+                                    <tr css={tr} tw="hidden lg:block">
+                                      <p css={th}>中間評価時の値/状態</p>
+                                      <p css={td}>
+                                        <div
+                                          dangerouslySetInnerHTML={{
+                                            __html:
+                                              item.node.goals_mid_eval.data
+                                                .childMarkdownRemark.html,
+                                          }}
+                                        />
+                                      </p>
+                                    </tr>
+                                    <tr css={tr} tw="hidden lg:block">
+                                      <p css={th}>事後評価時の値/状態</p>
+                                      <p css={td}>
+                                        <div
+                                          dangerouslySetInnerHTML={{
+                                            __html:
+                                              item.node.goals_aft_eval.data
+                                                .childMarkdownRemark.html,
+                                          }}
+                                        />
+                                      </p>
+                                    </tr>
+
+                                    <tr css={tr} tw="lg:hidden">
                                       <th css={th}>モニタリング</th>
                                       <td css={td}>
                                         <div
@@ -959,7 +1480,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         />
                                       </td>
                                     </tr>
-                                    <tr css={tr}>
+                                    <tr css={tr} tw="lg:hidden">
                                       <th css={th}>初期値/初期状態</th>
                                       <td css={td}>
                                         <div
@@ -971,7 +1492,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         />
                                       </td>
                                     </tr>
-                                    <tr css={tr}>
+                                    <tr css={tr} tw="lg:hidden">
                                       <th css={th}>中間評価時の値/状態</th>
                                       <td css={td}>
                                         <div
@@ -983,7 +1504,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         />
                                       </td>
                                     </tr>
-                                    <tr css={tr}>
+                                    <tr css={tr} tw="lg:hidden">
                                       <th css={th}>事後評価時の値/状態</th>
                                       <td css={td}>
                                         <div
@@ -1021,7 +1542,57 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         />
                                       </td>
                                     </tr>
-                                    <tr css={tr}>
+
+                                    <tr css={tr} tw="hidden lg:block">
+                                      <p css={th}>モニタリング</p>
+                                      <p css={td}>
+                                        <div
+                                          dangerouslySetInnerHTML={{
+                                            __html:
+                                              item.node.output_monitor.data
+                                                .childMarkdownRemark.html,
+                                          }}
+                                        />
+                                      </p>
+                                    </tr>
+                                    <tr css={tr} tw="hidden lg:block">
+                                      <p css={th}>初期値/初期状態</p>
+                                      <p css={td}>
+                                        <div
+                                          dangerouslySetInnerHTML={{
+                                            __html:
+                                              item.node.output_initial.data
+                                                .childMarkdownRemark.html,
+                                          }}
+                                        />
+                                      </p>
+                                    </tr>
+                                    <tr css={tr} tw="hidden lg:block">
+                                      <p css={th}>中間評価時の値/状態</p>
+                                      <p css={td}>
+                                        <div
+                                          dangerouslySetInnerHTML={{
+                                            __html:
+                                              item.node.output_mid_eval.data
+                                                .childMarkdownRemark.html,
+                                          }}
+                                        />
+                                      </p>
+                                    </tr>
+                                    <tr css={tr} tw="hidden lg:block">
+                                      <p css={th}>事後評価時の値/状態</p>
+                                      <p css={td}>
+                                        <div
+                                          dangerouslySetInnerHTML={{
+                                            __html:
+                                              item.node.output_aft_eval.data
+                                                .childMarkdownRemark.html,
+                                          }}
+                                        />
+                                      </p>
+                                    </tr>
+
+                                    <tr css={tr} tw="lg:hidden">
                                       <th css={th}>モニタリング</th>
                                       <td css={td}>
                                         <div
@@ -1033,7 +1604,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         />
                                       </td>
                                     </tr>
-                                    <tr css={tr}>
+                                    <tr css={tr} tw="lg:hidden">
                                       <th css={th}>初期値/初期状態</th>
                                       <td css={td}>
                                         <div
@@ -1045,7 +1616,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         />
                                       </td>
                                     </tr>
-                                    <tr css={tr}>
+                                    <tr css={tr} tw="lg:hidden">
                                       <th css={th}>中間評価時の値/状態</th>
                                       <td css={td}>
                                         <div
@@ -1057,7 +1628,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         />
                                       </td>
                                     </tr>
-                                    <tr css={tr}>
+                                    <tr css={tr} tw="lg:hidden">
                                       <th css={th}>事後評価時の値/状態</th>
                                       <td css={td}>
                                         <div
@@ -1081,7 +1652,137 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                 </div>
                 <div id="seventhItem">
                   <DetailItemWrapper itemName="事業活動">
-                    <table css={table}>
+                    <div tw="hidden lg:block">
+                      {strapiBizPlan.activity_0 &&
+                        strapiBizPlan.activity_0.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div>
+                            <p css={th1_2}>0年目</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.activity_0.data
+                                      .childMarkdownRemark.html,
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.activity_season_0 &&
+                        strapiBizPlan.activity_season_0.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div tw="flex">
+                            <p css={th2_2}>活動時期</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.activity_season_0.data
+                                      .childMarkdownRemark.html,
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.activity_1 &&
+                        strapiBizPlan.activity_1.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div>
+                            <p css={th1_2}>1年目</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.activity_1.data
+                                      .childMarkdownRemark.html,
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.activity_season_1 &&
+                        strapiBizPlan.activity_season_1.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div tw="flex">
+                            <p css={th2_2}>活動時期</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.activity_season_1.data
+                                      .childMarkdownRemark.html,
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.activity_2 &&
+                        strapiBizPlan.activity_2.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div>
+                            <p css={th1_2}>2年目</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.activity_2.data
+                                      .childMarkdownRemark.html,
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.activity_season_2 &&
+                        strapiBizPlan.activity_season_2.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div tw="flex">
+                            <p css={th2_2}>活動時期</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.activity_season_2.data
+                                      .childMarkdownRemark.html,
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.activity_3 &&
+                        strapiBizPlan.activity_3.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div>
+                            <p css={th1_2}>3年目</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.activity_3.data
+                                      .childMarkdownRemark.html,
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.activity_season_3 &&
+                        strapiBizPlan.activity_season_3.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div tw="flex">
+                            <p css={th2_2}>活動時期</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.activity_season_3.data
+                                      .childMarkdownRemark.html,
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                    </div>
+                    <table css={table} tw="lg:hidden">
                       <tbody>
                         {strapiBizPlan.activity_0 &&
                           strapiBizPlan.activity_0.data.childMarkdownRemark
@@ -1229,7 +1930,63 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                 </div>
                 <div id="eighthItem">
                   <DetailItemWrapper itemName="インプット">
-                    <table css={table}>
+                    <div tw="hidden lg:block">
+                      {strapiBizPlan.total_business_cost && (
+                        <div>
+                          <p css={th}>総事業費</p>
+                          <p css={td}>{strapiBizPlan.total_business_cost}円</p>
+                        </div>
+                      )}
+                      {strapiBizPlan.human_resources &&
+                        strapiBizPlan.human_resources.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div>
+                            <p css={th}>人材</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.human_resources.data
+                                      .childMarkdownRemark.html,
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.equipment &&
+                        strapiBizPlan.equipment.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div>
+                            <p css={th}>資機材</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.equipment.data
+                                      .childMarkdownRemark.html,
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.etc_resources &&
+                        strapiBizPlan.etc_resources.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div>
+                            <p css={th}>その他</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.etc_resources.data
+                                      .childMarkdownRemark.html,
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                    </div>
+                    <table css={table} tw="lg:hidden">
                       <tbody>
                         {strapiBizPlan.total_business_cost && (
                           <tr css={tr}>
@@ -1293,7 +2050,41 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                 </div>
                 <div id="ninthItem">
                   <DetailItemWrapper itemName="広報戦略および連携・対話戦略">
-                    <table css={table}>
+                    <div tw="hidden lg:block">
+                      {strapiBizPlan.pr_strategy &&
+                        strapiBizPlan.pr_strategy.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div>
+                            <p css={th}>広報戦略</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.pr_strategy.data
+                                      .childMarkdownRemark.html,
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.dialogue_strategy &&
+                        strapiBizPlan.dialogue_strategy.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div>
+                            <p css={th}>連携・対話戦略</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.dialogue_strategy.data
+                                      .childMarkdownRemark.html,
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                    </div>
+                    <table css={table} tw="lg:hidden">
                       <tbody>
                         {strapiBizPlan.pr_strategy &&
                           strapiBizPlan.pr_strategy.data.childMarkdownRemark
@@ -1333,7 +2124,41 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                 </div>
                 <div id="tenthItem">
                   <DetailItemWrapper itemName="出口戦略・持続可能性について">
-                    <table css={table}>
+                    <div tw="hidden lg:block">
+                      {strapiBizPlan.sustainability1 &&
+                        strapiBizPlan.sustainability1.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div>
+                            <p css={th}>持続可能性１</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.sustainability1.data
+                                      .childMarkdownRemark.html,
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.sustainability2 &&
+                        strapiBizPlan.sustainability2.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div>
+                            <p css={th}>持続可能性2</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.sustainability2.data
+                                      .childMarkdownRemark.html,
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                    </div>
+                    <table css={table} tw="lg:hidden">
                       <tbody>
                         {strapiBizPlan.sustainability1 &&
                           strapiBizPlan.sustainability1.data.childMarkdownRemark
@@ -1372,8 +2197,46 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                   </DetailItemWrapper>
                 </div>
                 <div id="eleventhItem">
-                  <DetailItemWrapper itemName="助成事業の実績と成果">
-                    <table css={table}>
+                  <DetailItemWrapper itemName="関連する主な実績">
+                    <div tw="hidden lg:block">
+                      {strapiBizPlan.subsidy_actual &&
+                        strapiBizPlan.subsidy_actual.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div>
+                            <p css={th}>
+                              事業対象者（助成で見込む最終受益者）・内容
+                            </p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.subsidy_actual.data
+                                      .childMarkdownRemark.html,
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.org_strength &&
+                        strapiBizPlan.org_strength.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div>
+                            <p css={th}>
+                              申請事業に関連する調査研究、連携、マッチング、伴走支援の実績、事業事例等
+                            </p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.org_strength.data
+                                      .childMarkdownRemark.html,
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                    </div>
+                    <table css={table} tw="lg:hidden">
                       <tbody>
                         {strapiBizPlan.subsidy_actual &&
                           strapiBizPlan.subsidy_actual.data.childMarkdownRemark

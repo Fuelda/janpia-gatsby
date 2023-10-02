@@ -51,7 +51,7 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
       <DetailHeader business_cd={slug} />
       <div css={detailFlex}>
         <DetailSidebar slug={slug} />
-        <DetailWrapper category="公募結果報告">
+        <DetailWrapper category="公募結果報告" slug={slug}>
           <div css={detailTab}>
             {roundArray.length !== 0 &&
               roundArray.map((round: number) => (

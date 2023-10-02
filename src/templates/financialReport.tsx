@@ -33,7 +33,7 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
       <DetailHeader business_cd={slug} />
       <div css={detailFlex}>
         <DetailSidebar slug={slug} />
-        <DetailWrapper category="事業完了時精算報告">
+        <DetailWrapper category="事業完了時精算報告" slug={slug}>
           {settleReport && (
             <div css={detailAnchor}>
               <DetailAnchor

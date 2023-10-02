@@ -23,7 +23,7 @@ const ExportEvaluationReport: React.FC<any> = ({ data, pageContext }) => {
       <DetailHeader business_cd={slug} />
       <div css={detailFlex}>
         <DetailSidebar slug={slug} />
-        <DetailWrapper category="事後評価報告">
+        <DetailWrapper category="事後評価報告" slug={slug}>
           <div css={detailBody}>
             {strapiPostReportManual ? (
               <div>

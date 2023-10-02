@@ -184,7 +184,7 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
                     </div>
                   )}
                 </div>
-                <table css={table}>
+                <table css={table} tw="lg:hidden">
                   <tbody>
                     {legalPersonality && (
                       <tr css={tr}>
@@ -358,7 +358,7 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
                     </div>
                   )}
                 </div>
-                <table css={table}>
+                <table css={table} tw="lg:hidden">
                   <tbody>
                     {mainGroup.node.representative_kana && (
                       <tr css={tr}>
@@ -400,7 +400,7 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
                         </div>
                       )}
                     </div>
-                    <table css={table} tw="mt-2.5 ">
+                    <table css={table} tw="mt-2.5 lg:hidden">
                       <tbody>
                         {mainGroup.node.representative_kana2 && (
                           <tr css={tr}>
@@ -459,7 +459,7 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
                     </div>
                   )}
                 </div>
-                <table css={table}>
+                <table css={table} tw="lg:hidden">
                   <tbody>
                     {mainGroup.node.number_of_officers && (
                       <tr css={tr}>
@@ -547,7 +547,7 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
                     </div>
                   </div>
                 </div>
-                <table css={table}>
+                <table css={table} tw="lg:hidden">
                   <tbody>
                     {mainGroup.node.number_of_employees && (
                       <tr css={tr}>
@@ -620,7 +620,7 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
                     </div>
                   )}
                 </div>
-                <table css={table}>
+                <table css={table} tw="lg:hidden">
                   <tbody>
                     {mainGroup.node.organization_measure && (
                       <tr css={tr}>

@@ -58,7 +58,7 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
       <DetailHeader business_cd={slug} />
       <div css={detailFlex}>
         <DetailSidebar slug={slug} />
-        <DetailWrapper category="進捗/年度末報告">
+        <DetailWrapper category="進捗/年度末報告" slug={slug}>
           <div css={detailTab}>
             {sortedProgressReportManual &&
               sortedProgressReportManual.map((prm: any) => (

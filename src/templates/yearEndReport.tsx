@@ -18,7 +18,7 @@ const YearEndReport: React.FC<any> = ({ data, pageContext }) => {
       <DetailHeader business_cd={slug} />
       <div css={detailFlex}>
         <DetailSidebar slug={slug} />
-        <DetailWrapper category="事業詳細">
+        <DetailWrapper category="事業詳細" slug={slug}>
           <div css={detailAnchor}>
             <DetailAnchor
               title="事業情報"
