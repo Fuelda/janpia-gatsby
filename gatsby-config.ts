@@ -132,16 +132,6 @@ const config: GatsbyConfig = {
               }),
           },
           {
-            query: algoliaQuery.bizPlanSub,
-            transformer: ({ data }: any) =>
-              data.allStrapiBizPlanSub.edges.map(({ node }: any) => {
-                return {
-                  id: node.id,
-                  ...node,
-                };
-              }),
-          },
-          {
             query: algoliaQuery.bizPlanManual,
             transformer: ({ data }: any) =>
               data.allStrapiBizPlanManual.edges.map(({ node }: any) => {
@@ -152,7 +142,7 @@ const config: GatsbyConfig = {
               }),
           },
         ],
-        chunkSize: 100000,
+        chunkSize: 10000,
         settings: {
           queryLanguages: ["ja"],
         },

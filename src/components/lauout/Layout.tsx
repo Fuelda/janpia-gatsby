@@ -14,6 +14,7 @@ import { useModalContext } from "../../context/modalContext";
 import ModalPrefectures from "../../features/search/component/sidebar/modal/ModalPrefectures";
 import ModalPrefecturesSp from "../../features/search/component/sidebar/modal/ModalPrefecturesSp";
 import { useLocation } from "@reach/router";
+import Hamburger from "./Hamburger";
 
 Modal.setAppElement("#___gatsby");
 
@@ -28,7 +29,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <div tw="relative">
       <GlobalStyles />
-      <Header />
+      <Header path={path} />
       <main
         css={[
           wrapper,
@@ -37,7 +38,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       >
         {children}
       </main>
-      <Footer />
+      <Footer path={path} />
       <ToPageTopButton />
 
       <Modal

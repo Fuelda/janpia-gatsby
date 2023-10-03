@@ -1,4 +1,4 @@
-const algoliaQuery = {
+const algoliaQueryCopy = {
   attachedFiles: `{
     allStrapiAttachedFile {
       edges {
@@ -32,7 +32,34 @@ const algoliaQuery = {
         node {
           id
           business_cd
+          business_type_name
           business_name
+          business_name_sub
+          vision {
+            data {
+              vision
+            }
+          }
+          mission {
+            data {
+              mission
+            }
+          }
+          business_overview {
+            data {
+              business_overview 
+            }
+          }       
+          social_issues {
+            data {
+              social_issues
+            }
+          }      
+          significance {
+            data {
+              significance
+            }
+          }    
         }
       }
     }
@@ -139,4 +166,4 @@ const algoliaQuery = {
   }`,
 };
 
-module.exports = algoliaQuery;
+module.exports = algoliaQueryCopy;

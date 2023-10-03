@@ -95,7 +95,7 @@ const DetailHeader = (props: { business_cd: string }) => {
         <p tw="truncate">{business_name}</p>
       </div>
       <div tw="w-full p-2.5 flex gap-2 mt-3.5 lg:(py-0)">
-        <div tw="w-[100px] h-[100px] shrink-0 lg:(w-[23%])">
+        <div tw="w-[100px] h-[100px] shrink-0 lg:(w-[23%] h-auto)">
           {business_org_type === "F" ? (
             <StaticImage
               src="../../images/thumbnail_shikinbunpai.png"
@@ -127,7 +127,7 @@ const DetailHeader = (props: { business_cd: string }) => {
             <p css={resultCardTip}>{target_area}</p>
           </div>
           <p tw="text-lg font-bold break-words">{business_name}</p>
-          <div tw="mt-3.5 flex gap-7 lg:hidden">
+          <div tw="mt-3.5 flex gap-7 md:hidden">
             {mainGroup && (
               <div css={hCenter} tw="gap-1.5">
                 <StaticImage
@@ -151,7 +151,7 @@ const DetailHeader = (props: { business_cd: string }) => {
           </div>
         </div>
       </div>
-      <div tw="hidden lg:(block px-2.5)">
+      <div tw="hidden md:(block px-2.5)">
         {mainGroup && (
           <div css={hCenter} tw="gap-1.5">
             <StaticImage

@@ -3,12 +3,10 @@ import React from "react";
 import "twin.macro";
 import { hCenter, wrapper, wrapperSp } from "../../styles/base";
 import { StaticImage } from "gatsby-plugin-image";
-import { useLocation } from "@reach/router";
 import tw from "twin.macro";
 
-const Footer = () => {
-  const location = useLocation();
-  const path = location.pathname;
+const Footer = (props: { path: string }) => {
+  const { path } = props;
   return (
     <div
       tw="bg-blue-base w-full pt-6 pb-4"

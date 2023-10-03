@@ -4,7 +4,7 @@ import "twin.macro";
 
 const MainVisual = () => {
   return (
-    <div tw="w-full h-[300px] relative lg:(h-[166px])">
+    <div tw="w-full h-[300px] relative md:(h-[166px])">
       <StaticImage
         src="../../images/kv-summer.png"
         alt="シンボル"

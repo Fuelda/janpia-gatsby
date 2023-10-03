@@ -105,7 +105,7 @@ const ResultCard = (props: any) => {
             )}
           </div>
           <p tw="text-lg font-bold break-all">{business_name}</p>
-          <div tw="lg:(hidden)">
+          <div tw="md:(hidden)">
             {mainGroup && (
               <div css={hCenter} tw="gap-1.5">
                 <StaticImage
@@ -129,7 +129,7 @@ const ResultCard = (props: any) => {
           </div>
         </div>
       </div>
-      <div tw="hidden lg:(block mt-1.5)">
+      <div tw="hidden md:(block mt-1.5)">
         {mainGroup && (
           <div css={hCenter} tw="gap-1.5">
             <StaticImage

@@ -9,7 +9,7 @@ const HamburgerButton = (props: {
   setIsOpen: Dispatch<boolean>;
 }) => {
   const { isOpen, setIsOpen } = props;
-  console.log(isOpen);
+
   return (
     <div
       tw="relative w-5 h-4 cursor-pointer"

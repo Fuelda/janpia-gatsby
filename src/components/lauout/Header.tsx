@@ -1,17 +1,17 @@
 import { Link } from "gatsby";
-import React from "react";
+import React, { useState } from "react";
 import "twin.macro";
 import { wrapper, hCenter, wrapperSp } from "../../styles/base";
 import { StaticImage } from "gatsby-plugin-image";
-import { useLocation } from "@reach/router";
 import tw from "twin.macro";
-//
+import HamburgerButton from "../atoms/HamburgerButton";
+import Hamburger from "./Hamburger";
 
 const currentPath = tw`p-[7px] bg-blue-vivid bg-opacity-10`;
 
-const Header = () => {
-  const location = useLocation();
-  const path = location.pathname;
+const Header = (props: { path: string }) => {
+  const path = props.path;
+  const [isHamOpen, setIsHamOpen] = useState(false);
 
   return (
     <div
@@ -19,12 +19,12 @@ const Header = () => {
       css={path === "/result/status/" && tw`hidden`}
     >
       <div css={[wrapper, wrapperSp]}>
-        <div css={hCenter} tw="justify-between py-1.5">
-          <Link to="/" tw="gap-3" css={hCenter}>
+        <div css={hCenter} tw="justify-between py-1.5 relative">
+          <Link to="/" tw="gap-3 lg:(w-[90%])" css={hCenter}>
             <StaticImage
               src="../../images/symbol.png"
               alt="シンボル"
-              tw="w-[72px] h-[70px] lg:(w-16 h-16)"
+              tw="w-[72px] h-[70px] lg:(w-16 h-16) shrink-0"
             />
             <h1>休眠預金活用事業 情報公開サイト</h1>
           </Link>
@@ -61,6 +61,10 @@ const Header = () => {
               お知らせ
             </Link>
           </nav>
+          <div tw="hidden lg:(block absolute right-0 z-[2000])">
+            <HamburgerButton isOpen={isHamOpen} setIsOpen={setIsHamOpen} />
+          </div>
+          <Hamburger path={path} isOpen={isHamOpen} />
         </div>
       </div>
     </div>

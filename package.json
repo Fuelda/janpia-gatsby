@@ -50,6 +50,7 @@
     "gatsby-transformer-sharp": "^5.12.0",
     "node-sass": "^8.0.0",
     "react": "^18.2.0",
+    "react-burger-menu": "^3.0.9",
     "react-dom": "^18.2.0",
     "react-instantsearch": "^7.0.3",
     "react-instantsearch-hooks-web": "^6.47.3",
@@ -60,6 +61,7 @@
   "devDependencies": {
     "@types/node": "^20.3.3",
     "@types/react": "^18.2.14",
+    "@types/react-burger-menu": "^2.8.4",
     "@types/react-dom": "^18.2.6",
     "@types/react-modal": "^3.16.0",
     "typescript": "^5.1.6"

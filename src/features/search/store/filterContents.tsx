@@ -65,14 +65,14 @@ export const legalPersonalityArray = [
 
 export const businessCategoryArray = [
   { label: "草の根活動支援事業 (全国)", code: 1, subCode: 21 },
-  { label: "災害支援事業", code: 4, subCode: -3 },
+  { label: "草の根活動支援事業 (地域)", code: 1, subCode: 22 },
   {
     label: "イノベーション企画支援事業",
     code: 2,
     subCode: -1,
   },
   { label: "ソーシャルビジネス支援事業", code: 3, subCode: -2 },
-  { label: "草の根活動支援事業 (地域)", code: 1, subCode: 22 },
+  { label: "災害支援事業", code: 4, subCode: -3 },
 ];
 
 export const businessStatusArray = [
