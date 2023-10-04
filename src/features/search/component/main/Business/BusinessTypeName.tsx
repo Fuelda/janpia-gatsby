@@ -16,8 +16,8 @@ import tw from "twin.macro";
 const BusinessTypeName = (props: { path: string }) => {
   const { searchState, searchSetState } = useSearchContext();
   const { allStrapiBizPlan, allStrapiBizPlanManual } = useStrapiContext();
-  const { business_type_name, btnYear, btnCategory } = searchState;
-  const { setBusinessTypeName, setBtnYear, setBtnCategory } = searchSetState;
+  const { btnYear, btnCategory } = searchState;
+  const { setBtnYear, setBtnCategory } = searchSetState;
 
   const businessTypeNameYear = allStrapiBizPlan.edges.map(
     (item) => item.node.business_type_name || ""
@@ -44,20 +44,19 @@ const BusinessTypeName = (props: { path: string }) => {
   const businessTypeNameCategory = ["通常枠", "コロナ枠"];
 
   const handleYearCheckbox = (label: string) => {
-    btnYear !== label ? setBtnYear(label) : setBtnYear("");
+    if (btnYear.includes(label)) {
+      setBtnYear(btnYear.filter((btny) => btny !== label));
+    } else {
+      setBtnYear([...btnYear, label]);
+    }
   };
   const handleCategoryCheckbox = (label: string) => {
-    btnCategory !== label ? setBtnCategory(label) : setBtnCategory("");
+    if (btnCategory.includes(label)) {
+      setBtnCategory(btnCategory.filter((btny) => btny !== label));
+    } else {
+      setBtnCategory([...btnCategory, label]);
+    }
   };
-
-  useEffect(() => {
-    setBusinessTypeName(btnYear + btnCategory);
-  }, [btnYear, btnCategory]);
-
-  useEffect(() => {
-    business_type_name === "" && setBtnYear("");
-    business_type_name === "" && setBtnCategory("");
-  }, [business_type_name]);
 
   return (
     <div>
@@ -73,7 +72,7 @@ const BusinessTypeName = (props: { path: string }) => {
                 id={checkbox}
                 onClick={() => handleYearCheckbox(checkbox)}
                 css={checkBox}
-                checked={btnYear === checkbox}
+                checked={btnYear.includes(checkbox)}
               >
                 <Checkbox.Indicator tw="flex justify-center">
                   <svg
@@ -108,7 +107,7 @@ const BusinessTypeName = (props: { path: string }) => {
                 id={checkbox}
                 onClick={() => handleCategoryCheckbox(checkbox)}
                 css={checkBox}
-                checked={btnCategory === checkbox}
+                checked={btnCategory.includes(checkbox)}
               >
                 <Checkbox.Indicator tw="flex justify-center">
                   <svg

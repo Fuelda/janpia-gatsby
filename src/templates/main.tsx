@@ -88,7 +88,7 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
   }
 
   let businessStatusText = "";
-  if (typeof business_status === "string" && business_status === "1") {
+  if (typeof business_status === "number" && business_status === 0) {
     businessStatusText = "実施中";
   } else if (typeof business_status === "boolean" && business_status) {
     businessStatusText = "実施中";
@@ -127,7 +127,7 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
     setWithCRM(strapiCompleteReportManualFDO || strapiCompleteReportManualADO);
   }, []);
 
-  console.log(linkedAdo);
+  console.log(bizPlan);
 
   return (
     <Layout>

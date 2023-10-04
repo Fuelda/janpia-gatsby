@@ -93,11 +93,19 @@ export const filterStrapiDataWithoutPref = () => {
       // (searchState.business_type_name === "" ||
       //   item.bizPlan.business_type_name === searchState.business_type_name) &&
       //事業年度
-      (searchState.btnYear === "" ||
-        item.bizPlan.business_type_name?.includes(searchState.btnYear)) &&
+      (searchState.btnYear.length === 0 ||
+        searchState.btnYear.some(
+          (btny) =>
+            item.bizPlan.business_type_name &&
+            item.bizPlan.business_type_name?.includes(btny)
+        )) &&
       //事業枠
-      (searchState.btnCategory === "" ||
-        item.bizPlan.business_type_name?.includes(searchState.btnCategory)) &&
+      (searchState.btnCategory.length === 0 ||
+        searchState.btnCategory.some(
+          (btnc) =>
+            item.bizPlan.business_type_name &&
+            item.bizPlan.business_type_name?.includes(btnc)
+        )) &&
       //事業分類
       (searchState.business_category.length === 0 ||
         searchState.business_category.some(

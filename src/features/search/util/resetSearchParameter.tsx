@@ -12,7 +12,8 @@ const resetSearchParameter = () => {
     setLegalPersonality,
 
     setBusinessOrgType,
-    setBusinessTypeName,
+    setBtnYear,
+    setBtnCategory,
     setBusinessCategory,
     setBusinessStatus,
     setTargetArea,
@@ -37,8 +38,7 @@ const resetSearchParameter = () => {
     setLegalPersonality([]);
 
     setBusinessOrgType([]);
-    setBusinessTypeName("");
-    setBusinessCategory([]);
+    setBtnYear([]), setBtnCategory([]), setBusinessCategory([]);
     setBusinessStatus(null);
     setTargetArea([]);
     setSubsidyAmount([]);

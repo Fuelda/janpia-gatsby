@@ -90,18 +90,21 @@ export const filterStrapiManualDataWithoutPref = () => {
       //   (item.bizPlan.business_type_name &&
       //     item.bizPlan.business_type_name.label ===
       //       searchState.business_type_name)) &&
+
       //事業年度
-      (searchState.btnYear === "" ||
-        (item.bizPlan.business_type_name &&
-          item.bizPlan.business_type_name.label?.includes(
-            searchState.btnYear
-          ))) &&
+      (searchState.btnYear.length === 0 ||
+        searchState.btnYear.some(
+          (btny) =>
+            item.bizPlan.business_type_name &&
+            item.bizPlan.business_type_name.label?.includes(btny)
+        )) &&
       //事業枠
-      (searchState.btnCategory === "" ||
-        (item.bizPlan.business_type_name &&
-          item.bizPlan.business_type_name.label?.includes(
-            searchState.btnCategory
-          ))) &&
+      (searchState.btnCategory.length === 0 ||
+        searchState.btnCategory.some(
+          (btnc) =>
+            item.bizPlan.business_type_name &&
+            item.bizPlan.business_type_name.label?.includes(btnc)
+        )) &&
       //事業分類
       (searchState.business_category.length === 0 ||
         searchState.business_category.some(
@@ -112,8 +115,8 @@ export const filterStrapiManualDataWithoutPref = () => {
         )) &&
       //事業ステータス
       (searchState.business_status === null ||
-        (searchState.business_status === 0 && !item.bizPlan.business_status) ||
-        (searchState.business_status === 1 && item.bizPlan.business_status)) &&
+        (searchState.business_status === 0 && item.bizPlan.business_status) ||
+        (searchState.business_status === 1 && !item.bizPlan.business_status)) &&
       // //事業対象地域
       // (searchState.target_area.length === 0 ||
       //   (item.bizPlan.target_area &&
