@@ -33,6 +33,32 @@ const algoliaQuery = {
           id
           business_cd
           business_name
+          business_name_sub
+          vision {
+            data {
+              vision
+            }
+          }
+          mission {
+            data {
+              mission
+            }
+          }
+          business_overview {
+            data {
+              business_overview 
+            }
+          }       
+          social_issues {
+            data {
+              social_issues
+            }
+          }      
+          significance {
+            data {
+              significance
+            }
+          }    
         }
       }
     }

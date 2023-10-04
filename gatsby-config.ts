@@ -107,7 +107,8 @@ const config: GatsbyConfig = {
               data.allStrapiAttachedFileText.edges.map(({ node }: any) => {
                 return {
                   id: node.id,
-                  ...node,
+                  insert_id: node.insert_id,
+                  content: node.content.data.content.slice(0, 3000),
                 };
               }),
           },
@@ -117,7 +118,16 @@ const config: GatsbyConfig = {
               data.allStrapiBizPlan.edges.map(({ node }: any) => {
                 return {
                   id: node.id,
-                  ...node,
+                  business_cd: node.business_cd,
+                  business_name: node.business_name,
+                  business_name_sub: node.business_name_sub,
+                  vision: node.vision.data.vision.slice(0, 1500),
+                  mission: node.mission.data.mission.slice(0, 1500),
+                  business_overview:
+                    node.business_overview.data.business_overview.slice(
+                      0,
+                      1500
+                    ),
                 };
               }),
           },
@@ -137,7 +147,14 @@ const config: GatsbyConfig = {
               data.allStrapiBizPlanManual.edges.map(({ node }: any) => {
                 return {
                   id: node.id,
-                  ...node,
+                  biz_cd_executive: node.biz_cd_executive,
+                  biz_cd_fund_distr: node.biz_cd_fund_distr,
+                  business_name: node.business_name,
+                  business_overview:
+                    node.business_overview.data.business_overview.slice(
+                      0,
+                      3000
+                    ),
                 };
               }),
           },
