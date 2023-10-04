@@ -7,12 +7,14 @@ const contextQuery = graphql`
       edges {
         node {
           business_cd
+          business_org_type
+          fund_distr_grp_cd
+          executive_grp_cd
           business_name
           target_area
           business_category
           business_category1
           business_category2
-          business_org_type
           business_type_name
           business_status
           region1
@@ -98,6 +100,8 @@ const contextQuery = graphql`
           business_org_type
           biz_cd_executive
           biz_cd_fund_distr
+          fund_distr_grp_cd
+          executive_grp_cd
           business_name
           business_type_name {
             label

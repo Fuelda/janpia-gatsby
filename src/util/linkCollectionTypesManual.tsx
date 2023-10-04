@@ -41,8 +41,17 @@ export const linkCollectionTypesManual = () => {
       (lbpg) => lbpg.business_cd === business_cd
     );
 
+    const organization_cd =
+      bpm.node.business_org_type === "F"
+        ? bpm.node.fund_distr_grp_cd
+        : bpm.node.executive_grp_cd;
+    const mainGroup = allGroup.find(
+      (g) => g.node.organization_cd === organization_cd
+    );
+
     return {
       group: linkingBizPlanGroup,
+      mainGroup: mainGroup,
       bizPlan: { ...bpm.node, business_cd: business_cd },
     };
   });

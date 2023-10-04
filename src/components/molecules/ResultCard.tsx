@@ -10,7 +10,7 @@ const resultCardTip = tw`text-xs py-1 px-1.5 border border-gray-border`;
 
 const ResultCard = (props: any) => {
   const { content } = props;
-  const { bizPlan, group } = content;
+  const { bizPlan, group, mainGroup } = content;
   const {
     business_cd,
     business_org_type,
@@ -31,13 +31,29 @@ const ResultCard = (props: any) => {
     businessStatusText = "終了";
   }
 
-  const mainGroup = group.find((g: any) => {
+  const mainGroupIndirect = group.find((g: any) => {
     const groupRole =
       g.business_org_type === "F" ? g.org_role_fdo : g.org_role_fdo;
     return groupRole === 0 || 1;
   });
-  const mainGroupName = mainGroup ? mainGroup.groupData.organization_name : "";
-  const mainGroupPrefecture = mainGroup && mainGroup.groupData.prefectures;
+
+  let mainGroupName = "";
+  if (mainGroup) {
+    mainGroupName = mainGroup.node.organization_name;
+  } else if (mainGroupIndirect) {
+    mainGroupName = mainGroupIndirect.groupData.organization_name;
+  } else {
+    mainGroupName = "";
+  }
+
+  let mainGroupPrefecture = "";
+  if (mainGroup) {
+    mainGroupPrefecture = mainGroup.node.prefectures;
+  } else if (mainGroupIndirect) {
+    mainGroupPrefecture = mainGroupIndirect.groupData.prefectures;
+  } else {
+    mainGroupPrefecture = "";
+  }
 
   let businessCategoryLabel: string | undefined = "";
   if (business_category && business_category.code === 1) {
@@ -107,7 +123,7 @@ const ResultCard = (props: any) => {
           </div>
           <p tw="text-lg font-bold break-all">{business_name}</p>
           <div tw="md:(hidden)">
-            {mainGroup && (
+            {(mainGroup || mainGroupIndirect) && (
               <div css={hCenter} tw="gap-1.5">
                 <StaticImage
                   src="../../images/office.svg"
@@ -131,7 +147,7 @@ const ResultCard = (props: any) => {
         </div>
       </div>
       <div tw="hidden md:(block mt-1.5)">
-        {mainGroup && (
+        {(mainGroup || mainGroupIndirect) && (
           <div css={hCenter} tw="gap-1.5">
             <StaticImage
               src="../../images/office.svg"

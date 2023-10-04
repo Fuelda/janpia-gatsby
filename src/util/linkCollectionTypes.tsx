@@ -23,6 +23,13 @@ export const linkCollectionTypes = () => {
     const linkingBizPlanGroup = linkedBizPlanGroup.filter(
       (lbpg) => lbpg.business_cd === bp.node.business_cd
     );
+    const organization_cd =
+      bp.node.business_org_type === "F"
+        ? bp.node.fund_distr_grp_cd
+        : bp.node.executive_grp_cd;
+    const mainGroup = allGroup.find(
+      (g) => g.node.organization_cd === organization_cd
+    );
     const linkingBizPlanSub = allBizPlanSub
       .filter((bps) => bps.node.business_cd === bp.node.business_cd)
       .map((bps) => bps.node);
@@ -51,6 +58,7 @@ export const linkCollectionTypes = () => {
         };
     return {
       group: linkingBizPlanGroup,
+      mainGroup: mainGroup,
       bizPlan: { ...bp.node, business_category: linkingBusinessCategory },
       bizPlanSub: linkingBizPlanSub,
       financePlan: linkingFinancePlan?.node,

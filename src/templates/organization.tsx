@@ -26,6 +26,9 @@ import AttachedFileLink from "../components/atoms/AttachedFileLink";
 const Organization: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
   const {
+    strapiBizPlan,
+    strapiBizPlanManualFDO,
+    strapiBizPlanManualADO,
     allStrapiBizPlanGroup,
     allStrapiBizPlanGroupManualADO,
     allStrapiBizPlanGroupManualFDO,
@@ -33,6 +36,8 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
     allStrapiAttachedFile,
   } = data;
 
+  const bizPlan =
+    strapiBizPlan || strapiBizPlanManualFDO || strapiBizPlanManualADO;
   const bizPlanGroupArray = [
     ...allStrapiBizPlanGroup.edges,
     ...allStrapiBizPlanGroupManualFDO.edges,
@@ -48,8 +53,17 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
   const mainBizPlanGroupCd = mainBizPlanGroup
     ? mainBizPlanGroup.node.organization_cd
     : "";
+  let mainGroupCd = "";
+  if (bizPlan) {
+    mainGroupCd =
+      bizPlan.business_org_type === "F"
+        ? bizPlan.fund_distr_grp_cd
+        : bizPlan.executive_grp_cd;
+  } else {
+    mainGroupCd = mainBizPlanGroupCd;
+  }
   const mainGroup = allStrapiGroup.edges.find(
-    (g: any) => g.node.organization_cd === mainBizPlanGroupCd
+    (g: any) => g.node.organization_cd === mainGroupCd
   ) || { node: {} };
 
   const legalPersonality = legalPersonalityArray.find(
@@ -685,6 +699,25 @@ export const pageQuery = graphql`
     $insert_id: [String]
     $organization_cd: [String]
   ) {
+    strapiBizPlan(business_cd: { eq: $slug }) {
+      business_org_type
+      executive_grp_cd
+      fund_distr_grp_cd
+    }
+    strapiBizPlanManualFDO: strapiBizPlanManual(
+      biz_cd_fund_distr: { eq: $slug }
+    ) {
+      business_org_type
+      executive_grp_cd
+      fund_distr_grp_cd
+    }
+    strapiBizPlanManualADO: strapiBizPlanManual(
+      biz_cd_executive: { eq: $slug }
+    ) {
+      business_org_type
+      executive_grp_cd
+      fund_distr_grp_cd
+    }
     allStrapiBizPlanGroup(filter: { business_cd: { eq: $slug } }) {
       edges {
         node {

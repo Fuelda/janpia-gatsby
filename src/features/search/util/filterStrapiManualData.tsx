@@ -33,8 +33,9 @@ export const filterStrapiManualData = () => {
     });
     const isGroupMatch = algoliaHits.some((hit) => {
       return (
-        hit.type === "organization" &&
-        item.group.some((g) => g.organization_cd === hit.code)
+        (hit.type === "organization" &&
+          item.group.some((g) => g.organization_cd === hit.code)) ||
+        item.mainGroup?.node.organization_cd === hit.code
       );
     });
 
@@ -53,6 +54,9 @@ export const filterStrapiManualData = () => {
           g.groupData?.organization_name?.includes(
             searchState.organization_name
           )
+        ) ||
+        item.mainGroup?.node.organization_name?.includes(
+          searchState.organization_name
         )) &&
       //団体種別
       (searchState.organization_type_cd.length === 0 ||
@@ -62,14 +66,22 @@ export const filterStrapiManualData = () => {
             searchState.organization_type_cd.includes(
               g.groupData?.organization_type_cd
             )
-        )) &&
+        ) ||
+        (item.mainGroup?.node.organization_type_cd &&
+          searchState.organization_type_cd.includes(
+            item.mainGroup.node.organization_type_cd
+          ))) &&
       //団体所在地
       (searchState.prefectures.length === 0 ||
         item.group.some(
           (g) =>
             g.groupData?.prefectures &&
             searchState.prefectures.includes(g.groupData?.prefectures)
-        )) &&
+        ) ||
+        (item.mainGroup?.node.prefectures &&
+          searchState.prefectures.includes(
+            item.mainGroup?.node.prefectures
+          ))) &&
       //法人格
       (searchState.legal_personality.length === 0 ||
         item.group.some(
@@ -78,7 +90,11 @@ export const filterStrapiManualData = () => {
             searchState.legal_personality.includes(
               parseInt(g.groupData?.legal_personality)
             )
-        )) &&
+        ) ||
+        (item.mainGroup?.node.legal_personality &&
+          searchState.legal_personality.includes(
+            parseInt(item.mainGroup?.node.legal_personality)
+          ))) &&
       //事業種別
       (searchState.business_org_type.length === 0 ||
         (item.bizPlan.business_org_type &&

@@ -1,4 +1,4 @@
-import { Link, graphql, useStaticQuery } from "gatsby";
+import { Link } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
 import React, { useState } from "react";
 import "twin.macro";
@@ -17,7 +17,7 @@ const DetailHeader = (props: { business_cd: string }) => {
   const filteredSingleBizPlan = filteredAllBizPlan.find(
     (item) => item.bizPlan.business_cd === props.business_cd
   ) || { bizPlan: {}, group: [] };
-  const { bizPlan, group } = filteredSingleBizPlan;
+  const { bizPlan, group, mainGroup } = filteredSingleBizPlan;
 
   const {
     business_org_type,
@@ -39,14 +39,31 @@ const DetailHeader = (props: { business_cd: string }) => {
     businessStatusText = "終了";
   }
 
-  const mainGroup =
+  const mainGroupIndirect =
     group.length !== 0 &&
     group.find((g: any) => {
       const groupRole =
         g.business_org_type === "F" ? g.org_role_fdo : g.org_role_fdo;
       return groupRole === 0 || 1;
     });
-  const mainGroupName = mainGroup ? mainGroup.groupData.organization_name : "";
+
+  let mainGroupName = "";
+  if (mainGroup) {
+    mainGroupName = mainGroup.node.organization_name;
+  } else if (mainGroupIndirect) {
+    mainGroupName = mainGroupIndirect.groupData.organization_name;
+  } else {
+    mainGroupName = "";
+  }
+
+  let mainGroupPrefecture = "";
+  if (mainGroup) {
+    mainGroupPrefecture = mainGroup.node.prefectures;
+  } else if (mainGroupIndirect) {
+    mainGroupPrefecture = mainGroupIndirect.groupData.prefectures;
+  } else {
+    mainGroupPrefecture = "";
+  }
 
   let businessCategoryLabel: string | undefined = "";
   if (business_category) {
@@ -124,11 +141,13 @@ const DetailHeader = (props: { business_cd: string }) => {
             </p>
             <p css={resultCardTip}>{businessTypeNameYear}</p>
             <p css={resultCardTip}>{businessStatusText}</p>
-            <p css={resultCardTip}>{target_area}</p>
+            {mainGroupPrefecture && (
+              <p css={resultCardTip}>{mainGroupPrefecture}</p>
+            )}
           </div>
           <p tw="text-lg font-bold break-words">{business_name}</p>
           <div tw="mt-3.5 flex gap-7 md:hidden">
-            {mainGroup && (
+            {(mainGroup || mainGroupIndirect) && (
               <div css={hCenter} tw="gap-1.5">
                 <StaticImage
                   src="../../images/office.svg"
@@ -152,7 +171,7 @@ const DetailHeader = (props: { business_cd: string }) => {
         </div>
       </div>
       <div tw="hidden md:(block px-2.5)">
-        {mainGroup && (
+        {(mainGroup || mainGroupIndirect) && (
           <div css={hCenter} tw="gap-1.5">
             <StaticImage
               src="../../images/office.svg"

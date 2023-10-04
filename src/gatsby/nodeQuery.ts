@@ -4,7 +4,10 @@ const nodeQuery = {
       edges {
         node {
           business_cd
+          business_org_type
           biz_cd_fund_distr
+          fund_distr_grp_cd
+          executive_grp_cd
         }
       }
     }
@@ -49,6 +52,8 @@ const nodeQuery = {
           business_org_type
           biz_cd_executive
           biz_cd_fund_distr
+          fund_distr_grp_cd
+          executive_grp_cd
         }
       }
     }

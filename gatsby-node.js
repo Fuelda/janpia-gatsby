@@ -34,12 +34,18 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   bizPlan.forEach((bizPlanItem) => {
     const business_cd = bizPlanItem.node.business_cd;
     const biz_cd_fund_distr = bizPlanItem.node.biz_cd_fund_distr;
+    const direct_organization_cd =
+      bizPlanItem.node.business_org_type === "F"
+        ? bizPlanItem.node.fund_distr_grp_cd
+        : bizPlanItem.node.executive_grp_cd;
+
     const bizPlanGroupArray = bizPlanGroup.filter(
       (item) => item.node.business_cd === business_cd
     );
     const organization_cd = bizPlanGroupArray.map(
       (item) => item.node.organization_cd
     );
+    organization_cd.push(direct_organization_cd);
     const insert_id_group = organization_cd.map((code) => {
       const groupItem = group.find(
         (item) => item.node.organization_cd === code
@@ -137,6 +143,11 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         ? bizPlanManualItem.node.biz_cd_fund_distr
         : bizPlanManualItem.node.biz_cd_executive;
     const biz_cd_fund_distr = bizPlanManualItem.node.biz_cd_fund_distr;
+    const direct_organization_cd =
+      bizPlanManualItem.node.business_org_type === "F"
+        ? bizPlanManualItem.node.fund_distr_grp_cd
+        : bizPlanManualItem.node.executive_grp_cd;
+
     const bizPlanGroupManualArray = bizPlanGroupManual.filter((item) => {
       const business_cd_manual =
         item.node.business_org_type === "F"
@@ -149,6 +160,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         ? item.node.fund_distr_grp_cd
         : item.node.executive_grp_cd
     );
+    organization_cd.push(direct_organization_cd);
     const insert_id_group = organization_cd.map((code) => {
       const groupItem = group.find(
         (item) => item.node.organization_cd === code

@@ -1,4 +1,4 @@
-import { Link, PageProps, graphql } from "gatsby";
+import { Link } from "gatsby";
 import React, { useEffect, useState } from "react";
 import SearchSideBar from "../../components/organisms/SearchSideBar";
 import Layout from "../../components/lauout/Layout";
