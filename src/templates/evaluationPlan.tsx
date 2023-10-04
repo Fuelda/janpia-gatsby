@@ -16,10 +16,15 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
     strapiEvaluationPlan,
     allStrapiEvaluationPlanSub,
     allStrapiAttachedFile,
+    evaluationPlanManualFDO,
+    evaluationPlanManualADO,
   } = data;
 
-  const { slug, insert_id } = pageContext;
-
+  const { slug } = pageContext;
+  const evaluationPlanManual =
+    evaluationPlanManualFDO || evaluationPlanManualADO;
+  const pdfUrl = evaluationPlanManual && evaluationPlanManual.data.url;
+  const googleDocsViewerUrl = `https://docs.google.com/viewer?url=${pdfUrl}&embedded=true`;
   const evaluationFile = allStrapiAttachedFile.edges.filter(
     (af: any) => af.node.item_id === "attach_fileupload_item2"
   );
@@ -32,174 +37,189 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
       <div css={detailFlex}>
         <DetailSidebar slug={slug} />
         <DetailWrapper category="評価計画" slug={slug}>
-          <div css={detailAnchor}>
-            <DetailAnchor
-              title="評価スケジュール・実施体制"
-              anchor={`/result/${slug}/evaluation-plan/#firstItem`}
-            />
-            {evaluationFile.length !== 0 && (
-              <DetailAnchor
-                title="事業設計図"
-                anchor={`/result/${slug}/evaluation-plan/#secondItem`}
-              />
-            )}
-          </div>
-          <div css={detailBody}>
-            <div id="firstItem">
-              <DetailItemWrapper itemName="評価スケジュール・実施体制">
-                <div tw="lg:overflow-scroll">
-                  <table css={table} tw="lg:w-[780px]">
-                    <thead css={thead}>
-                      <tr css={tr}>
-                        <th css={thScroll}>申請種別</th>
-                        <td css={thScroll}>中間評価</td>
-                        <td css={thScroll}>事後評価</td>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {strapiEvaluationPlan &&
-                        (strapiEvaluationPlan.mid_rethink_season ||
-                          strapiEvaluationPlan.after_rethink_season) && (
-                          <tr css={tr}>
-                            <th css={thScroll}>評価計画の見直し時期</th>
-                            <td css={tdScroll}>
-                              {strapiEvaluationPlan &&
-                                strapiEvaluationPlan.mid_rethink_season}
-                            </td>
-                            <td css={tdScroll}>
-                              {strapiEvaluationPlan &&
-                                strapiEvaluationPlan.after_rethink_season}
-                            </td>
-                          </tr>
-                        )}
-                      {strapiEvaluationPlan &&
-                        (strapiEvaluationPlan.mid_imple_priod ||
-                          strapiEvaluationPlan.after_imple_priod) && (
-                          <tr css={tr}>
-                            <th css={thScroll}>実施時期</th>
-                            <td css={tdScroll}>
-                              {strapiEvaluationPlan &&
-                                strapiEvaluationPlan.mid_imple_priod}
-                            </td>
-                            <td css={tdScroll}>
-                              {strapiEvaluationPlan &&
-                                strapiEvaluationPlan.after_imple_priod}
-                            </td>
-                          </tr>
-                        )}
-                      {strapiEvaluationPlan &&
-                        (strapiEvaluationPlan.mid_submit_priod ||
-                          strapiEvaluationPlan.after_submit_priod) && (
-                          <tr css={tr}>
-                            <th css={thScroll}>提出時期</th>
-                            <td css={tdScroll}>
-                              {strapiEvaluationPlan &&
-                                strapiEvaluationPlan.mid_submit_priod}
-                            </td>
-                            <td css={tdScroll}>
-                              {strapiEvaluationPlan &&
-                                strapiEvaluationPlan.after_submit_priod}
-                            </td>
-                          </tr>
-                        )}
-                      {strapiEvaluationPlan &&
-                        (strapiEvaluationPlan.mid_imple_system ||
-                          strapiEvaluationPlan.after_imple_system) && (
-                          <tr css={tr}>
-                            <th css={thScroll}>実施体制</th>
-                            <td css={tdScroll}>
-                              {strapiEvaluationPlan &&
-                                strapiEvaluationPlan.mid_imple_system}
-                            </td>
-                            <td css={tdScroll}>
-                              {strapiEvaluationPlan &&
-                                strapiEvaluationPlan.after_imple_system}
-                            </td>
-                          </tr>
-                        )}
-                      {strapiEvaluationPlan &&
-                        (strapiEvaluationPlan.mid_escort_support ||
-                          strapiEvaluationPlan.after_escort_support) && (
-                          <tr css={tr}>
-                            <th css={thScroll}>資金分配団体の伴走支援内容</th>
-                            <td css={tdScroll}>
-                              {strapiEvaluationPlan &&
-                                strapiEvaluationPlan.mid_escort_support}
-                            </td>
-                            <td css={tdScroll}>
-                              {strapiEvaluationPlan &&
-                                strapiEvaluationPlan.after_escort_support}
-                            </td>
-                          </tr>
-                        )}
-                      {strapiEvaluationPlan &&
-                        (strapiEvaluationPlan.mid_expenses ||
-                          strapiEvaluationPlan.after_expenses) && (
-                          <tr css={tr}>
-                            <th css={thScroll}>評価関連経費（金額）</th>
-                            <td css={tdScroll}>
-                              {strapiEvaluationPlan &&
-                                strapiEvaluationPlan.mid_expenses}
-                            </td>
-                            <td css={tdScroll}>
-                              {strapiEvaluationPlan &&
-                                strapiEvaluationPlan.after_expenses}
-                            </td>
-                          </tr>
-                        )}
-                      {strapiEvaluationPlan &&
-                        (strapiEvaluationPlan.mid_expenses_usage ||
-                          strapiEvaluationPlan.after_expenses_usage) && (
-                          <tr css={tr}>
-                            <th css={thScroll}>評価関連経費の使用方法</th>
-                            <td css={tdScroll}>
-                              {strapiEvaluationPlan &&
-                                strapiEvaluationPlan.mid_expenses_usage}
-                            </td>
-                            <td css={tdScroll}>
-                              {strapiEvaluationPlan &&
-                                strapiEvaluationPlan.after_expenses_usage}
-                            </td>
-                          </tr>
-                        )}
-                      {strapiEvaluationPlan &&
-                        (strapiEvaluationPlan.mid_improving_mh ||
-                          strapiEvaluationPlan.after_improving_mh) && (
-                          <tr css={tr}>
-                            <th css={thScroll}>
-                              評価関連経費を使用することで、どのように評価の質を上げることを目指しますか
-                            </th>
-                            <td css={tdScroll}>
-                              {strapiEvaluationPlan &&
-                                strapiEvaluationPlan.mid_improving_mh}
-                            </td>
-                            <td css={tdScroll}>
-                              {strapiEvaluationPlan &&
-                                strapiEvaluationPlan.after_improving_mh}
-                            </td>
-                          </tr>
-                        )}
-                    </tbody>
-                  </table>
-                </div>
-              </DetailItemWrapper>
+          {evaluationPlanManual && (
+            <div>
+              <iframe
+                width="100%"
+                height="500px"
+                src={googleDocsViewerUrl}
+              ></iframe>
             </div>
-            {evaluationFile.length !== 0 && (
-              <div id="secondItem">
-                <DetailItemWrapper itemName="事業設計図">
-                  <div tw="flex gap-[5px] flex-wrap">
-                    {evaluationFile.map((ef: any) => (
-                      <AttachedFileLink
-                        filePath={ef.node.data.url}
-                        fileName={ef.node.file_name}
-                        key={ef.node.data.url}
-                      />
-                    ))}
-                  </div>
-                </DetailItemWrapper>
+          )}
+          {strapiEvaluationPlan && (
+            <div>
+              <div css={detailAnchor}>
+                <DetailAnchor
+                  title="評価スケジュール・実施体制"
+                  anchor={`/result/${slug}/evaluation-plan/#firstItem`}
+                />
+                {evaluationFile.length !== 0 && (
+                  <DetailAnchor
+                    title="事業設計図"
+                    anchor={`/result/${slug}/evaluation-plan/#secondItem`}
+                  />
+                )}
               </div>
-            )}
-          </div>
+              <div css={detailBody}>
+                <div id="firstItem">
+                  <DetailItemWrapper itemName="評価スケジュール・実施体制">
+                    <div tw="lg:overflow-scroll">
+                      <table css={table} tw="lg:w-[780px]">
+                        <thead css={thead}>
+                          <tr css={tr}>
+                            <th css={thScroll}>申請種別</th>
+                            <td css={thScroll}>中間評価</td>
+                            <td css={thScroll}>事後評価</td>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {strapiEvaluationPlan &&
+                            (strapiEvaluationPlan.mid_rethink_season ||
+                              strapiEvaluationPlan.after_rethink_season) && (
+                              <tr css={tr}>
+                                <th css={thScroll}>評価計画の見直し時期</th>
+                                <td css={tdScroll}>
+                                  {strapiEvaluationPlan &&
+                                    strapiEvaluationPlan.mid_rethink_season}
+                                </td>
+                                <td css={tdScroll}>
+                                  {strapiEvaluationPlan &&
+                                    strapiEvaluationPlan.after_rethink_season}
+                                </td>
+                              </tr>
+                            )}
+                          {strapiEvaluationPlan &&
+                            (strapiEvaluationPlan.mid_imple_priod ||
+                              strapiEvaluationPlan.after_imple_priod) && (
+                              <tr css={tr}>
+                                <th css={thScroll}>実施時期</th>
+                                <td css={tdScroll}>
+                                  {strapiEvaluationPlan &&
+                                    strapiEvaluationPlan.mid_imple_priod}
+                                </td>
+                                <td css={tdScroll}>
+                                  {strapiEvaluationPlan &&
+                                    strapiEvaluationPlan.after_imple_priod}
+                                </td>
+                              </tr>
+                            )}
+                          {strapiEvaluationPlan &&
+                            (strapiEvaluationPlan.mid_submit_priod ||
+                              strapiEvaluationPlan.after_submit_priod) && (
+                              <tr css={tr}>
+                                <th css={thScroll}>提出時期</th>
+                                <td css={tdScroll}>
+                                  {strapiEvaluationPlan &&
+                                    strapiEvaluationPlan.mid_submit_priod}
+                                </td>
+                                <td css={tdScroll}>
+                                  {strapiEvaluationPlan &&
+                                    strapiEvaluationPlan.after_submit_priod}
+                                </td>
+                              </tr>
+                            )}
+                          {strapiEvaluationPlan &&
+                            (strapiEvaluationPlan.mid_imple_system ||
+                              strapiEvaluationPlan.after_imple_system) && (
+                              <tr css={tr}>
+                                <th css={thScroll}>実施体制</th>
+                                <td css={tdScroll}>
+                                  {strapiEvaluationPlan &&
+                                    strapiEvaluationPlan.mid_imple_system}
+                                </td>
+                                <td css={tdScroll}>
+                                  {strapiEvaluationPlan &&
+                                    strapiEvaluationPlan.after_imple_system}
+                                </td>
+                              </tr>
+                            )}
+                          {strapiEvaluationPlan &&
+                            (strapiEvaluationPlan.mid_escort_support ||
+                              strapiEvaluationPlan.after_escort_support) && (
+                              <tr css={tr}>
+                                <th css={thScroll}>
+                                  資金分配団体の伴走支援内容
+                                </th>
+                                <td css={tdScroll}>
+                                  {strapiEvaluationPlan &&
+                                    strapiEvaluationPlan.mid_escort_support}
+                                </td>
+                                <td css={tdScroll}>
+                                  {strapiEvaluationPlan &&
+                                    strapiEvaluationPlan.after_escort_support}
+                                </td>
+                              </tr>
+                            )}
+                          {strapiEvaluationPlan &&
+                            (strapiEvaluationPlan.mid_expenses ||
+                              strapiEvaluationPlan.after_expenses) && (
+                              <tr css={tr}>
+                                <th css={thScroll}>評価関連経費（金額）</th>
+                                <td css={tdScroll}>
+                                  {strapiEvaluationPlan &&
+                                    strapiEvaluationPlan.mid_expenses}
+                                </td>
+                                <td css={tdScroll}>
+                                  {strapiEvaluationPlan &&
+                                    strapiEvaluationPlan.after_expenses}
+                                </td>
+                              </tr>
+                            )}
+                          {strapiEvaluationPlan &&
+                            (strapiEvaluationPlan.mid_expenses_usage ||
+                              strapiEvaluationPlan.after_expenses_usage) && (
+                              <tr css={tr}>
+                                <th css={thScroll}>評価関連経費の使用方法</th>
+                                <td css={tdScroll}>
+                                  {strapiEvaluationPlan &&
+                                    strapiEvaluationPlan.mid_expenses_usage}
+                                </td>
+                                <td css={tdScroll}>
+                                  {strapiEvaluationPlan &&
+                                    strapiEvaluationPlan.after_expenses_usage}
+                                </td>
+                              </tr>
+                            )}
+                          {strapiEvaluationPlan &&
+                            (strapiEvaluationPlan.mid_improving_mh ||
+                              strapiEvaluationPlan.after_improving_mh) && (
+                              <tr css={tr}>
+                                <th css={thScroll}>
+                                  評価関連経費を使用することで、どのように評価の質を上げることを目指しますか
+                                </th>
+                                <td css={tdScroll}>
+                                  {strapiEvaluationPlan &&
+                                    strapiEvaluationPlan.mid_improving_mh}
+                                </td>
+                                <td css={tdScroll}>
+                                  {strapiEvaluationPlan &&
+                                    strapiEvaluationPlan.after_improving_mh}
+                                </td>
+                              </tr>
+                            )}
+                        </tbody>
+                      </table>
+                    </div>
+                  </DetailItemWrapper>
+                </div>
+                {evaluationFile.length !== 0 && (
+                  <div id="secondItem">
+                    <DetailItemWrapper itemName="事業設計図">
+                      <div tw="flex gap-[5px] flex-wrap">
+                        {evaluationFile.map((ef: any) => (
+                          <AttachedFileLink
+                            filePath={ef.node.data.url}
+                            fileName={ef.node.file_name}
+                            key={ef.node.data.url}
+                          />
+                        ))}
+                      </div>
+                    </DetailItemWrapper>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
         </DetailWrapper>
       </div>
     </Layout>
@@ -289,6 +309,22 @@ export const pageQuery = graphql`
           index_achievement
           create_date(formatString: "yyyy/mm/dd")
         }
+      }
+    }
+    evaluationPlanManualFDO: strapiEvaluationPlanManual(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      data {
+        url
+      }
+    }
+    evaluationPlanManualADO: strapiEvaluationPlanManual(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
+    ) {
+      data {
+        url
       }
     }
     allStrapiAttachedFile(filter: { insert_id: { in: $insert_id } }) {

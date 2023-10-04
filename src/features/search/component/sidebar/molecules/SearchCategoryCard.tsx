@@ -75,7 +75,7 @@ const SearchCategoryCard = (props: { category: string }) => {
           tw="transition-[height] duration-300 ease-in"
         >
           <SocialIssue />
-          <SdgsGoal path="result" />
+          {/* <SdgsGoal path="result" /> */}
         </div>
       )}
     </div>

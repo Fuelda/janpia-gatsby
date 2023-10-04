@@ -9,7 +9,6 @@ import DetailWrapper from "../components/lauout/DetailWrapper";
 import DetailItemWrapper from "../components/lauout/DetailItemWrapper";
 import { useFilteredStrapiContext } from "../context/filteredStrapiContext";
 import { businessCategoryArray } from "../features/search/store/filterContents";
-import { useStrapiContext } from "../context/strapiContext";
 import DetailAnchor from "../components/atoms/DetailAnchor";
 import { table, td, th, tr } from "../styles/table";
 import { detailAnchor, detailBody, detailFlex } from "../styles/detailPage";
@@ -29,7 +28,7 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
   const filteredSingleBizPlan = filteredAllBizPlan.find(
     (item) => item.bizPlan.business_cd === slug
   ) || { bizPlan: {}, group: [] };
-  const { bizPlan, group } = filteredSingleBizPlan;
+  const { bizPlan, group, mainGroup } = filteredSingleBizPlan;
   const {
     business_name,
     business_status,
@@ -61,14 +60,21 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
     strapiCompleteReportManualADO,
   } = data;
 
-  const mainGroup =
+  const mainGroupIndirect =
     group.length !== 0 &&
     group.find((g: any) => {
       const groupRole =
         g.business_org_type === "F" ? g.org_role_fdo : g.org_role_ado;
       return groupRole === 0 || 1;
     });
-  const mainGroupName = mainGroup ? mainGroup.groupData.organization_name : "";
+  let mainGroupName = "";
+  if (mainGroup) {
+    mainGroupName = mainGroup.node.organization_name;
+  } else if (mainGroupIndirect) {
+    mainGroupName = mainGroupIndirect.groupData.organization_name;
+  } else {
+    mainGroupName = "";
+  }
 
   let businessCategoryLabel: string | undefined = "";
   if (business_category) {
@@ -127,7 +133,7 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
     setWithCRM(strapiCompleteReportManualFDO || strapiCompleteReportManualADO);
   }, []);
 
-  console.log(bizPlan);
+  console.log(allStrapiGroup);
 
   return (
     <Layout>
@@ -178,7 +184,7 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
                       <th css={th}>事業名</th>
                       <td css={td}>{business_name}</td>
                     </tr>
-                    {mainGroup && (
+                    {(mainGroup || mainGroupIndirect) && (
                       <tr>
                         <th css={th}>団体名</th>
                         <td css={td}>{mainGroupName}</td>
