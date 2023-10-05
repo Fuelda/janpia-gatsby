@@ -23,6 +23,7 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
     setWithPostRM,
     setWithProRM,
     setWithCRM,
+    setWithSR,
   } = useDetailContext();
   const { slug } = pageContext;
   const filteredSingleBizPlan = filteredAllBizPlan.find(
@@ -30,6 +31,7 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
   ) || { bizPlan: {}, group: [] };
   const { bizPlan, group, mainGroup } = filteredSingleBizPlan;
   const {
+    business_org_type,
     business_name,
     business_status,
     target_area,
@@ -58,6 +60,8 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
     strapiProgressReportManualADO,
     strapiCompleteReportManualFDO,
     strapiCompleteReportManualADO,
+    strapiSettleReportFDO,
+    strapiSettleReportADO,
   } = data;
 
   const mainGroupIndirect =
@@ -109,12 +113,10 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
     (strapiBizPlanManualADO &&
       strapiBizPlanManualADO.business_overview.data.business_overview);
 
-  const linkedAdo = [
-    ...strapiBizPlanLinkADO.edges,
-    ...strapiBizPlanManualLinkADO.edges,
-    ...strapiBizPlanLinkFDO.edges,
-    ...strapiBizPlanManualLinkFDO.edges,
-  ];
+  const linkedAdo =
+    business_org_type === "F"
+      ? [...strapiBizPlanLinkADO.edges, ...strapiBizPlanManualLinkADO.edges]
+      : [...strapiBizPlanLinkFDO.edges, ...strapiBizPlanManualLinkFDO.edges];
   const pickupLinkedAdoGroupName = (organization_cd: string) => {
     const linkedAdoGroup = allStrapiGroup.edges.find(
       (g: any) => g.node.organization_cd === organization_cd
@@ -131,9 +133,10 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
       strapiProgressReportManualFDO || strapiProgressReportManualADO
     );
     setWithCRM(strapiCompleteReportManualFDO || strapiCompleteReportManualADO);
+    setWithSR(strapiSettleReportFDO || strapiSettleReportADO);
   }, []);
 
-  console.log(allStrapiGroup);
+  console.log(bizPlan);
 
   return (
     <Layout>
@@ -148,7 +151,7 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
             />
             {linkedAdo.length !== 0 && (
               <DetailAnchor
-                title="実行団体"
+                title={business_org_type === "F" ? "実行団体" : "資金分配団体"}
                 anchor={`/result/${slug}/#secondItem`}
               />
             )}
@@ -159,24 +162,46 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
                 <div tw="hidden lg:(block)">
                   <p css={th}>事業名</p>
                   <p css={td}>{business_name}</p>
-                  <p css={th}>採択事業年度</p>
-                  <p css={td}>
-                    {business_type_name &&
-                      (business_type_name.label || business_type_name)}
-                  </p>
-                  <p css={th}>採択事業年度</p>
-                  <p css={td}>
-                    {business_type_name &&
-                      (business_type_name.label || business_type_name)}
-                  </p>
-                  <p css={th}>事業分類</p>
-                  <p css={td}>{businessCategoryLabel}</p>
-                  <p css={th}>事業対象地域</p>
-                  <p css={td}>{target_area}</p>
-                  <p css={th}>事業ステータス</p>
-                  <p css={td}>{businessStatusText}</p>
-                  <p css={th}>事業概要</p>
-                  <p css={td}>{business_overview}</p>
+
+                  {(mainGroup || mainGroupIndirect) && (
+                    <div>
+                      <p css={th}>団体名</p>
+                      <p css={td}>{mainGroupName}</p>
+                    </div>
+                  )}
+                  {business_type_name && (
+                    <div>
+                      <p css={th}>採択事業年度</p>
+                      <p css={td}>
+                        {business_type_name &&
+                          (business_type_name.label || business_type_name)}
+                      </p>
+                    </div>
+                  )}
+                  {businessCategoryLabel && (
+                    <div>
+                      <p css={th}>事業分類</p>
+                      <p css={td}>{businessCategoryLabel}</p>
+                    </div>
+                  )}
+                  {target_area && (
+                    <div>
+                      <p css={th}>事業対象地域</p>
+                      <p css={td}>{target_area}</p>
+                    </div>
+                  )}
+                  {businessStatusText && (
+                    <div>
+                      <p css={th}>事業ステータス</p>
+                      <p css={td}>{businessStatusText}</p>
+                    </div>
+                  )}
+                  {business_overview && (
+                    <div>
+                      <p css={th}>事業概要</p>
+                      <p css={td}>{business_overview}</p>
+                    </div>
+                  )}
                 </div>
                 <table tw="lg:hidden">
                   <tbody>
@@ -228,12 +253,21 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
 
             <div id="secondItem">
               {linkedAdo.length !== 0 && (
-                <DetailItemWrapper itemName="実行団体">
+                <DetailItemWrapper
+                  itemName={
+                    business_org_type === "F" ? "実行団体" : "資金分配団体"
+                  }
+                >
                   <div tw="flex flex-col gap-2.5">
                     {linkedAdo.map((item, i) => (
                       <div key={i}>
                         <div tw="hidden lg:(block)">
-                          <p css={th}>実行団体名</p>
+                          <p css={th}>
+                            {business_org_type === "F"
+                              ? "実行団体"
+                              : "資金分配団体"}
+                            名
+                          </p>
                           <p css={td}>
                             {pickupLinkedAdoGroupName(
                               item.node.executive_grp_cd ||
@@ -256,7 +290,12 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
                         <table tw="lg:hidden">
                           <tbody>
                             <tr>
-                              <th css={th}>実行団体名</th>
+                              <th css={th}>
+                                {business_org_type === "F"
+                                  ? "実行団体"
+                                  : "資金分配団体"}
+                                名
+                              </th>
                               <td css={td}>
                                 {pickupLinkedAdoGroupName(
                                   item.node.executive_grp_cd ||
@@ -441,7 +480,19 @@ export const pageQuery = graphql`
     }
     strapiCompleteReportManualADO: strapiCompleteReportManual(
       biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
+    ) {
+      id
+    }
+    strapiSettleReportFDO: strapiSettleReport(
+      biz_cd_fund_distr: { eq: $slug }
       business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiSettleReportADO: strapiSettleReport(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
     ) {
       id
     }

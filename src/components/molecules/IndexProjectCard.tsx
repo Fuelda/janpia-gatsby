@@ -22,10 +22,10 @@ const IndexProjectCard = ({ isFdo }: IndexProjectCardType) => {
       : item.node.business_org_type === "A"
   );
   const onGoingProject = project.filter(
-    (item) => item.node.business_status === 1
+    (item) => item.node.business_status == 0
   );
   const onGoingProjectManual = projectManual.filter(
-    (item) => item.node.business_status === true
+    (item) => item.node.business_status
   );
 
   return (

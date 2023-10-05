@@ -322,8 +322,10 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
                             <div
                               dangerouslySetInnerHTML={{
                                 __html:
-                                  mainGroup.node.vision.data.childMarkdownRemark
-                                    .html,
+                                  mainGroup.node.vision.data.childMarkdownRemark.html.replace(
+                                    /\n/g,
+                                    "<br />"
+                                  ),
                               }}
                             />
                           )}
@@ -338,8 +340,10 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
                             <div
                               dangerouslySetInnerHTML={{
                                 __html:
-                                  mainGroup.node.mission.data
-                                    .childMarkdownRemark.html,
+                                  mainGroup.node.mission.data.childMarkdownRemark.html.replace(
+                                    /\n/g,
+                                    "<br />"
+                                  ),
                               }}
                             />
                           )}
@@ -446,132 +450,117 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
             </div>
             <div id="thirdItem">
               <DetailItemWrapper itemName="役員">
-                <div tw="hidden lg:block">
-                  {mainGroup.node.number_of_officers && (
+                {mainGroup.node.number_of_officers ? (
+                  <div tw="hidden lg:block">
                     <div>
                       <p css={th1}>役員数</p>
                       <p css={td}>{mainGroup.node.number_of_officers}名</p>
                     </div>
-                  )}
-                  {mainGroup.node.people_director && (
                     <div>
                       <p css={th2Sub}></p>
                       <p css={th2}>理事・取締役数</p>
                       <p css={td}>{mainGroup.node.people_director}名</p>
                     </div>
-                  )}
-                  {mainGroup.node.councilor && (
                     <div>
                       <p css={th2}>評議員数</p>
                       <p css={td}>{mainGroup.node.councilor}名</p>
                     </div>
-                  )}
-                  {mainGroup.node.auditor_people && (
                     <div>
                       <p css={th2}>監事/監査役・会計参与数</p>
                       <p css={td}>{mainGroup.node.auditor_people}名</p>
                     </div>
-                  )}
-                </div>
-                <table css={table} tw="lg:hidden">
-                  <tbody>
-                    {mainGroup.node.number_of_officers && (
+                  </div>
+                ) : (
+                  <div />
+                )}
+                {mainGroup.node.number_of_officers ? (
+                  <table css={table} tw="lg:hidden">
+                    <tbody>
                       <tr css={tr}>
                         <th css={th1} colSpan={2}>
                           役員数
                         </th>
                         <td css={td}>{mainGroup.node.number_of_officers}名</td>
                       </tr>
-                    )}
-                    {mainGroup.node.people_director && (
+
                       <tr css={tr}>
                         <th css={th2Sub} rowSpan={3}></th>
                         <th css={th2}>理事・取締役数</th>
                         <td css={td}>{mainGroup.node.people_director}名</td>
                       </tr>
-                    )}
-                    {mainGroup.node.councilor && (
                       <tr css={tr}>
                         <th css={th2}>評議員数</th>
                         <td css={td}>{mainGroup.node.councilor}名</td>
                       </tr>
-                    )}
-                    {mainGroup.node.auditor_people && (
                       <tr css={tr}>
                         <th css={th2}>監事/監査役・会計参与数</th>
                         <td css={td}>{mainGroup.node.auditor_people}名</td>
                       </tr>
-                    )}
-                  </tbody>
-                </table>
+                    </tbody>
+                  </table>
+                ) : (
+                  <div />
+                )}
               </DetailItemWrapper>
             </div>
             <div id="fourthItem">
               <DetailItemWrapper itemName="職員・従業員">
-                <div tw="hidden lg:block">
-                  {mainGroup.node.number_of_employees && (
+                {mainGroup.node.number_of_employees ? (
+                  <div tw="hidden lg:block">
                     <div>
                       <p css={th1}>職員・従業員数</p>
                       <p css={td}>{mainGroup.node.number_of_employees}名</p>
                     </div>
-                  )}
-                  {mainGroup.node.fulltime_employees && (
                     <div>
                       <p css={th2Sub}></p>
                       <p css={th3}>常勤職員・従業員数</p>
                       <p css={td}>{mainGroup.node.fulltime_employees}名</p>
                     </div>
-                  )}
-                  <div tw="flex w-full">
-                    {mainGroup.node.fulltime_paid && (
+                    <div tw="flex w-full">
                       <div tw="flex w-full">
                         <p css={th3} tw="w-[40%] py-2">
                           有給数
                         </p>
                         <p css={td}>{mainGroup.node.fulltime_paid}名</p>
                       </div>
-                    )}
-                    <div tw="flex w-full">
-                      <p css={th3} tw="w-[40%] py-2">
-                        無給数
-                      </p>
-                      <p css={td}>{mainGroup.node.fulltime_unpaid}名</p>
+                      <div tw="flex w-full">
+                        <p css={th3} tw="w-[40%] py-2">
+                          無給数
+                        </p>
+                        <p css={td}>{mainGroup.node.fulltime_unpaid}名</p>
+                      </div>
                     </div>
-                  </div>
-                  {mainGroup.node.parttime_employees && (
                     <div>
                       <p css={th3}>非常勤職員・従業員数</p>
                       <p css={td}>{mainGroup.node.parttime_employees}名</p>
                     </div>
-                  )}
-                  <div tw="flex w-full">
-                    {mainGroup.node.parttime_paid && (
+                    <div tw="flex w-full">
                       <div tw="flex w-full">
                         <p css={th3} tw="w-[40%] py-2">
                           有給数
                         </p>
                         <p css={td}>{mainGroup.node.parttime_paid}名</p>
                       </div>
-                    )}
-                    <div tw="flex w-full">
-                      <p css={th3} tw="w-[40%] py-2">
-                        無給数
-                      </p>
-                      <p css={td}>{mainGroup.node.parttime_unpaid}名</p>
+                      <div tw="flex w-full">
+                        <p css={th3} tw="w-[40%] py-2">
+                          無給数
+                        </p>
+                        <p css={td}>{mainGroup.node.parttime_unpaid}名</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <table css={table} tw="lg:hidden">
-                  <tbody>
-                    {mainGroup.node.number_of_employees && (
+                ) : (
+                  <div />
+                )}
+                {mainGroup.node.number_of_employees ? (
+                  <table css={table} tw="lg:hidden">
+                    <tbody>
                       <tr css={tr}>
                         <th css={th1} colSpan={3}>
                           職員・従業員数
                         </th>
                         <td css={td}>{mainGroup.node.number_of_employees}名</td>
                       </tr>
-                    )}
-                    {mainGroup.node.fulltime_employees && (
                       <tr css={tr}>
                         <th css={th2Sub} rowSpan={6}></th>
                         <th css={th3} colSpan={2}>
@@ -579,39 +568,35 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
                         </th>
                         <td css={td}>{mainGroup.node.fulltime_employees}名</td>
                       </tr>
-                    )}
-                    {mainGroup.node.fulltime_paid && (
                       <tr css={tr}>
                         <th css={th3Sub} rowSpan={2}></th>
                         <th css={th3}>有給数</th>
                         <td css={td}>{mainGroup.node.fulltime_paid}名</td>
                       </tr>
-                    )}
-                    <tr css={tr}>
-                      <th css={th3}>無給数</th>
-                      <td css={td}>{mainGroup.node.fulltime_unpaid}名</td>
-                    </tr>
-                    {mainGroup.node.parttime_employees && (
+                      <tr css={tr}>
+                        <th css={th3}>無給数</th>
+                        <td css={td}>{mainGroup.node.fulltime_unpaid}名</td>
+                      </tr>
                       <tr css={tr}>
                         <th css={th3} colSpan={2}>
                           非常勤職員・従業員数
                         </th>
                         <td css={td}>{mainGroup.node.parttime_employees}名</td>
                       </tr>
-                    )}
-                    {mainGroup.node.parttime_paid && (
                       <tr css={tr}>
                         <th css={th3Sub} rowSpan={2}></th>
                         <th css={th3}>有給数</th>
                         <td css={td}>{mainGroup.node.parttime_paid}名</td>
                       </tr>
-                    )}
-                    <tr css={tr}>
-                      <th css={th3}>無給数</th>
-                      <td css={td}>{mainGroup.node.parttime_unpaid}名</td>
-                    </tr>
-                  </tbody>
-                </table>
+                      <tr css={tr}>
+                        <th css={th3}>無給数</th>
+                        <td css={td}>{mainGroup.node.parttime_unpaid}名</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                ) : (
+                  <div />
+                )}
               </DetailItemWrapper>
             </div>
             <div id="fifthItem">

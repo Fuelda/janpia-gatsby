@@ -18,8 +18,8 @@ type detailType = {
   setWithMRM: Dispatch<boolean>;
   withPostRM: boolean;
   setWithPostRM: Dispatch<boolean>;
-  withSRM: boolean;
-  setWithSRM: Dispatch<boolean>;
+  withSR: boolean;
+  setWithSR: Dispatch<boolean>;
   withCRM: boolean;
   setWithCRM: Dispatch<boolean>;
 };
@@ -35,8 +35,8 @@ const DetailContext = createContext<detailType>({
   setWithMRM: () => {},
   withPostRM: false,
   setWithPostRM: () => {},
-  withSRM: false,
-  setWithSRM: () => {},
+  withSR: false,
+  setWithSR: () => {},
   withCRM: false,
   setWithCRM: () => {},
 });
@@ -47,7 +47,7 @@ const DetailProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [withProRM, setWithProRM] = useState(false);
   const [withMRM, setWithMRM] = useState(false);
   const [withPostRM, setWithPostRM] = useState(false);
-  const [withSRM, setWithSRM] = useState(false);
+  const [withSR, setWithSR] = useState(false);
   const [withCRM, setWithCRM] = useState(false);
   const value = {
     withORM,
@@ -60,8 +60,8 @@ const DetailProvider: FC<{ children: ReactNode }> = ({ children }) => {
     setWithMRM,
     withPostRM,
     setWithPostRM,
-    withSRM,
-    setWithSRM,
+    withSR,
+    setWithSR,
     withCRM,
     setWithCRM,
   };

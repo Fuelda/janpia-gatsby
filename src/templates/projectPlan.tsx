@@ -208,7 +208,8 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                         </div>
                       </div>
                     )}
-                    {(strapiBizPlan.field3_8 === "1" ||
+                    {(strapiBizPlan.field3_7 === "1" ||
+                      strapiBizPlan.field3_8 === "1" ||
                       strapiBizPlan.field3_9 === "1") && (
                       <div css={table}>
                         <p css={thLshape}>
@@ -217,12 +218,12 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                         <div css={trLshape}>
                           <div css={thLshapeSub} />
                           <div css={tdLshapeWrapper}>
-                            {strapiBizPlan.field3_8 === "1" && (
+                            {strapiBizPlan.field3_7 === "1" && (
                               <p css={tdLshape}>
                                 地域の働く場づくりや地域活性化などの課題解決に向けた取組の支援
                               </p>
                             )}
-                            {strapiBizPlan.field3_9 === "1" && (
+                            {strapiBizPlan.field3_8 === "1" && (
                               <p css={tdLshape}>
                                 安心・安全に暮らせるコミュニティづくりへの支援
                               </p>
@@ -240,8 +241,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                             <div
                               dangerouslySetInnerHTML={{
                                 __html:
-                                  strapiBizPlan.field_other.data
-                                    .childMarkdownRemark.html,
+                                  strapiBizPlan.field_other.data.childMarkdownRemark.html.replace(
+                                    /\n/g,
+                                    "<br />"
+                                  ),
                               }}
                               css={tdLshape}
                             />
@@ -255,8 +258,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                         <div
                           dangerouslySetInnerHTML={{
                             __html:
-                              strapiBizPlan.field_other_problem.data
-                                .childMarkdownRemark.html,
+                              strapiBizPlan.field_other_problem.data.childMarkdownRemark.html.replace(
+                                /\n/g,
+                                "<br />"
+                              ),
                           }}
                           css={tdLshape}
                         />
@@ -291,8 +296,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                   <div
                                     dangerouslySetInnerHTML={{
                                       __html:
-                                        sdgs.node.sdgs_description.data
-                                          .childMarkdownRemark.html,
+                                        sdgs.node.sdgs_description.data.childMarkdownRemark.html.replace(
+                                          /\n/g,
+                                          "<br />"
+                                        ),
                                     }}
                                   />
                                 </td>
@@ -310,13 +317,15 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                         strapiBizPlan.vision.data.childMarkdownRemark.html !==
                           "" && (
                           <div>
-                            <p css={th}>団体の役割</p>
+                            <p css={th}>団体の目的</p>
                             <p css={td}>
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
-                                    strapiBizPlan.vision.data
-                                      .childMarkdownRemark.html,
+                                    strapiBizPlan.vision.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
                                 }}
                               />
                             </p>
@@ -331,8 +340,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
-                                    strapiBizPlan.mission.data
-                                      .childMarkdownRemark.html,
+                                    strapiBizPlan.mission.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
                                 }}
                               />
                             </p>
@@ -345,13 +356,15 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                           strapiBizPlan.vision.data.childMarkdownRemark.html !==
                             "" && (
                             <tr css={tr}>
-                              <th css={th}>団体の役割</th>
+                              <th css={th}>団体の目的</th>
                               <td css={td}>
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
-                                      strapiBizPlan.vision.data
-                                        .childMarkdownRemark.html,
+                                      strapiBizPlan.vision.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
                                   }}
                                 />
                               </td>
@@ -366,8 +379,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
-                                      strapiBizPlan.mission.data
-                                        .childMarkdownRemark.html,
+                                      strapiBizPlan.mission.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
                                   }}
                                 />
                               </td>
@@ -389,13 +404,23 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
-                                    strapiBizPlan.business_overview.data
-                                      .childMarkdownRemark.html,
+                                    strapiBizPlan.business_overview.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
                                 }}
                               />
                             </p>
                           </div>
                         )}
+                      {strapiBizPlan.funding_conclusion_d && (
+                        <div>
+                          <p css={th}>事業提供契約締結日</p>
+                          <p css={td}>
+                            {formatDate(strapiBizPlan.funding_conclusion_d)}
+                          </p>
+                        </div>
+                      )}
                       {strapiBizPlan.business_period_s && (
                         <div>
                           <p css={th}>事業期間</p>
@@ -435,13 +460,23 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
-                                      strapiBizPlan.business_overview.data
-                                        .childMarkdownRemark.html,
+                                      strapiBizPlan.business_overview.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
                                   }}
                                 />
                               </td>
                             </tr>
                           )}
+                        {strapiBizPlan.funding_conclusion_d && (
+                          <tr css={tr}>
+                            <th css={th}>事業提供契約締結日</th>
+                            <td colSpan={2} css={td}>
+                              {formatDate(strapiBizPlan.funding_conclusion_d)}
+                            </td>
+                          </tr>
+                        )}
                         {strapiBizPlan.business_period_s && (
                           <tr css={tr}>
                             <th css={th}>事業期間</th>
@@ -475,8 +510,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
-                                    strapiBizPlan.direct_target_grp.data
-                                      .childMarkdownRemark.html,
+                                    strapiBizPlan.direct_target_grp.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
                                 }}
                               />
                             </p>
@@ -491,8 +528,46 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
-                                    strapiBizPlan.direct_target_cnt.data
-                                      .childMarkdownRemark.html,
+                                    strapiBizPlan.direct_target_cnt.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.indirect_target_grp &&
+                        strapiBizPlan.indirect_target_grp.data
+                          .childMarkdownRemark.html !== "" && (
+                          <div>
+                            <p css={th1_2}>間接的対象グループ</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.indirect_target_grp.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.indirect_target_cnt &&
+                        strapiBizPlan.indirect_target_cnt.data
+                          .childMarkdownRemark.html !== "" && (
+                          <div tw="flex w-full">
+                            <p css={th2_2}>人数</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.indirect_target_cnt.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
                                 }}
                               />
                             </p>
@@ -507,8 +582,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
-                                    strapiBizPlan.beneficiary.data
-                                      .childMarkdownRemark.html,
+                                    strapiBizPlan.beneficiary.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
                                 }}
                               />
                             </p>
@@ -523,8 +600,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
-                                    strapiBizPlan.beneficiary_cnt.data
-                                      .childMarkdownRemark.html,
+                                    strapiBizPlan.beneficiary_cnt.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
                                 }}
                               />
                             </p>
@@ -544,8 +623,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
-                                      strapiBizPlan.direct_target_grp.data
-                                        .childMarkdownRemark.html,
+                                      strapiBizPlan.direct_target_grp.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
                                   }}
                                 />
                               </td>
@@ -561,8 +642,49 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
-                                      strapiBizPlan.direct_target_cnt.data
-                                        .childMarkdownRemark.html,
+                                      strapiBizPlan.direct_target_cnt.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                        {strapiBizPlan.indirect_target_grp &&
+                          strapiBizPlan.indirect_target_grp.data
+                            .childMarkdownRemark.html !== "" && (
+                            <tr css={tr}>
+                              <th css={th1_2} colSpan={2}>
+                                間接的対象グループ
+                              </th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.indirect_target_grp.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                        {strapiBizPlan.indirect_target_cnt &&
+                          strapiBizPlan.indirect_target_cnt.data
+                            .childMarkdownRemark.html !== "" && (
+                            <tr css={tr}>
+                              <th css={th2Sub_2} rowSpan={1}></th>
+                              <th css={th2_2}>人数</th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.indirect_target_cnt.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
                                   }}
                                 />
                               </td>
@@ -579,8 +701,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
-                                      strapiBizPlan.beneficiary.data
-                                        .childMarkdownRemark.html,
+                                      strapiBizPlan.beneficiary.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
                                   }}
                                 />
                               </td>
@@ -596,8 +720,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
-                                      strapiBizPlan.beneficiary_cnt.data
-                                        .childMarkdownRemark.html,
+                                      strapiBizPlan.beneficiary_cnt.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
                                   }}
                                 />
                               </td>
@@ -617,8 +743,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
-                                    strapiBizPlan.business_target_fdo.data
-                                      .childMarkdownRemark.html,
+                                    strapiBizPlan.business_target_fdo.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
                                 }}
                               />
                             </p>
@@ -636,8 +764,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
-                                    strapiBizPlan.business_target_ado.data
-                                      .childMarkdownRemark.html,
+                                    strapiBizPlan.business_target_ado.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
                                 }}
                               />
                             </p>
@@ -669,8 +799,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
-                                      strapiBizPlan.business_target_fdo.data
-                                        .childMarkdownRemark.html,
+                                      strapiBizPlan.business_target_fdo.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
                                   }}
                                 />
                               </td>
@@ -688,8 +820,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
-                                      strapiBizPlan.business_target_ado.data
-                                        .childMarkdownRemark.html,
+                                      strapiBizPlan.business_target_ado.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
                                   }}
                                 />
                               </td>
@@ -723,8 +857,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
-                                    strapiBizPlan.social_issues.data
-                                      .childMarkdownRemark.html,
+                                    strapiBizPlan.social_issues.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
                                 }}
                               />
                             </p>
@@ -741,8 +877,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
-                                    strapiBizPlan.task_administration.data
-                                      .childMarkdownRemark.html,
+                                    strapiBizPlan.task_administration.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
                                 }}
                               />
                             </p>
@@ -757,8 +895,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
-                                    strapiBizPlan.task_request_account.data
-                                      .childMarkdownRemark.html,
+                                    strapiBizPlan.task_request_account.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
                                 }}
                               />
                             </p>
@@ -775,8 +915,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
-                                    strapiBizPlan.significance.data
-                                      .childMarkdownRemark.html,
+                                    strapiBizPlan.significance.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
                                 }}
                               />
                             </p>
@@ -794,8 +936,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
-                                      strapiBizPlan.social_issues.data
-                                        .childMarkdownRemark.html,
+                                      strapiBizPlan.social_issues.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
                                   }}
                                 />
                               </td>
@@ -812,8 +956,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
-                                      strapiBizPlan.task_administration.data
-                                        .childMarkdownRemark.html,
+                                      strapiBizPlan.task_administration.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
                                   }}
                                 />
                               </td>
@@ -830,8 +976,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
-                                      strapiBizPlan.task_request_account.data
-                                        .childMarkdownRemark.html,
+                                      strapiBizPlan.task_request_account.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
                                   }}
                                 />
                               </td>
@@ -848,8 +996,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
-                                      strapiBizPlan.significance.data
-                                        .childMarkdownRemark.html,
+                                      strapiBizPlan.significance.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
                                   }}
                                 />
                               </td>
@@ -886,8 +1036,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
-                                    strapiBizPlan.midterm_biz_goals.data
-                                      .childMarkdownRemark.html,
+                                    strapiBizPlan.midterm_biz_goals.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
                                 }}
                               />
                             </div>
@@ -911,8 +1063,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           <div
                                             dangerouslySetInnerHTML={{
                                               __html:
-                                                item.node.business_goals.data
-                                                  .childMarkdownRemark.html,
+                                                item.node.business_goals.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
                                             }}
                                           />
                                         </td>
@@ -924,8 +1078,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           <div
                                             dangerouslySetInnerHTML={{
                                               __html:
-                                                item.node.goals_monitoring.data
-                                                  .childMarkdownRemark.html,
+                                                item.node.goals_monitoring.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
                                             }}
                                           />
                                         </p>
@@ -936,8 +1092,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           <div
                                             dangerouslySetInnerHTML={{
                                               __html:
-                                                item.node.goals_initial.data
-                                                  .childMarkdownRemark.html,
+                                                item.node.goals_initial.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
                                             }}
                                           />
                                         </p>
@@ -948,8 +1106,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           <div
                                             dangerouslySetInnerHTML={{
                                               __html:
-                                                item.node.goals_mid_eval.data
-                                                  .childMarkdownRemark.html,
+                                                item.node.goals_mid_eval.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
                                             }}
                                           />
                                         </p>
@@ -960,8 +1120,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           <div
                                             dangerouslySetInnerHTML={{
                                               __html:
-                                                item.node.goals_aft_eval.data
-                                                  .childMarkdownRemark.html,
+                                                item.node.goals_aft_eval.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
                                             }}
                                           />
                                         </p>
@@ -973,8 +1135,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           <div
                                             dangerouslySetInnerHTML={{
                                               __html:
-                                                item.node.goals_monitoring.data
-                                                  .childMarkdownRemark.html,
+                                                item.node.goals_monitoring.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
                                             }}
                                           />
                                         </td>
@@ -985,8 +1149,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           <div
                                             dangerouslySetInnerHTML={{
                                               __html:
-                                                item.node.goals_initial.data
-                                                  .childMarkdownRemark.html,
+                                                item.node.goals_initial.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
                                             }}
                                           />
                                         </td>
@@ -997,8 +1163,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           <div
                                             dangerouslySetInnerHTML={{
                                               __html:
-                                                item.node.goals_mid_eval.data
-                                                  .childMarkdownRemark.html,
+                                                item.node.goals_mid_eval.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
                                             }}
                                           />
                                         </td>
@@ -1009,8 +1177,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           <div
                                             dangerouslySetInnerHTML={{
                                               __html:
-                                                item.node.goals_aft_eval.data
-                                                  .childMarkdownRemark.html,
+                                                item.node.goals_aft_eval.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
                                             }}
                                           />
                                         </td>
@@ -1035,8 +1205,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           <div
                                             dangerouslySetInnerHTML={{
                                               __html:
-                                                item.node.business_goals.data
-                                                  .childMarkdownRemark.html,
+                                                item.node.business_goals.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
                                             }}
                                           />
                                         </td>
@@ -1048,8 +1220,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           <div
                                             dangerouslySetInnerHTML={{
                                               __html:
-                                                item.node.goals_monitoring.data
-                                                  .childMarkdownRemark.html,
+                                                item.node.goals_monitoring.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
                                             }}
                                           />
                                         </p>
@@ -1060,8 +1234,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           <div
                                             dangerouslySetInnerHTML={{
                                               __html:
-                                                item.node.goals_initial.data
-                                                  .childMarkdownRemark.html,
+                                                item.node.goals_initial.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
                                             }}
                                           />
                                         </p>
@@ -1072,8 +1248,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           <div
                                             dangerouslySetInnerHTML={{
                                               __html:
-                                                item.node.goals_mid_eval.data
-                                                  .childMarkdownRemark.html,
+                                                item.node.goals_mid_eval.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
                                             }}
                                           />
                                         </p>
@@ -1084,8 +1262,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           <div
                                             dangerouslySetInnerHTML={{
                                               __html:
-                                                item.node.goals_aft_eval.data
-                                                  .childMarkdownRemark.html,
+                                                item.node.goals_aft_eval.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
                                             }}
                                           />
                                         </p>
@@ -1097,8 +1277,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           <div
                                             dangerouslySetInnerHTML={{
                                               __html:
-                                                item.node.goals_monitoring.data
-                                                  .childMarkdownRemark.html,
+                                                item.node.goals_monitoring.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
                                             }}
                                           />
                                         </td>
@@ -1109,8 +1291,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           <div
                                             dangerouslySetInnerHTML={{
                                               __html:
-                                                item.node.goals_initial.data
-                                                  .childMarkdownRemark.html,
+                                                item.node.goals_initial.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
                                             }}
                                           />
                                         </td>
@@ -1121,8 +1305,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           <div
                                             dangerouslySetInnerHTML={{
                                               __html:
-                                                item.node.goals_mid_eval.data
-                                                  .childMarkdownRemark.html,
+                                                item.node.goals_mid_eval.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
                                             }}
                                           />
                                         </td>
@@ -1133,8 +1319,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           <div
                                             dangerouslySetInnerHTML={{
                                               __html:
-                                                item.node.goals_aft_eval.data
-                                                  .childMarkdownRemark.html,
+                                                item.node.goals_aft_eval.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
                                             }}
                                           />
                                         </td>
@@ -1160,8 +1348,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         <div
                                           dangerouslySetInnerHTML={{
                                             __html:
-                                              item.node.output.data
-                                                .childMarkdownRemark.html,
+                                              item.node.output.data.childMarkdownRemark.html.replace(
+                                                /\n/g,
+                                                "<br />"
+                                              ),
                                           }}
                                         />
                                       </td>
@@ -1173,8 +1363,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         <div
                                           dangerouslySetInnerHTML={{
                                             __html:
-                                              item.node.output_monitor.data
-                                                .childMarkdownRemark.html,
+                                              item.node.output_monitor.data.childMarkdownRemark.html.replace(
+                                                /\n/g,
+                                                "<br />"
+                                              ),
                                           }}
                                         />
                                       </p>
@@ -1185,8 +1377,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         <div
                                           dangerouslySetInnerHTML={{
                                             __html:
-                                              item.node.output_initial.data
-                                                .childMarkdownRemark.html,
+                                              item.node.output_initial.data.childMarkdownRemark.html.replace(
+                                                /\n/g,
+                                                "<br />"
+                                              ),
                                           }}
                                         />
                                       </p>
@@ -1197,8 +1391,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         <div
                                           dangerouslySetInnerHTML={{
                                             __html:
-                                              item.node.output_mid_eval.data
-                                                .childMarkdownRemark.html,
+                                              item.node.output_mid_eval.data.childMarkdownRemark.html.replace(
+                                                /\n/g,
+                                                "<br />"
+                                              ),
                                           }}
                                         />
                                       </p>
@@ -1209,8 +1405,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         <div
                                           dangerouslySetInnerHTML={{
                                             __html:
-                                              item.node.output_aft_eval.data
-                                                .childMarkdownRemark.html,
+                                              item.node.output_aft_eval.data.childMarkdownRemark.html.replace(
+                                                /\n/g,
+                                                "<br />"
+                                              ),
                                           }}
                                         />
                                       </p>
@@ -1222,8 +1420,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         <div
                                           dangerouslySetInnerHTML={{
                                             __html:
-                                              item.node.output_monitor.data
-                                                .childMarkdownRemark.html,
+                                              item.node.output_monitor.data.childMarkdownRemark.html.replace(
+                                                /\n/g,
+                                                "<br />"
+                                              ),
                                           }}
                                         />
                                       </td>
@@ -1234,8 +1434,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         <div
                                           dangerouslySetInnerHTML={{
                                             __html:
-                                              item.node.output_initial.data
-                                                .childMarkdownRemark.html,
+                                              item.node.output_initial.data.childMarkdownRemark.html.replace(
+                                                /\n/g,
+                                                "<br />"
+                                              ),
                                           }}
                                         />
                                       </td>
@@ -1246,8 +1448,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         <div
                                           dangerouslySetInnerHTML={{
                                             __html:
-                                              item.node.output_mid_eval.data
-                                                .childMarkdownRemark.html,
+                                              item.node.output_mid_eval.data.childMarkdownRemark.html.replace(
+                                                /\n/g,
+                                                "<br />"
+                                              ),
                                           }}
                                         />
                                       </td>
@@ -1258,8 +1462,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         <div
                                           dangerouslySetInnerHTML={{
                                             __html:
-                                              item.node.output_aft_eval.data
-                                                .childMarkdownRemark.html,
+                                              item.node.output_aft_eval.data.childMarkdownRemark.html.replace(
+                                                /\n/g,
+                                                "<br />"
+                                              ),
                                           }}
                                         />
                                       </td>
@@ -1283,8 +1489,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           <div
                                             dangerouslySetInnerHTML={{
                                               __html:
-                                                item.node.output.data
-                                                  .childMarkdownRemark.html,
+                                                item.node.output.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
                                             }}
                                           />
                                         </td>
@@ -1296,8 +1504,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           <div
                                             dangerouslySetInnerHTML={{
                                               __html:
-                                                item.node.output_monitor.data
-                                                  .childMarkdownRemark.html,
+                                                item.node.output_monitor.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
                                             }}
                                           />
                                         </p>
@@ -1308,8 +1518,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           <div
                                             dangerouslySetInnerHTML={{
                                               __html:
-                                                item.node.output_initial.data
-                                                  .childMarkdownRemark.html,
+                                                item.node.output_initial.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
                                             }}
                                           />
                                         </p>
@@ -1320,8 +1532,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           <div
                                             dangerouslySetInnerHTML={{
                                               __html:
-                                                item.node.output_mid_eval.data
-                                                  .childMarkdownRemark.html,
+                                                item.node.output_mid_eval.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
                                             }}
                                           />
                                         </p>
@@ -1332,8 +1546,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           <div
                                             dangerouslySetInnerHTML={{
                                               __html:
-                                                item.node.output_aft_eval.data
-                                                  .childMarkdownRemark.html,
+                                                item.node.output_aft_eval.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
                                             }}
                                           />
                                         </p>
@@ -1345,8 +1561,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           <div
                                             dangerouslySetInnerHTML={{
                                               __html:
-                                                item.node.output_monitor.data
-                                                  .childMarkdownRemark.html,
+                                                item.node.output_monitor.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
                                             }}
                                           />
                                         </td>
@@ -1357,8 +1575,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           <div
                                             dangerouslySetInnerHTML={{
                                               __html:
-                                                item.node.output_initial.data
-                                                  .childMarkdownRemark.html,
+                                                item.node.output_initial.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
                                             }}
                                           />
                                         </td>
@@ -1369,8 +1589,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           <div
                                             dangerouslySetInnerHTML={{
                                               __html:
-                                                item.node.output_mid_eval.data
-                                                  .childMarkdownRemark.html,
+                                                item.node.output_mid_eval.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
                                             }}
                                           />
                                         </td>
@@ -1381,8 +1603,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           <div
                                             dangerouslySetInnerHTML={{
                                               __html:
-                                                item.node.output_aft_eval.data
-                                                  .childMarkdownRemark.html,
+                                                item.node.output_aft_eval.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
                                             }}
                                           />
                                         </td>
@@ -1412,8 +1636,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         <div
                                           dangerouslySetInnerHTML={{
                                             __html:
-                                              item.node.business_goals.data
-                                                .childMarkdownRemark.html,
+                                              item.node.business_goals.data.childMarkdownRemark.html.replace(
+                                                /\n/g,
+                                                "<br />"
+                                              ),
                                           }}
                                         />
                                       </td>
@@ -1425,8 +1651,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         <div
                                           dangerouslySetInnerHTML={{
                                             __html:
-                                              item.node.goals_monitoring.data
-                                                .childMarkdownRemark.html,
+                                              item.node.goals_monitoring.data.childMarkdownRemark.html.replace(
+                                                /\n/g,
+                                                "<br />"
+                                              ),
                                           }}
                                         />
                                       </p>
@@ -1437,8 +1665,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         <div
                                           dangerouslySetInnerHTML={{
                                             __html:
-                                              item.node.goals_initial.data
-                                                .childMarkdownRemark.html,
+                                              item.node.goals_initial.data.childMarkdownRemark.html.replace(
+                                                /\n/g,
+                                                "<br />"
+                                              ),
                                           }}
                                         />
                                       </p>
@@ -1449,8 +1679,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         <div
                                           dangerouslySetInnerHTML={{
                                             __html:
-                                              item.node.goals_mid_eval.data
-                                                .childMarkdownRemark.html,
+                                              item.node.goals_mid_eval.data.childMarkdownRemark.html.replace(
+                                                /\n/g,
+                                                "<br />"
+                                              ),
                                           }}
                                         />
                                       </p>
@@ -1461,8 +1693,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         <div
                                           dangerouslySetInnerHTML={{
                                             __html:
-                                              item.node.goals_aft_eval.data
-                                                .childMarkdownRemark.html,
+                                              item.node.goals_aft_eval.data.childMarkdownRemark.html.replace(
+                                                /\n/g,
+                                                "<br />"
+                                              ),
                                           }}
                                         />
                                       </p>
@@ -1474,8 +1708,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         <div
                                           dangerouslySetInnerHTML={{
                                             __html:
-                                              item.node.goals_monitoring.data
-                                                .childMarkdownRemark.html,
+                                              item.node.goals_monitoring.data.childMarkdownRemark.html.replace(
+                                                /\n/g,
+                                                "<br />"
+                                              ),
                                           }}
                                         />
                                       </td>
@@ -1486,8 +1722,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         <div
                                           dangerouslySetInnerHTML={{
                                             __html:
-                                              item.node.goals_initial.data
-                                                .childMarkdownRemark.html,
+                                              item.node.goals_initial.data.childMarkdownRemark.html.replace(
+                                                /\n/g,
+                                                "<br />"
+                                              ),
                                           }}
                                         />
                                       </td>
@@ -1498,8 +1736,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         <div
                                           dangerouslySetInnerHTML={{
                                             __html:
-                                              item.node.goals_mid_eval.data
-                                                .childMarkdownRemark.html,
+                                              item.node.goals_mid_eval.data.childMarkdownRemark.html.replace(
+                                                /\n/g,
+                                                "<br />"
+                                              ),
                                           }}
                                         />
                                       </td>
@@ -1510,8 +1750,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         <div
                                           dangerouslySetInnerHTML={{
                                             __html:
-                                              item.node.goals_aft_eval.data
-                                                .childMarkdownRemark.html,
+                                              item.node.goals_aft_eval.data.childMarkdownRemark.html.replace(
+                                                /\n/g,
+                                                "<br />"
+                                              ),
                                           }}
                                         />
                                       </td>
@@ -1536,8 +1778,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         <div
                                           dangerouslySetInnerHTML={{
                                             __html:
-                                              item.node.output.data
-                                                .childMarkdownRemark.html,
+                                              item.node.output.data.childMarkdownRemark.html.replace(
+                                                /\n/g,
+                                                "<br />"
+                                              ),
                                           }}
                                         />
                                       </td>
@@ -1549,8 +1793,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         <div
                                           dangerouslySetInnerHTML={{
                                             __html:
-                                              item.node.output_monitor.data
-                                                .childMarkdownRemark.html,
+                                              item.node.output_monitor.data.childMarkdownRemark.html.replace(
+                                                /\n/g,
+                                                "<br />"
+                                              ),
                                           }}
                                         />
                                       </p>
@@ -1561,8 +1807,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         <div
                                           dangerouslySetInnerHTML={{
                                             __html:
-                                              item.node.output_initial.data
-                                                .childMarkdownRemark.html,
+                                              item.node.output_initial.data.childMarkdownRemark.html.replace(
+                                                /\n/g,
+                                                "<br />"
+                                              ),
                                           }}
                                         />
                                       </p>
@@ -1573,8 +1821,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         <div
                                           dangerouslySetInnerHTML={{
                                             __html:
-                                              item.node.output_mid_eval.data
-                                                .childMarkdownRemark.html,
+                                              item.node.output_mid_eval.data.childMarkdownRemark.html.replace(
+                                                /\n/g,
+                                                "<br />"
+                                              ),
                                           }}
                                         />
                                       </p>
@@ -1585,8 +1835,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         <div
                                           dangerouslySetInnerHTML={{
                                             __html:
-                                              item.node.output_aft_eval.data
-                                                .childMarkdownRemark.html,
+                                              item.node.output_aft_eval.data.childMarkdownRemark.html.replace(
+                                                /\n/g,
+                                                "<br />"
+                                              ),
                                           }}
                                         />
                                       </p>
@@ -1598,8 +1850,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         <div
                                           dangerouslySetInnerHTML={{
                                             __html:
-                                              item.node.output_monitor.data
-                                                .childMarkdownRemark.html,
+                                              item.node.output_monitor.data.childMarkdownRemark.html.replace(
+                                                /\n/g,
+                                                "<br />"
+                                              ),
                                           }}
                                         />
                                       </td>
@@ -1610,8 +1864,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         <div
                                           dangerouslySetInnerHTML={{
                                             __html:
-                                              item.node.output_initial.data
-                                                .childMarkdownRemark.html,
+                                              item.node.output_initial.data.childMarkdownRemark.html.replace(
+                                                /\n/g,
+                                                "<br />"
+                                              ),
                                           }}
                                         />
                                       </td>
@@ -1622,8 +1878,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         <div
                                           dangerouslySetInnerHTML={{
                                             __html:
-                                              item.node.output_mid_eval.data
-                                                .childMarkdownRemark.html,
+                                              item.node.output_mid_eval.data.childMarkdownRemark.html.replace(
+                                                /\n/g,
+                                                "<br />"
+                                              ),
                                           }}
                                         />
                                       </td>
@@ -1634,8 +1892,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         <div
                                           dangerouslySetInnerHTML={{
                                             __html:
-                                              item.node.output_aft_eval.data
-                                                .childMarkdownRemark.html,
+                                              item.node.output_aft_eval.data.childMarkdownRemark.html.replace(
+                                                /\n/g,
+                                                "<br />"
+                                              ),
                                           }}
                                         />
                                       </td>
@@ -1662,8 +1922,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
-                                    strapiBizPlan.activity_0.data
-                                      .childMarkdownRemark.html,
+                                    strapiBizPlan.activity_0.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
                                 }}
                               />
                             </p>
@@ -1678,8 +1940,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
-                                    strapiBizPlan.activity_season_0.data
-                                      .childMarkdownRemark.html,
+                                    strapiBizPlan.activity_season_0.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
                                 }}
                               />
                             </p>
@@ -1694,8 +1958,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
-                                    strapiBizPlan.activity_1.data
-                                      .childMarkdownRemark.html,
+                                    strapiBizPlan.activity_1.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
                                 }}
                               />
                             </p>
@@ -1710,8 +1976,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
-                                    strapiBizPlan.activity_season_1.data
-                                      .childMarkdownRemark.html,
+                                    strapiBizPlan.activity_season_1.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
                                 }}
                               />
                             </p>
@@ -1726,8 +1994,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
-                                    strapiBizPlan.activity_2.data
-                                      .childMarkdownRemark.html,
+                                    strapiBizPlan.activity_2.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
                                 }}
                               />
                             </p>
@@ -1742,8 +2012,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
-                                    strapiBizPlan.activity_season_2.data
-                                      .childMarkdownRemark.html,
+                                    strapiBizPlan.activity_season_2.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
                                 }}
                               />
                             </p>
@@ -1758,8 +2030,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
-                                    strapiBizPlan.activity_3.data
-                                      .childMarkdownRemark.html,
+                                    strapiBizPlan.activity_3.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
                                 }}
                               />
                             </p>
@@ -1774,8 +2048,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
-                                    strapiBizPlan.activity_season_3.data
-                                      .childMarkdownRemark.html,
+                                    strapiBizPlan.activity_season_3.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
                                 }}
                               />
                             </p>
@@ -1795,8 +2071,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
-                                      strapiBizPlan.activity_0.data
-                                        .childMarkdownRemark.html,
+                                      strapiBizPlan.activity_0.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
                                   }}
                                 />
                               </td>
@@ -1812,8 +2090,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
-                                      strapiBizPlan.activity_season_0.data
-                                        .childMarkdownRemark.html,
+                                      strapiBizPlan.activity_season_0.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
                                   }}
                                 />
                               </td>
@@ -1830,8 +2110,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
-                                      strapiBizPlan.activity_1.data
-                                        .childMarkdownRemark.html,
+                                      strapiBizPlan.activity_1.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
                                   }}
                                 />
                               </td>
@@ -1847,8 +2129,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
-                                      strapiBizPlan.activity_season_1.data
-                                        .childMarkdownRemark.html,
+                                      strapiBizPlan.activity_season_1.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
                                   }}
                                 />
                               </td>
@@ -1865,8 +2149,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
-                                      strapiBizPlan.activity_2.data
-                                        .childMarkdownRemark.html,
+                                      strapiBizPlan.activity_2.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
                                   }}
                                 />
                               </td>
@@ -1882,8 +2168,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
-                                      strapiBizPlan.activity_season_2.data
-                                        .childMarkdownRemark.html,
+                                      strapiBizPlan.activity_season_2.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
                                   }}
                                 />
                               </td>
@@ -1900,8 +2188,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
-                                      strapiBizPlan.activity_3.data
-                                        .childMarkdownRemark.html,
+                                      strapiBizPlan.activity_3.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
                                   }}
                                 />
                               </td>
@@ -1917,8 +2207,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
-                                      strapiBizPlan.activity_season_3.data
-                                        .childMarkdownRemark.html,
+                                      strapiBizPlan.activity_season_3.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
                                   }}
                                 />
                               </td>
@@ -1946,8 +2238,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
-                                    strapiBizPlan.human_resources.data
-                                      .childMarkdownRemark.html,
+                                    strapiBizPlan.human_resources.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
                                 }}
                               />
                             </p>
@@ -1962,8 +2256,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
-                                    strapiBizPlan.equipment.data
-                                      .childMarkdownRemark.html,
+                                    strapiBizPlan.equipment.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
                                 }}
                               />
                             </p>
@@ -1978,8 +2274,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
-                                    strapiBizPlan.etc_resources.data
-                                      .childMarkdownRemark.html,
+                                    strapiBizPlan.etc_resources.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
                                 }}
                               />
                             </p>
@@ -2005,8 +2303,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
-                                      strapiBizPlan.human_resources.data
-                                        .childMarkdownRemark.html,
+                                      strapiBizPlan.human_resources.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
                                   }}
                                 />
                               </td>
@@ -2021,8 +2321,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
-                                      strapiBizPlan.equipment.data
-                                        .childMarkdownRemark.html,
+                                      strapiBizPlan.equipment.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
                                   }}
                                 />
                               </td>
@@ -2037,8 +2339,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
-                                      strapiBizPlan.etc_resources.data
-                                        .childMarkdownRemark.html,
+                                      strapiBizPlan.etc_resources.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
                                   }}
                                 />
                               </td>
@@ -2060,8 +2364,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
-                                    strapiBizPlan.pr_strategy.data
-                                      .childMarkdownRemark.html,
+                                    strapiBizPlan.pr_strategy.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
                                 }}
                               />
                             </p>
@@ -2076,8 +2382,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
-                                    strapiBizPlan.dialogue_strategy.data
-                                      .childMarkdownRemark.html,
+                                    strapiBizPlan.dialogue_strategy.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
                                 }}
                               />
                             </p>
@@ -2095,8 +2403,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
-                                      strapiBizPlan.pr_strategy.data
-                                        .childMarkdownRemark.html,
+                                      strapiBizPlan.pr_strategy.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
                                   }}
                                 />
                               </td>
@@ -2111,8 +2421,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
-                                      strapiBizPlan.dialogue_strategy.data
-                                        .childMarkdownRemark.html,
+                                      strapiBizPlan.dialogue_strategy.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
                                   }}
                                 />
                               </td>
@@ -2134,8 +2446,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
-                                    strapiBizPlan.sustainability1.data
-                                      .childMarkdownRemark.html,
+                                    strapiBizPlan.sustainability1.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
                                 }}
                               />
                             </p>
@@ -2150,8 +2464,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
-                                    strapiBizPlan.sustainability2.data
-                                      .childMarkdownRemark.html,
+                                    strapiBizPlan.sustainability2.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
                                 }}
                               />
                             </p>
@@ -2169,8 +2485,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
-                                      strapiBizPlan.sustainability1.data
-                                        .childMarkdownRemark.html,
+                                      strapiBizPlan.sustainability1.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
                                   }}
                                 />
                               </td>
@@ -2185,8 +2503,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
-                                      strapiBizPlan.sustainability2.data
-                                        .childMarkdownRemark.html,
+                                      strapiBizPlan.sustainability2.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
                                   }}
                                 />
                               </td>
@@ -2210,8 +2530,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
-                                    strapiBizPlan.subsidy_actual.data
-                                      .childMarkdownRemark.html,
+                                    strapiBizPlan.subsidy_actual.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
                                 }}
                               />
                             </p>
@@ -2228,8 +2550,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
-                                    strapiBizPlan.org_strength.data
-                                      .childMarkdownRemark.html,
+                                    strapiBizPlan.org_strength.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
                                 }}
                               />
                             </p>
@@ -2249,8 +2573,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
-                                      strapiBizPlan.subsidy_actual.data
-                                        .childMarkdownRemark.html,
+                                      strapiBizPlan.subsidy_actual.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
                                   }}
                                 />
                               </td>
@@ -2267,8 +2593,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
-                                      strapiBizPlan.org_strength.data
-                                        .childMarkdownRemark.html,
+                                      strapiBizPlan.org_strength.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
                                   }}
                                 />
                               </td>
@@ -2336,10 +2664,12 @@ export const pageQuery = graphql`
       field1_1
       field1_2
       field1_3
+      field1_9
       field2_4
       field2_5
       field2_6
       field2_9
+      field3_7
       field3_8
       field3_9
       field_other {

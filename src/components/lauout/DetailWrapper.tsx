@@ -8,7 +8,7 @@ const DetailWrapper: React.FC<{
   slug: string;
 }> = ({ children, category, slug }) => {
   return (
-    <div tw="border w-[80%] border-gray-border lg:(w-full border-0)">
+    <div tw="border w-[80%] border-gray-border mb-[80px] lg:(w-full border-0)">
       <p tw="py-2.5 px-3.5 text-lg font-bold w-full border-b border-gray-border lg:(border-0 bg-blue-base)">
         {category}
       </p>

@@ -66,7 +66,11 @@ export const filterStrapiDataWithoutPref = () => {
             searchState.organization_type_cd.includes(
               g.groupData?.organization_type_cd
             )
-        )) &&
+        ) ||
+        (item.mainGroup?.node.organization_type_cd &&
+          searchState.organization_type_cd.includes(
+            item.mainGroup?.node.organization_type_cd
+          ))) &&
       // //団体所在地
       // (searchState.prefectures.length === 0 ||
       //   item.group.some(

@@ -19,6 +19,8 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
     strapiCompleteReportManual && strapiCompleteReportManual.data.url;
   const googleDocsViewerUrl = `https://docs.google.com/viewer?url=${pdfUrl}&embedded=true`;
 
+  console.log(data);
+
   return (
     <Layout>
       <DetailHeader business_cd={slug} />
@@ -58,7 +60,7 @@ export const pageQuery = graphql`
     }
     strapiCompleteReportManualADO: strapiCompleteReportManual(
       biz_cd_executive: { eq: $slug }
-      business_org_type: { eq: "F" }
+      business_org_type: { eq: "A" }
     ) {
       data {
         url

@@ -1,6 +1,5 @@
 import React from "react";
 import * as Checkbox from "@radix-ui/react-checkbox";
-import { CheckIcon } from "@radix-ui/react-icons";
 import { hCenter, vCenter } from "../../styles/base";
 import { checkBox, checkBoxPref, checkMark } from "../../styles/form";
 import { prefecturesArray } from "../../features/search/store/filterContents";
@@ -9,7 +8,6 @@ import "twin.macro";
 import tw from "twin.macro";
 import { filterStrapiDataWithoutPref } from "../../features/search/util/withoutPrefectrues/filterStrapiDataWithoutPref";
 import { filterStrapiManualDataWithoutPref } from "../../features/search/util/withoutPrefectrues/filterStrapiManualDataWithputPref";
-import { StaticImage } from "gatsby-plugin-image";
 
 const SearchPrefectureCard = (props: { area: string }) => {
   const { searchState, searchSetState } = useSearchContext();
@@ -100,8 +98,10 @@ const SearchPrefectureCard = (props: { area: string }) => {
   }
 
   const pickupPref = (pref: string) => {
-    const prefLength = filteredAllBizPlan.filter((item) =>
-      item.group.some((g: any) => g.groupData.prefectures === pref)
+    const prefLength = filteredAllBizPlan.filter(
+      (item) =>
+        item.group.some((g: any) => g.groupData.prefectures === pref) ||
+        item.mainGroup?.node.prefectures === pref
     ).length;
     return prefLength;
   };

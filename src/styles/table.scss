@@ -1,4 +1,50 @@
 .table {
+  &__financialPlan {
+    thead {
+      text-align: center;
+    }
+    th {
+      background-color: #eff3fb;
+    }
+    &--thead {
+      &-th {
+        width: 33.3%;
+        border: solid 1px #7f8e99;
+      }
+      &-01 {
+        border: none;
+        width: 22.4%;
+      }
+      &-02 {
+        width: 22.4%;
+        padding: 8px 0;
+      }
+      &-sub {
+        height: 10px;
+        border: none;
+      }
+    }
+    &--tbody {
+      &-01 {
+        padding: 12px 14px;
+        text-align: start;
+        border-top: solid 1px #7f8e99;
+      }
+      &-02 {
+        padding: 12px 14px;
+        text-align: start;
+        border: solid 1px #7f8e99;
+      }
+      &-sub {
+        width: 15px;
+      }
+      td {
+        padding: 12px 14px;
+        text-align: end;
+      }
+    }
+  }
+
   &__settleReport {
     &__exective {
       width: 780px;

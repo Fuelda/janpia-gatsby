@@ -41,7 +41,7 @@ const Project = () => {
           <div>
             <BusinessOrgType path={path} />
             <BusinessTypeName path={path} />
-            {btnCategory === "通常枠" && <BusinessCategory path={path} />}
+            {btnCategory.includes("通常枠") && <BusinessCategory path={path} />}
             <BusinessStatus path={path} />
 
             <h3 css={h3} tw="lg:(hidden)">

@@ -17,7 +17,7 @@ export const th2Sub = tw`w-[6%] bg-blue-base `;
 export const th3 = tw`w-[16%] bg-blue-base py-3 px-3.5 text-start border-gray-border border lg:(text-[13px] w-full py-0 px-2)`;
 export const th3Sub = tw`w-[16%] bg-blue-base border-gray-border border-l`;
 
-export const th1_2 = tw`w-[25%] bg-blue-base py-3 px-3.5 text-start lg:(text-[13px] w-full py-0 px-2 border-gray-border border)`;
+export const th1_2 = tw`w-[25%] bg-blue-base py-3 px-3.5 text-start border-gray-border border-t  lg:(text-[13px] w-full py-0 px-2 border)`;
 export const th2_2 = tw`w-[12.5%] bg-blue-base py-3 px-3.5 text-start border-gray-border border lg:(text-[13px] py-2 px-2 w-24)`;
 export const th2Sub_2 = tw`w-[12.5%] bg-blue-base `;
 export const th3_2 = tw`w-[16%] bg-blue-base py-3 px-3.5 text-start border-gray-border border`;

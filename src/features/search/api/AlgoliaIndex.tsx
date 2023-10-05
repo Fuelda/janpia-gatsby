@@ -13,7 +13,7 @@ const searchClient = algoliasearch(
 );
 
 const AlgoliaIndex = (props: { path: string }) => {
-  const { withQuery, setWithQuery, setAlgoliaHits } = useAlgoliaStrapiContext();
+  const { setWithQuery, setAlgoliaHits } = useAlgoliaStrapiContext();
 
   const index = searchClient.initIndex("janpia_search");
   const searchOption = { hitsPerPage: 1000 };

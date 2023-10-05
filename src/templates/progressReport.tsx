@@ -22,19 +22,21 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
   const { allStrapiProgressReportManualFDO, allStrapiProgressReportManualADO } =
     data;
 
-  const allStrapiProgressReportManual =
-    allStrapiProgressReportManualFDO || allStrapiProgressReportManualADO;
+  const allStrapiProgressReportManual = [
+    ...allStrapiProgressReportManualFDO.edges,
+    ...allStrapiProgressReportManualADO.edges,
+  ];
 
   const sortedProgressReportManual =
     allStrapiProgressReportManual &&
-    allStrapiProgressReportManual.edges.sort((a: any, b: any) => {
+    allStrapiProgressReportManual.sort((a: any, b: any) => {
       const itemA = a.node.progress_round.code;
       const itemB = b.node.progress_round.code;
       return itemA - itemB;
     });
 
   const roundArray = allStrapiProgressReportManual
-    ? allStrapiProgressReportManual.edges.map(
+    ? allStrapiProgressReportManual.map(
         (prm: any) => prm.node.progress_round.code
       )
     : [];
@@ -45,14 +47,12 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
 
   const currentItem =
     allStrapiProgressReportManual &&
-    allStrapiProgressReportManual.edges.find(
+    allStrapiProgressReportManual.find(
       (prm: any) => prm.node.progress_round.code === currentTab
     );
   const currentPdfUrl = currentItem && currentItem.node.data.url;
   const googleDocsViewerUrl = `https://docs.google.com/viewer?url=${currentPdfUrl}&embedded=true`;
 
-  console.log(allStrapiProgressReportManual.edges);
-  [{ node: { progress_round: { code: 1 } } }];
   return (
     <Layout>
       <DetailHeader business_cd={slug} />

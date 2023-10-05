@@ -10,8 +10,15 @@ const detailSidebarBlock = tw`block border border-gray-border py-3 px-3.5 w-full
 const currentSidebar = tw`bg-blue-button border-blue-button text-white`;
 
 const DetailSidebar = (props: { slug: string }) => {
-  const { withORM, withPreRM, withMRM, withPostRM, withProRM, withCRM } =
-    useDetailContext();
+  const {
+    withORM,
+    withPreRM,
+    withMRM,
+    withPostRM,
+    withProRM,
+    withCRM,
+    withSR,
+  } = useDetailContext();
   const location = useLocation();
   const path = location.pathname;
 
@@ -135,15 +142,18 @@ const DetailSidebar = (props: { slug: string }) => {
           事業完了報告
         </Link>
       )}
-      <Link
-        css={[
-          detailSidebarBlock,
-          path === `/result/${props.slug}/financial-report/` && currentSidebar,
-        ]}
-        to={`/result/${props.slug}/financial-report`}
-      >
-        事業完了時精算報告
-      </Link>
+      {withSR && (
+        <Link
+          css={[
+            detailSidebarBlock,
+            path === `/result/${props.slug}/financial-report/` &&
+              currentSidebar,
+          ]}
+          to={`/result/${props.slug}/financial-report`}
+        >
+          事業完了時精算報告
+        </Link>
+      )}
     </div>
   );
 };
