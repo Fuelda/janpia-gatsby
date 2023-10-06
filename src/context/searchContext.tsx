@@ -40,6 +40,8 @@ type searchStateType = {
   region3: boolean;
   sdgs_goal: string[];
   allFieldCheck: boolean;
+
+  withAlgoliaQuery: boolean;
 };
 type searchSetStateType = {
   setOrganizationName: Dispatch<string>;
@@ -71,6 +73,8 @@ type searchSetStateType = {
   setRegion3: Dispatch<boolean>;
   setSdgsGoal: Dispatch<string[]>;
   setAllFieldCheck: Dispatch<boolean>;
+
+  setWithAlgoliaQuery: Dispatch<boolean>;
 };
 type searchType = {
   searchState: searchStateType;
@@ -107,6 +111,8 @@ const SearchContext = createContext<searchType>({
     region3: false,
     sdgs_goal: [],
     allFieldCheck: false,
+
+    withAlgoliaQuery: false,
   },
 
   searchSetState: {
@@ -137,6 +143,8 @@ const SearchContext = createContext<searchType>({
     setRegion3: () => {},
     setSdgsGoal: () => {},
     setAllFieldCheck: () => {},
+
+    setWithAlgoliaQuery: () => {},
   },
   resetSearchStatus: () => {},
 });
@@ -171,7 +179,7 @@ const SearchProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [region3, setRegion3] = useState(false);
   const [sdgs_goal, setSdgsGoal] = useState<string[]>([]);
   const [allFieldCheck, setAllFieldCheck] = useState(false);
-  const { setWithQuery } = useAlgoliaStrapiContext();
+  const [withAlgoliaQuery, setWithAlgoliaQuery] = useState(false);
 
   const resetSearchStatus = () => {
     setOrganizationName("");
@@ -202,7 +210,7 @@ const SearchProvider: FC<{ children: ReactNode }> = ({ children }) => {
     setSdgsGoal([]);
     setAllFieldCheck(false);
 
-    setWithQuery(false);
+    setWithAlgoliaQuery(false);
   };
 
   const value = {
@@ -234,6 +242,8 @@ const SearchProvider: FC<{ children: ReactNode }> = ({ children }) => {
       region3,
       sdgs_goal,
       allFieldCheck,
+
+      withAlgoliaQuery,
     },
 
     searchSetState: {
@@ -264,6 +274,8 @@ const SearchProvider: FC<{ children: ReactNode }> = ({ children }) => {
       setRegion3,
       setSdgsGoal,
       setAllFieldCheck,
+
+      setWithAlgoliaQuery,
     },
 
     resetSearchStatus: resetSearchStatus,

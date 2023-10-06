@@ -14,16 +14,13 @@ import {
 import DetailSidebar from "../components/organisms/DetailSidebar";
 import DetailWrapper from "../components/lauout/DetailWrapper";
 import DetailAnchor from "../components/atoms/DetailAnchor";
-import { hCenter } from "../styles/base";
 import "twin.macro";
 import tw from "twin.macro";
 import DetailItemWrapper from "../components/lauout/DetailItemWrapper";
 import {
   table,
-  td,
   td6col,
   tdScroll,
-  th,
   th25col,
   th26col,
   th2Sub5col,
@@ -99,9 +96,16 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                     <th colSpan={2} className="table__financialPlan--tbody-01">
                       事業費
                     </th>
-                    <td>{financePlan && financePlan.bis_sum}</td>
-                    <td>{financePlan && financePlan.bis_a}</td>
-                    <td>{financePlan && financePlan.bis_b}</td>
+                    <td>
+                      {financePlan.bis_sum &&
+                        financePlan.bis_sum.toLocaleString()}
+                    </td>
+                    <td>
+                      {financePlan.bis_a && financePlan.bis_a.toLocaleString()}
+                    </td>
+                    <td>
+                      {financePlan.bis_b && financePlan.bis_b.toLocaleString()}
+                    </td>
                   </tr>
                   {financePlan && financePlan.bis_ado && (
                     <tr>
@@ -109,9 +113,18 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                       <th className="table__financialPlan--tbody-02">
                         実行団体への助成
                       </th>
-                      <td>{financePlan && financePlan.bis_ado}</td>
-                      <td>{financePlan && financePlan.bis_a_ado}</td>
-                      <td>{financePlan && financePlan.bis_b_ado_sum}</td>
+                      <td>
+                        {financePlan.bis_ado &&
+                          financePlan.bis_ado.toLocaleString()}
+                      </td>
+                      <td>
+                        {financePlan.bis_a_ado &&
+                          financePlan.bis_a_ado.toLocaleString()}
+                      </td>
+                      <td>
+                        {financePlan.bis_b_ado_sum &&
+                          financePlan.bis_b_ado_sum.toLocaleString()}
+                      </td>
                     </tr>
                   )}
                   {financePlan && financePlan.bis_ado_direct && (
@@ -120,9 +133,18 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                       <th className="table__financialPlan--tbody-02">
                         直接事業費
                       </th>
-                      <td>{financePlan && financePlan.bis_ado_direct}</td>
-                      <td>{financePlan && financePlan.bis_a_ado_direct}</td>
-                      <td>{financePlan && financePlan.bis_b_ado_sum_direct}</td>
+                      <td>
+                        {financePlan.bis_ado_direct &&
+                          financePlan.bis_ado_direct.toLocaleString()}
+                      </td>
+                      <td>
+                        {financePlan.bis_a_ado_direct &&
+                          financePlan.bis_a_ado_direct.toLocaleString()}
+                      </td>
+                      <td>
+                        {financePlan.bis_b_ado_sum_direct &&
+                          financePlan.bis_b_ado_sum_direct.toLocaleString()}
+                      </td>
                     </tr>
                   )}
                   <tr>
@@ -130,9 +152,18 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                     <th className="table__financialPlan--tbody-02">
                       管理的経費
                     </th>
-                    <td>{financePlan && financePlan.bis_manage_sum}</td>
-                    <td>{financePlan && financePlan.bis_a_manage_sum}</td>
-                    <td>{financePlan && financePlan.bis_b_manage_sum}</td>
+                    <td>
+                      {financePlan.bis_manage_sum &&
+                        financePlan.bis_manage_sum.toLocaleString()}
+                    </td>
+                    <td>
+                      {financePlan.bis_a_manage_sum &&
+                        financePlan.bis_a_manage_sum.toLocaleString()}
+                    </td>
+                    <td>
+                      {financePlan.bis_b_manage_sum &&
+                        financePlan.bis_b_manage_sum.toLocaleString()}
+                    </td>
                   </tr>
                   {financePlan && financePlan.po_sum_sum && (
                     <tr>
@@ -142,46 +173,95 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                       >
                         プログラムオフィサー関連経費
                       </th>
-                      <td>{financePlan && financePlan.po_sum_sum}</td>
-                      <td>{financePlan && financePlan.po_c_sum}</td>
-                      <td>{financePlan && financePlan.po_sum}</td>
+                      <td>
+                        {financePlan.po_sum_sum &&
+                          financePlan.po_sum_sum.toLocaleString()}
+                      </td>
+                      <td>
+                        {financePlan.po_c_sum &&
+                          financePlan.po_c_sum.toLocaleString()}
+                      </td>
+                      <td>
+                        {financePlan.po_sum &&
+                          financePlan.po_sum.toLocaleString()}
+                      </td>
                     </tr>
                   )}
                   <tr>
                     <th colSpan={2} className="table__financialPlan--tbody-01">
                       評価関連経費
                     </th>
-                    <td>{financePlan && financePlan.eval_sum_sum}</td>
-                    <td>{financePlan && financePlan.eval_sum}</td>
-                    <td>{financePlan && financePlan.eval}</td>
+                    <td>
+                      {financePlan.eval_sum_sum &&
+                        financePlan.eval_sum_sum.toLocaleString()}
+                    </td>
+                    <td>
+                      {financePlan.eval_sum &&
+                        financePlan.eval_sum.toLocaleString()}
+                    </td>
+                    <td>
+                      {financePlan.eval && financePlan.eval.toLocaleString()}
+                    </td>
                   </tr>
-                  {financePlan && financePlan.eval_fdo_sum_sum && (
+                  {financePlan && financePlan.eval_fdo_sum_sum ? (
                     <tr>
                       <th className="table__financialPlan--tbody-sub"></th>
                       <th className="table__financialPlan--tbody-02">
                         資金分配団体
                       </th>
-                      <td>{financePlan && financePlan.eval_fdo_sum_sum}</td>
-                      <td>{financePlan && financePlan.eval_fdo_sum}</td>
-                      <td>{financePlan && financePlan.eval_fdo}</td>
+                      <td>
+                        {financePlan &&
+                          financePlan.eval_fdo_sum_sum &&
+                          financePlan.eval_fdo_sum_sum.toLocaleString()}
+                      </td>
+                      <td>
+                        {financePlan &&
+                          financePlan.eval_fdo_sum &&
+                          financePlan.eval_fdo_sum.toLocaleString()}
+                      </td>
+                      <td>
+                        {financePlan &&
+                          financePlan.eval_fdo &&
+                          financePlan.eval_fdo.toLocaleString()}
+                      </td>
                     </tr>
+                  ) : (
+                    <tr />
                   )}
                   <tr>
                     <th></th>
                     <th className="table__financialPlan--tbody-02">
                       実行団体用
                     </th>
-                    <td>{financePlan && financePlan.eval_ado_sum_sum}</td>
-                    <td>{financePlan && financePlan.eval_ado_sum}</td>
-                    <td>{financePlan && financePlan.eval_ado}</td>
+                    <td>
+                      {financePlan.eval_ado_sum_sum &&
+                        financePlan.eval_ado_sum_sum.toLocaleString()}
+                    </td>
+                    <td>
+                      {financePlan.eval_ado_sum &&
+                        financePlan.eval_ado_sum.toLocaleString()}
+                    </td>
+                    <td>
+                      {financePlan.eval_ado &&
+                        financePlan.eval_ado.toLocaleString()}
+                    </td>
                   </tr>
                   <tr>
                     <th colSpan={2} className="table__financialPlan--tbody-02">
                       合計
                     </th>
-                    <td>{financePlan && financePlan.sum_sum}</td>
-                    <td>{financePlan && financePlan.sum_subidy}</td>
-                    <td>{financePlan && financePlan.sum_own_funds}</td>
+                    <td>
+                      {financePlan.sum_sum &&
+                        financePlan.sum_sum.toLocaleString()}
+                    </td>
+                    <td>
+                      {financePlan.sum_subidy &&
+                        financePlan.sum_subidy.toLocaleString()}
+                    </td>
+                    <td>
+                      {financePlan.sum_own_funds &&
+                        financePlan.sum_own_funds.toLocaleString()}
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -234,120 +314,162 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                     <div id="one-firstItem">
                       <DetailItemWrapper itemName="事業費調達計画">
                         <div tw="lg:overflow-scroll">
-                          <table css={table} tw="lg:w-[780px]">
+                          <table
+                            css={table}
+                            tw="lg:w-[780px]"
+                            className="table__financialPlanFormer"
+                          >
                             <thead css={thead}>
                               <tr css={tr}>
                                 <th css={th5col} colSpan={2}></th>
-                                <td css={tdScroll}>2021年度</td>
-                                <td css={tdScroll}>2022年度</td>
-                                <td css={tdScroll}>2023年度</td>
-                                <td css={tdScroll}>2024年度</td>
-                                <td css={tdScroll}>合計</td>
+                                <td>2021年度</td>
+                                <td>2022年度</td>
+                                <td>2023年度</td>
+                                <td>2024年度</td>
+                                <td>合計</td>
                               </tr>
                             </thead>
-                            <tbody>
+                            <tbody className="table__financialPlanFormer--tbody">
                               <tr css={tr}>
                                 <th css={th5col} colSpan={2}>
                                   事業費（A+B）
                                 </th>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.a_plus_b_2021}
+                                <td>
+                                  {financePlanFormer.a_plus_b_2021 &&
+                                    parseInt(
+                                      financePlanFormer.a_plus_b_2021
+                                    ).toLocaleString()}
                                 </td>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.a_plus_b_2022}
+                                <td>
+                                  {financePlanFormer.a_plus_b_2022 &&
+                                    parseInt(
+                                      financePlanFormer.a_plus_b_2022
+                                    ).toLocaleString()}
                                 </td>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.a_plus_b_2023}
+                                <td>
+                                  {financePlanFormer.a_plus_b_2023 &&
+                                    parseInt(
+                                      financePlanFormer.a_plus_b_2023
+                                    ).toLocaleString()}
                                 </td>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.a_plus_b_2024}
+                                <td>
+                                  {financePlanFormer.a_plus_b_2024 &&
+                                    parseInt(
+                                      financePlanFormer.a_plus_b_2024
+                                    ).toLocaleString()}
                                 </td>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.a_plus_b_ttl}
+                                <td>
+                                  {financePlanFormer.a_plus_b_ttl &&
+                                    parseInt(
+                                      financePlanFormer.a_plus_b_ttl
+                                    ).toLocaleString()}
                                 </td>
                               </tr>
                               <tr css={tr}>
                                 <th css={th2Sub5col}></th>
                                 <th css={th25col}>A. 助成金</th>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.subsidy_2021}
+                                <td>
+                                  {financePlanFormer.subsidy_2021 &&
+                                    parseInt(
+                                      financePlanFormer.subsidy_2021
+                                    ).toLocaleString()}
                                 </td>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.subsidy_2022}
+                                <td>
+                                  {financePlanFormer.subsidy_2022 &&
+                                    parseInt(
+                                      financePlanFormer.subsidy_2022
+                                    ).toLocaleString()}
                                 </td>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.subsidy_2023}
+                                <td>
+                                  {financePlanFormer.subsidy_2023 &&
+                                    parseInt(
+                                      financePlanFormer.subsidy_2023
+                                    ).toLocaleString()}
                                 </td>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.subsidy_2024}
+                                <td>
+                                  {financePlanFormer.subsidy_2024 &&
+                                    parseInt(
+                                      financePlanFormer.subsidy_2024
+                                    ).toLocaleString()}
                                 </td>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.subsidy_ttl}
+                                <td>
+                                  {financePlanFormer.subsidy_ttl &&
+                                    parseInt(
+                                      financePlanFormer.subsidy_ttl
+                                    ).toLocaleString()}
                                 </td>
                               </tr>
                               <tr css={tr}>
                                 <th css={th2Sub5col}></th>
                                 <th css={th25col}>B. 自己資金・民間資金</th>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.own_funds_2021}
+                                <td>
+                                  {financePlanFormer.own_funds_2021 &&
+                                    parseInt(
+                                      financePlanFormer.own_funds_2021
+                                    ).toLocaleString()}
                                 </td>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.own_funds_2022}
+                                <td>
+                                  {financePlanFormer.own_funds_2022 &&
+                                    parseInt(
+                                      financePlanFormer.own_funds_2022
+                                    ).toLocaleString()}
                                 </td>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.own_funds_2023}
+                                <td>
+                                  {financePlanFormer.own_funds_2023 &&
+                                    parseInt(
+                                      financePlanFormer.own_funds_2023
+                                    ).toLocaleString()}
                                 </td>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.own_funds_2024}
+                                <td>
+                                  {financePlanFormer.own_funds_2024 &&
+                                    parseInt(
+                                      financePlanFormer.own_funds_2024
+                                    ).toLocaleString()}
                                 </td>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.own_funds_ttl}
+                                <td>
+                                  {financePlanFormer.own_funds_ttl &&
+                                    parseInt(
+                                      financePlanFormer.own_funds_ttl
+                                    ).toLocaleString()}
                                 </td>
                               </tr>
                               <tr css={tr}>
                                 <th css={th2Sub5col}></th>
                                 <th css={th25col}>補助率 （ A/(A+B)% ）</th>
-                                <td css={tdScroll}>
+                                <td>
                                   {financePlanFormer &&
                                     financePlanFormer.subsidy_rate_2021}
+                                  %
                                 </td>
-                                <td css={tdScroll}>
+                                <td>
                                   {financePlanFormer &&
                                     financePlanFormer.subsidy_rate_2022}
+                                  %
                                 </td>
-                                <td css={tdScroll}>
+                                <td>
                                   {financePlanFormer &&
                                     financePlanFormer.subsidy_rate_2023}
+                                  %
                                 </td>
-                                <td css={tdScroll}>
+                                <td>
                                   {financePlanFormer &&
                                     financePlanFormer.subsidy_rate_2024}
+                                  %
                                 </td>
-                                <td css={tdScroll}>
+                                <td>
                                   {financePlanFormer &&
                                     financePlanFormer.subsidy_rate_ttl}
+                                  %
                                 </td>
                               </tr>
                               <tr css={tr}>
                                 <th css={th5col} colSpan={2}>
                                   特例申請の有無
                                 </th>
-                                <td css={tdScroll} colSpan={5}>
+                                <td
+                                  colSpan={5}
+                                  className="table__financialPlanFormer--tbody-text"
+                                >
                                   {financePlanFormer &&
                                   financePlanFormer.exception_request === "A"
                                     ? "希望する"
@@ -362,144 +484,194 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                     <div id="one-secondItem">
                       <DetailItemWrapper itemName="プログラムオフィサー関連経費">
                         <div tw="lg:overflow-scroll">
-                          <table css={table} tw="lg:w-[780px]">
-                            <thead css={thead}>
-                              <tr css={tr}>
-                                <th css={th5col} colSpan={2}></th>
-                                <td css={tdScroll}>2021年度</td>
-                                <td css={tdScroll}>2022年度</td>
-                                <td css={tdScroll}>2023年度</td>
-                                <td css={tdScroll}>2024年度</td>
-                                <td css={tdScroll}>2025年度</td>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr css={tr}>
-                                <th css={th5col} colSpan={2}>
-                                  C. プログラムオフィサー 関連経費
-                                </th>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.po_2021}
-                                </td>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.po_2022}
-                                </td>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.po_2023}
-                                </td>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.po_2024}
-                                </td>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.po_ttl}
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
+                          {financePlanFormer && financePlanFormer.po_ttl && (
+                            <table
+                              css={table}
+                              tw="lg:w-[780px]"
+                              className="table__financialPlanFormer"
+                            >
+                              <thead css={thead}>
+                                <tr css={tr}>
+                                  <th css={th5col} colSpan={2}></th>
+                                  <td>2021年度</td>
+                                  <td>2022年度</td>
+                                  <td>2023年度</td>
+                                  <td>2024年度</td>
+                                  <td>2025年度</td>
+                                </tr>
+                              </thead>
+                              <tbody className="table__financialPlanFormer--tbody">
+                                <tr css={tr}>
+                                  <th css={th5col} colSpan={2}>
+                                    C. プログラムオフィサー 関連経費
+                                  </th>
+                                  <td>
+                                    {financePlanFormer.po_2021 &&
+                                      parseInt(
+                                        financePlanFormer.po_2021
+                                      ).toLocaleString()}
+                                  </td>
+                                  <td>
+                                    {financePlanFormer.po_2022 &&
+                                      parseInt(
+                                        financePlanFormer.po_2022
+                                      ).toLocaleString()}
+                                  </td>
+                                  <td>
+                                    {financePlanFormer.po_2023 &&
+                                      parseInt(
+                                        financePlanFormer.po_2023
+                                      ).toLocaleString()}
+                                  </td>
+                                  <td>
+                                    {financePlanFormer.po_2024 &&
+                                      parseInt(
+                                        financePlanFormer.po_2024
+                                      ).toLocaleString()}
+                                  </td>
+                                  <td>
+                                    {financePlanFormer.po_ttl &&
+                                      parseInt(
+                                        financePlanFormer.po_ttl
+                                      ).toLocaleString()}
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          )}
                         </div>
                       </DetailItemWrapper>
                     </div>
                     <div id="one-thirdItem">
                       <DetailItemWrapper itemName="評価関連経費">
                         <div tw="lg:overflow-scroll">
-                          <table css={table} tw="lg:w-[780px]">
+                          <table
+                            css={table}
+                            tw="lg:w-[780px]"
+                            className="table__financialPlanFormer"
+                          >
                             <thead css={thead}>
                               <tr css={tr}>
                                 <th css={th6col} colSpan={2}></th>
                                 <td css={td6col}>%</td>
-                                <td css={tdScroll}>2021年度</td>
-                                <td css={tdScroll}>2022年度</td>
-                                <td css={tdScroll}>2023年度</td>
-                                <td css={tdScroll}>2024年度</td>
-                                <td css={tdScroll}>合計</td>
+                                <td>2021年度</td>
+                                <td>2022年度</td>
+                                <td>2023年度</td>
+                                <td>2024年度</td>
+                                <td>合計</td>
                               </tr>
                             </thead>
-                            <tbody>
+                            <tbody className="table__financialPlanFormer--tbody">
                               <tr css={tr}>
                                 <th css={th6col} colSpan={2}>
                                   D. 評価関連経費計
                                 </th>
                                 <td css={td6col}>-</td>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.eval_2021}
+                                <td>
+                                  {financePlanFormer.eval_2021 &&
+                                    parseInt(
+                                      financePlanFormer.eval_2021
+                                    ).toLocaleString()}
                                 </td>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.eval_2022}
+                                <td>
+                                  {financePlanFormer.eval_2022 &&
+                                    parseInt(
+                                      financePlanFormer.eval_2022
+                                    ).toLocaleString()}
                                 </td>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.eval_2023}
+                                <td>
+                                  {financePlanFormer.eval_2023 &&
+                                    parseInt(
+                                      financePlanFormer.eval_2023
+                                    ).toLocaleString()}
                                 </td>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.eval_2024}
+                                <td>
+                                  {financePlanFormer.eval_2024 &&
+                                    parseInt(
+                                      financePlanFormer.eval_2024
+                                    ).toLocaleString()}
                                 </td>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.eval_ttl}
+                                <td>
+                                  {financePlanFormer.eval_ttl &&
+                                    parseInt(
+                                      financePlanFormer.eval_ttl
+                                    ).toLocaleString()}
                                 </td>
                               </tr>
                               <tr css={tr}>
                                 <th css={th2Sub5col}></th>
                                 <th css={th26col}>資金分配団体</th>
                                 <td css={td6col}>
-                                  {financePlanFormer &&
+                                  {financePlanFormer.eval_fdo_percent &&
                                     financePlanFormer.eval_fdo_percent}
                                 </td>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.eval_fdo_2021}
+                                <td>
+                                  {financePlanFormer.eval_fdo_2021 &&
+                                    parseInt(
+                                      financePlanFormer.eval_fdo_2021
+                                    ).toLocaleString()}
                                 </td>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.eval_fdo_2022}
+                                <td>
+                                  {financePlanFormer.eval_fdo_2022 &&
+                                    parseInt(
+                                      financePlanFormer.eval_fdo_2022
+                                    ).toLocaleString()}
                                 </td>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.eval_fdo_2023}
+                                <td>
+                                  {financePlanFormer.eval_fdo_2023 &&
+                                    parseInt(
+                                      financePlanFormer.eval_fdo_2023
+                                    ).toLocaleString()}
                                 </td>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.eval_fdo_2024}
+                                <td>
+                                  {financePlanFormer.eval_fdo_2024 &&
+                                    parseInt(
+                                      financePlanFormer.eval_fdo_2024
+                                    ).toLocaleString()}
                                 </td>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.eval_fdo_ttl}
+                                <td>
+                                  {financePlanFormer.eval_fdo_ttl &&
+                                    parseInt(
+                                      financePlanFormer.eval_fdo_ttl
+                                    ).toLocaleString()}
                                 </td>
                               </tr>
                               <tr css={tr}>
                                 <th css={th2Sub5col}></th>
                                 <th css={th26col}>実行団体</th>
                                 <td css={td6col}>
-                                  {financePlanFormer &&
+                                  {financePlanFormer.eval_ado_percent &&
                                     financePlanFormer.eval_ado_percent}
                                 </td>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.eval_ado_2021}
+                                <td>
+                                  {financePlanFormer.eval_ado_2021 &&
+                                    parseInt(
+                                      financePlanFormer.eval_ado_2021
+                                    ).toLocaleString()}
                                 </td>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.eval_ado_2022}
+                                <td>
+                                  {financePlanFormer.eval_ado_2022 &&
+                                    parseInt(
+                                      financePlanFormer.eval_ado_2022
+                                    ).toLocaleString()}
                                 </td>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.eval_ado_2023}
+                                <td>
+                                  {financePlanFormer.eval_ado_2023 &&
+                                    parseInt(
+                                      financePlanFormer.eval_ado_2023
+                                    ).toLocaleString()}
                                 </td>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.eval_ado_2024}
+                                <td>
+                                  {financePlanFormer.eval_ado_2024 &&
+                                    parseInt(
+                                      financePlanFormer.eval_ado_2024
+                                    ).toLocaleString()}
                                 </td>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.eval_ado_ttl}
+                                <td>
+                                  {financePlanFormer.eval_ado_ttl &&
+                                    parseInt(
+                                      financePlanFormer.eval_ado_ttl
+                                    ).toLocaleString()}
                                 </td>
                               </tr>
                             </tbody>
@@ -510,66 +682,90 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                     <div id="one-fourthItem">
                       <DetailItemWrapper itemName="合計">
                         <div tw="lg:overflow-scroll">
-                          <table css={table} tw="lg:w-[780px]">
+                          <table
+                            css={table}
+                            tw="lg:w-[780px]"
+                            className="table__financialPlanFormer"
+                          >
                             <thead css={thead}>
                               <tr css={tr}>
                                 <th css={th5col} colSpan={2}></th>
-                                <td css={tdScroll}>2021年度</td>
-                                <td css={tdScroll}>2022年度</td>
-                                <td css={tdScroll}>2023年度</td>
-                                <td css={tdScroll}>2024年度</td>
-                                <td css={tdScroll}>合計</td>
+                                <td>2021年度</td>
+                                <td>2022年度</td>
+                                <td>2023年度</td>
+                                <td>2024年度</td>
+                                <td>合計</td>
                               </tr>
                             </thead>
-                            <tbody>
+                            <tbody className="table__financialPlanFormer--tbody">
                               <tr css={tr}>
                                 <th css={th5col} colSpan={2}>
                                   助成金計（A+C+D）
                                 </th>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.abc_2021}
+                                <td>
+                                  {financePlanFormer.abc_2021 &&
+                                    parseInt(
+                                      financePlanFormer.abc_2021
+                                    ).toLocaleString()}
                                 </td>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.abc_2022}
+                                <td>
+                                  {financePlanFormer.abc_2022 &&
+                                    parseInt(
+                                      financePlanFormer.abc_2022
+                                    ).toLocaleString()}
                                 </td>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.abc_2023}
+                                <td>
+                                  {financePlanFormer.abc_2023 &&
+                                    parseInt(
+                                      financePlanFormer.abc_2023
+                                    ).toLocaleString()}
                                 </td>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.abc_2024}
+                                <td>
+                                  {financePlanFormer.abc_2024 &&
+                                    parseInt(
+                                      financePlanFormer.abc_2024
+                                    ).toLocaleString()}
                                 </td>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.abc_ttl}
+                                <td>
+                                  {financePlanFormer.abc_ttl &&
+                                    parseInt(
+                                      financePlanFormer.abc_ttl
+                                    ).toLocaleString()}
                                 </td>
                               </tr>
                               <tr css={tr}>
                                 <th css={th5col} colSpan={2}>
                                   総事業費（A+B+C+D）
                                 </th>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.all_2021}
+                                <td>
+                                  {financePlanFormer.all_2021 &&
+                                    parseInt(
+                                      financePlanFormer.all_2021
+                                    ).toLocaleString()}
                                 </td>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.all_2022}
+                                <td>
+                                  {financePlanFormer.all_2022 &&
+                                    parseInt(
+                                      financePlanFormer.all_2022
+                                    ).toLocaleString()}
                                 </td>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.all_2023}
+                                <td>
+                                  {financePlanFormer.all_2023 &&
+                                    parseInt(
+                                      financePlanFormer.all_2023
+                                    ).toLocaleString()}
                                 </td>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.all_2024}
+                                <td>
+                                  {financePlanFormer.all_2024 &&
+                                    parseInt(
+                                      financePlanFormer.all_2024
+                                    ).toLocaleString()}
                                 </td>
-                                <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.all_ttl}
+                                <td>
+                                  {financePlanFormer.all_ttl &&
+                                    parseInt(
+                                      financePlanFormer.all_ttl
+                                    ).toLocaleString()}
                                 </td>
                               </tr>
                             </tbody>
@@ -651,7 +847,10 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                                   A. 助成金合計
                                 </th>
                                 <td css={tdScroll}>
-                                  {financePlanFormer && financePlanFormer.a_ttl}
+                                  {financePlanFormer.a_ttl &&
+                                    parseInt(
+                                      financePlanFormer.a_ttl
+                                    ).toLocaleString()}
                                 </td>
                               </tr>
                               {financePlanFormer &&
@@ -662,7 +861,9 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                                       実行団体への助成に充当される費用
                                     </th>
                                     <td css={tdScroll}>
-                                      {financePlanFormer.dct_pj_cost_a_ttl}
+                                      {parseInt(
+                                        financePlanFormer.dct_pj_cost_a_ttl
+                                      ).toLocaleString()}
                                     </td>
                                   </tr>
                                 )}
@@ -672,7 +873,9 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                                     <th css={th2Sub5col}></th>
                                     <th css={th25col}>直接事業費</th>
                                     <td css={tdScroll}>
-                                      {financePlanFormer.dct_pj_cost_a_ttl_ado}
+                                      {parseInt(
+                                        financePlanFormer.dct_pj_cost_a_ttl_ado
+                                      ).toLocaleString()}
                                     </td>
                                   </tr>
                                 )}
@@ -680,16 +883,19 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                                 <th css={th2Sub5col}></th>
                                 <th css={th25col}>管理的経費</th>
                                 <td css={tdScroll}>
-                                  {financePlanFormer &&
-                                    financePlanFormer.mg_cost_a_ttl}
+                                  {financePlanFormer.mg_cost_a_ttl &&
+                                    parseInt(
+                                      financePlanFormer.mg_cost_a_ttl
+                                    ).toLocaleString()}
                                 </td>
                               </tr>
                               <tr css={tr}>
                                 <th css={th2Sub5col}></th>
                                 <th css={th25col}>(管理的経費割合)</th>
                                 <td css={tdScroll}>
-                                  {financePlanFormer &&
+                                  {financePlanFormer.pct_mg_cost_a_ttl &&
                                     financePlanFormer.pct_mg_cost_a_ttl}
+                                  %
                                 </td>
                               </tr>
                               <tr css={tr}>
@@ -697,7 +903,10 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                                   B. 自己資金・民間資金
                                 </th>
                                 <td css={tdScroll}>
-                                  {financePlanFormer && financePlanFormer.b_ttl}
+                                  {financePlanFormer.b_ttl &&
+                                    parseInt(
+                                      financePlanFormer.b_ttl
+                                    ).toLocaleString()}
                                 </td>
                               </tr>
                               {financePlanFormer &&
@@ -708,7 +917,9 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                                       実行団体への助成に充当される費用
                                     </th>
                                     <td css={tdScroll}>
-                                      {financePlanFormer.dct_pj_cost_b_ttl}
+                                      {parseInt(
+                                        financePlanFormer.dct_pj_cost_b_ttl
+                                      ).toLocaleString()}
                                     </td>
                                   </tr>
                                 )}
@@ -718,7 +929,9 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                                     <th css={th2Sub5col}></th>
                                     <th css={th25col}>直接事業費</th>
                                     <td css={tdScroll}>
-                                      {financePlanFormer.dct_pj_cost_b_ttl_ado}
+                                      {parseInt(
+                                        financePlanFormer.dct_pj_cost_b_ttl_ado
+                                      ).toLocaleString()}
                                     </td>
                                   </tr>
                                 )}
@@ -728,7 +941,9 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                                     <th css={th2Sub5col}></th>
                                     <th css={th25col}>管理的経費</th>
                                     <td css={tdScroll}>
-                                      {financePlanFormer.mg_cost_b_ttl}
+                                      {parseInt(
+                                        financePlanFormer.mg_cost_b_ttl
+                                      ).toLocaleString()}
                                     </td>
                                   </tr>
                                 )}
@@ -738,7 +953,7 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                                     <th css={th2Sub5col}></th>
                                     <th css={th25col}>(管理的経費割合)</th>
                                     <td css={tdScroll}>
-                                      {financePlanFormer.pct_mg_cost_b_ttl}
+                                      {financePlanFormer.pct_mg_cost_b_ttl}%
                                     </td>
                                   </tr>
                                 )}

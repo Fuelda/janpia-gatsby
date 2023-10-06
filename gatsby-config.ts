@@ -38,6 +38,7 @@ const strapiConfig = {
     "subsidy-amount",
     "topic-keyword",
     "new",
+    "external-link",
   ],
   singleTypes: [],
   remoteFileHeaders: {

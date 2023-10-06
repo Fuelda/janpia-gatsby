@@ -4,8 +4,9 @@ import { linkCollectionTypesManual } from "../../../../util/linkCollectionTypesM
 
 export const filterStrapiManualDataWithoutPref = () => {
   const { searchState } = useSearchContext();
-  const { withQuery, algoliaHits } = useAlgoliaStrapiContext();
+  const { algoliaHits } = useAlgoliaStrapiContext();
   const linkedBizPlanManual = linkCollectionTypesManual();
+  const { withAlgoliaQuery } = searchState;
 
   const {
     field1_1,
@@ -41,7 +42,7 @@ export const filterStrapiManualDataWithoutPref = () => {
     return isBizPlanMatch || isGroupMatch;
   });
 
-  const sourceBizPlan = withQuery
+  const sourceBizPlan = withAlgoliaQuery
     ? algoliaFilteredBizPlan
     : linkedBizPlanManual;
 

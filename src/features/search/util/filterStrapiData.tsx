@@ -1,11 +1,13 @@
+import { useEffect } from "react";
 import { useAlgoliaStrapiContext } from "../../../context/algoliaStrapiContext";
 import { useSearchContext } from "../../../context/searchContext";
 import { linkCollectionTypes } from "../../../util/linkCollectionTypes";
 
 export const filterStrapiData = () => {
   const { searchState } = useSearchContext();
-  const { withQuery, algoliaHits } = useAlgoliaStrapiContext();
+  const { algoliaHits } = useAlgoliaStrapiContext();
   const linkedBizPlan = linkCollectionTypes();
+  const { withAlgoliaQuery } = searchState;
 
   const {
     field1_1,
@@ -49,7 +51,9 @@ export const filterStrapiData = () => {
     return isBizPlanMatch || isGroupMatch || isAttachedFileMatch;
   });
 
-  const sourceBizPlan = withQuery ? algoliaFilteredBizPlan : linkedBizPlan;
+  const sourceBizPlan = withAlgoliaQuery
+    ? algoliaFilteredBizPlan
+    : linkedBizPlan;
 
   const filteredBizPlan = sourceBizPlan.filter((item) => {
     return (

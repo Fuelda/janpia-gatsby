@@ -1,7 +1,7 @@
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   UseSearchBoxProps,
   useInstantSearch,
@@ -11,6 +11,7 @@ import "twin.macro";
 import { hCenter } from "../../../../../styles/base";
 import { textField } from "../../../../../styles/form";
 import { Link } from "gatsby";
+import { useAlgoliaStrapiContext } from "../../../../../context/algoliaStrapiContext";
 
 const SearchBoxSidebar = (props: UseSearchBoxProps) => {
   const { query, refine } = useSearchBox(props);

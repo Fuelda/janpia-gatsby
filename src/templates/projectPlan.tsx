@@ -95,6 +95,24 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
           .filter((bps: any) => bps.node.info_type === "23")
           .sort((a: any, b: any) => a.node.row_no - b.node.row_no)
       : [];
+  const activityFinance =
+    allStrapiBizPlanSub.edges.length !== 0
+      ? allStrapiBizPlanSub.edges
+          .filter((bps: any) => bps.node.info_type === "31")
+          .sort((a: any, b: any) => a.node.row_no - b.node.row_no)
+      : [];
+  const activityNonFinance =
+    allStrapiBizPlanSub.edges.length !== 0
+      ? allStrapiBizPlanSub.edges
+          .filter((bps: any) => bps.node.info_type === "32")
+          .sort((a: any, b: any) => a.node.row_no - b.node.row_no)
+      : [];
+  const activityAdo =
+    allStrapiBizPlanSub.edges.length !== 0
+      ? allStrapiBizPlanSub.edges
+          .filter((bps: any) => bps.node.info_type === "33")
+          .sort((a: any, b: any) => a.node.row_no - b.node.row_no)
+      : [];
 
   console.log(data);
 
@@ -752,6 +770,26 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                             </p>
                           </div>
                         )}
+                      {strapiBizPlan.business_target_fcnt &&
+                        strapiBizPlan.business_target_fcnt.data
+                          .childMarkdownRemark.html !== "" && (
+                          <div>
+                            <p css={th}>
+                              事業対象者（助成で見込む最終受益者）・人数
+                            </p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.business_target_fcnt.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
                       {strapiBizPlan.business_target_ado &&
                         strapiBizPlan.business_target_ado.data
                           .childMarkdownRemark.html !== "" && (
@@ -773,6 +811,28 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                             </p>
                           </div>
                         )}
+                      {strapiBizPlan.business_target_acnt &&
+                        strapiBizPlan.business_target_acnt.data
+                          .childMarkdownRemark.html !== "" && (
+                          <div>
+                            <p css={th}>
+                              事業対象者（事業で直接介入する対象者と、その他最終受益者を含む）・
+                              人数
+                            </p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.business_target_acnt.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+
                       {strapiBizPlan.buy_real_estate && (
                         <div>
                           <p css={th}>
@@ -808,6 +868,26 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               </td>
                             </tr>
                           )}
+                        {strapiBizPlan.business_target_fcnt &&
+                          strapiBizPlan.business_target_fcnt.data
+                            .childMarkdownRemark.html !== "" && (
+                            <tr css={tr}>
+                              <th css={th}>
+                                事業対象者（助成で見込む最終受益者）・人数
+                              </th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.business_target_fcnt.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
                         {strapiBizPlan.business_target_ado &&
                           strapiBizPlan.business_target_ado.data
                             .childMarkdownRemark.html !== "" && (
@@ -829,6 +909,28 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               </td>
                             </tr>
                           )}
+                        {strapiBizPlan.business_target_acnt &&
+                          strapiBizPlan.business_target_acnt.data
+                            .childMarkdownRemark.html !== "" && (
+                            <tr css={tr}>
+                              <th css={th}>
+                                事業対象者（事業で直接介入する対象者と、その他最終受益者を含む）・
+                                人数
+                              </th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.business_target_acnt.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+
                         {strapiBizPlan.buy_real_estate && (
                           <tr css={tr}>
                             <th css={th}>
@@ -924,6 +1026,46 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                             </p>
                           </div>
                         )}
+                      {strapiBizPlan.social_issues_corona &&
+                        strapiBizPlan.social_issues_corona.data
+                          .childMarkdownRemark.html !== "" && (
+                          <div>
+                            <p css={th}>
+                              新型コロナウイルス感染症及び原油価格・物価高騰により深刻化した社会課題
+                            </p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.social_issues_corona.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.subsidy_apply_reason &&
+                        strapiBizPlan.subsidy_apply_reason.data
+                          .childMarkdownRemark.html !== "" && (
+                          <div>
+                            <p css={th}>
+                              新型コロナ及び原油価格・物価高騰対応支援枠の助成申請に至った理由
+                            </p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.subsidy_apply_reason.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
                     </div>
                     <table css={table} tw="lg:hidden">
                       <tbody>
@@ -1005,6 +1147,46 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               </td>
                             </tr>
                           )}
+                        {strapiBizPlan.social_issues_corona &&
+                          strapiBizPlan.social_issues_corona.data
+                            .childMarkdownRemark.html !== "" && (
+                            <tr css={tr}>
+                              <th css={th}>
+                                新型コロナウイルス感染症及び原油価格・物価高騰により深刻化した社会課題
+                              </th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.social_issues_corona.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                        {strapiBizPlan.subsidy_apply_reason &&
+                          strapiBizPlan.subsidy_apply_reason.data
+                            .childMarkdownRemark.html !== "" && (
+                            <tr css={tr}>
+                              <th css={th}>
+                                新型コロナ及び原油価格・物価高騰対応支援枠の助成申請に至った理由
+                              </th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.subsidy_apply_reason.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
                       </tbody>
                     </table>
                   </DetailItemWrapper>
@@ -1046,590 +1228,16 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                           )}
                       </DetailItemWrapper>
                     </div>
-                    {strapiBizPlan.business_org_type === "F" && (
-                      <div css={detailBody}>
-                        <div id="six-secondItem">
+                    <div css={detailBody}>
+                      <div id="six-secondItem">
+                        {shortOutcomeFinance.length !== 0 && (
                           <DetailItemWrapper itemName="短期アウトカム (資金支援)">
-                            {shortOutcomeFinance.length !== 0 && (
-                              <table css={table}>
-                                {shortOutcomeFinance.map(
-                                  (item: any, i: number) => (
-                                    <tbody key={"shortOutcomeFinance" + i}>
-                                      <tr>
-                                        <th css={th2Sub} rowSpan={6}>
-                                          {i + 1}
-                                        </th>
-                                        <td css={td} colSpan={2}>
-                                          <div
-                                            dangerouslySetInnerHTML={{
-                                              __html:
-                                                item.node.business_goals.data.childMarkdownRemark.html.replace(
-                                                  /\n/g,
-                                                  "<br />"
-                                                ),
-                                            }}
-                                          />
-                                        </td>
-                                      </tr>
-
-                                      <tr css={tr} tw="hidden lg:block">
-                                        <p css={th}>モニタリング</p>
-                                        <p css={td}>
-                                          <div
-                                            dangerouslySetInnerHTML={{
-                                              __html:
-                                                item.node.goals_monitoring.data.childMarkdownRemark.html.replace(
-                                                  /\n/g,
-                                                  "<br />"
-                                                ),
-                                            }}
-                                          />
-                                        </p>
-                                      </tr>
-                                      <tr css={tr} tw="hidden lg:block">
-                                        <p css={th}>初期値/初期状態</p>
-                                        <p css={td}>
-                                          <div
-                                            dangerouslySetInnerHTML={{
-                                              __html:
-                                                item.node.goals_initial.data.childMarkdownRemark.html.replace(
-                                                  /\n/g,
-                                                  "<br />"
-                                                ),
-                                            }}
-                                          />
-                                        </p>
-                                      </tr>
-                                      <tr css={tr} tw="hidden lg:block">
-                                        <p css={th}>中間評価時の値/状態</p>
-                                        <p css={td}>
-                                          <div
-                                            dangerouslySetInnerHTML={{
-                                              __html:
-                                                item.node.goals_mid_eval.data.childMarkdownRemark.html.replace(
-                                                  /\n/g,
-                                                  "<br />"
-                                                ),
-                                            }}
-                                          />
-                                        </p>
-                                      </tr>
-                                      <tr css={tr} tw="hidden lg:block">
-                                        <p css={th}>事後評価時の値/状態</p>
-                                        <p css={td}>
-                                          <div
-                                            dangerouslySetInnerHTML={{
-                                              __html:
-                                                item.node.goals_aft_eval.data.childMarkdownRemark.html.replace(
-                                                  /\n/g,
-                                                  "<br />"
-                                                ),
-                                            }}
-                                          />
-                                        </p>
-                                      </tr>
-
-                                      <tr css={tr} tw="lg:hidden">
-                                        <th css={th}>モニタリング</th>
-                                        <td css={td}>
-                                          <div
-                                            dangerouslySetInnerHTML={{
-                                              __html:
-                                                item.node.goals_monitoring.data.childMarkdownRemark.html.replace(
-                                                  /\n/g,
-                                                  "<br />"
-                                                ),
-                                            }}
-                                          />
-                                        </td>
-                                      </tr>
-                                      <tr css={tr} tw="lg:hidden">
-                                        <th css={th}>初期値/初期状態</th>
-                                        <td css={td}>
-                                          <div
-                                            dangerouslySetInnerHTML={{
-                                              __html:
-                                                item.node.goals_initial.data.childMarkdownRemark.html.replace(
-                                                  /\n/g,
-                                                  "<br />"
-                                                ),
-                                            }}
-                                          />
-                                        </td>
-                                      </tr>
-                                      <tr css={tr} tw="lg:hidden">
-                                        <th css={th}>中間評価時の値/状態</th>
-                                        <td css={td}>
-                                          <div
-                                            dangerouslySetInnerHTML={{
-                                              __html:
-                                                item.node.goals_mid_eval.data.childMarkdownRemark.html.replace(
-                                                  /\n/g,
-                                                  "<br />"
-                                                ),
-                                            }}
-                                          />
-                                        </td>
-                                      </tr>
-                                      <tr css={tr} tw="lg:hidden">
-                                        <th css={th}>事後評価時の値/状態</th>
-                                        <td css={td}>
-                                          <div
-                                            dangerouslySetInnerHTML={{
-                                              __html:
-                                                item.node.goals_aft_eval.data.childMarkdownRemark.html.replace(
-                                                  /\n/g,
-                                                  "<br />"
-                                                ),
-                                            }}
-                                          />
-                                        </td>
-                                      </tr>
-                                    </tbody>
-                                  )
-                                )}
-                              </table>
-                            )}
-                          </DetailItemWrapper>
-                          <DetailItemWrapper itemName="短期アウトカム (非資金支援)">
-                            {shortOutcomeNonFinance.length !== 0 && (
-                              <table css={table}>
-                                {shortOutcomeNonFinance.map(
-                                  (item: any, i: number) => (
-                                    <tbody key={"shortOutcomeNonFinance" + i}>
-                                      <tr>
-                                        <th css={th2Sub} rowSpan={6}>
-                                          {i + 1}
-                                        </th>
-                                        <td css={td} colSpan={2}>
-                                          <div
-                                            dangerouslySetInnerHTML={{
-                                              __html:
-                                                item.node.business_goals.data.childMarkdownRemark.html.replace(
-                                                  /\n/g,
-                                                  "<br />"
-                                                ),
-                                            }}
-                                          />
-                                        </td>
-                                      </tr>
-
-                                      <tr css={tr} tw="hidden lg:block">
-                                        <p css={th}>モニタリング</p>
-                                        <p css={td}>
-                                          <div
-                                            dangerouslySetInnerHTML={{
-                                              __html:
-                                                item.node.goals_monitoring.data.childMarkdownRemark.html.replace(
-                                                  /\n/g,
-                                                  "<br />"
-                                                ),
-                                            }}
-                                          />
-                                        </p>
-                                      </tr>
-                                      <tr css={tr} tw="hidden lg:block">
-                                        <p css={th}>初期値/初期状態</p>
-                                        <p css={td}>
-                                          <div
-                                            dangerouslySetInnerHTML={{
-                                              __html:
-                                                item.node.goals_initial.data.childMarkdownRemark.html.replace(
-                                                  /\n/g,
-                                                  "<br />"
-                                                ),
-                                            }}
-                                          />
-                                        </p>
-                                      </tr>
-                                      <tr css={tr} tw="hidden lg:block">
-                                        <p css={th}>中間評価時の値/状態</p>
-                                        <p css={td}>
-                                          <div
-                                            dangerouslySetInnerHTML={{
-                                              __html:
-                                                item.node.goals_mid_eval.data.childMarkdownRemark.html.replace(
-                                                  /\n/g,
-                                                  "<br />"
-                                                ),
-                                            }}
-                                          />
-                                        </p>
-                                      </tr>
-                                      <tr css={tr} tw="hidden lg:block">
-                                        <p css={th}>事後評価時の値/状態</p>
-                                        <p css={td}>
-                                          <div
-                                            dangerouslySetInnerHTML={{
-                                              __html:
-                                                item.node.goals_aft_eval.data.childMarkdownRemark.html.replace(
-                                                  /\n/g,
-                                                  "<br />"
-                                                ),
-                                            }}
-                                          />
-                                        </p>
-                                      </tr>
-
-                                      <tr css={tr} tw="lg:hidden">
-                                        <th css={th}>モニタリング</th>
-                                        <td css={td}>
-                                          <div
-                                            dangerouslySetInnerHTML={{
-                                              __html:
-                                                item.node.goals_monitoring.data.childMarkdownRemark.html.replace(
-                                                  /\n/g,
-                                                  "<br />"
-                                                ),
-                                            }}
-                                          />
-                                        </td>
-                                      </tr>
-                                      <tr css={tr} tw="lg:hidden">
-                                        <th css={th}>初期値/初期状態</th>
-                                        <td css={td}>
-                                          <div
-                                            dangerouslySetInnerHTML={{
-                                              __html:
-                                                item.node.goals_initial.data.childMarkdownRemark.html.replace(
-                                                  /\n/g,
-                                                  "<br />"
-                                                ),
-                                            }}
-                                          />
-                                        </td>
-                                      </tr>
-                                      <tr css={tr} tw="lg:hidden">
-                                        <th css={th}>中間評価時の値/状態</th>
-                                        <td css={td}>
-                                          <div
-                                            dangerouslySetInnerHTML={{
-                                              __html:
-                                                item.node.goals_mid_eval.data.childMarkdownRemark.html.replace(
-                                                  /\n/g,
-                                                  "<br />"
-                                                ),
-                                            }}
-                                          />
-                                        </td>
-                                      </tr>
-                                      <tr css={tr} tw="lg:hidden">
-                                        <th css={th}>事後評価時の値/状態</th>
-                                        <td css={td}>
-                                          <div
-                                            dangerouslySetInnerHTML={{
-                                              __html:
-                                                item.node.goals_aft_eval.data.childMarkdownRemark.html.replace(
-                                                  /\n/g,
-                                                  "<br />"
-                                                ),
-                                            }}
-                                          />
-                                        </td>
-                                      </tr>
-                                    </tbody>
-                                  )
-                                )}
-                              </table>
-                            )}
-                          </DetailItemWrapper>
-                        </div>
-                        <div id="six-thirdItem" css={detailBody}>
-                          <DetailItemWrapper itemName="アウトプット (資金支援)">
-                            {outputFinance.length !== 0 && (
-                              <table css={table}>
-                                {outputFinance.map((item: any, i: number) => (
-                                  <tbody key={"outputFinance" + i}>
+                            <table css={table}>
+                              {shortOutcomeFinance.map(
+                                (item: any, i: number) => (
+                                  <tbody key={"shortOutcomeFinance" + i}>
                                     <tr>
-                                      <th css={th2Sub} rowSpan={6}>
-                                        {i + 1}
-                                      </th>
-                                      <td css={td} colSpan={2}>
-                                        <div
-                                          dangerouslySetInnerHTML={{
-                                            __html:
-                                              item.node.output.data.childMarkdownRemark.html.replace(
-                                                /\n/g,
-                                                "<br />"
-                                              ),
-                                          }}
-                                        />
-                                      </td>
-                                    </tr>
-
-                                    <tr css={tr} tw="hidden lg:block">
-                                      <p css={th}>モニタリング</p>
-                                      <p css={td}>
-                                        <div
-                                          dangerouslySetInnerHTML={{
-                                            __html:
-                                              item.node.output_monitor.data.childMarkdownRemark.html.replace(
-                                                /\n/g,
-                                                "<br />"
-                                              ),
-                                          }}
-                                        />
-                                      </p>
-                                    </tr>
-                                    <tr css={tr} tw="hidden lg:block">
-                                      <p css={th}>初期値/初期状態</p>
-                                      <p css={td}>
-                                        <div
-                                          dangerouslySetInnerHTML={{
-                                            __html:
-                                              item.node.output_initial.data.childMarkdownRemark.html.replace(
-                                                /\n/g,
-                                                "<br />"
-                                              ),
-                                          }}
-                                        />
-                                      </p>
-                                    </tr>
-                                    <tr css={tr} tw="hidden lg:block">
-                                      <p css={th}>中間評価時の値/状態</p>
-                                      <p css={td}>
-                                        <div
-                                          dangerouslySetInnerHTML={{
-                                            __html:
-                                              item.node.output_mid_eval.data.childMarkdownRemark.html.replace(
-                                                /\n/g,
-                                                "<br />"
-                                              ),
-                                          }}
-                                        />
-                                      </p>
-                                    </tr>
-                                    <tr css={tr} tw="hidden lg:block">
-                                      <p css={th}>事後評価時の値/状態</p>
-                                      <p css={td}>
-                                        <div
-                                          dangerouslySetInnerHTML={{
-                                            __html:
-                                              item.node.output_aft_eval.data.childMarkdownRemark.html.replace(
-                                                /\n/g,
-                                                "<br />"
-                                              ),
-                                          }}
-                                        />
-                                      </p>
-                                    </tr>
-
-                                    <tr css={tr} tw="lg:hidden">
-                                      <th css={th}>モニタリング</th>
-                                      <td css={td}>
-                                        <div
-                                          dangerouslySetInnerHTML={{
-                                            __html:
-                                              item.node.output_monitor.data.childMarkdownRemark.html.replace(
-                                                /\n/g,
-                                                "<br />"
-                                              ),
-                                          }}
-                                        />
-                                      </td>
-                                    </tr>
-                                    <tr css={tr} tw="lg:hidden">
-                                      <th css={th}>初期値/初期状態</th>
-                                      <td css={td}>
-                                        <div
-                                          dangerouslySetInnerHTML={{
-                                            __html:
-                                              item.node.output_initial.data.childMarkdownRemark.html.replace(
-                                                /\n/g,
-                                                "<br />"
-                                              ),
-                                          }}
-                                        />
-                                      </td>
-                                    </tr>
-                                    <tr css={tr} tw="lg:hidden">
-                                      <th css={th}>中間評価時の値/状態</th>
-                                      <td css={td}>
-                                        <div
-                                          dangerouslySetInnerHTML={{
-                                            __html:
-                                              item.node.output_mid_eval.data.childMarkdownRemark.html.replace(
-                                                /\n/g,
-                                                "<br />"
-                                              ),
-                                          }}
-                                        />
-                                      </td>
-                                    </tr>
-                                    <tr css={tr} tw="lg:hidden">
-                                      <th css={th}>事後評価時の値/状態</th>
-                                      <td css={td}>
-                                        <div
-                                          dangerouslySetInnerHTML={{
-                                            __html:
-                                              item.node.output_aft_eval.data.childMarkdownRemark.html.replace(
-                                                /\n/g,
-                                                "<br />"
-                                              ),
-                                          }}
-                                        />
-                                      </td>
-                                    </tr>
-                                  </tbody>
-                                ))}
-                              </table>
-                            )}
-                          </DetailItemWrapper>
-                          <DetailItemWrapper itemName="アウトプット (非資金支援)">
-                            {outputNonFinance.length !== 0 && (
-                              <table css={table}>
-                                {outputNonFinance.map(
-                                  (item: any, i: number) => (
-                                    <tbody key={"outputNonFinance" + i}>
-                                      <tr>
-                                        <th css={th2Sub} rowSpan={6}>
-                                          {i + 1}
-                                        </th>
-                                        <td css={td} colSpan={2}>
-                                          <div
-                                            dangerouslySetInnerHTML={{
-                                              __html:
-                                                item.node.output.data.childMarkdownRemark.html.replace(
-                                                  /\n/g,
-                                                  "<br />"
-                                                ),
-                                            }}
-                                          />
-                                        </td>
-                                      </tr>
-
-                                      <tr css={tr} tw="hidden lg:block">
-                                        <p css={th}>モニタリング</p>
-                                        <p css={td}>
-                                          <div
-                                            dangerouslySetInnerHTML={{
-                                              __html:
-                                                item.node.output_monitor.data.childMarkdownRemark.html.replace(
-                                                  /\n/g,
-                                                  "<br />"
-                                                ),
-                                            }}
-                                          />
-                                        </p>
-                                      </tr>
-                                      <tr css={tr} tw="hidden lg:block">
-                                        <p css={th}>初期値/初期状態</p>
-                                        <p css={td}>
-                                          <div
-                                            dangerouslySetInnerHTML={{
-                                              __html:
-                                                item.node.output_initial.data.childMarkdownRemark.html.replace(
-                                                  /\n/g,
-                                                  "<br />"
-                                                ),
-                                            }}
-                                          />
-                                        </p>
-                                      </tr>
-                                      <tr css={tr} tw="hidden lg:block">
-                                        <p css={th}>中間評価時の値/状態</p>
-                                        <p css={td}>
-                                          <div
-                                            dangerouslySetInnerHTML={{
-                                              __html:
-                                                item.node.output_mid_eval.data.childMarkdownRemark.html.replace(
-                                                  /\n/g,
-                                                  "<br />"
-                                                ),
-                                            }}
-                                          />
-                                        </p>
-                                      </tr>
-                                      <tr css={tr} tw="hidden lg:block">
-                                        <p css={th}>事後評価時の値/状態</p>
-                                        <p css={td}>
-                                          <div
-                                            dangerouslySetInnerHTML={{
-                                              __html:
-                                                item.node.output_aft_eval.data.childMarkdownRemark.html.replace(
-                                                  /\n/g,
-                                                  "<br />"
-                                                ),
-                                            }}
-                                          />
-                                        </p>
-                                      </tr>
-
-                                      <tr css={tr} tw="lg:hidden">
-                                        <th css={th}>モニタリング</th>
-                                        <td css={td}>
-                                          <div
-                                            dangerouslySetInnerHTML={{
-                                              __html:
-                                                item.node.output_monitor.data.childMarkdownRemark.html.replace(
-                                                  /\n/g,
-                                                  "<br />"
-                                                ),
-                                            }}
-                                          />
-                                        </td>
-                                      </tr>
-                                      <tr css={tr} tw="lg:hidden">
-                                        <th css={th}>初期値/初期状態</th>
-                                        <td css={td}>
-                                          <div
-                                            dangerouslySetInnerHTML={{
-                                              __html:
-                                                item.node.output_initial.data.childMarkdownRemark.html.replace(
-                                                  /\n/g,
-                                                  "<br />"
-                                                ),
-                                            }}
-                                          />
-                                        </td>
-                                      </tr>
-                                      <tr css={tr} tw="lg:hidden">
-                                        <th css={th}>中間評価時の値/状態</th>
-                                        <td css={td}>
-                                          <div
-                                            dangerouslySetInnerHTML={{
-                                              __html:
-                                                item.node.output_mid_eval.data.childMarkdownRemark.html.replace(
-                                                  /\n/g,
-                                                  "<br />"
-                                                ),
-                                            }}
-                                          />
-                                        </td>
-                                      </tr>
-                                      <tr css={tr} tw="lg:hidden">
-                                        <th css={th}>事後評価時の値/状態</th>
-                                        <td css={td}>
-                                          <div
-                                            dangerouslySetInnerHTML={{
-                                              __html:
-                                                item.node.output_aft_eval.data.childMarkdownRemark.html.replace(
-                                                  /\n/g,
-                                                  "<br />"
-                                                ),
-                                            }}
-                                          />
-                                        </td>
-                                      </tr>
-                                    </tbody>
-                                  )
-                                )}
-                              </table>
-                            )}
-                          </DetailItemWrapper>
-                        </div>
-                      </div>
-                    )}
-                    {strapiBizPlan.business_org_type === "A" && (
-                      <div css={detailBody}>
-                        <div id="six-secondItem">
-                          <DetailItemWrapper itemName="短期アウトカム (ADO)">
-                            {shortOutcomeAdo.length !== 0 && (
-                              <table css={table}>
-                                {shortOutcomeAdo.map((item: any, i: number) => (
-                                  <tbody key={"shortOutcomeAdo" + i}>
-                                    <tr>
-                                      <th css={th2Sub} rowSpan={6}>
+                                      <th css={th2Sub} rowSpan={8}>
                                         {i + 1}
                                       </th>
                                       <td css={td} colSpan={2}>
@@ -1645,21 +1253,30 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                       </td>
                                     </tr>
 
-                                    <tr css={tr} tw="hidden lg:block">
+                                    <div css={tr} tw="hidden lg:block">
                                       <p css={th}>モニタリング</p>
+                                      <p css={td}>
+                                        {item.node.goals_monitoring.data
+                                          .goals_monitoring === "true"
+                                          ? "はい"
+                                          : "いいえ"}
+                                      </p>
+                                    </div>
+                                    <div css={tr} tw="hidden lg:block">
+                                      <p css={th}>指標</p>
                                       <p css={td}>
                                         <div
                                           dangerouslySetInnerHTML={{
                                             __html:
-                                              item.node.goals_monitoring.data.childMarkdownRemark.html.replace(
+                                              item.node.goals_index.data.childMarkdownRemark.html.replace(
                                                 /\n/g,
                                                 "<br />"
                                               ),
                                           }}
                                         />
                                       </p>
-                                    </tr>
-                                    <tr css={tr} tw="hidden lg:block">
+                                    </div>
+                                    <div css={tr} tw="hidden lg:block">
                                       <p css={th}>初期値/初期状態</p>
                                       <p css={td}>
                                         <div
@@ -1672,8 +1289,36 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           }}
                                         />
                                       </p>
-                                    </tr>
-                                    <tr css={tr} tw="hidden lg:block">
+                                    </div>
+                                    <div css={tr} tw="hidden lg:block">
+                                      <p css={th}>目標値/目標状態</p>
+                                      <p css={td}>
+                                        <div
+                                          dangerouslySetInnerHTML={{
+                                            __html:
+                                              item.node.goals_goal.data.childMarkdownRemark.html.replace(
+                                                /\n/g,
+                                                "<br />"
+                                              ),
+                                          }}
+                                        />
+                                      </p>
+                                    </div>
+                                    <div css={tr} tw="hidden lg:block">
+                                      <p css={th}>目標達成時期</p>
+                                      <p css={td}>
+                                        <div
+                                          dangerouslySetInnerHTML={{
+                                            __html:
+                                              item.node.goals_achievement.data.childMarkdownRemark.html.replace(
+                                                /\n/g,
+                                                "<br />"
+                                              ),
+                                          }}
+                                        />
+                                      </p>
+                                    </div>
+                                    <div css={tr} tw="hidden lg:block">
                                       <p css={th}>中間評価時の値/状態</p>
                                       <p css={td}>
                                         <div
@@ -1686,8 +1331,8 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           }}
                                         />
                                       </p>
-                                    </tr>
-                                    <tr css={tr} tw="hidden lg:block">
+                                    </div>
+                                    <div css={tr} tw="hidden lg:block">
                                       <p css={th}>事後評価時の値/状態</p>
                                       <p css={td}>
                                         <div
@@ -1700,15 +1345,24 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           }}
                                         />
                                       </p>
-                                    </tr>
+                                    </div>
 
                                     <tr css={tr} tw="lg:hidden">
                                       <th css={th}>モニタリング</th>
                                       <td css={td}>
+                                        {item.node.goals_monitoring.data
+                                          .goals_monitoring === "true"
+                                          ? "はい"
+                                          : "いいえ"}
+                                      </td>
+                                    </tr>
+                                    <tr css={tr} tw="lg:hidden">
+                                      <th css={th}>指標</th>
+                                      <td css={td}>
                                         <div
                                           dangerouslySetInnerHTML={{
                                             __html:
-                                              item.node.goals_monitoring.data.childMarkdownRemark.html.replace(
+                                              item.node.goals_index.data.childMarkdownRemark.html.replace(
                                                 /\n/g,
                                                 "<br />"
                                               ),
@@ -1723,6 +1377,34 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                           dangerouslySetInnerHTML={{
                                             __html:
                                               item.node.goals_initial.data.childMarkdownRemark.html.replace(
+                                                /\n/g,
+                                                "<br />"
+                                              ),
+                                          }}
+                                        />
+                                      </td>
+                                    </tr>
+                                    <tr css={tr} tw="lg:hidden">
+                                      <th css={th}>目標値/目標状態</th>
+                                      <td css={td}>
+                                        <div
+                                          dangerouslySetInnerHTML={{
+                                            __html:
+                                              item.node.goals_goal.data.childMarkdownRemark.html.replace(
+                                                /\n/g,
+                                                "<br />"
+                                              ),
+                                          }}
+                                        />
+                                      </td>
+                                    </tr>
+                                    <tr css={tr} tw="lg:hidden">
+                                      <th css={th}>目標達成時期</th>
+                                      <td css={td}>
+                                        <div
+                                          dangerouslySetInnerHTML={{
+                                            __html:
+                                              item.node.goals_achievement.data.childMarkdownRemark.html.replace(
                                                 /\n/g,
                                                 "<br />"
                                               ),
@@ -1759,26 +1441,26 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                       </td>
                                     </tr>
                                   </tbody>
-                                ))}
-                              </table>
-                            )}
+                                )
+                              )}
+                            </table>
                           </DetailItemWrapper>
-                        </div>
-                        <div id="six-thirdItem" css={detailBody}>
-                          <DetailItemWrapper itemName="アウトプット (ADO)">
-                            {outputAdo.length !== 0 && (
-                              <table css={table}>
-                                {outputAdo.map((item: any, i: number) => (
-                                  <tbody key={"outputAdo" + i}>
+                        )}
+                        {shortOutcomeNonFinance.length !== 0 && (
+                          <DetailItemWrapper itemName="短期アウトカム (非資金支援)">
+                            <table css={table}>
+                              {shortOutcomeNonFinance.map(
+                                (item: any, i: number) => (
+                                  <tbody key={"shortOutcomeNonFinance" + i}>
                                     <tr>
-                                      <th css={th2Sub} rowSpan={6}>
+                                      <th css={th2Sub} rowSpan={8}>
                                         {i + 1}
                                       </th>
                                       <td css={td} colSpan={2}>
                                         <div
                                           dangerouslySetInnerHTML={{
                                             __html:
-                                              item.node.output.data.childMarkdownRemark.html.replace(
+                                              item.node.business_goals.data.childMarkdownRemark.html.replace(
                                                 /\n/g,
                                                 "<br />"
                                               ),
@@ -1787,70 +1469,116 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                       </td>
                                     </tr>
 
-                                    <tr css={tr} tw="hidden lg:block">
+                                    <div css={tr} tw="hidden lg:block">
                                       <p css={th}>モニタリング</p>
+                                      <p css={td}>
+                                        {item.node.goals_monitoring.data
+                                          .goals_monitoring === "true"
+                                          ? "はい"
+                                          : "いいえ"}
+                                      </p>
+                                    </div>
+                                    <div css={tr} tw="hidden lg:block">
+                                      <p css={th}>指標</p>
                                       <p css={td}>
                                         <div
                                           dangerouslySetInnerHTML={{
                                             __html:
-                                              item.node.output_monitor.data.childMarkdownRemark.html.replace(
+                                              item.node.goals_index.data.childMarkdownRemark.html.replace(
                                                 /\n/g,
                                                 "<br />"
                                               ),
                                           }}
                                         />
                                       </p>
-                                    </tr>
-                                    <tr css={tr} tw="hidden lg:block">
+                                    </div>
+                                    <div css={tr} tw="hidden lg:block">
                                       <p css={th}>初期値/初期状態</p>
                                       <p css={td}>
                                         <div
                                           dangerouslySetInnerHTML={{
                                             __html:
-                                              item.node.output_initial.data.childMarkdownRemark.html.replace(
+                                              item.node.goals_initial.data.childMarkdownRemark.html.replace(
                                                 /\n/g,
                                                 "<br />"
                                               ),
                                           }}
                                         />
                                       </p>
-                                    </tr>
-                                    <tr css={tr} tw="hidden lg:block">
+                                    </div>
+                                    <div css={tr} tw="hidden lg:block">
+                                      <p css={th}>目標値/目標状態</p>
+                                      <p css={td}>
+                                        <div
+                                          dangerouslySetInnerHTML={{
+                                            __html:
+                                              item.node.goals_goal.data.childMarkdownRemark.html.replace(
+                                                /\n/g,
+                                                "<br />"
+                                              ),
+                                          }}
+                                        />
+                                      </p>
+                                    </div>
+                                    <div css={tr} tw="hidden lg:block">
+                                      <p css={th}>目標達成時期</p>
+                                      <p css={td}>
+                                        <div
+                                          dangerouslySetInnerHTML={{
+                                            __html:
+                                              item.node.goals_achievement.data.childMarkdownRemark.html.replace(
+                                                /\n/g,
+                                                "<br />"
+                                              ),
+                                          }}
+                                        />
+                                      </p>
+                                    </div>
+                                    <div css={tr} tw="hidden lg:block">
                                       <p css={th}>中間評価時の値/状態</p>
                                       <p css={td}>
                                         <div
                                           dangerouslySetInnerHTML={{
                                             __html:
-                                              item.node.output_mid_eval.data.childMarkdownRemark.html.replace(
+                                              item.node.goals_mid_eval.data.childMarkdownRemark.html.replace(
                                                 /\n/g,
                                                 "<br />"
                                               ),
                                           }}
                                         />
                                       </p>
-                                    </tr>
-                                    <tr css={tr} tw="hidden lg:block">
+                                    </div>
+                                    <div css={tr} tw="hidden lg:block">
                                       <p css={th}>事後評価時の値/状態</p>
                                       <p css={td}>
                                         <div
                                           dangerouslySetInnerHTML={{
                                             __html:
-                                              item.node.output_aft_eval.data.childMarkdownRemark.html.replace(
+                                              item.node.goals_aft_eval.data.childMarkdownRemark.html.replace(
                                                 /\n/g,
                                                 "<br />"
                                               ),
                                           }}
                                         />
                                       </p>
-                                    </tr>
+                                    </div>
 
                                     <tr css={tr} tw="lg:hidden">
                                       <th css={th}>モニタリング</th>
                                       <td css={td}>
+                                        {item.node.goals_monitoring.data
+                                          .goals_monitoring === "true"
+                                          ? "はい"
+                                          : "いいえ"}
+                                      </td>
+                                    </tr>
+                                    <tr css={tr} tw="lg:hidden">
+                                      <th css={th}>指標</th>
+                                      <td css={td}>
                                         <div
                                           dangerouslySetInnerHTML={{
                                             __html:
-                                              item.node.output_monitor.data.childMarkdownRemark.html.replace(
+                                              item.node.goals_index.data.childMarkdownRemark.html.replace(
                                                 /\n/g,
                                                 "<br />"
                                               ),
@@ -1864,7 +1592,35 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         <div
                                           dangerouslySetInnerHTML={{
                                             __html:
-                                              item.node.output_initial.data.childMarkdownRemark.html.replace(
+                                              item.node.goals_initial.data.childMarkdownRemark.html.replace(
+                                                /\n/g,
+                                                "<br />"
+                                              ),
+                                          }}
+                                        />
+                                      </td>
+                                    </tr>
+                                    <tr css={tr} tw="lg:hidden">
+                                      <th css={th}>目標値/目標状態</th>
+                                      <td css={td}>
+                                        <div
+                                          dangerouslySetInnerHTML={{
+                                            __html:
+                                              item.node.goals_goal.data.childMarkdownRemark.html.replace(
+                                                /\n/g,
+                                                "<br />"
+                                              ),
+                                          }}
+                                        />
+                                      </td>
+                                    </tr>
+                                    <tr css={tr} tw="lg:hidden">
+                                      <th css={th}>目標達成時期</th>
+                                      <td css={td}>
+                                        <div
+                                          dangerouslySetInnerHTML={{
+                                            __html:
+                                              item.node.goals_achievement.data.childMarkdownRemark.html.replace(
                                                 /\n/g,
                                                 "<br />"
                                               ),
@@ -1878,7 +1634,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         <div
                                           dangerouslySetInnerHTML={{
                                             __html:
-                                              item.node.output_mid_eval.data.childMarkdownRemark.html.replace(
+                                              item.node.goals_mid_eval.data.childMarkdownRemark.html.replace(
                                                 /\n/g,
                                                 "<br />"
                                               ),
@@ -1892,7 +1648,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                         <div
                                           dangerouslySetInnerHTML={{
                                             __html:
-                                              item.node.output_aft_eval.data.childMarkdownRemark.html.replace(
+                                              item.node.goals_aft_eval.data.childMarkdownRemark.html.replace(
                                                 /\n/g,
                                                 "<br />"
                                               ),
@@ -1901,11 +1657,1419 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                       </td>
                                     </tr>
                                   </tbody>
-                                ))}
+                                )
+                              )}
+                            </table>
+                          </DetailItemWrapper>
+                        )}
+                        {shortOutcomeAdo.length !== 0 && (
+                          <DetailItemWrapper itemName="短期アウトカム (ADO)">
+                            <table css={table}>
+                              {shortOutcomeAdo.map((item: any, i: number) => (
+                                <tbody key={"shortOutcomeAdo" + i}>
+                                  <tr>
+                                    <th css={th2Sub} rowSpan={8}>
+                                      {i + 1}
+                                    </th>
+                                    <td css={td} colSpan={2}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.business_goals.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+
+                                  <div css={tr} tw="hidden lg:block">
+                                    <p css={th}>モニタリング</p>
+                                    <p css={td}>
+                                      {item.node.goals_monitoring.data
+                                        .goals_monitoring === "true"
+                                        ? "はい"
+                                        : "いいえ"}
+                                    </p>
+                                  </div>
+                                  <div css={tr} tw="hidden lg:block">
+                                    <p css={th}>指標</p>
+                                    <p css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.goals_index.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </p>
+                                  </div>
+                                  <div css={tr} tw="hidden lg:block">
+                                    <p css={th}>初期値/初期状態</p>
+                                    <p css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.goals_initial.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </p>
+                                  </div>
+                                  <div css={tr} tw="hidden lg:block">
+                                    <p css={th}>目標値/目標状態</p>
+                                    <p css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.goals_goal.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </p>
+                                  </div>
+                                  <div css={tr} tw="hidden lg:block">
+                                    <p css={th}>目標達成時期</p>
+                                    <p css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.goals_achievement.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </p>
+                                  </div>
+                                  <div css={tr} tw="hidden lg:block">
+                                    <p css={th}>中間評価時の値/状態</p>
+                                    <p css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.goals_mid_eval.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </p>
+                                  </div>
+                                  <div css={tr} tw="hidden lg:block">
+                                    <p css={th}>事後評価時の値/状態</p>
+                                    <p css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.goals_aft_eval.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </p>
+                                  </div>
+
+                                  <tr css={tr} tw="lg:hidden">
+                                    <th css={th}>モニタリング</th>
+                                    <td css={td}>
+                                      {item.node.goals_monitoring.data
+                                        .goals_monitoring === "true"
+                                        ? "はい"
+                                        : "いいえ"}
+                                    </td>
+                                  </tr>
+                                  <tr css={tr} tw="lg:hidden">
+                                    <th css={th}>指標</th>
+                                    <td css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.goals_index.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                  <tr css={tr} tw="lg:hidden">
+                                    <th css={th}>初期値/初期状態</th>
+                                    <td css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.goals_initial.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                  <tr css={tr} tw="lg:hidden">
+                                    <th css={th}>目標値/目標状態</th>
+                                    <td css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.goals_goal.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                  <tr css={tr} tw="lg:hidden">
+                                    <th css={th}>目標達成時期</th>
+                                    <td css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.goals_achievement.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                  <tr css={tr} tw="lg:hidden">
+                                    <th css={th}>中間評価時の値/状態</th>
+                                    <td css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.goals_mid_eval.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                  <tr css={tr} tw="lg:hidden">
+                                    <th css={th}>事後評価時の値/状態</th>
+                                    <td css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.goals_aft_eval.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              ))}
+                            </table>
+                          </DetailItemWrapper>
+                        )}
+                        {shortOutcomeCovid.length !== 0 && (
+                          <DetailItemWrapper itemName="短期アウトカム (緊急支援枠)">
+                            <table css={table}>
+                              {shortOutcomeCovid.map((item: any, i: number) => (
+                                <tbody key={"shortOutcomeCovid" + i}>
+                                  <tr>
+                                    <th css={th2Sub} rowSpan={8}>
+                                      {i + 1}
+                                    </th>
+                                    <td css={td} colSpan={2}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.business_goals.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+
+                                  <div css={tr} tw="hidden lg:block">
+                                    <p css={th}>モニタリング</p>
+                                    <p css={td}>
+                                      {item.node.goals_monitoring.data
+                                        .goals_monitoring === "true"
+                                        ? "はい"
+                                        : "いいえ"}
+                                    </p>
+                                  </div>
+                                  <div css={tr} tw="hidden lg:block">
+                                    <p css={th}>
+                                      実施・到達状況の目安とする指標
+                                    </p>
+                                    <p css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.goals_index_arrival.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </p>
+                                  </div>
+                                  <div css={tr} tw="hidden lg:block">
+                                    <p css={th}>把握方法</p>
+                                    <p css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.goals_grasp.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </p>
+                                  </div>
+                                  <div css={tr} tw="hidden lg:block">
+                                    <p css={th}>目標値/目標状態</p>
+                                    <p css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.goals_goal.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </p>
+                                  </div>
+                                  <div css={tr} tw="hidden lg:block">
+                                    <p css={th}>目標達成時期</p>
+                                    <p css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.goals_achievement.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </p>
+                                  </div>
+
+                                  <tr css={tr} tw="lg:hidden">
+                                    <th css={th}>モニタリング</th>
+                                    <td css={td}>
+                                      {item.node.goals_monitoring.data
+                                        .goals_monitoring === "true"
+                                        ? "はい"
+                                        : "いいえ"}
+                                    </td>
+                                  </tr>
+
+                                  <tr css={tr} tw="lg:hidden">
+                                    <th css={th}>
+                                      実施・到達状況の目安とする指標
+                                    </th>
+                                    <td css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.goals_index_arrival.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+
+                                  <tr css={tr} tw="lg:hidden">
+                                    <th css={th}>把握方法</th>
+                                    <td css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.goals_grasp.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                  <tr css={tr} tw="lg:hidden">
+                                    <th css={th}>目標値/目標状態</th>
+                                    <td css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.goals_goal.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                  <tr css={tr} tw="lg:hidden">
+                                    <th css={th}>目標達成時期</th>
+                                    <td css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.goals_achievement.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                  <tr css={tr} tw="lg:hidden">
+                                    <th css={th}>中間評価時の値/状態</th>
+                                    <td css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.goals_mid_eval.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                  <tr css={tr} tw="lg:hidden">
+                                    <th css={th}>事後評価時の値/状態</th>
+                                    <td css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.goals_aft_eval.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              ))}
+                            </table>
+                          </DetailItemWrapper>
+                        )}
+                      </div>
+                      <div id="six-thirdItem">
+                        {outputFinance.length !== 0 && (
+                          <DetailItemWrapper itemName="アウトプット (資金支援)">
+                            <table css={table}>
+                              {outputFinance.map((item: any, i: number) => (
+                                <tbody key={"outputFinance" + i}>
+                                  <tr>
+                                    <th css={th2Sub} rowSpan={12}>
+                                      {i + 1}
+                                    </th>
+                                    <td css={td} colSpan={2}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+
+                                  <div css={tr} tw="hidden lg:block">
+                                    <p css={th}>モニタリング</p>
+                                    <p css={td}>
+                                      {item.node.output_monitor.data
+                                        .output_monitor === "true"
+                                        ? "はい"
+                                        : "いいえ"}
+                                    </p>
+                                  </div>
+                                  <div css={tr} tw="hidden lg:block">
+                                    <p css={th}>指標</p>
+                                    <p css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_index.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </p>
+                                  </div>
+                                  <div css={tr} tw="hidden lg:block">
+                                    <p css={th}>
+                                      実施・到達状況の目安とする指標
+                                    </p>
+                                    <p css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_index_arrival.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </p>
+                                  </div>
+                                  <div css={tr} tw="hidden lg:block">
+                                    <p css={th}>把握方法</p>
+                                    <p css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_grasp.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </p>
+                                  </div>
+                                  <div css={tr} tw="hidden lg:block">
+                                    <p css={th}>初期値/初期状態</p>
+                                    <p css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_initial.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </p>
+                                  </div>
+                                  <div css={tr} tw="hidden lg:block">
+                                    <p css={th}>目標値/目標状態</p>
+                                    <p css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_goal.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </p>
+                                  </div>
+                                  <div css={tr} tw="hidden lg:block">
+                                    <p css={th}>目標達成時期</p>
+                                    <p css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_achievement.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </p>
+                                  </div>
+                                  <div css={tr} tw="hidden lg:block">
+                                    <p css={th}>活動内容</p>
+                                    <p css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_activity.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </p>
+                                  </div>
+                                  <div css={tr} tw="hidden lg:block">
+                                    <p css={th}>活動時期</p>
+                                    <p css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_season.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </p>
+                                  </div>
+                                  <div css={tr} tw="hidden lg:block">
+                                    <p css={th}>中間評価時の値/状態</p>
+                                    <p css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_mid_eval.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </p>
+                                  </div>
+                                  <div css={tr} tw="hidden lg:block">
+                                    <p css={th}>事後評価時の値/状態</p>
+                                    <p css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_aft_eval.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </p>
+                                  </div>
+
+                                  <tr css={tr} tw="lg:hidden">
+                                    <th css={th}>モニタリング</th>
+                                    <td css={td}>
+                                      {item.node.output_monitor.data
+                                        .output_monitor === "true"
+                                        ? "はい"
+                                        : "いいえ"}
+                                    </td>
+                                  </tr>
+                                  <tr css={tr} tw="lg:hidden">
+                                    <th css={th}>指標</th>
+                                    <td css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_index.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                  <tr css={tr} tw="lg:hidden">
+                                    <th css={th}>
+                                      実施・到達状況の目安とする指標
+                                    </th>
+                                    <td css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_index_arrival.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                  <tr css={tr} tw="lg:hidden">
+                                    <th css={th}>把握方法</th>
+                                    <td css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_grasp.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                  <tr css={tr} tw="lg:hidden">
+                                    <th css={th}>初期値/初期状態</th>
+                                    <td css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_initial.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                  <tr css={tr} tw="lg:hidden">
+                                    <th css={th}>目標値/目標状態</th>
+                                    <td css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_goal.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                  <tr css={tr} tw="lg:hidden">
+                                    <th css={th}>目標達成時期</th>
+                                    <td css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_achievement.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                  <tr css={tr} tw="lg:hidden">
+                                    <th css={th}>活動内容</th>
+                                    <td css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_activity.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                  <tr css={tr} tw="lg:hidden">
+                                    <th css={th}>活動時期</th>
+                                    <td css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_season.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                  <tr css={tr} tw="lg:hidden">
+                                    <th css={th}>中間評価時の値/状態</th>
+                                    <td css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_mid_eval.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                  <tr css={tr} tw="lg:hidden">
+                                    <th css={th}>事後評価時の値/状態</th>
+                                    <td css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_aft_eval.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              ))}
+                            </table>
+                          </DetailItemWrapper>
+                        )}
+                        {outputNonFinance.length !== 0 && (
+                          <DetailItemWrapper itemName="アウトプット (非資金支援)">
+                            {outputNonFinance.length !== 0 && (
+                              <table css={table}>
+                                {outputNonFinance.map(
+                                  (item: any, i: number) => (
+                                    <tbody key={"outputNonFinance" + i}>
+                                      <tr>
+                                        <th css={th2Sub} rowSpan={12}>
+                                          {i + 1}
+                                        </th>
+                                        <td css={td} colSpan={2}>
+                                          <div
+                                            dangerouslySetInnerHTML={{
+                                              __html:
+                                                item.node.output.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
+                                            }}
+                                          />
+                                        </td>
+                                      </tr>
+
+                                      <div css={tr} tw="hidden lg:block">
+                                        <p css={th}>モニタリング</p>
+                                        <p css={td}>
+                                          {item.node.output_monitor.data
+                                            .output_monitor === "true"
+                                            ? "はい"
+                                            : "いいえ"}
+                                        </p>
+                                      </div>
+                                      <div css={tr} tw="hidden lg:block">
+                                        <p css={th}>指標</p>
+                                        <p css={td}>
+                                          <div
+                                            dangerouslySetInnerHTML={{
+                                              __html:
+                                                item.node.output_index.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
+                                            }}
+                                          />
+                                        </p>
+                                      </div>
+                                      <div css={tr} tw="hidden lg:block">
+                                        <p css={th}>
+                                          実施・到達状況の目安とする指標
+                                        </p>
+                                        <p css={td}>
+                                          <div
+                                            dangerouslySetInnerHTML={{
+                                              __html:
+                                                item.node.output_index_arrival.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
+                                            }}
+                                          />
+                                        </p>
+                                      </div>
+                                      <div css={tr} tw="hidden lg:block">
+                                        <p css={th}>把握方法</p>
+                                        <p css={td}>
+                                          <div
+                                            dangerouslySetInnerHTML={{
+                                              __html:
+                                                item.node.output_grasp.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
+                                            }}
+                                          />
+                                        </p>
+                                      </div>
+                                      <div css={tr} tw="hidden lg:block">
+                                        <p css={th}>初期値/初期状態</p>
+                                        <p css={td}>
+                                          <div
+                                            dangerouslySetInnerHTML={{
+                                              __html:
+                                                item.node.output_initial.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
+                                            }}
+                                          />
+                                        </p>
+                                      </div>
+                                      <div css={tr} tw="hidden lg:block">
+                                        <p css={th}>目標値/目標状態</p>
+                                        <p css={td}>
+                                          <div
+                                            dangerouslySetInnerHTML={{
+                                              __html:
+                                                item.node.output_goal.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
+                                            }}
+                                          />
+                                        </p>
+                                      </div>
+                                      <div css={tr} tw="hidden lg:block">
+                                        <p css={th}>目標達成時期</p>
+                                        <p css={td}>
+                                          <div
+                                            dangerouslySetInnerHTML={{
+                                              __html:
+                                                item.node.output_achievement.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
+                                            }}
+                                          />
+                                        </p>
+                                      </div>
+                                      <div css={tr} tw="hidden lg:block">
+                                        <p css={th}>活動内容</p>
+                                        <p css={td}>
+                                          <div
+                                            dangerouslySetInnerHTML={{
+                                              __html:
+                                                item.node.output_activity.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
+                                            }}
+                                          />
+                                        </p>
+                                      </div>
+                                      <div css={tr} tw="hidden lg:block">
+                                        <p css={th}>活動時期</p>
+                                        <p css={td}>
+                                          <div
+                                            dangerouslySetInnerHTML={{
+                                              __html:
+                                                item.node.output_season.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
+                                            }}
+                                          />
+                                        </p>
+                                      </div>
+                                      <div css={tr} tw="hidden lg:block">
+                                        <p css={th}>中間評価時の値/状態</p>
+                                        <p css={td}>
+                                          <div
+                                            dangerouslySetInnerHTML={{
+                                              __html:
+                                                item.node.output_mid_eval.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
+                                            }}
+                                          />
+                                        </p>
+                                      </div>
+                                      <div css={tr} tw="hidden lg:block">
+                                        <p css={th}>事後評価時の値/状態</p>
+                                        <p css={td}>
+                                          <div
+                                            dangerouslySetInnerHTML={{
+                                              __html:
+                                                item.node.output_aft_eval.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
+                                            }}
+                                          />
+                                        </p>
+                                      </div>
+
+                                      <tr css={tr} tw="lg:hidden">
+                                        <th css={th}>モニタリング</th>
+                                        <td css={td}>
+                                          {item.node.output_monitor.data
+                                            .output_monitor === "true"
+                                            ? "はい"
+                                            : "いいえ"}
+                                        </td>
+                                      </tr>
+                                      <tr css={tr} tw="lg:hidden">
+                                        <th css={th}>指標</th>
+                                        <td css={td}>
+                                          <div
+                                            dangerouslySetInnerHTML={{
+                                              __html:
+                                                item.node.output_index.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
+                                            }}
+                                          />
+                                        </td>
+                                      </tr>
+                                      <tr css={tr} tw="lg:hidden">
+                                        <th css={th}>
+                                          実施・到達状況の目安とする指標
+                                        </th>
+                                        <td css={td}>
+                                          <div
+                                            dangerouslySetInnerHTML={{
+                                              __html:
+                                                item.node.output_index_arrival.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
+                                            }}
+                                          />
+                                        </td>
+                                      </tr>
+                                      <tr css={tr} tw="lg:hidden">
+                                        <th css={th}>把握方法</th>
+                                        <td css={td}>
+                                          <div
+                                            dangerouslySetInnerHTML={{
+                                              __html:
+                                                item.node.output_grasp.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
+                                            }}
+                                          />
+                                        </td>
+                                      </tr>
+                                      <tr css={tr} tw="lg:hidden">
+                                        <th css={th}>初期値/初期状態</th>
+                                        <td css={td}>
+                                          <div
+                                            dangerouslySetInnerHTML={{
+                                              __html:
+                                                item.node.output_initial.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
+                                            }}
+                                          />
+                                        </td>
+                                      </tr>
+                                      <tr css={tr} tw="lg:hidden">
+                                        <th css={th}>目標値/目標状態</th>
+                                        <td css={td}>
+                                          <div
+                                            dangerouslySetInnerHTML={{
+                                              __html:
+                                                item.node.output_goal.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
+                                            }}
+                                          />
+                                        </td>
+                                      </tr>
+                                      <tr css={tr} tw="lg:hidden">
+                                        <th css={th}>目標達成時期</th>
+                                        <td css={td}>
+                                          <div
+                                            dangerouslySetInnerHTML={{
+                                              __html:
+                                                item.node.output_achievement.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
+                                            }}
+                                          />
+                                        </td>
+                                      </tr>
+                                      <tr css={tr} tw="lg:hidden">
+                                        <th css={th}>活動内容</th>
+                                        <td css={td}>
+                                          <div
+                                            dangerouslySetInnerHTML={{
+                                              __html:
+                                                item.node.output_activity.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
+                                            }}
+                                          />
+                                        </td>
+                                      </tr>
+                                      <tr css={tr} tw="lg:hidden">
+                                        <th css={th}>活動時期</th>
+                                        <td css={td}>
+                                          <div
+                                            dangerouslySetInnerHTML={{
+                                              __html:
+                                                item.node.output_season.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
+                                            }}
+                                          />
+                                        </td>
+                                      </tr>
+                                      <tr css={tr} tw="lg:hidden">
+                                        <th css={th}>中間評価時の値/状態</th>
+                                        <td css={td}>
+                                          <div
+                                            dangerouslySetInnerHTML={{
+                                              __html:
+                                                item.node.output_mid_eval.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
+                                            }}
+                                          />
+                                        </td>
+                                      </tr>
+                                      <tr css={tr} tw="lg:hidden">
+                                        <th css={th}>事後評価時の値/状態</th>
+                                        <td css={td}>
+                                          <div
+                                            dangerouslySetInnerHTML={{
+                                              __html:
+                                                item.node.output_aft_eval.data.childMarkdownRemark.html.replace(
+                                                  /\n/g,
+                                                  "<br />"
+                                                ),
+                                            }}
+                                          />
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  )
+                                )}
                               </table>
                             )}
                           </DetailItemWrapper>
-                        </div>
+                        )}
+                        {outputAdo.length !== 0 && (
+                          <DetailItemWrapper itemName="アウトプット (ADO)">
+                            <table css={table}>
+                              {outputAdo.map((item: any, i: number) => (
+                                <tbody key={"outputAdo" + i}>
+                                  <tr>
+                                    <th css={th2Sub} rowSpan={12}>
+                                      {i + 1}
+                                    </th>
+                                    <td css={td} colSpan={2}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+
+                                  <div css={tr} tw="hidden lg:block">
+                                    <p css={th}>モニタリング</p>
+                                    <p css={td}>
+                                      {item.node.output_monitor.data
+                                        .output_monitor === "true"
+                                        ? "はい"
+                                        : "いいえ"}
+                                    </p>
+                                  </div>
+                                  <div css={tr} tw="hidden lg:block">
+                                    <p css={th}>指標</p>
+                                    <p css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_index.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </p>
+                                  </div>
+                                  <div css={tr} tw="hidden lg:block">
+                                    <p css={th}>
+                                      実施・到達状況の目安とする指標
+                                    </p>
+                                    <p css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_index_arrival.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </p>
+                                  </div>
+                                  <div css={tr} tw="hidden lg:block">
+                                    <p css={th}>把握方法</p>
+                                    <p css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_grasp.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </p>
+                                  </div>
+                                  <div css={tr} tw="hidden lg:block">
+                                    <p css={th}>初期値/初期状態</p>
+                                    <p css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_initial.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </p>
+                                  </div>
+                                  <div css={tr} tw="hidden lg:block">
+                                    <p css={th}>目標値/目標状態</p>
+                                    <p css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_goal.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </p>
+                                  </div>
+                                  <div css={tr} tw="hidden lg:block">
+                                    <p css={th}>目標達成時期</p>
+                                    <p css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_achievement.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </p>
+                                  </div>
+                                  <div css={tr} tw="hidden lg:block">
+                                    <p css={th}>活動内容</p>
+                                    <p css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_activity.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </p>
+                                  </div>
+                                  <div css={tr} tw="hidden lg:block">
+                                    <p css={th}>活動時期</p>
+                                    <p css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_season.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </p>
+                                  </div>
+                                  <div css={tr} tw="hidden lg:block">
+                                    <p css={th}>中間評価時の値/状態</p>
+                                    <p css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_mid_eval.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </p>
+                                  </div>
+                                  <div css={tr} tw="hidden lg:block">
+                                    <p css={th}>事後評価時の値/状態</p>
+                                    <p css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_aft_eval.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </p>
+                                  </div>
+
+                                  <tr css={tr} tw="lg:hidden">
+                                    <th css={th}>モニタリング</th>
+                                    <td css={td}>
+                                      {item.node.output_monitor.data
+                                        .output_monitor === "true"
+                                        ? "はい"
+                                        : "いいえ"}
+                                    </td>
+                                  </tr>
+                                  <tr css={tr} tw="lg:hidden">
+                                    <th css={th}>指標</th>
+                                    <td css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_index.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                  <tr css={tr} tw="lg:hidden">
+                                    <th css={th}>
+                                      実施・到達状況の目安とする指標
+                                    </th>
+                                    <td css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_index_arrival.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                  <tr css={tr} tw="lg:hidden">
+                                    <th css={th}>把握方法</th>
+                                    <td css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_grasp.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                  <tr css={tr} tw="lg:hidden">
+                                    <th css={th}>初期値/初期状態</th>
+                                    <td css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_initial.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                  <tr css={tr} tw="lg:hidden">
+                                    <th css={th}>目標値/目標状態</th>
+                                    <td css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_goal.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                  <tr css={tr} tw="lg:hidden">
+                                    <th css={th}>目標達成時期</th>
+                                    <td css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_achievement.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                  <tr css={tr} tw="lg:hidden">
+                                    <th css={th}>活動内容</th>
+                                    <td css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_activity.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                  <tr css={tr} tw="lg:hidden">
+                                    <th css={th}>活動時期</th>
+                                    <td css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_season.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                  <tr css={tr} tw="lg:hidden">
+                                    <th css={th}>中間評価時の値/状態</th>
+                                    <td css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_mid_eval.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                  <tr css={tr} tw="lg:hidden">
+                                    <th css={th}>事後評価時の値/状態</th>
+                                    <td css={td}>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            item.node.output_aft_eval.data.childMarkdownRemark.html.replace(
+                                              /\n/g,
+                                              "<br />"
+                                            ),
+                                        }}
+                                      />
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              ))}
+                            </table>
+                          </DetailItemWrapper>
+                        )}
+                      </div>
+                    </div>
+
+                    {strapiBizPlan.business_org_type === "A" && (
+                      <div css={detailBody}>
+                        <div id="six-thirdItem" css={detailBody}></div>
                       </div>
                     )}
                   </div>
@@ -1913,6 +3077,15 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                 <div id="seventhItem">
                   <DetailItemWrapper itemName="事業活動">
                     <div tw="hidden lg:block">
+                      {strapiBizPlan.activity_0 &&
+                        strapiBizPlan.activity_0.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div>
+                            <p css={table} tw="bg-blue-base px-2">
+                              資金支援
+                            </p>
+                          </div>
+                        )}
                       {strapiBizPlan.activity_0 &&
                         strapiBizPlan.activity_0.data.childMarkdownRemark
                           .html !== "" && (
@@ -2057,9 +3230,175 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                             </p>
                           </div>
                         )}
+                      {strapiBizPlan.activity_non_0 &&
+                        strapiBizPlan.activity_non_0.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div>
+                            <p css={table} tw="bg-blue-base px-2">
+                              組織基盤強化・環境整備 (非資金的支援)
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.activity_non_0 &&
+                        strapiBizPlan.activity_non_0.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div>
+                            <p css={th1_2}>0年目</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.activity_non_0.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.activity_season_n_0 &&
+                        strapiBizPlan.activity_season_n_0.data
+                          .childMarkdownRemark.html !== "" && (
+                          <div tw="flex">
+                            <p css={th2_2}>活動時期</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.activity_season_n_0.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.activity_non_1 &&
+                        strapiBizPlan.activity_non_1.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div>
+                            <p css={th1_2}>1年目</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.activity_non_1.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.activity_season_n_1 &&
+                        strapiBizPlan.activity_season_n_1.data
+                          .childMarkdownRemark.html !== "" && (
+                          <div tw="flex">
+                            <p css={th2_2}>活動時期</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.activity_season_n_1.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.activity_non_2 &&
+                        strapiBizPlan.activity_non_2.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div>
+                            <p css={th1_2}>2年目</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.activity_non_2.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.activity_season_n_2 &&
+                        strapiBizPlan.activity_season_n_2.data
+                          .childMarkdownRemark.html !== "" && (
+                          <div tw="flex">
+                            <p css={th2_2}>活動時期</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.activity_season_n_2.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.activity_non_3 &&
+                        strapiBizPlan.activity_non_3.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div>
+                            <p css={th1_2}>3年目</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.activity_non_3.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.activity_season_n_3 &&
+                        strapiBizPlan.activity_season_n_3.data
+                          .childMarkdownRemark.html !== "" && (
+                          <div tw="flex">
+                            <p css={th2_2}>活動時期</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.activity_season_n_3.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
                     </div>
                     <table css={table} tw="lg:hidden">
                       <tbody>
+                        {strapiBizPlan.activity_0 &&
+                          strapiBizPlan.activity_0.data.childMarkdownRemark
+                            .html !== "" && (
+                            <tr>
+                              <th
+                                css={table}
+                                tw="bg-blue-base px-2"
+                                colSpan={3}
+                              >
+                                資金支援
+                              </th>
+                            </tr>
+                          )}
                         {strapiBizPlan.activity_0 &&
                           strapiBizPlan.activity_0.data.childMarkdownRemark
                             .html !== "" && (
@@ -2216,9 +3555,415 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               </td>
                             </tr>
                           )}
+                        {strapiBizPlan.activity_non_0 &&
+                          strapiBizPlan.activity_non_0.data.childMarkdownRemark
+                            .html !== "" && (
+                            <tr>
+                              <th
+                                css={table}
+                                tw="bg-blue-base px-2"
+                                colSpan={3}
+                              >
+                                組織基盤強化・環境整備 (非資金的支援)
+                              </th>
+                            </tr>
+                          )}
+                        {strapiBizPlan.activity_non_0 &&
+                          strapiBizPlan.activity_non_0.data.childMarkdownRemark
+                            .html !== "" && (
+                            <tr css={tr}>
+                              <th css={th1_2} colSpan={2}>
+                                0年目
+                              </th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.activity_non_0.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                        {strapiBizPlan.activity_season_n_0 &&
+                          strapiBizPlan.activity_season_n_0.data
+                            .childMarkdownRemark.html !== "" && (
+                            <tr css={tr}>
+                              <th css={th2Sub_2} rowSpan={1}></th>
+                              <th css={th2_2}>活動時期</th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.activity_season_n_0.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                        {strapiBizPlan.activity_non_1 &&
+                          strapiBizPlan.activity_non_1.data.childMarkdownRemark
+                            .html !== "" && (
+                            <tr css={tr}>
+                              <th css={th1_2} colSpan={2}>
+                                1年目
+                              </th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.activity_non_1.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                        {strapiBizPlan.activity_season_n_1 &&
+                          strapiBizPlan.activity_season_n_1.data
+                            .childMarkdownRemark.html !== "" && (
+                            <tr css={tr}>
+                              <th css={th2Sub_2} rowSpan={1}></th>
+                              <th css={th2_2}>活動時期</th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.activity_season_n_1.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                        {strapiBizPlan.activity_non_2 &&
+                          strapiBizPlan.activity_non_2.data.childMarkdownRemark
+                            .html !== "" && (
+                            <tr css={tr}>
+                              <th css={th1_2} colSpan={2}>
+                                2年目
+                              </th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.activity_non_2.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                        {strapiBizPlan.activity_season_n_2 &&
+                          strapiBizPlan.activity_season_n_2.data
+                            .childMarkdownRemark.html !== "" && (
+                            <tr css={tr}>
+                              <th css={th2Sub_2} rowSpan={1}></th>
+                              <th css={th2_2}>活動時期</th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.activity_season_n_2.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                        {strapiBizPlan.activity_non_3 &&
+                          strapiBizPlan.activity_non_3.data.childMarkdownRemark
+                            .html !== "" && (
+                            <tr css={tr}>
+                              <th css={th1_2} colSpan={2}>
+                                3年目
+                              </th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.activity_non_3.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                        {strapiBizPlan.activity_season_n_3 &&
+                          strapiBizPlan.activity_season_n_3.data
+                            .childMarkdownRemark.html !== "" && (
+                            <tr css={tr}>
+                              <th css={th2Sub_2} rowSpan={1}></th>
+                              <th css={th2_2}>活動時期</th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.activity_season_n_3.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
                       </tbody>
                     </table>
                   </DetailItemWrapper>
+                  {activityFinance.length !== 0 && (
+                    <DetailItemWrapper itemName="活動 (資金支援)">
+                      <table css={table}>
+                        {activityFinance.map((item: any, i: number) => (
+                          <tbody key={"activityFinance" + i}>
+                            <tr tw="hidden lg:block">
+                              <th css={th2Sub} rowSpan={2}>
+                                {i + 1}
+                              </th>
+                              <td>
+                                <div css={tr}>
+                                  <p css={th}>活動 (内容)</p>
+                                  <p css={td}>
+                                    <div
+                                      dangerouslySetInnerHTML={{
+                                        __html:
+                                          item.node.activity.data.childMarkdownRemark.html.replace(
+                                            /\n/g,
+                                            "<br />"
+                                          ),
+                                      }}
+                                    />
+                                  </p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <div css={tr} tw="hidden lg:block">
+                                <p css={th}>時期</p>
+                                <p css={td}>
+                                  <div
+                                    dangerouslySetInnerHTML={{
+                                      __html:
+                                        item.node.activity_season.data.childMarkdownRemark.html.replace(
+                                          /\n/g,
+                                          "<br />"
+                                        ),
+                                    }}
+                                  />
+                                </p>
+                              </div>
+                            </tr>
+
+                            <tr css={tr} tw="lg:hidden">
+                              <th css={th2Sub} rowSpan={2}>
+                                {i + 1}
+                              </th>
+                              <th css={th}>活動 (内容)</th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      item.node.activity.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                            <tr css={tr} tw="lg:hidden">
+                              <th css={th}>時期</th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      item.node.activity_season.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          </tbody>
+                        ))}
+                      </table>
+                    </DetailItemWrapper>
+                  )}
+                  {activityNonFinance.length !== 0 && (
+                    <DetailItemWrapper itemName="活動 (非資金支援)">
+                      <table css={table}>
+                        {activityNonFinance.map((item: any, i: number) => (
+                          <tbody key={"activityFinance" + i}>
+                            <tr tw="hidden lg:block">
+                              <th css={th2Sub} rowSpan={2}>
+                                {i + 1}
+                              </th>
+                              <td>
+                                <div css={tr}>
+                                  <p css={th}>活動 (内容)</p>
+                                  <p css={td}>
+                                    <div
+                                      dangerouslySetInnerHTML={{
+                                        __html:
+                                          item.node.activity.data.childMarkdownRemark.html.replace(
+                                            /\n/g,
+                                            "<br />"
+                                          ),
+                                      }}
+                                    />
+                                  </p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <div css={tr} tw="hidden lg:block">
+                                <p css={th}>時期</p>
+                                <p css={td}>
+                                  <div
+                                    dangerouslySetInnerHTML={{
+                                      __html:
+                                        item.node.activity_season.data.childMarkdownRemark.html.replace(
+                                          /\n/g,
+                                          "<br />"
+                                        ),
+                                    }}
+                                  />
+                                </p>
+                              </div>
+                            </tr>
+
+                            <tr css={tr} tw="lg:hidden">
+                              <th css={th2Sub} rowSpan={2}>
+                                {i + 1}
+                              </th>
+                              <th css={th}>活動 (内容)</th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      item.node.activity.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                            <tr css={tr} tw="lg:hidden">
+                              <th css={th}>時期</th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      item.node.activity_season.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          </tbody>
+                        ))}
+                      </table>
+                    </DetailItemWrapper>
+                  )}
+                  {activityAdo.length !== 0 && (
+                    <DetailItemWrapper itemName="活動 (ADO)">
+                      <table css={table}>
+                        {activityAdo.map((item: any, i: number) => (
+                          <tbody key={"activityFinance" + i}>
+                            <tr tw="hidden lg:block">
+                              <th css={th2Sub} rowSpan={2}>
+                                {i + 1}
+                              </th>
+                              <td>
+                                <div css={tr}>
+                                  <p css={th}>活動 (内容)</p>
+                                  <p css={td}>
+                                    <div
+                                      dangerouslySetInnerHTML={{
+                                        __html:
+                                          item.node.activity.data.childMarkdownRemark.html.replace(
+                                            /\n/g,
+                                            "<br />"
+                                          ),
+                                      }}
+                                    />
+                                  </p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <div css={tr} tw="hidden lg:block">
+                                <p css={th}>時期</p>
+                                <p css={td}>
+                                  <div
+                                    dangerouslySetInnerHTML={{
+                                      __html:
+                                        item.node.activity_season.data.childMarkdownRemark.html.replace(
+                                          /\n/g,
+                                          "<br />"
+                                        ),
+                                    }}
+                                  />
+                                </p>
+                              </div>
+                            </tr>
+
+                            <tr css={tr} tw="lg:hidden">
+                              <th css={th2Sub} rowSpan={2}>
+                                {i + 1}
+                              </th>
+                              <th css={th}>活動 (内容)</th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      item.node.activity.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                            <tr css={tr} tw="lg:hidden">
+                              <th css={th}>時期</th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      item.node.activity_season.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          </tbody>
+                        ))}
+                      </table>
+                    </DetailItemWrapper>
+                  )}
                 </div>
                 <div id="eighthItem">
                   <DetailItemWrapper itemName="インプット">
@@ -2226,7 +3971,10 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                       {strapiBizPlan.total_business_cost && (
                         <div>
                           <p css={th}>総事業費</p>
-                          <p css={td}>{strapiBizPlan.total_business_cost}円</p>
+                          <p css={td}>
+                            {strapiBizPlan.total_business_cost.toLocaleString()}
+                            円
+                          </p>
                         </div>
                       )}
                       {strapiBizPlan.human_resources &&
@@ -2290,7 +4038,8 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                           <tr css={tr}>
                             <th css={th}>総事業費</th>
                             <td css={td}>
-                              {strapiBizPlan.total_business_cost}円
+                              {strapiBizPlan.total_business_cost.toLocaleString()}
+                              円
                             </td>
                           </tr>
                         )}
@@ -2630,6 +4379,7 @@ export const pageQuery = graphql`
   query MyQuery($slug: String!) {
     strapiBizPlanManualFDO: strapiBizPlanManual(
       biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
     ) {
       data {
         url
@@ -2637,6 +4387,7 @@ export const pageQuery = graphql`
     }
     strapiBizPlanManualADO: strapiBizPlanManual(
       biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
     ) {
       data {
         url

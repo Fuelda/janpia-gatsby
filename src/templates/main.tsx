@@ -107,11 +107,15 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
   }
 
   const business_overview =
-    (strapiBizPlan && strapiBizPlan.business_overview.data.business_overview) ||
+    (strapiBizPlan &&
+      strapiBizPlan.business_overview.data &&
+      strapiBizPlan.business_overview.data.childMarkdownRemark.html) ||
     (strapiBizPlanManualFDO &&
-      strapiBizPlanManualFDO.business_overview.data.business_overview) ||
+      strapiBizPlanManualFDO.business_overview.data &&
+      strapiBizPlanManualFDO.business_overview.data.childMarkdownRemark.html) ||
     (strapiBizPlanManualADO &&
-      strapiBizPlanManualADO.business_overview.data.business_overview);
+      strapiBizPlanManualADO.business_overview.data &&
+      strapiBizPlanManualADO.business_overview.data.childMarkdownRemark.html);
 
   const linkedAdo =
     business_org_type === "F"
@@ -196,10 +200,15 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
                       <p css={td}>{businessStatusText}</p>
                     </div>
                   )}
-                  {business_overview && (
+                  {business_overview && business_overview !== "" && (
                     <div>
                       <p css={th}>事業概要</p>
-                      <p css={td}>{business_overview}</p>
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: business_overview.replace(/\n/g, "<br />"),
+                        }}
+                        css={td}
+                      />
                     </div>
                   )}
                 </div>
@@ -209,6 +218,12 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
                       <th css={th}>事業名</th>
                       <td css={td}>{business_name}</td>
                     </tr>
+                    {strapiBizPlan && strapiBizPlan.business_name_sub && (
+                      <tr>
+                        <th css={th}>事業名 (副)</th>
+                        <td css={td}>{strapiBizPlan.business_name_sub}</td>
+                      </tr>
+                    )}
                     {(mainGroup || mainGroupIndirect) && (
                       <tr>
                         <th css={th}>団体名</th>
@@ -240,10 +255,19 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
                       <th css={th}>事業ステータス</th>
                       <td css={td}>{businessStatusText}</td>
                     </tr>
-                    {business_overview && (
+                    {business_overview && business_overview !== "" && (
                       <tr>
                         <th css={th}>事業概要</th>
-                        <td css={td}>{business_overview}</td>
+                        <td css={td}>
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html: business_overview.replace(
+                                /\n/g,
+                                "<br />"
+                              ),
+                            }}
+                          />
+                        </td>
                       </tr>
                     )}
                   </tbody>
@@ -339,9 +363,12 @@ export const pageQuery = graphql`
     strapiBizPlan(business_cd: { eq: $slug }) {
       business_overview {
         data {
-          business_overview
+          childMarkdownRemark {
+            html
+          }
         }
       }
+      business_name_sub
     }
     strapiBizPlanLinkADO: allStrapiBizPlan(
       filter: {
@@ -376,7 +403,9 @@ export const pageQuery = graphql`
     ) {
       business_overview {
         data {
-          business_overview
+          childMarkdownRemark {
+            html
+          }
         }
       }
     }
@@ -385,7 +414,9 @@ export const pageQuery = graphql`
     ) {
       business_overview {
         data {
-          business_overview
+          childMarkdownRemark {
+            html
+          }
         }
       }
     }

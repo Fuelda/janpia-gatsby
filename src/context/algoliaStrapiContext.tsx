@@ -4,6 +4,7 @@ import React, {
   ReactNode,
   createContext,
   useContext,
+  useEffect,
   useState,
 } from "react";
 
@@ -13,23 +14,19 @@ type algoliaHitType = {
 };
 
 type AlgoliaStrapiType = {
-  withQuery: boolean;
-  setWithQuery: Dispatch<boolean>;
   algoliaHits: algoliaHitType[];
   setAlgoliaHits: Dispatch<algoliaHitType[]>;
 };
 
 const AlgoliaStrapiContext = createContext<AlgoliaStrapiType>({
-  withQuery: false,
-  setWithQuery: () => {},
   algoliaHits: [{ code: "", type: "" }],
   setAlgoliaHits: () => {},
 });
 
 const AlgoliaStrapiProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  const [withQuery, setWithQuery] = useState(false);
   const [algoliaHits, setAlgoliaHits] = useState([{ code: "", type: "" }]);
-  const value = { withQuery, setWithQuery, algoliaHits, setAlgoliaHits };
+  const value = { algoliaHits, setAlgoliaHits };
+
   return (
     <AlgoliaStrapiContext.Provider value={value}>
       {children}

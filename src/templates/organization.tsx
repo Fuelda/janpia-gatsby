@@ -22,6 +22,7 @@ import {
 } from "../styles/table";
 import { legalPersonalityArray } from "../features/search/store/filterContents";
 import AttachedFileLink from "../components/atoms/AttachedFileLink";
+import { formatDate } from "../util/formatDate";
 
 const Organization: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
@@ -88,6 +89,8 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
     etcWebUrls.push(mainGroup.node.etc_web_url3);
   mainGroup.node.etc_web_url4 !== "" &&
     etcWebUrls.push(mainGroup.node.etc_web_url4);
+
+  console.log(mainGroup);
 
   return (
     <Layout>
@@ -305,13 +308,17 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
                     {mainGroup.node.foundation_date && (
                       <tr css={tr}>
                         <th css={th}>設立年月日</th>
-                        <td css={td}>{mainGroup.node.foundation_date}</td>
+                        <td css={td}>
+                          {formatDate(mainGroup.node.foundation_date)}
+                        </td>
                       </tr>
                     )}
                     {mainGroup.node.legal_personality_d && (
                       <tr css={tr}>
                         <th css={th}>法人格取得年月日</th>
-                        <td css={td}>{mainGroup.node.legal_personality_d}</td>
+                        <td css={td}>
+                          {formatDate(mainGroup.node.legal_personality_d)}
+                        </td>
                       </tr>
                     )}
                     {mainGroup.node.vision && (
@@ -772,8 +779,8 @@ export const pageQuery = graphql`
           etc_web_url2
           etc_web_url3
           etc_web_url4
-          foundation_date(formatString: "yyyy/mm/dd")
-          legal_personality_d(formatString: "yyyy/mm/dd")
+          foundation_date
+          legal_personality_d
           representative_kana
           representative_name
           representative_kana2
