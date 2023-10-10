@@ -8,17 +8,28 @@ import { h3, hCenter } from "../../../../../styles/base";
 import "twin.macro";
 import tw from "twin.macro";
 
+const legalPersonalityLabelArray = [
+  { code: [1, 2], label: "NPO法人" },
+  { code: [12], label: "株式会社" },
+  { code: [3, 7], label: "社団法人" },
+  { code: [4, 8], label: "財団法人" },
+  { code: [20], label: "社会福祉法人" },
+  { code: [14], label: "更生保護法人" },
+  { code: [24], label: "任意団体" },
+  { code: [99], label: "その他" },
+];
+
 const LegalPersonality = (props: { path: string }) => {
   const { searchState, searchSetState } = useSearchContext();
   const { legal_personality } = searchState;
   const { setLegalPersonality } = searchSetState;
   const checkboxArray = legalPersonalityArray;
 
-  const handleCheckbox = (code: number) => {
-    if (legal_personality.includes(code)) {
-      setLegalPersonality(legal_personality.filter((lp) => lp !== code));
+  const handleCheckbox = (code: number[]) => {
+    if (legal_personality.includes(code[0])) {
+      setLegalPersonality(legal_personality.filter((lp) => !code.includes(lp)));
     } else {
-      setLegalPersonality([...legal_personality, code]);
+      setLegalPersonality([...legal_personality, ...code]);
     }
   };
 
@@ -29,13 +40,13 @@ const LegalPersonality = (props: { path: string }) => {
         tw="flex gap-y-2.5 flex-wrap px-3.5 py-2.5"
         css={props.path.includes("/search/") ? tw`gap-x-14` : tw`gap-x-3`}
       >
-        {checkboxArray.map((checkbox) => (
-          <div key={checkbox.code} css={[hCenter, checkBoxSet]}>
+        {legalPersonalityLabelArray.map((checkbox) => (
+          <div key={checkbox.label} css={[hCenter, checkBoxSet]}>
             <Checkbox.Root
               id={String(checkbox.code)}
               onCheckedChange={() => handleCheckbox(checkbox.code)}
               css={checkBox}
-              checked={legal_personality.includes(checkbox.code)}
+              checked={legal_personality.includes(checkbox.code[0])}
             >
               <Checkbox.Indicator tw="flex justify-center">
                 <svg

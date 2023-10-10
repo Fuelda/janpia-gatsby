@@ -159,14 +159,14 @@ export const filterStrapiData = () => {
       (searchState.topic_keywords.length === 0 || false) &&
       //社会課題
       (isNotSocialIssueSelected ||
-        ((field1_1 ? item.bizPlan.field1_1 === "1" : true) &&
-          (field1_2 ? item.bizPlan.field1_2 === "1" : true) &&
-          (field1_3 ? item.bizPlan.field1_3 === "1" : true) &&
-          (field2_4 ? item.bizPlan.field2_4 === "1" : true) &&
-          (field2_5 ? item.bizPlan.field2_5 === "1" : true) &&
-          (field2_6 ? item.bizPlan.field2_6 === "1" : true) &&
-          (field3_7 ? item.bizPlan.field3_7 === "1" : true) &&
-          (field3_8 ? item.bizPlan.field3_8 === "1" : true))) &&
+        (field1_1 && item.bizPlan.field1_1 === "1") ||
+        (field1_2 && item.bizPlan.field1_2 === "1") ||
+        (field1_3 && item.bizPlan.field1_3 === "1") ||
+        (field2_4 && item.bizPlan.field2_4 === "1") ||
+        (field2_5 && item.bizPlan.field2_5 === "1") ||
+        (field2_6 && item.bizPlan.field2_6 === "1") ||
+        (field3_7 && item.bizPlan.field3_7 === "1") ||
+        (field3_8 && item.bizPlan.field3_8 === "1")) &&
       //SDGs
       (searchState.sdgs_goal.length === 0 ||
         searchState.sdgs_goal.every((sg) =>

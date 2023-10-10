@@ -13,6 +13,8 @@ import DetailAnchor from "../components/atoms/DetailAnchor";
 import { table, td, th, tr } from "../styles/table";
 import { detailAnchor, detailBody, detailFlex } from "../styles/detailPage";
 import { useDetailContext } from "../context/detailContext";
+import { useConsortiumContext } from "../context/consortiumContext";
+import { link } from "../styles/base";
 
 const Main: React.FC<any> = ({ data, pageContext }) => {
   const filteredAllBizPlan = useFilteredStrapiContext();
@@ -25,6 +27,7 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
     setWithCRM,
     setWithSR,
   } = useDetailContext();
+  const { setCurrentGroupCd } = useConsortiumContext();
   const { slug } = pageContext;
   const filteredSingleBizPlan = filteredAllBizPlan.find(
     (item) => item.bizPlan.business_cd === slug
@@ -47,6 +50,7 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
     strapiBizPlanManualLinkADO,
     strapiBizPlanManualLinkFDO,
     allStrapiGroup,
+    allStrapiGroupLink,
 
     //サイドバーチェック用
     strapiOfferingReportManualFDO,
@@ -79,6 +83,13 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
   } else {
     mainGroupName = "";
   }
+
+  const mainGroupCd = mainGroup ? mainGroup.node.organization_cd : "";
+  const consortiumGroup =
+    allStrapiGroupLink &&
+    allStrapiGroupLink.edges.filter(
+      (gl: any) => gl.node.organization_cd !== mainGroupCd
+    );
 
   let businessCategoryLabel: string | undefined = "";
   if (business_category) {
@@ -138,6 +149,8 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
     );
     setWithCRM(strapiCompleteReportManualFDO || strapiCompleteReportManualADO);
     setWithSR(strapiSettleReportFDO || strapiSettleReportADO);
+
+    setCurrentGroupCd("");
   }, []);
 
   console.log(bizPlan);
@@ -153,6 +166,12 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
               title="事業情報"
               anchor={`/result/${slug}/#firstItem`}
             />
+            {consortiumGroup.length !== 0 && (
+              <DetailAnchor
+                title="コンソーシアム構成団体"
+                anchor={`/result/${slug}/#thirdItem`}
+              />
+            )}
             {linkedAdo.length !== 0 && (
               <DetailAnchor
                 title={business_org_type === "F" ? "実行団体" : "資金分配団体"}
@@ -275,6 +294,38 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
               </DetailItemWrapper>
             </div>
 
+            <div id="thirdItem">
+              {consortiumGroup.length !== 0 && (
+                <DetailItemWrapper itemName="コンソーシアム構成団体">
+                  <table>
+                    <tbody>
+                      {consortiumGroup.map((cg: any) => (
+                        <tr key={cg.node.organization_cd}>
+                          <th css={th}>
+                            {business_org_type === "F"
+                              ? "実行団体"
+                              : "資金分配団体"}
+                            名
+                          </th>
+                          <td css={td}>
+                            <Link
+                              to="organization"
+                              onClick={() =>
+                                setCurrentGroupCd(cg.node.organization_cd)
+                              }
+                              css={link}
+                            >
+                              {cg.node.organization_name}
+                            </Link>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </DetailItemWrapper>
+              )}
+            </div>
+
             <div id="secondItem">
               {linkedAdo.length !== 0 && (
                 <DetailItemWrapper
@@ -305,7 +356,7 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
                                 item.node.biz_cd_executive ||
                                 item.node.biz_cd_fund_distr
                               }`}
-                              tw="underline text-blue-link"
+                              css={link}
                             >
                               {item.node.business_name}
                             </Link>
@@ -359,7 +410,11 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
 export default Main;
 
 export const pageQuery = graphql`
-  query MyQuery($slug: String!, $biz_cd_fund_distr: String!) {
+  query MyQuery(
+    $slug: String!
+    $biz_cd_fund_distr: String!
+    $organization_cd: [String]
+  ) {
     strapiBizPlan(business_cd: { eq: $slug }) {
       business_overview {
         data {
@@ -449,6 +504,16 @@ export const pageQuery = graphql`
       }
     }
     allStrapiGroup {
+      edges {
+        node {
+          organization_name
+          organization_cd
+        }
+      }
+    }
+    allStrapiGroupLink: allStrapiGroup(
+      filter: { organization_cd: { in: $organization_cd } }
+    ) {
       edges {
         node {
           organization_name

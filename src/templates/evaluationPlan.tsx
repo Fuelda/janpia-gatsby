@@ -244,15 +244,21 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                                 <th css={thScroll}>評価関連経費（金額）</th>
                                 <td css={tdScroll}>
                                   {strapiEvaluationPlan.prior_expenses &&
-                                    strapiEvaluationPlan.prior_expenses}
+                                    parseInt(
+                                      strapiEvaluationPlan.prior_expenses
+                                    ).toLocaleString()}
                                 </td>
                                 <td css={tdScroll}>
                                   {strapiEvaluationPlan.mid_expenses &&
-                                    strapiEvaluationPlan.mid_expenses}
+                                    parseInt(
+                                      strapiEvaluationPlan.mid_expenses
+                                    ).toLocaleString()}
                                 </td>
                                 <td css={tdScroll}>
                                   {strapiEvaluationPlan.after_expenses &&
-                                    strapiEvaluationPlan.after_expenses}
+                                    parseInt(
+                                      strapiEvaluationPlan.after_expenses
+                                    ).toLocaleString()}
                                 </td>
                               </tr>
                             )}
@@ -296,15 +302,21 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                                 <th css={thScroll}>内) 外部委託費</th>
                                 <td css={tdScroll}>
                                   {strapiEvaluationPlan.prior_comm_expenses &&
-                                    strapiEvaluationPlan.prior_comm_expenses}
+                                    parseInt(
+                                      strapiEvaluationPlan.prior_comm_expenses
+                                    ).toLocaleString()}
                                 </td>
                                 <td css={tdScroll}>
                                   {strapiEvaluationPlan.mid_comm_expenses &&
-                                    strapiEvaluationPlan.mid_comm_expenses}
+                                    parseInt(
+                                      strapiEvaluationPlan.mid_comm_expenses
+                                    ).toLocaleString()}
                                 </td>
                                 <td css={tdScroll}>
                                   {strapiEvaluationPlan.after_comm_expenses &&
-                                    strapiEvaluationPlan.after_comm_expenses}
+                                    parseInt(
+                                      strapiEvaluationPlan.after_comm_expenses
+                                    ).toLocaleString()}
                                 </td>
                               </tr>
                             )}

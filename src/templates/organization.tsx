@@ -1,8 +1,15 @@
 import { graphql } from "gatsby";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../components/lauout/Layout";
 import DetailHeader from "../components/lauout/DetailHeader";
-import { detailAnchor, detailBody, detailFlex } from "../styles/detailPage";
+import {
+  detailAnchor,
+  detailBody,
+  detailFlex,
+  detailRoundTabBtn,
+  detailTab,
+  detailTabBtnSelected,
+} from "../styles/detailPage";
 import DetailSidebar from "../components/organisms/DetailSidebar";
 import DetailWrapper from "../components/lauout/DetailWrapper";
 import DetailAnchor from "../components/atoms/DetailAnchor";
@@ -23,9 +30,13 @@ import {
 import { legalPersonalityArray } from "../features/search/store/filterContents";
 import AttachedFileLink from "../components/atoms/AttachedFileLink";
 import { formatDate } from "../util/formatDate";
+import { useConsortiumContext } from "../context/consortiumContext";
+import { link } from "../styles/base";
 
 const Organization: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
+  const { currentGroupCd, setCurrentGroupCd } = useConsortiumContext();
+
   const {
     strapiBizPlan,
     strapiBizPlanManualFDO,
@@ -66,11 +77,17 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
   const mainGroup = allStrapiGroup.edges.find(
     (g: any) => g.node.organization_cd === mainGroupCd
   ) || { node: {} };
+  const consortiumGroup = allStrapiGroup.edges.filter(
+    (g: any) => g.node.organization_cd !== mainGroupCd
+  ) || { node: {} };
+  const displayGroup = allStrapiGroup.edges.find(
+    (g: any) => g.node.organization_cd === currentGroupCd
+  ) || { node: {} };
 
   const legalPersonality = legalPersonalityArray.find(
     (lp) =>
-      mainGroup.node.legal_personality &&
-      mainGroup.node.legal_personality === String(lp.code)
+      displayGroup.node.legal_personality &&
+      displayGroup.node.legal_personality === String(lp.code)
   );
 
   const teikanFile = allStrapiAttachedFile.edges.filter(
@@ -81,16 +98,22 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
   );
 
   const etcWebUrls = [];
-  mainGroup.node.etc_web_url1 !== "" &&
-    etcWebUrls.push(mainGroup.node.etc_web_url1);
-  mainGroup.node.etc_web_url2 !== "" &&
-    etcWebUrls.push(mainGroup.node.etc_web_url2);
-  mainGroup.node.etc_web_url3 !== "" &&
-    etcWebUrls.push(mainGroup.node.etc_web_url3);
-  mainGroup.node.etc_web_url4 !== "" &&
-    etcWebUrls.push(mainGroup.node.etc_web_url4);
+  displayGroup.node.etc_web_url1 !== "" &&
+    etcWebUrls.push(displayGroup.node.etc_web_url1);
+  displayGroup.node.etc_web_url2 !== "" &&
+    etcWebUrls.push(displayGroup.node.etc_web_url2);
+  displayGroup.node.etc_web_url3 !== "" &&
+    etcWebUrls.push(displayGroup.node.etc_web_url3);
+  displayGroup.node.etc_web_url4 !== "" &&
+    etcWebUrls.push(displayGroup.node.etc_web_url4);
 
-  console.log(mainGroup);
+  useEffect(() => {
+    currentGroupCd === "" && setCurrentGroupCd(mainGroupCd);
+  }, [mainGroupCd]);
+
+  console.log(mainGroupCd);
+  console.log(currentGroupCd);
+  console.log(displayGroup);
 
   return (
     <Layout>
@@ -98,6 +121,37 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
       <div css={detailFlex}>
         <DetailSidebar slug={slug} />
         <DetailWrapper category="団体情報" slug={slug}>
+          {consortiumGroup.length !== 0 && (
+            <div>
+              <button
+                css={[
+                  detailRoundTabBtn,
+                  currentGroupCd === mainGroupCd && detailTabBtnSelected,
+                ]}
+                onClick={() => setCurrentGroupCd(mainGroupCd)}
+                tw="mb-4"
+              >
+                {mainGroup.node.organization_name}
+              </button>
+              <DetailItemWrapper itemName="コンソーシアム構成団体">
+                <div css={detailTab}>
+                  {consortiumGroup.map((g: any) => (
+                    <button
+                      key={g.node.organization_cd}
+                      css={[
+                        detailRoundTabBtn,
+                        currentGroupCd === g.node.organization_cd &&
+                          detailTabBtnSelected,
+                      ]}
+                      onClick={() => setCurrentGroupCd(g.node.organization_cd)}
+                    >
+                      {g.node.organization_name}
+                    </button>
+                  ))}
+                </div>
+              </DetailItemWrapper>
+            </div>
+          )}
           <div css={detailAnchor}>
             <DetailAnchor
               title="団体組織情報"
@@ -144,62 +198,70 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
                   )}
                   <p css={th}>団体種別</p>
                   <p css={td}>
-                    {mainGroup.node.organization_type_cd === "F"
+                    {displayGroup.node.organization_type_cd === "F"
                       ? "資金分配団体"
                       : "実行団体"}
                   </p>
-                  {mainGroup.node.organization_name && (
+                  {displayGroup.node.organization_name && (
                     <div>
                       <p css={th}>団体名</p>
-                      <p css={td}>{mainGroup.node.organization_name}</p>
+                      <p css={td}>{displayGroup.node.organization_name}</p>
                     </div>
                   )}
-                  {mainGroup.node.post_code && (
+                  {displayGroup.node.post_code && (
                     <div>
                       <p css={th}>郵便番号</p>
-                      <p css={td}>{mainGroup.node.post_code}</p>
+                      <p css={td}>{displayGroup.node.post_code}</p>
                     </div>
                   )}
-                  {mainGroup.node.prefectures && (
+                  {displayGroup.node.prefectures && (
                     <div>
                       <p css={th}>都道府県</p>
-                      <p css={td}>{mainGroup.node.prefectures}</p>
+                      <p css={td}>{displayGroup.node.prefectures}</p>
                     </div>
                   )}
-                  {mainGroup.node.city && (
+                  {displayGroup.node.city && (
                     <div>
                       <p css={th}>市区町村</p>
-                      <p css={td}>{mainGroup.node.city}</p>
+                      <p css={td}>{displayGroup.node.city}</p>
                     </div>
                   )}
-                  {mainGroup.node.address && (
+                  {displayGroup.node.address && (
                     <div>
                       <p css={th}>番地等</p>
-                      <p css={td}>{mainGroup.node.address}</p>
+                      <p css={td}>{displayGroup.node.address}</p>
                     </div>
                   )}
-                  {mainGroup.node.tel && (
+                  {displayGroup.node.tel && (
                     <div>
                       <p css={th}>電話番号</p>
-                      <p css={td}>{mainGroup.node.tel}</p>
+                      <p css={td}>{displayGroup.node.tel}</p>
                     </div>
                   )}
-                  {mainGroup.node.group_web_url && (
+                  {displayGroup.node.group_web_url && (
                     <div>
                       <p css={th}>団体Webサイト</p>
                       <p css={td}>
-                        <a href={mainGroup.node.group_web_url} target="_blank">
-                          {mainGroup.node.group_web_url}
+                        <a
+                          href={displayGroup.node.group_web_url}
+                          target="_blank"
+                          css={link}
+                        >
+                          {displayGroup.node.group_web_url}
                         </a>
                       </p>
                     </div>
                   )}
-                  {mainGroup.node.etc_web_url1 && (
+                  {displayGroup.node.etc_web_url1 && (
                     <div>
                       <p css={th}>その他のWebサイト</p>
                       <p css={td}>
-                        <a href={mainGroup.node.etc_web_url1} target="_blank">
-                          {mainGroup.node.etc_web_url1}
+                        <a
+                          href={displayGroup.node.etc_web_url1}
+                          target="_blank"
+                          css={link}
+                        >
+                          {displayGroup.node.etc_web_url1}
                         </a>
                       </p>
                     </div>
@@ -216,124 +278,138 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
                     <tr css={tr}>
                       <th css={th}>団体種別</th>
                       <td css={td}>
-                        {mainGroup.node.organization_type_cd === "F"
+                        {displayGroup.node.organization_type_cd === "F"
                           ? "資金分配団体"
                           : "実行団体"}
                       </td>
                     </tr>
-                    {mainGroup.node.organization_name && (
+                    {displayGroup.node.organization_name && (
                       <tr css={tr}>
                         <th css={th}>団体名</th>
-                        <td css={td}>{mainGroup.node.organization_name}</td>
+                        <td css={td}>{displayGroup.node.organization_name}</td>
                       </tr>
                     )}
-                    {mainGroup.node.post_code && (
+                    {displayGroup.node.post_code && (
                       <tr css={tr}>
                         <th css={th}>郵便番号</th>
-                        <td css={td}>{mainGroup.node.post_code}</td>
+                        <td css={td}>{displayGroup.node.post_code}</td>
                       </tr>
                     )}
-                    {mainGroup.node.prefectures && (
+                    {displayGroup.node.prefectures && (
                       <tr css={tr}>
                         <th css={th}>都道府県</th>
-                        <td css={td}>{mainGroup.node.prefectures}</td>
+                        <td css={td}>{displayGroup.node.prefectures}</td>
                       </tr>
                     )}
-                    {mainGroup.node.city && (
+                    {displayGroup.node.city && (
                       <tr css={tr}>
                         <th css={th}>市区町村</th>
-                        <td css={td}>{mainGroup.node.city}</td>
+                        <td css={td}>{displayGroup.node.city}</td>
                       </tr>
                     )}
-                    {mainGroup.node.address && (
+                    {displayGroup.node.address && (
                       <tr css={tr}>
                         <th css={th}>番地等</th>
-                        <td css={td}>{mainGroup.node.address}</td>
+                        <td css={td}>{displayGroup.node.address}</td>
                       </tr>
                     )}
-                    {mainGroup.node.tel && (
+                    {displayGroup.node.tel && (
                       <tr css={tr}>
                         <th css={th}>電話番号</th>
-                        <td css={td}>{mainGroup.node.tel}</td>
+                        <td css={td}>{displayGroup.node.tel}</td>
                       </tr>
                     )}
-                    {mainGroup.node.group_web_url && (
+                    {displayGroup.node.group_web_url && (
                       <tr css={tr}>
                         <th css={th}>団体Webサイト</th>
                         <td css={td}>
                           <a
-                            href={mainGroup.node.group_web_url}
+                            href={displayGroup.node.group_web_url}
                             target="_blank"
+                            css={link}
                           >
-                            {mainGroup.node.group_web_url}
+                            {displayGroup.node.group_web_url}
                           </a>
                         </td>
                       </tr>
                     )}
-                    {mainGroup.node.etc_web_url1 && (
+                    {displayGroup.node.etc_web_url1 && (
                       <tr css={tr}>
                         <th css={th} rowSpan={etcWebUrls.length}>
                           その他のWebサイト
                         </th>
                         <td css={td}>
-                          <a href={mainGroup.node.etc_web_url1} target="_blank">
-                            {mainGroup.node.etc_web_url1}
+                          <a
+                            href={displayGroup.node.etc_web_url1}
+                            target="_blank"
+                            css={link}
+                          >
+                            {displayGroup.node.etc_web_url1}
                           </a>
                         </td>
                       </tr>
                     )}
-                    {mainGroup.node.etc_web_url2 && (
+                    {displayGroup.node.etc_web_url2 && (
                       <tr css={tr}>
                         <td css={td}>
-                          <a href={mainGroup.node.etc_web_url2} target="_blank">
-                            {mainGroup.node.etc_web_url2}
+                          <a
+                            href={displayGroup.node.etc_web_url2}
+                            target="_blank"
+                          >
+                            {displayGroup.node.etc_web_url2}
                           </a>
                         </td>
                       </tr>
                     )}
-                    {mainGroup.node.etc_web_url3 && (
+                    {displayGroup.node.etc_web_url3 && (
                       <tr css={tr}>
                         <td css={td}>
-                          <a href={mainGroup.node.etc_web_url3} target="_blank">
-                            {mainGroup.node.etc_web_url3}
+                          <a
+                            href={displayGroup.node.etc_web_url3}
+                            target="_blank"
+                          >
+                            {displayGroup.node.etc_web_url3}
                           </a>
                         </td>
                       </tr>
                     )}
-                    {mainGroup.node.etc_web_url4 && (
+                    {displayGroup.node.etc_web_url4 && (
                       <tr css={tr}>
                         <td css={td}>
-                          <a href={mainGroup.node.etc_web_url4} target="_blank">
-                            {mainGroup.node.etc_web_url4}
+                          <a
+                            href={displayGroup.node.etc_web_url4}
+                            target="_blank"
+                          >
+                            {displayGroup.node.etc_web_url4}
                           </a>
                         </td>
                       </tr>
                     )}
-                    {mainGroup.node.foundation_date && (
+                    {displayGroup.node.foundation_date && (
                       <tr css={tr}>
                         <th css={th}>設立年月日</th>
                         <td css={td}>
-                          {formatDate(mainGroup.node.foundation_date)}
+                          {formatDate(displayGroup.node.foundation_date)}
                         </td>
                       </tr>
                     )}
-                    {mainGroup.node.legal_personality_d && (
+                    {displayGroup.node.legal_personality_d && (
                       <tr css={tr}>
                         <th css={th}>法人格取得年月日</th>
                         <td css={td}>
-                          {formatDate(mainGroup.node.legal_personality_d)}
+                          {formatDate(displayGroup.node.legal_personality_d)}
                         </td>
                       </tr>
                     )}
-                    {mainGroup.node.vision && (
+                    {displayGroup.node.vision && (
                       <tr css={tr}>
                         <th css={th}>団体の目的</th>
                         <td css={td}>
-                          {mainGroup.node.vision && (
+                          {displayGroup.node.vision && (
                             <div
                               dangerouslySetInnerHTML={{
                                 __html:
-                                  mainGroup.node.vision.data.childMarkdownRemark.html.replace(
+                                  displayGroup.node.vision.data.childMarkdownRemark.html.replace(
                                     /\n/g,
                                     "<br />"
                                   ),
@@ -343,15 +419,15 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
                         </td>
                       </tr>
                     )}
-                    {mainGroup.node.mission && (
+                    {displayGroup.node.mission && (
                       <tr css={tr}>
                         <th css={th}>団体の概要・活動・業務</th>
                         <td css={td}>
-                          {mainGroup.node.mission && (
+                          {displayGroup.node.mission && (
                             <div
                               dangerouslySetInnerHTML={{
                                 __html:
-                                  mainGroup.node.mission.data.childMarkdownRemark.html.replace(
+                                  displayGroup.node.mission.data.childMarkdownRemark.html.replace(
                                     /\n/g,
                                     "<br />"
                                   ),
@@ -368,88 +444,98 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
             <div id="secondItem">
               <DetailItemWrapper itemName="代表者情報">
                 <div tw="hidden lg:block">
-                  {mainGroup.node.representative_kana && (
+                  {displayGroup.node.representative_kana && (
                     <div>
                       <p css={th}>フリガナ</p>
-                      <p css={td}>{mainGroup.node.representative_kana}</p>
+                      <p css={td}>{displayGroup.node.representative_kana}</p>
                     </div>
                   )}
-                  {mainGroup.node.representative_name && (
+                  {displayGroup.node.representative_name && (
                     <div>
                       <p css={th}>氏名</p>
-                      <p css={td}>{mainGroup.node.representative_name}</p>
+                      <p css={td}>{displayGroup.node.representative_name}</p>
                     </div>
                   )}
-                  {mainGroup.node.representative_post && (
+                  {displayGroup.node.representative_post && (
                     <div>
                       <p css={th}>役職</p>
-                      <p css={td}>{mainGroup.node.representative_post}</p>
+                      <p css={td}>{displayGroup.node.representative_post}</p>
                     </div>
                   )}
                 </div>
                 <table css={table} tw="lg:hidden">
                   <tbody>
-                    {mainGroup.node.representative_kana && (
+                    {displayGroup.node.representative_kana && (
                       <tr css={tr}>
                         <th css={th}>フリガナ</th>
-                        <td css={td}>{mainGroup.node.representative_kana}</td>
+                        <td css={td}>
+                          {displayGroup.node.representative_kana}
+                        </td>
                       </tr>
                     )}
-                    {mainGroup.node.representative_name && (
+                    {displayGroup.node.representative_name && (
                       <tr css={tr}>
                         <th css={th}>氏名</th>
-                        <td css={td}>{mainGroup.node.representative_name}</td>
+                        <td css={td}>
+                          {displayGroup.node.representative_name}
+                        </td>
                       </tr>
                     )}
-                    {mainGroup.node.representative_post && (
+                    {displayGroup.node.representative_post && (
                       <tr css={tr}>
                         <th css={th}>役職</th>
-                        <td css={td}>{mainGroup.node.representative_post}</td>
+                        <td css={td}>
+                          {displayGroup.node.representative_post}
+                        </td>
                       </tr>
                     )}
                   </tbody>
                 </table>
-                {mainGroup.node.representative_name2 && (
+                {displayGroup.node.representative_name2 && (
                   <div>
                     <div tw="hidden lg:block">
-                      {mainGroup.node.representative_kana2 && (
+                      {displayGroup.node.representative_kana2 && (
                         <div>
                           <p css={th}>フリガナ</p>
-                          <p css={td}>{mainGroup.node.representative_kana2}</p>
+                          <p css={td}>
+                            {displayGroup.node.representative_kana2}
+                          </p>
                         </div>
                       )}
                       <div>
                         <p css={th}>氏名</p>
-                        <p css={td}>{mainGroup.node.representative_name2}</p>
+                        <p css={td}>{displayGroup.node.representative_name2}</p>
                       </div>
-                      {mainGroup.node.representative_post2 && (
+                      {displayGroup.node.representative_post2 && (
                         <div>
                           <p css={th}>役職</p>
-                          <p css={td}>{mainGroup.node.representative_post2}</p>
+                          <p css={td}>
+                            {displayGroup.node.representative_post2}
+                          </p>
                         </div>
                       )}
                     </div>
                     <table css={table} tw="mt-2.5 lg:hidden">
                       <tbody>
-                        {mainGroup.node.representative_kana2 && (
+                        {displayGroup.node.representative_kana2 && (
                           <tr css={tr}>
                             <th css={th}>フリガナ</th>
                             <td css={td}>
-                              {mainGroup.node.representative_kana2}
+                              {displayGroup.node.representative_kana2}
                             </td>
                           </tr>
                         )}
                         <tr css={tr}>
                           <th css={th}>氏名</th>
                           <td css={td}>
-                            {mainGroup.node.representative_name2}
+                            {displayGroup.node.representative_name2}
                           </td>
                         </tr>
-                        {mainGroup.node.representative_post2 && (
+                        {displayGroup.node.representative_post2 && (
                           <tr css={tr}>
                             <th css={th}>役職</th>
                             <td css={td}>
-                              {mainGroup.node.representative_post2}
+                              {displayGroup.node.representative_post2}
                             </td>
                           </tr>
                         )}
@@ -461,51 +547,53 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
             </div>
             <div id="thirdItem">
               <DetailItemWrapper itemName="役員">
-                {mainGroup.node.number_of_officers ? (
+                {displayGroup.node.number_of_officers ? (
                   <div tw="hidden lg:block">
                     <div>
                       <p css={th1}>役員数</p>
-                      <p css={td}>{mainGroup.node.number_of_officers}名</p>
+                      <p css={td}>{displayGroup.node.number_of_officers}名</p>
                     </div>
                     <div>
                       <p css={th2Sub}></p>
                       <p css={th2}>理事・取締役数</p>
-                      <p css={td}>{mainGroup.node.people_director}名</p>
+                      <p css={td}>{displayGroup.node.people_director}名</p>
                     </div>
                     <div>
                       <p css={th2}>評議員数</p>
-                      <p css={td}>{mainGroup.node.councilor}名</p>
+                      <p css={td}>{displayGroup.node.councilor}名</p>
                     </div>
                     <div>
                       <p css={th2}>監事/監査役・会計参与数</p>
-                      <p css={td}>{mainGroup.node.auditor_people}名</p>
+                      <p css={td}>{displayGroup.node.auditor_people}名</p>
                     </div>
                   </div>
                 ) : (
                   <div />
                 )}
-                {mainGroup.node.number_of_officers ? (
+                {displayGroup.node.number_of_officers ? (
                   <table css={table} tw="lg:hidden">
                     <tbody>
                       <tr css={tr}>
                         <th css={th1} colSpan={2}>
                           役員数
                         </th>
-                        <td css={td}>{mainGroup.node.number_of_officers}名</td>
+                        <td css={td}>
+                          {displayGroup.node.number_of_officers}名
+                        </td>
                       </tr>
 
                       <tr css={tr}>
                         <th css={th2Sub} rowSpan={3}></th>
                         <th css={th2}>理事・取締役数</th>
-                        <td css={td}>{mainGroup.node.people_director}名</td>
+                        <td css={td}>{displayGroup.node.people_director}名</td>
                       </tr>
                       <tr css={tr}>
                         <th css={th2}>評議員数</th>
-                        <td css={td}>{mainGroup.node.councilor}名</td>
+                        <td css={td}>{displayGroup.node.councilor}名</td>
                       </tr>
                       <tr css={tr}>
                         <th css={th2}>監事/監査役・会計参与数</th>
-                        <td css={td}>{mainGroup.node.auditor_people}名</td>
+                        <td css={td}>{displayGroup.node.auditor_people}名</td>
                       </tr>
                     </tbody>
                   </table>
@@ -516,92 +604,98 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
             </div>
             <div id="fourthItem">
               <DetailItemWrapper itemName="職員・従業員">
-                {mainGroup.node.number_of_employees ? (
+                {displayGroup.node.number_of_employees ? (
                   <div tw="hidden lg:block">
                     <div>
                       <p css={th1}>職員・従業員数</p>
-                      <p css={td}>{mainGroup.node.number_of_employees}名</p>
+                      <p css={td}>{displayGroup.node.number_of_employees}名</p>
                     </div>
                     <div>
                       <p css={th2Sub}></p>
                       <p css={th3}>常勤職員・従業員数</p>
-                      <p css={td}>{mainGroup.node.fulltime_employees}名</p>
+                      <p css={td}>{displayGroup.node.fulltime_employees}名</p>
                     </div>
                     <div tw="flex w-full">
                       <div tw="flex w-full">
                         <p css={th3} tw="w-[40%] py-2">
                           有給数
                         </p>
-                        <p css={td}>{mainGroup.node.fulltime_paid}名</p>
+                        <p css={td}>{displayGroup.node.fulltime_paid}名</p>
                       </div>
                       <div tw="flex w-full">
                         <p css={th3} tw="w-[40%] py-2">
                           無給数
                         </p>
-                        <p css={td}>{mainGroup.node.fulltime_unpaid}名</p>
+                        <p css={td}>{displayGroup.node.fulltime_unpaid}名</p>
                       </div>
                     </div>
                     <div>
                       <p css={th3}>非常勤職員・従業員数</p>
-                      <p css={td}>{mainGroup.node.parttime_employees}名</p>
+                      <p css={td}>{displayGroup.node.parttime_employees}名</p>
                     </div>
                     <div tw="flex w-full">
                       <div tw="flex w-full">
                         <p css={th3} tw="w-[40%] py-2">
                           有給数
                         </p>
-                        <p css={td}>{mainGroup.node.parttime_paid}名</p>
+                        <p css={td}>{displayGroup.node.parttime_paid}名</p>
                       </div>
                       <div tw="flex w-full">
                         <p css={th3} tw="w-[40%] py-2">
                           無給数
                         </p>
-                        <p css={td}>{mainGroup.node.parttime_unpaid}名</p>
+                        <p css={td}>{displayGroup.node.parttime_unpaid}名</p>
                       </div>
                     </div>
                   </div>
                 ) : (
                   <div />
                 )}
-                {mainGroup.node.number_of_employees ? (
+                {displayGroup.node.number_of_employees ? (
                   <table css={table} tw="lg:hidden">
                     <tbody>
                       <tr css={tr}>
                         <th css={th1} colSpan={3}>
                           職員・従業員数
                         </th>
-                        <td css={td}>{mainGroup.node.number_of_employees}名</td>
+                        <td css={td}>
+                          {displayGroup.node.number_of_employees}名
+                        </td>
                       </tr>
                       <tr css={tr}>
                         <th css={th2Sub} rowSpan={6}></th>
                         <th css={th3} colSpan={2}>
                           常勤職員・従業員数
                         </th>
-                        <td css={td}>{mainGroup.node.fulltime_employees}名</td>
+                        <td css={td}>
+                          {displayGroup.node.fulltime_employees}名
+                        </td>
                       </tr>
                       <tr css={tr}>
                         <th css={th3Sub} rowSpan={2}></th>
                         <th css={th3}>有給数</th>
-                        <td css={td}>{mainGroup.node.fulltime_paid}名</td>
+                        <td css={td}>{displayGroup.node.fulltime_paid}名</td>
                       </tr>
                       <tr css={tr}>
                         <th css={th3}>無給数</th>
-                        <td css={td}>{mainGroup.node.fulltime_unpaid}名</td>
+                        <td css={td}>{displayGroup.node.fulltime_unpaid}名</td>
                       </tr>
                       <tr css={tr}>
                         <th css={th3} colSpan={2}>
                           非常勤職員・従業員数
                         </th>
-                        <td css={td}>{mainGroup.node.parttime_employees}名</td>
+                        <td css={td}>
+                          {displayGroup.node.parttime_employees}名
+                        </td>
                       </tr>
                       <tr css={tr}>
                         <th css={th3Sub} rowSpan={2}></th>
                         <th css={th3}>有給数</th>
-                        <td css={td}>{mainGroup.node.parttime_paid}名</td>
+                        <td css={td}>{displayGroup.node.parttime_paid}名</td>
                       </tr>
                       <tr css={tr}>
                         <th css={th3}>無給数</th>
-                        <td css={td}>{mainGroup.node.parttime_unpaid}名</td>
+                        <td css={td}>{displayGroup.node.parttime_unpaid}名</td>
                       </tr>
                     </tbody>
                   </table>
@@ -613,41 +707,41 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
             <div id="fifthItem">
               <DetailItemWrapper itemName="組織評価">
                 <div tw="hidden lg:block">
-                  {mainGroup.node.organization_measure && (
+                  {displayGroup.node.organization_measure && (
                     <div>
                       <p css={thLong}>過去3年以内に組織評価を受けているか</p>
                       <p css={td}>
-                        {mainGroup.node.organization_measure === "1"
+                        {displayGroup.node.organization_measure === "1"
                           ? "受けている"
                           : "受けていない"}
                       </p>
                     </div>
                   )}
-                  {mainGroup.node.certification_body && (
+                  {displayGroup.node.certification_body && (
                     <div>
                       <p css={thLong}>認証機関/認証制度名/認証年度</p>
-                      <p css={td}>{mainGroup.node.certification_body}</p>
+                      <p css={td}>{displayGroup.node.certification_body}</p>
                     </div>
                   )}
                 </div>
                 <table css={table} tw="lg:hidden">
                   <tbody>
-                    {mainGroup.node.organization_measure && (
+                    {displayGroup.node.organization_measure && (
                       <tr css={tr}>
                         <th css={thLong}>
                           過去3年以内に組織評価を受けているか
                         </th>
                         <td css={td}>
-                          {mainGroup.node.organization_measure === "1"
+                          {displayGroup.node.organization_measure === "1"
                             ? "受けている"
                             : "受けていない"}
                         </td>
                       </tr>
                     )}
-                    {mainGroup.node.certification_body && (
+                    {displayGroup.node.certification_body && (
                       <tr css={tr}>
                         <th css={thLong}>認証機関/認証制度名/認証年度</th>
-                        <td css={td}>{mainGroup.node.certification_body}</td>
+                        <td css={td}>{displayGroup.node.certification_body}</td>
                       </tr>
                     )}
                   </tbody>

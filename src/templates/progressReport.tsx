@@ -19,6 +19,7 @@ import {
 const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
   const [currentTab, setCurrentTab] = useState(1);
+  const [loaded, setLoaded] = useState(false);
   const { allStrapiProgressReportManualFDO, allStrapiProgressReportManualADO } =
     data;
 
@@ -78,10 +79,12 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
           <div css={detailBody}>
             {currentItem ? (
               <div>
+                {!loaded && <p>PDFのロード中です...</p>}
                 <iframe
                   width="100%"
                   height="500px"
                   src={googleDocsViewerUrl}
+                  onLoad={() => setLoaded(true)}
                 ></iframe>
               </div>
             ) : (

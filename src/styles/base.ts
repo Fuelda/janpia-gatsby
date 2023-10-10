@@ -8,3 +8,5 @@ export const vCenter = tw`flex flex-col justify-between items-center`;
 export const h3 = tw`text-blue-font text-sm font-bold p-2 bg-blue-pale`;
 
 export const pankuzu = [hCenter, tw`text-sm p-2 bg-blue-base gap-2 rounded`];
+
+export const link = tw`underline text-blue-link`;
