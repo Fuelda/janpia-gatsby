@@ -7,9 +7,27 @@ import { detailAnchor, detailBody, detailFlex } from "../styles/detailPage";
 import DetailAnchor from "../components/atoms/DetailAnchor";
 import DetailWrapper from "../components/lauout/DetailWrapper";
 import DetailItemWrapper from "../components/lauout/DetailItemWrapper";
-import { table, td, tdScroll, th, thScroll, thead, tr } from "../styles/table";
+import {
+  table,
+  td,
+  tdScroll,
+  th,
+  th2Sub,
+  thForCircle,
+  thLong,
+  thScroll,
+  thead,
+  tr,
+} from "../styles/table";
 import AttachedFileLink from "../components/atoms/AttachedFileLink";
 import "twin.macro";
+import {
+  evaluationFactorArray,
+  evaluationMethodArray,
+  evaluationRequiredArray,
+  evaluationSeasonArray,
+} from "../features/search/store/filterContents";
+import EvaluationShortOutcome from "../components/organisms/EvaluationShortOutcome";
 
 const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
   const {
@@ -28,6 +46,37 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
   const evaluationFile = allStrapiAttachedFile.edges.filter(
     (af: any) => af.node.item_id === "attach_fileupload_item2"
   );
+
+  const evaluationTable =
+    allStrapiEvaluationPlanSub.edges.length !== 0
+      ? allStrapiEvaluationPlanSub.edges
+          .filter((eps: any) => eps.node.info_type === 10)
+          .sort((a: any, b: any) => a.node.row_no - b.node.row_no)
+      : [];
+  const shortOutcome =
+    allStrapiEvaluationPlanSub.edges.length !== 0
+      ? allStrapiEvaluationPlanSub.edges
+          .filter((eps: any) => eps.node.info_type === 20)
+          .sort((a: any, b: any) => a.node.row_no - b.node.row_no)
+      : [];
+  const outputFinance =
+    allStrapiEvaluationPlanSub.edges.length !== 0
+      ? allStrapiEvaluationPlanSub.edges
+          .filter((eps: any) => eps.node.info_type === 21)
+          .sort((a: any, b: any) => a.node.row_no - b.node.row_no)
+      : [];
+  const outputNonFinance =
+    allStrapiEvaluationPlanSub.edges.length !== 0
+      ? allStrapiEvaluationPlanSub.edges
+          .filter((eps: any) => eps.node.info_type === 22)
+          .sort((a: any, b: any) => a.node.row_no - b.node.row_no)
+      : [];
+  const outputAdo =
+    allStrapiEvaluationPlanSub.edges.length !== 0
+      ? allStrapiEvaluationPlanSub.edges
+          .filter((eps: any) => eps.node.info_type === 23)
+          .sort((a: any, b: any) => a.node.row_no - b.node.row_no)
+      : [];
 
   console.log(data);
 
@@ -67,17 +116,28 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                       <table css={table} tw="lg:w-[780px]">
                         <thead css={thead}>
                           <tr css={tr}>
-                            <th css={thScroll}>申請種別</th>
+                            <th css={thScroll}></th>
+                            <td css={thScroll}>事前評価</td>
                             <td css={thScroll}>中間評価</td>
                             <td css={thScroll}>事後評価</td>
                           </tr>
                         </thead>
                         <tbody>
                           {strapiEvaluationPlan &&
+                            strapiEvaluationPlan.apply_type_name && (
+                              <tr>
+                                <th css={thScroll}>申請種別</th>
+                                <td css={tdScroll} colSpan={3}>
+                                  {strapiEvaluationPlan.apply_type_name}
+                                </td>
+                              </tr>
+                            )}
+                          {strapiEvaluationPlan &&
                             (strapiEvaluationPlan.mid_rethink_season ||
                               strapiEvaluationPlan.after_rethink_season) && (
                               <tr css={tr}>
                                 <th css={thScroll}>評価計画の見直し時期</th>
+                                <td css={tdScroll}></td>
                                 <td css={tdScroll}>
                                   {strapiEvaluationPlan &&
                                     strapiEvaluationPlan.mid_rethink_season}
@@ -89,46 +149,55 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                               </tr>
                             )}
                           {strapiEvaluationPlan &&
-                            (strapiEvaluationPlan.mid_imple_priod ||
-                              strapiEvaluationPlan.after_imple_priod) && (
+                            strapiEvaluationPlan.prior_imple_priod && (
                               <tr css={tr}>
                                 <th css={thScroll}>実施時期</th>
                                 <td css={tdScroll}>
-                                  {strapiEvaluationPlan &&
+                                  {strapiEvaluationPlan.prior_imple_priod &&
+                                    strapiEvaluationPlan.prior_imple_priod}
+                                </td>
+                                <td css={tdScroll}>
+                                  {strapiEvaluationPlan.mid_imple_priod &&
                                     strapiEvaluationPlan.mid_imple_priod}
                                 </td>
                                 <td css={tdScroll}>
-                                  {strapiEvaluationPlan &&
+                                  {strapiEvaluationPlan.after_imple_priod &&
                                     strapiEvaluationPlan.after_imple_priod}
                                 </td>
                               </tr>
                             )}
                           {strapiEvaluationPlan &&
-                            (strapiEvaluationPlan.mid_submit_priod ||
-                              strapiEvaluationPlan.after_submit_priod) && (
+                            strapiEvaluationPlan.prior_submit_priod && (
                               <tr css={tr}>
                                 <th css={thScroll}>提出時期</th>
                                 <td css={tdScroll}>
-                                  {strapiEvaluationPlan &&
+                                  {strapiEvaluationPlan.prior_submit_priod &&
+                                    strapiEvaluationPlan.prior_submit_priod}
+                                </td>
+                                <td css={tdScroll}>
+                                  {strapiEvaluationPlan.mid_submit_priod &&
                                     strapiEvaluationPlan.mid_submit_priod}
                                 </td>
                                 <td css={tdScroll}>
-                                  {strapiEvaluationPlan &&
+                                  {strapiEvaluationPlan.after_submit_priod &&
                                     strapiEvaluationPlan.after_submit_priod}
                                 </td>
                               </tr>
                             )}
                           {strapiEvaluationPlan &&
-                            (strapiEvaluationPlan.mid_imple_system ||
-                              strapiEvaluationPlan.after_imple_system) && (
+                            strapiEvaluationPlan.prior_imple_system && (
                               <tr css={tr}>
                                 <th css={thScroll}>実施体制</th>
                                 <td css={tdScroll}>
-                                  {strapiEvaluationPlan &&
+                                  {strapiEvaluationPlan.prior_imple_system &&
+                                    strapiEvaluationPlan.prior_imple_system}
+                                </td>
+                                <td css={tdScroll}>
+                                  {strapiEvaluationPlan.mid_imple_system &&
                                     strapiEvaluationPlan.mid_imple_system}
                                 </td>
                                 <td css={tdScroll}>
-                                  {strapiEvaluationPlan &&
+                                  {strapiEvaluationPlan.after_imple_system &&
                                     strapiEvaluationPlan.after_imple_system}
                                 </td>
                               </tr>
@@ -140,6 +209,7 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                                 <th css={thScroll}>
                                   資金分配団体の伴走支援内容
                                 </th>
+                                <td></td>
                                 <td css={tdScroll}>
                                   {strapiEvaluationPlan &&
                                     strapiEvaluationPlan.mid_escort_support}
@@ -151,16 +221,37 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                               </tr>
                             )}
                           {strapiEvaluationPlan &&
-                            (strapiEvaluationPlan.mid_expenses ||
-                              strapiEvaluationPlan.after_expenses) && (
+                            strapiEvaluationPlan.prior_investigation && (
+                              <tr css={tr}>
+                                <th css={thScroll}>必要な調査</th>
+                                <td css={tdScroll}>
+                                  {strapiEvaluationPlan.prior_investigation &&
+                                    strapiEvaluationPlan.prior_investigation}
+                                </td>
+                                <td css={tdScroll}>
+                                  {strapiEvaluationPlan.mid_investigation &&
+                                    strapiEvaluationPlan.mid_investigation}
+                                </td>
+                                <td css={tdScroll}>
+                                  {strapiEvaluationPlan.after_investigation &&
+                                    strapiEvaluationPlan.after_investigation}
+                                </td>
+                              </tr>
+                            )}
+                          {strapiEvaluationPlan &&
+                            strapiEvaluationPlan.prior_expenses && (
                               <tr css={tr}>
                                 <th css={thScroll}>評価関連経費（金額）</th>
                                 <td css={tdScroll}>
-                                  {strapiEvaluationPlan &&
+                                  {strapiEvaluationPlan.prior_expenses &&
+                                    strapiEvaluationPlan.prior_expenses}
+                                </td>
+                                <td css={tdScroll}>
+                                  {strapiEvaluationPlan.mid_expenses &&
                                     strapiEvaluationPlan.mid_expenses}
                                 </td>
                                 <td css={tdScroll}>
-                                  {strapiEvaluationPlan &&
+                                  {strapiEvaluationPlan.after_expenses &&
                                     strapiEvaluationPlan.after_expenses}
                                 </td>
                               </tr>
@@ -170,6 +261,7 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                               strapiEvaluationPlan.after_expenses_usage) && (
                               <tr css={tr}>
                                 <th css={thScroll}>評価関連経費の使用方法</th>
+                                <td></td>
                                 <td css={tdScroll}>
                                   {strapiEvaluationPlan &&
                                     strapiEvaluationPlan.mid_expenses_usage}
@@ -187,6 +279,7 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                                 <th css={thScroll}>
                                   評価関連経費を使用することで、どのように評価の質を上げることを目指しますか
                                 </th>
+                                <td></td>
                                 <td css={tdScroll}>
                                   {strapiEvaluationPlan &&
                                     strapiEvaluationPlan.mid_improving_mh}
@@ -197,11 +290,282 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                                 </td>
                               </tr>
                             )}
+                          {strapiEvaluationPlan &&
+                            strapiEvaluationPlan.prior_comm_expenses && (
+                              <tr css={tr}>
+                                <th css={thScroll}>内) 外部委託費</th>
+                                <td css={tdScroll}>
+                                  {strapiEvaluationPlan.prior_comm_expenses &&
+                                    strapiEvaluationPlan.prior_comm_expenses}
+                                </td>
+                                <td css={tdScroll}>
+                                  {strapiEvaluationPlan.mid_comm_expenses &&
+                                    strapiEvaluationPlan.mid_comm_expenses}
+                                </td>
+                                <td css={tdScroll}>
+                                  {strapiEvaluationPlan.after_comm_expenses &&
+                                    strapiEvaluationPlan.after_comm_expenses}
+                                </td>
+                              </tr>
+                            )}
+                          {strapiEvaluationPlan &&
+                            strapiEvaluationPlan.prior_consign_detail && (
+                              <tr css={tr}>
+                                <th css={thScroll}>外部委託内容</th>
+                                <td css={tdScroll}>
+                                  {strapiEvaluationPlan.prior_consign_detail &&
+                                    strapiEvaluationPlan.prior_consign_detail}
+                                </td>
+                                <td css={tdScroll}>
+                                  {strapiEvaluationPlan.mid_consign_detail &&
+                                    strapiEvaluationPlan.mid_consign_detail}
+                                </td>
+                                <td css={tdScroll}>
+                                  {strapiEvaluationPlan.after_consign_detail &&
+                                    strapiEvaluationPlan.after_consign_detail}
+                                </td>
+                              </tr>
+                            )}
+                          {strapiEvaluationPlan &&
+                            strapiEvaluationPlan.other_title_1 && (
+                              <tr css={tr}>
+                                <th css={thScroll}>タイトル1</th>
+                                <td css={tdScroll} colSpan={3}>
+                                  {strapiEvaluationPlan.other_title_1}
+                                </td>
+                              </tr>
+                            )}
+                          {strapiEvaluationPlan &&
+                            strapiEvaluationPlan.other_content_1 && (
+                              <tr css={tr}>
+                                <th css={thScroll}>内容1</th>
+                                <td css={tdScroll} colSpan={3}>
+                                  {strapiEvaluationPlan.other_content_1}
+                                </td>
+                              </tr>
+                            )}
+                          {strapiEvaluationPlan &&
+                            strapiEvaluationPlan.other_title_2 && (
+                              <tr css={tr}>
+                                <th css={thScroll}>タイトル2</th>
+                                <td css={tdScroll} colSpan={3}>
+                                  {strapiEvaluationPlan.other_title_2}
+                                </td>
+                              </tr>
+                            )}
+                          {strapiEvaluationPlan &&
+                            strapiEvaluationPlan.other_content_2 && (
+                              <tr css={tr}>
+                                <th css={thScroll}>内容2</th>
+                                <td css={tdScroll} colSpan={3}>
+                                  {strapiEvaluationPlan.other_content_2}
+                                </td>
+                              </tr>
+                            )}
+                          {strapiEvaluationPlan &&
+                            strapiEvaluationPlan.other_title_3 && (
+                              <tr css={tr}>
+                                <th css={thScroll}>タイトル3</th>
+                                <td css={tdScroll} colSpan={3}>
+                                  {strapiEvaluationPlan.other_title_3}
+                                </td>
+                              </tr>
+                            )}
+                          {strapiEvaluationPlan &&
+                            strapiEvaluationPlan.other_content_3 && (
+                              <tr css={tr}>
+                                <th css={thScroll}>内容3</th>
+                                <td css={tdScroll} colSpan={3}>
+                                  {strapiEvaluationPlan.other_content_3}
+                                </td>
+                              </tr>
+                            )}
                         </tbody>
                       </table>
                     </div>
                   </DetailItemWrapper>
                 </div>
+                <div id="">
+                  {evaluationTable.length !== 0 && (
+                    <DetailItemWrapper itemName="評価表">
+                      <div tw="lg:overflow-scroll">
+                        <table css={table} tw="lg:w-[780px]">
+                          {evaluationTable.map((item: any, i: number) => (
+                            <tbody key={"evaluationTable" + i}>
+                              <tr>
+                                <th css={th2Sub} rowSpan={9}>
+                                  {i + 1}
+                                </th>
+                                <th css={th}>評価の要素</th>
+                                <td css={td}>
+                                  {
+                                    evaluationFactorArray.find(
+                                      (ef) => ef.code === item.node.eval_factors
+                                    )?.label
+                                  }
+                                </td>
+                              </tr>
+                              <tr>
+                                <th css={th}>評価項目</th>
+                                <td css={td}>{item.node.eval_item}</td>
+                              </tr>
+                              <tr>
+                                <th css={th}>評価小項目</th>
+                                <td css={td}>{item.node.eval_sub_item}</td>
+                              </tr>
+                              <tr>
+                                <th css={th}>評価基準・判断方法（指標など）</th>
+                                <td css={td}>{item.node.criteria_method}</td>
+                              </tr>
+                              <tr>
+                                <th css={th}>
+                                  評価基準・判断基準値（目標値/状態など）
+                                </th>
+                                <td css={td}>{item.node.criteria_st_value}</td>
+                              </tr>
+                              <tr>
+                                <th css={th}>測定方法・必要なデータ</th>
+                                <td css={td}>
+                                  {
+                                    evaluationRequiredArray.find(
+                                      (er) =>
+                                        er.code === item.node.mm_required_data
+                                    )?.label
+                                  }
+                                </td>
+                              </tr>
+                              <tr>
+                                <th css={th}>測定方法・情報源</th>
+                                <td css={td}>{item.node.mm_if_source}</td>
+                              </tr>
+                              <tr>
+                                <th css={th}>測定方法・データ収集方法</th>
+                                <td css={td}>
+                                  {
+                                    evaluationMethodArray.find(
+                                      (em) =>
+                                        em.code === item.node.mm_col_method
+                                    )?.label
+                                  }
+                                </td>
+                              </tr>
+                              <tr>
+                                <th css={th}>評価時期</th>
+                                <td css={td}>
+                                  {
+                                    evaluationSeasonArray.find(
+                                      (es) => es.code === item.node.eval_season
+                                    )?.label
+                                  }
+                                </td>
+                              </tr>
+                            </tbody>
+                          ))}
+                        </table>
+                      </div>
+                    </DetailItemWrapper>
+                  )}
+                </div>
+                <div id="">
+                  {shortOutcome.length !== 0 && (
+                    <DetailItemWrapper itemName="短期アウトカム">
+                      <div>
+                        <EvaluationShortOutcome data={shortOutcome} />
+                      </div>
+                    </DetailItemWrapper>
+                  )}
+                </div>
+                <div id="">
+                  {outputFinance.length !== 0 && (
+                    <DetailItemWrapper itemName="アウトプット (資金支援)">
+                      <div>
+                        <EvaluationShortOutcome data={outputFinance} />
+                      </div>
+                    </DetailItemWrapper>
+                  )}
+                </div>
+                <div id="">
+                  {outputNonFinance.length !== 0 && (
+                    <DetailItemWrapper itemName="アウトプット (非資金的支援)">
+                      <div>
+                        <EvaluationShortOutcome data={outputNonFinance} />
+                      </div>
+                    </DetailItemWrapper>
+                  )}
+                </div>
+                <div id="">
+                  {outputAdo.length !== 0 && (
+                    <DetailItemWrapper itemName="アウトプット (ADO)">
+                      <div>
+                        <EvaluationShortOutcome data={outputAdo} />
+                      </div>
+                    </DetailItemWrapper>
+                  )}
+                </div>
+                {(strapiEvaluationPlan.biz_design_chk_list1 ||
+                  strapiEvaluationPlan.biz_design_chk_list2 ||
+                  strapiEvaluationPlan.biz_design_chk_list3 ||
+                  strapiEvaluationPlan.biz_design_chk_list4 ||
+                  strapiEvaluationPlan.biz_design_chk_list5) && (
+                  <div id="">
+                    <DetailItemWrapper itemName="事業設計図作成のためのチェックリスト">
+                      <div>
+                        <table css={table}>
+                          <tr>
+                            <th css={thForCircle}>
+                              採択後の実行団体の事業計画を反映した
+                            </th>
+                            <td css={td}>
+                              {strapiEvaluationPlan.biz_design_chk_list1 === "1"
+                                ? "○"
+                                : ""}
+                            </td>
+                          </tr>
+                          <tr>
+                            <th css={thForCircle}>
+                              資金分配団体の活動(伴走支援)を実行団体の状況やニーズを踏まえて検討・更新した
+                            </th>
+                            <td css={td}>
+                              {strapiEvaluationPlan.biz_design_chk_list2 === "1"
+                                ? "○"
+                                : ""}
+                            </td>
+                          </tr>
+                          <tr>
+                            <th css={thForCircle}>
+                              活動が今回の事業実行を通じた目標に繋がっていることを確認した
+                            </th>
+                            <td css={td}>
+                              {strapiEvaluationPlan.biz_design_chk_list3 === "1"
+                                ? "○"
+                                : ""}
+                            </td>
+                          </tr>
+                          <tr>
+                            <th css={thForCircle}>
+                              作成した事業設計図を最終受益者に見せた
+                            </th>
+                            <td css={td}>
+                              {strapiEvaluationPlan.biz_design_chk_list4 === "1"
+                                ? "○"
+                                : ""}
+                            </td>
+                          </tr>
+                          <tr>
+                            <th css={thForCircle}>
+                              改めて最終受益者の声を聞き課題やニーズを確認した
+                            </th>
+                            <td css={td}>
+                              {strapiEvaluationPlan.biz_design_chk_list5 === "1"
+                                ? "○"
+                                : ""}
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                    </DetailItemWrapper>
+                  </div>
+                )}
                 {evaluationFile.length !== 0 && (
                   <div id="secondItem">
                     <DetailItemWrapper itemName="事業設計図">
@@ -277,6 +641,9 @@ export const pageQuery = graphql`
       other_title_1
       other_title_2
       other_title_3
+      biz_design_chk_list1
+      biz_design_chk_list2
+      biz_design_chk_list3
       biz_design_chk_list4
       biz_design_chk_list5
       create_date(formatString: "yyyy/mm/dd")

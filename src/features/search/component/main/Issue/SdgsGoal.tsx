@@ -22,6 +22,12 @@ const SdgsGoal = (props: { path: string }) => {
     }
   };
 
+  const handleAllSdgs = () => {
+    allSdgs.every((sdgs) => sdgs_goal.includes(sdgs))
+      ? setSdgsGoal([])
+      : setSdgsGoal(allSdgs);
+  };
+
   const allSdgs = sdgsGoalArray.map((sdgs) => sdgs.code);
 
   return (
@@ -32,7 +38,7 @@ const SdgsGoal = (props: { path: string }) => {
           <div css={hCenter} tw="gap-2">
             <Checkbox.Root
               id="allSdgs"
-              onCheckedChange={() => setSdgsGoal(allSdgs)}
+              onCheckedChange={handleAllSdgs}
               css={checkBox}
               checked={
                 sdgs_goal.sort().toString() === allSdgs.sort().toString()

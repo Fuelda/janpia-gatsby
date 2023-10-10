@@ -119,14 +119,18 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
               title="組織評価"
               anchor={`/result/${slug}/organization/#fifthItem`}
             />
-            <DetailAnchor
-              title="定款"
-              anchor={`/result/${slug}/organization/#sixthItem`}
-            />
-            <DetailAnchor
-              title="諸規定"
-              anchor={`/result/${slug}/organization/#seventhItem`}
-            />
+            {teikanFile.length !== 0 && (
+              <DetailAnchor
+                title="定款"
+                anchor={`/result/${slug}/organization/#sixthItem`}
+              />
+            )}
+            {regulationFile.length !== 0 && (
+              <DetailAnchor
+                title="諸規程"
+                anchor={`/result/${slug}/organization/#seventhItem`}
+              />
+            )}
           </div>
           <div css={detailBody}>
             <div id="firstItem">
@@ -651,30 +655,34 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
               </DetailItemWrapper>
             </div>
             <div id="sixthItem">
-              <DetailItemWrapper itemName="定款">
-                <div tw="flex gap-[5px] flex-wrap">
-                  {teikanFile.map((tf: any) => (
-                    <AttachedFileLink
-                      filePath={tf.node.data.url}
-                      fileName={tf.node.file_name}
-                      key={tf.node.data.url}
-                    />
-                  ))}
-                </div>
-              </DetailItemWrapper>
+              {teikanFile.length !== 0 && (
+                <DetailItemWrapper itemName="定款">
+                  <div tw="flex gap-[5px] flex-wrap">
+                    {teikanFile.map((tf: any) => (
+                      <AttachedFileLink
+                        filePath={tf.node.data.url}
+                        fileName={tf.node.file_name}
+                        key={tf.node.data.url}
+                      />
+                    ))}
+                  </div>
+                </DetailItemWrapper>
+              )}
             </div>
             <div id="seventhItem">
-              <DetailItemWrapper itemName="諸規定">
-                <div tw="flex gap-[5px] flex-wrap">
-                  {regulationFile.map((rf: any) => (
-                    <AttachedFileLink
-                      filePath={rf.node.data.url}
-                      fileName={rf.node.file_name}
-                      key={rf.node.data.url}
-                    />
-                  ))}
-                </div>
-              </DetailItemWrapper>
+              {regulationFile.length !== 0 && (
+                <DetailItemWrapper itemName="諸規程">
+                  <div tw="flex gap-[5px] flex-wrap">
+                    {regulationFile.map((rf: any) => (
+                      <AttachedFileLink
+                        filePath={rf.node.data.url}
+                        fileName={rf.node.file_name}
+                        key={rf.node.data.url}
+                      />
+                    ))}
+                  </div>
+                </DetailItemWrapper>
+              )}
             </div>
           </div>
         </DetailWrapper>

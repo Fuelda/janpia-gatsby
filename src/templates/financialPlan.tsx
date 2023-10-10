@@ -182,8 +182,9 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                           financePlan.po_c_sum.toLocaleString()}
                       </td>
                       <td>
-                        {financePlan.po_sum &&
-                          financePlan.po_sum.toLocaleString()}
+                        {financePlan.po_sum
+                          ? financePlan.po_sum.toLocaleString()
+                          : 0}
                       </td>
                     </tr>
                   )}
@@ -200,10 +201,10 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                         financePlan.eval_sum.toLocaleString()}
                     </td>
                     <td>
-                      {financePlan.eval && financePlan.eval.toLocaleString()}
+                      {financePlan.eval ? financePlan.eval.toLocaleString() : 0}
                     </td>
                   </tr>
-                  {financePlan && financePlan.eval_fdo_sum_sum ? (
+                  {financePlan && financePlan.eval_fdo_sum_sum !== null ? (
                     <tr>
                       <th className="table__financialPlan--tbody-sub"></th>
                       <th className="table__financialPlan--tbody-02">
@@ -220,14 +221,15 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                           financePlan.eval_fdo_sum.toLocaleString()}
                       </td>
                       <td>
-                        {financePlan &&
-                          financePlan.eval_fdo &&
-                          financePlan.eval_fdo.toLocaleString()}
+                        {financePlan && financePlan.eval_fdo
+                          ? financePlan.eval_fdo.toLocaleString()
+                          : 0}
                       </td>
                     </tr>
                   ) : (
                     <tr />
                   )}
+
                   <tr>
                     <th></th>
                     <th className="table__financialPlan--tbody-02">
@@ -242,8 +244,9 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                         financePlan.eval_ado_sum.toLocaleString()}
                     </td>
                     <td>
-                      {financePlan.eval_ado &&
-                        financePlan.eval_ado.toLocaleString()}
+                      {financePlan.eval_ado
+                        ? financePlan.eval_ado.toLocaleString()
+                        : 0}
                     </td>
                   </tr>
                   <tr>
@@ -322,10 +325,21 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                             <thead css={thead}>
                               <tr css={tr}>
                                 <th css={th5col} colSpan={2}></th>
-                                <td>2021年度</td>
-                                <td>2022年度</td>
-                                <td>2023年度</td>
-                                <td>2024年度</td>
+                                {financePlanFormer.a_plus_b_2020 && (
+                                  <td>2020年度</td>
+                                )}
+                                {financePlanFormer.a_plus_b_2021 && (
+                                  <td>2021年度</td>
+                                )}
+                                {financePlanFormer.a_plus_b_2022 && (
+                                  <td>2022年度</td>
+                                )}
+                                {financePlanFormer.a_plus_b_2023 && (
+                                  <td>2023年度</td>
+                                )}
+                                {financePlanFormer.a_plus_b_2024 && (
+                                  <td>2024年度</td>
+                                )}
                                 <td>合計</td>
                               </tr>
                             </thead>
@@ -334,30 +348,41 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                                 <th css={th5col} colSpan={2}>
                                   事業費（A+B）
                                 </th>
-                                <td>
-                                  {financePlanFormer.a_plus_b_2021 &&
-                                    parseInt(
+                                {financePlanFormer.a_plus_b_2020 && (
+                                  <td>
+                                    {parseInt(
+                                      financePlanFormer.a_plus_b_2020
+                                    ).toLocaleString()}
+                                  </td>
+                                )}
+                                {financePlanFormer.a_plus_b_2021 && (
+                                  <td>
+                                    {parseInt(
                                       financePlanFormer.a_plus_b_2021
                                     ).toLocaleString()}
-                                </td>
-                                <td>
-                                  {financePlanFormer.a_plus_b_2022 &&
-                                    parseInt(
+                                  </td>
+                                )}
+                                {financePlanFormer.a_plus_b_2022 && (
+                                  <td>
+                                    {parseInt(
                                       financePlanFormer.a_plus_b_2022
                                     ).toLocaleString()}
-                                </td>
-                                <td>
-                                  {financePlanFormer.a_plus_b_2023 &&
-                                    parseInt(
+                                  </td>
+                                )}
+                                {financePlanFormer.a_plus_b_2023 && (
+                                  <td>
+                                    {parseInt(
                                       financePlanFormer.a_plus_b_2023
                                     ).toLocaleString()}
-                                </td>
-                                <td>
-                                  {financePlanFormer.a_plus_b_2024 &&
-                                    parseInt(
+                                  </td>
+                                )}
+                                {financePlanFormer.a_plus_b_2024 && (
+                                  <td>
+                                    {parseInt(
                                       financePlanFormer.a_plus_b_2024
                                     ).toLocaleString()}
-                                </td>
+                                  </td>
+                                )}
                                 <td>
                                   {financePlanFormer.a_plus_b_ttl &&
                                     parseInt(
@@ -368,99 +393,126 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                               <tr css={tr}>
                                 <th css={th2Sub5col}></th>
                                 <th css={th25col}>A. 助成金</th>
-                                <td>
-                                  {financePlanFormer.subsidy_2021 &&
-                                    parseInt(
+                                {financePlanFormer.subsidy_2020 && (
+                                  <td>
+                                    {parseInt(
+                                      financePlanFormer.subsidy_2020
+                                    ).toLocaleString()}
+                                  </td>
+                                )}
+                                {financePlanFormer.subsidy_2021 && (
+                                  <td>
+                                    {parseInt(
                                       financePlanFormer.subsidy_2021
                                     ).toLocaleString()}
-                                </td>
-                                <td>
-                                  {financePlanFormer.subsidy_2022 &&
-                                    parseInt(
+                                  </td>
+                                )}
+                                {financePlanFormer.subsidy_2022 && (
+                                  <td>
+                                    {parseInt(
                                       financePlanFormer.subsidy_2022
                                     ).toLocaleString()}
-                                </td>
-                                <td>
-                                  {financePlanFormer.subsidy_2023 &&
-                                    parseInt(
+                                  </td>
+                                )}
+                                {financePlanFormer.subsidy_2023 && (
+                                  <td>
+                                    {parseInt(
                                       financePlanFormer.subsidy_2023
                                     ).toLocaleString()}
-                                </td>
-                                <td>
-                                  {financePlanFormer.subsidy_2024 &&
-                                    parseInt(
+                                  </td>
+                                )}
+                                {financePlanFormer.subsidy_2024 && (
+                                  <td>
+                                    {parseInt(
                                       financePlanFormer.subsidy_2024
                                     ).toLocaleString()}
-                                </td>
-                                <td>
-                                  {financePlanFormer.subsidy_ttl &&
-                                    parseInt(
+                                  </td>
+                                )}
+                                {financePlanFormer.subsidy_ttl && (
+                                  <td>
+                                    {parseInt(
                                       financePlanFormer.subsidy_ttl
                                     ).toLocaleString()}
-                                </td>
+                                  </td>
+                                )}
                               </tr>
                               <tr css={tr}>
                                 <th css={th2Sub5col}></th>
                                 <th css={th25col}>B. 自己資金・民間資金</th>
-                                <td>
-                                  {financePlanFormer.own_funds_2021 &&
-                                    parseInt(
+                                {financePlanFormer.own_funds_2020 && (
+                                  <td>
+                                    {parseInt(
+                                      financePlanFormer.own_funds_2020
+                                    ).toLocaleString()}
+                                  </td>
+                                )}
+                                {financePlanFormer.own_funds_2021 && (
+                                  <td>
+                                    {parseInt(
                                       financePlanFormer.own_funds_2021
                                     ).toLocaleString()}
-                                </td>
-                                <td>
-                                  {financePlanFormer.own_funds_2022 &&
-                                    parseInt(
+                                  </td>
+                                )}
+                                {financePlanFormer.own_funds_2022 && (
+                                  <td>
+                                    {parseInt(
                                       financePlanFormer.own_funds_2022
                                     ).toLocaleString()}
-                                </td>
-                                <td>
-                                  {financePlanFormer.own_funds_2023 &&
-                                    parseInt(
+                                  </td>
+                                )}
+                                {financePlanFormer.own_funds_2023 && (
+                                  <td>
+                                    {parseInt(
                                       financePlanFormer.own_funds_2023
                                     ).toLocaleString()}
-                                </td>
-                                <td>
-                                  {financePlanFormer.own_funds_2024 &&
-                                    parseInt(
+                                  </td>
+                                )}
+                                {financePlanFormer.own_funds_2024 && (
+                                  <td>
+                                    {parseInt(
                                       financePlanFormer.own_funds_2024
                                     ).toLocaleString()}
-                                </td>
-                                <td>
-                                  {financePlanFormer.own_funds_ttl &&
-                                    parseInt(
+                                  </td>
+                                )}
+                                {financePlanFormer.own_funds_ttl && (
+                                  <td>
+                                    {parseInt(
                                       financePlanFormer.own_funds_ttl
                                     ).toLocaleString()}
-                                </td>
+                                  </td>
+                                )}
                               </tr>
                               <tr css={tr}>
                                 <th css={th2Sub5col}></th>
                                 <th css={th25col}>補助率 （ A/(A+B)% ）</th>
-                                <td>
-                                  {financePlanFormer &&
-                                    financePlanFormer.subsidy_rate_2021}
-                                  %
-                                </td>
-                                <td>
-                                  {financePlanFormer &&
-                                    financePlanFormer.subsidy_rate_2022}
-                                  %
-                                </td>
-                                <td>
-                                  {financePlanFormer &&
-                                    financePlanFormer.subsidy_rate_2023}
-                                  %
-                                </td>
-                                <td>
-                                  {financePlanFormer &&
-                                    financePlanFormer.subsidy_rate_2024}
-                                  %
-                                </td>
-                                <td>
-                                  {financePlanFormer &&
-                                    financePlanFormer.subsidy_rate_ttl}
-                                  %
-                                </td>
+                                {financePlanFormer.subsidy_rate_2020 && (
+                                  <td>
+                                    {financePlanFormer.subsidy_rate_2020}%
+                                  </td>
+                                )}
+                                {financePlanFormer.subsidy_rate_2021 && (
+                                  <td>
+                                    {financePlanFormer.subsidy_rate_2021}%
+                                  </td>
+                                )}
+                                {financePlanFormer.subsidy_rate_2022 && (
+                                  <td>
+                                    {financePlanFormer.subsidy_rate_2022}%
+                                  </td>
+                                )}
+                                {financePlanFormer.subsidy_rate_2023 && (
+                                  <td>
+                                    {financePlanFormer.subsidy_rate_2023}%
+                                  </td>
+                                )}
+                                {financePlanFormer.subsidy_rate_2024 && (
+                                  <td>
+                                    {financePlanFormer.subsidy_rate_2024}%
+                                  </td>
+                                )}
+                                {financePlanFormer.subsidy_rate_ttl && (
+                                  <td>{financePlanFormer.subsidy_rate_ttl}%</td>
+                                )}
                               </tr>
                               <tr css={tr}>
                                 <th css={th5col} colSpan={2}>
@@ -470,10 +522,13 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                                   colSpan={5}
                                   className="table__financialPlanFormer--tbody-text"
                                 >
-                                  {financePlanFormer &&
-                                  financePlanFormer.exception_request === "A"
-                                    ? "希望する"
-                                    : "希望しない"}
+                                  {(financePlanFormer &&
+                                    financePlanFormer.exception_request ===
+                                      "A" &&
+                                    "希望する") ||
+                                    (financePlanFormer.exception_request ===
+                                      "B" &&
+                                      "希望しない")}
                                 </td>
                               </tr>
                             </tbody>
@@ -493,11 +548,22 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                               <thead css={thead}>
                                 <tr css={tr}>
                                   <th css={th5col} colSpan={2}></th>
-                                  <td>2021年度</td>
-                                  <td>2022年度</td>
-                                  <td>2023年度</td>
-                                  <td>2024年度</td>
-                                  <td>2025年度</td>
+                                  {financePlanFormer.po_2020 && (
+                                    <td>2020年度</td>
+                                  )}
+                                  {financePlanFormer.po_2021 && (
+                                    <td>2021年度</td>
+                                  )}
+                                  {financePlanFormer.po_2022 && (
+                                    <td>2022年度</td>
+                                  )}
+                                  {financePlanFormer.po_2023 && (
+                                    <td>2023年度</td>
+                                  )}
+                                  {financePlanFormer.po_2024 && (
+                                    <td>2024年度</td>
+                                  )}
+                                  <td>合計</td>
                                 </tr>
                               </thead>
                               <tbody className="table__financialPlanFormer--tbody">
@@ -505,30 +571,41 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                                   <th css={th5col} colSpan={2}>
                                     C. プログラムオフィサー 関連経費
                                   </th>
-                                  <td>
-                                    {financePlanFormer.po_2021 &&
-                                      parseInt(
+                                  {financePlanFormer.po_2020 && (
+                                    <td>
+                                      {parseInt(
+                                        financePlanFormer.po_2020
+                                      ).toLocaleString()}
+                                    </td>
+                                  )}
+                                  {financePlanFormer.po_2021 && (
+                                    <td>
+                                      {parseInt(
                                         financePlanFormer.po_2021
                                       ).toLocaleString()}
-                                  </td>
-                                  <td>
-                                    {financePlanFormer.po_2022 &&
-                                      parseInt(
+                                    </td>
+                                  )}
+                                  {financePlanFormer.po_2022 && (
+                                    <td>
+                                      {parseInt(
                                         financePlanFormer.po_2022
                                       ).toLocaleString()}
-                                  </td>
-                                  <td>
-                                    {financePlanFormer.po_2023 &&
-                                      parseInt(
+                                    </td>
+                                  )}
+                                  {financePlanFormer.po_2023 && (
+                                    <td>
+                                      {parseInt(
                                         financePlanFormer.po_2023
                                       ).toLocaleString()}
-                                  </td>
-                                  <td>
-                                    {financePlanFormer.po_2024 &&
-                                      parseInt(
+                                    </td>
+                                  )}
+                                  {financePlanFormer.po_2024 && (
+                                    <td>
+                                      {parseInt(
                                         financePlanFormer.po_2024
                                       ).toLocaleString()}
-                                  </td>
+                                    </td>
+                                  )}
                                   <td>
                                     {financePlanFormer.po_ttl &&
                                       parseInt(
@@ -554,10 +631,21 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                               <tr css={tr}>
                                 <th css={th6col} colSpan={2}></th>
                                 <td css={td6col}>%</td>
-                                <td>2021年度</td>
-                                <td>2022年度</td>
-                                <td>2023年度</td>
-                                <td>2024年度</td>
+                                {financePlanFormer.eval_2020 && (
+                                  <td>2020年度</td>
+                                )}
+                                {financePlanFormer.eval_2021 && (
+                                  <td>2021年度</td>
+                                )}
+                                {financePlanFormer.eval_2022 && (
+                                  <td>2022年度</td>
+                                )}
+                                {financePlanFormer.eval_2023 && (
+                                  <td>2023年度</td>
+                                )}
+                                {financePlanFormer.eval_2024 && (
+                                  <td>2024年度</td>
+                                )}
                                 <td>合計</td>
                               </tr>
                             </thead>
@@ -567,30 +655,41 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                                   D. 評価関連経費計
                                 </th>
                                 <td css={td6col}>-</td>
-                                <td>
-                                  {financePlanFormer.eval_2021 &&
-                                    parseInt(
+                                {financePlanFormer.eval_2020 && (
+                                  <td>
+                                    {parseInt(
+                                      financePlanFormer.eval_2020
+                                    ).toLocaleString()}
+                                  </td>
+                                )}
+                                {financePlanFormer.eval_2021 && (
+                                  <td>
+                                    {parseInt(
                                       financePlanFormer.eval_2021
                                     ).toLocaleString()}
-                                </td>
-                                <td>
-                                  {financePlanFormer.eval_2022 &&
-                                    parseInt(
+                                  </td>
+                                )}
+                                {financePlanFormer.eval_2022 && (
+                                  <td>
+                                    {parseInt(
                                       financePlanFormer.eval_2022
                                     ).toLocaleString()}
-                                </td>
-                                <td>
-                                  {financePlanFormer.eval_2023 &&
-                                    parseInt(
+                                  </td>
+                                )}
+                                {financePlanFormer.eval_2023 && (
+                                  <td>
+                                    {parseInt(
                                       financePlanFormer.eval_2023
                                     ).toLocaleString()}
-                                </td>
-                                <td>
-                                  {financePlanFormer.eval_2024 &&
-                                    parseInt(
+                                  </td>
+                                )}
+                                {financePlanFormer.eval_2024 && (
+                                  <td>
+                                    {parseInt(
                                       financePlanFormer.eval_2024
                                     ).toLocaleString()}
-                                </td>
+                                  </td>
+                                )}
                                 <td>
                                   {financePlanFormer.eval_ttl &&
                                     parseInt(
@@ -605,30 +704,41 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                                   {financePlanFormer.eval_fdo_percent &&
                                     financePlanFormer.eval_fdo_percent}
                                 </td>
-                                <td>
-                                  {financePlanFormer.eval_fdo_2021 &&
-                                    parseInt(
+                                {financePlanFormer.eval_fdo_2020 && (
+                                  <td>
+                                    {parseInt(
+                                      financePlanFormer.eval_fdo_2020
+                                    ).toLocaleString()}
+                                  </td>
+                                )}
+                                {financePlanFormer.eval_fdo_2021 && (
+                                  <td>
+                                    {parseInt(
                                       financePlanFormer.eval_fdo_2021
                                     ).toLocaleString()}
-                                </td>
-                                <td>
-                                  {financePlanFormer.eval_fdo_2022 &&
-                                    parseInt(
+                                  </td>
+                                )}
+                                {financePlanFormer.eval_fdo_2022 && (
+                                  <td>
+                                    {parseInt(
                                       financePlanFormer.eval_fdo_2022
                                     ).toLocaleString()}
-                                </td>
-                                <td>
-                                  {financePlanFormer.eval_fdo_2023 &&
-                                    parseInt(
+                                  </td>
+                                )}
+                                {financePlanFormer.eval_fdo_2023 && (
+                                  <td>
+                                    {parseInt(
                                       financePlanFormer.eval_fdo_2023
                                     ).toLocaleString()}
-                                </td>
-                                <td>
-                                  {financePlanFormer.eval_fdo_2024 &&
-                                    parseInt(
+                                  </td>
+                                )}
+                                {financePlanFormer.eval_fdo_2024 && (
+                                  <td>
+                                    {parseInt(
                                       financePlanFormer.eval_fdo_2024
                                     ).toLocaleString()}
-                                </td>
+                                  </td>
+                                )}
                                 <td>
                                   {financePlanFormer.eval_fdo_ttl &&
                                     parseInt(
@@ -643,30 +753,41 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                                   {financePlanFormer.eval_ado_percent &&
                                     financePlanFormer.eval_ado_percent}
                                 </td>
-                                <td>
-                                  {financePlanFormer.eval_ado_2021 &&
-                                    parseInt(
+                                {financePlanFormer.eval_ado_2020 && (
+                                  <td>
+                                    {parseInt(
+                                      financePlanFormer.eval_ado_2020
+                                    ).toLocaleString()}
+                                  </td>
+                                )}
+                                {financePlanFormer.eval_ado_2021 && (
+                                  <td>
+                                    {parseInt(
                                       financePlanFormer.eval_ado_2021
                                     ).toLocaleString()}
-                                </td>
-                                <td>
-                                  {financePlanFormer.eval_ado_2022 &&
-                                    parseInt(
+                                  </td>
+                                )}
+                                {financePlanFormer.eval_ado_2022 && (
+                                  <td>
+                                    {parseInt(
                                       financePlanFormer.eval_ado_2022
                                     ).toLocaleString()}
-                                </td>
-                                <td>
-                                  {financePlanFormer.eval_ado_2023 &&
-                                    parseInt(
+                                  </td>
+                                )}
+                                {financePlanFormer.eval_ado_2023 && (
+                                  <td>
+                                    {parseInt(
                                       financePlanFormer.eval_ado_2023
                                     ).toLocaleString()}
-                                </td>
-                                <td>
-                                  {financePlanFormer.eval_ado_2024 &&
-                                    parseInt(
+                                  </td>
+                                )}
+                                {financePlanFormer.eval_ado_2024 && (
+                                  <td>
+                                    {parseInt(
                                       financePlanFormer.eval_ado_2024
                                     ).toLocaleString()}
-                                </td>
+                                  </td>
+                                )}
                                 <td>
                                   {financePlanFormer.eval_ado_ttl &&
                                     parseInt(
@@ -702,30 +823,41 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                                 <th css={th5col} colSpan={2}>
                                   助成金計（A+C+D）
                                 </th>
-                                <td>
-                                  {financePlanFormer.abc_2021 &&
-                                    parseInt(
+                                {financePlanFormer.abc_2020 && (
+                                  <td>
+                                    {parseInt(
+                                      financePlanFormer.abc_2020
+                                    ).toLocaleString()}
+                                  </td>
+                                )}
+                                {financePlanFormer.abc_2021 && (
+                                  <td>
+                                    {parseInt(
                                       financePlanFormer.abc_2021
                                     ).toLocaleString()}
-                                </td>
-                                <td>
-                                  {financePlanFormer.abc_2022 &&
-                                    parseInt(
+                                  </td>
+                                )}
+                                {financePlanFormer.abc_2022 && (
+                                  <td>
+                                    {parseInt(
                                       financePlanFormer.abc_2022
                                     ).toLocaleString()}
-                                </td>
-                                <td>
-                                  {financePlanFormer.abc_2023 &&
-                                    parseInt(
+                                  </td>
+                                )}
+                                {financePlanFormer.abc_2023 && (
+                                  <td>
+                                    {parseInt(
                                       financePlanFormer.abc_2023
                                     ).toLocaleString()}
-                                </td>
-                                <td>
-                                  {financePlanFormer.abc_2024 &&
-                                    parseInt(
+                                  </td>
+                                )}
+                                {financePlanFormer.abc_2024 && (
+                                  <td>
+                                    {parseInt(
                                       financePlanFormer.abc_2024
                                     ).toLocaleString()}
-                                </td>
+                                  </td>
+                                )}
                                 <td>
                                   {financePlanFormer.abc_ttl &&
                                     parseInt(
@@ -737,30 +869,41 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                                 <th css={th5col} colSpan={2}>
                                   総事業費（A+B+C+D）
                                 </th>
-                                <td>
-                                  {financePlanFormer.all_2021 &&
-                                    parseInt(
+                                {financePlanFormer.all_2020 && (
+                                  <td>
+                                    {parseInt(
+                                      financePlanFormer.all_2020
+                                    ).toLocaleString()}
+                                  </td>
+                                )}
+                                {financePlanFormer.all_2021 && (
+                                  <td>
+                                    {parseInt(
                                       financePlanFormer.all_2021
                                     ).toLocaleString()}
-                                </td>
-                                <td>
-                                  {financePlanFormer.all_2022 &&
-                                    parseInt(
+                                  </td>
+                                )}
+                                {financePlanFormer.all_2022 && (
+                                  <td>
+                                    {parseInt(
                                       financePlanFormer.all_2022
                                     ).toLocaleString()}
-                                </td>
-                                <td>
-                                  {financePlanFormer.all_2023 &&
-                                    parseInt(
+                                  </td>
+                                )}
+                                {financePlanFormer.all_2023 && (
+                                  <td>
+                                    {parseInt(
                                       financePlanFormer.all_2023
                                     ).toLocaleString()}
-                                </td>
-                                <td>
-                                  {financePlanFormer.all_2024 &&
-                                    parseInt(
+                                  </td>
+                                )}
+                                {financePlanFormer.all_2024 && (
+                                  <td>
+                                    {parseInt(
                                       financePlanFormer.all_2024
                                     ).toLocaleString()}
-                                </td>
+                                  </td>
+                                )}
                                 <td>
                                   {financePlanFormer.all_ttl &&
                                     parseInt(

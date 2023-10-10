@@ -26,19 +26,11 @@ type NewsType = {
   title: string;
 };
 
-const linkArray = [
-  { label: "休眠預金活用とは", url: "https://www.janpia.or.jp/kyumin/" },
-  { label: "資金分配団体の公募", url: "https://www.janpia.or.jp/koubo/" },
-  { label: "休眠預金活用事業サイト", url: "https://kyuminyokin.info/" },
-  {
-    label: "民間公益活動促進のための休眠預金等活用（内閣府）",
-    url: "https://www5.cao.go.jp/kyumin_yokin/index.html",
-  },
-];
-
 const Index: React.FC<any> = ({ data }) => {
   const { resetSearchStatus } = useSearchContext();
   const newsEdges = data.allStrapiNew.edges;
+  const linkEdges = data.allStrapiExternalLink.edges;
+  console.log(linkEdges);
 
   useEffect(() => {
     resetSearchStatus();
@@ -137,8 +129,8 @@ const Index: React.FC<any> = ({ data }) => {
         <div tw="mt-14" css={wrapperSp}>
           <h2 tw="text-center">関連情報</h2>
           <div tw="mt-7 flex flex-wrap gap-5 lg:(grid grid-cols-2 gap-2.5)">
-            {linkArray.map((link) => (
-              <IndexLink label={link.label} url={link.url} />
+            {linkEdges.map((link: { node: { label: string; url: string } }) => (
+              <IndexLink label={link.node.label} url={link.node.url} />
             ))}
           </div>
         </div>
@@ -157,6 +149,14 @@ export const newsQuery = graphql`
           id
           title
           createdAt(formatString: "YYYY.MM.DD")
+        }
+      }
+    }
+    allStrapiExternalLink {
+      edges {
+        node {
+          label
+          url
         }
       }
     }

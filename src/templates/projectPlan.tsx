@@ -433,7 +433,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                         )}
                       {strapiBizPlan.funding_conclusion_d && (
                         <div>
-                          <p css={th}>事業提供契約締結日</p>
+                          <p css={th}>資金提供契約締結日</p>
                           <p css={td}>
                             {formatDate(strapiBizPlan.funding_conclusion_d)}
                           </p>
@@ -489,7 +489,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                           )}
                         {strapiBizPlan.funding_conclusion_d && (
                           <tr css={tr}>
-                            <th css={th}>事業提供契約締結日</th>
+                            <th css={th}>資金提供契約締結日</th>
                             <td colSpan={2} css={td}>
                               {formatDate(strapiBizPlan.funding_conclusion_d)}
                             </td>
@@ -3751,23 +3751,21 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                     />
                                   </p>
                                 </div>
+                                <div css={tr} tw="hidden lg:block">
+                                  <p css={th}>時期</p>
+                                  <p css={td}>
+                                    <div
+                                      dangerouslySetInnerHTML={{
+                                        __html:
+                                          item.node.activity_season.data.childMarkdownRemark.html.replace(
+                                            /\n/g,
+                                            "<br />"
+                                          ),
+                                      }}
+                                    />
+                                  </p>
+                                </div>
                               </td>
-                            </tr>
-                            <tr>
-                              <div css={tr} tw="hidden lg:block">
-                                <p css={th}>時期</p>
-                                <p css={td}>
-                                  <div
-                                    dangerouslySetInnerHTML={{
-                                      __html:
-                                        item.node.activity_season.data.childMarkdownRemark.html.replace(
-                                          /\n/g,
-                                          "<br />"
-                                        ),
-                                    }}
-                                  />
-                                </p>
-                              </div>
                             </tr>
 
                             <tr css={tr} tw="lg:hidden">
@@ -3830,23 +3828,21 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                     />
                                   </p>
                                 </div>
+                                <div css={tr} tw="hidden lg:block">
+                                  <p css={th}>時期</p>
+                                  <p css={td}>
+                                    <div
+                                      dangerouslySetInnerHTML={{
+                                        __html:
+                                          item.node.activity_season.data.childMarkdownRemark.html.replace(
+                                            /\n/g,
+                                            "<br />"
+                                          ),
+                                      }}
+                                    />
+                                  </p>
+                                </div>
                               </td>
-                            </tr>
-                            <tr>
-                              <div css={tr} tw="hidden lg:block">
-                                <p css={th}>時期</p>
-                                <p css={td}>
-                                  <div
-                                    dangerouslySetInnerHTML={{
-                                      __html:
-                                        item.node.activity_season.data.childMarkdownRemark.html.replace(
-                                          /\n/g,
-                                          "<br />"
-                                        ),
-                                    }}
-                                  />
-                                </p>
-                              </div>
                             </tr>
 
                             <tr css={tr} tw="lg:hidden">
@@ -3909,23 +3905,21 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                     />
                                   </p>
                                 </div>
+                                <div css={tr}>
+                                  <p css={th}>時期</p>
+                                  <p css={td}>
+                                    <div
+                                      dangerouslySetInnerHTML={{
+                                        __html:
+                                          item.node.activity_season.data.childMarkdownRemark.html.replace(
+                                            /\n/g,
+                                            "<br />"
+                                          ),
+                                      }}
+                                    />
+                                  </p>
+                                </div>
                               </td>
-                            </tr>
-                            <tr>
-                              <div css={tr} tw="hidden lg:block">
-                                <p css={th}>時期</p>
-                                <p css={td}>
-                                  <div
-                                    dangerouslySetInnerHTML={{
-                                      __html:
-                                        item.node.activity_season.data.childMarkdownRemark.html.replace(
-                                          /\n/g,
-                                          "<br />"
-                                        ),
-                                    }}
-                                  />
-                                </p>
-                              </div>
                             </tr>
 
                             <tr css={tr} tw="lg:hidden">
@@ -4265,6 +4259,299 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                     </table>
                   </DetailItemWrapper>
                 </div>
+                {strapiBizPlan.executive_org_cnt &&
+                  strapiBizPlan.executive_org_cnt.data.childMarkdownRemark
+                    .html !== "" && (
+                    <div id="">
+                      <DetailItemWrapper itemName="実行団体の募集">
+                        <table css={table} tw="lg:hidden">
+                          <tbody>
+                            {strapiBizPlan.executive_org_cnt &&
+                              strapiBizPlan.executive_org_cnt.data
+                                .childMarkdownRemark.html !== "" && (
+                                <tr css={tr}>
+                                  <th css={th}>採択予定実行団体数</th>
+                                  <td css={td}>
+                                    <div
+                                      dangerouslySetInnerHTML={{
+                                        __html:
+                                          strapiBizPlan.executive_org_cnt.data.childMarkdownRemark.html.replace(
+                                            /\n/g,
+                                            "<br />"
+                                          ),
+                                      }}
+                                    />
+                                  </td>
+                                </tr>
+                              )}
+                            {strapiBizPlan.executive_org_amt &&
+                              strapiBizPlan.executive_org_amt.data
+                                .childMarkdownRemark.html !== "" && (
+                                <tr css={tr}>
+                                  <th css={th}>１実行団体当たり助成金額</th>
+                                  <td css={td}>
+                                    <div
+                                      dangerouslySetInnerHTML={{
+                                        __html:
+                                          strapiBizPlan.executive_org_amt.data.childMarkdownRemark.html.replace(
+                                            /\n/g,
+                                            "<br />"
+                                          ),
+                                      }}
+                                    />
+                                  </td>
+                                </tr>
+                              )}
+                            {strapiBizPlan.ingenuity &&
+                              strapiBizPlan.ingenuity.data.childMarkdownRemark
+                                .html !== "" && (
+                                <tr css={tr}>
+                                  <th css={th}>申請数確保に向けた工夫</th>
+                                  <td css={td}>
+                                    <div
+                                      dangerouslySetInnerHTML={{
+                                        __html:
+                                          strapiBizPlan.ingenuity.data.childMarkdownRemark.html.replace(
+                                            /\n/g,
+                                            "<br />"
+                                          ),
+                                      }}
+                                    />
+                                  </td>
+                                </tr>
+                              )}
+                            {strapiBizPlan.examination_method &&
+                              strapiBizPlan.examination_method.data
+                                .childMarkdownRemark.html !== "" && (
+                                <tr css={tr}>
+                                  <th css={th}>
+                                    予定する審査方法(審査スケジュール、審査構成、留意点等）
+                                  </th>
+                                  <td css={td}>
+                                    <div
+                                      dangerouslySetInnerHTML={{
+                                        __html:
+                                          strapiBizPlan.examination_method.data.childMarkdownRemark.html.replace(
+                                            /\n/g,
+                                            "<br />"
+                                          ),
+                                      }}
+                                    />
+                                  </td>
+                                </tr>
+                              )}
+                          </tbody>
+                        </table>
+
+                        <table css={table} tw="hidden lg:block">
+                          <tbody>
+                            {strapiBizPlan.executive_org_cnt &&
+                              strapiBizPlan.executive_org_cnt.data
+                                .childMarkdownRemark.html !== "" && (
+                                <div>
+                                  <p css={th}>採択予定実行団体数</p>
+                                  <p css={td}>
+                                    <div
+                                      dangerouslySetInnerHTML={{
+                                        __html:
+                                          strapiBizPlan.executive_org_cnt.data.childMarkdownRemark.html.replace(
+                                            /\n/g,
+                                            "<br />"
+                                          ),
+                                      }}
+                                    />
+                                  </p>
+                                </div>
+                              )}
+                            {strapiBizPlan.executive_org_amt &&
+                              strapiBizPlan.executive_org_amt.data
+                                .childMarkdownRemark.html !== "" && (
+                                <div>
+                                  <p css={th}>１実行団体当たり助成金額</p>
+                                  <p css={td}>
+                                    <div
+                                      dangerouslySetInnerHTML={{
+                                        __html:
+                                          strapiBizPlan.executive_org_amt.data.childMarkdownRemark.html.replace(
+                                            /\n/g,
+                                            "<br />"
+                                          ),
+                                      }}
+                                    />
+                                  </p>
+                                </div>
+                              )}
+                            {strapiBizPlan.ingenuity &&
+                              strapiBizPlan.ingenuity.data.childMarkdownRemark
+                                .html !== "" && (
+                                <div>
+                                  <p css={th}>申請数確保に向けた工夫</p>
+                                  <p css={td}>
+                                    <div
+                                      dangerouslySetInnerHTML={{
+                                        __html:
+                                          strapiBizPlan.ingenuity.data.childMarkdownRemark.html.replace(
+                                            /\n/g,
+                                            "<br />"
+                                          ),
+                                      }}
+                                    />
+                                  </p>
+                                </div>
+                              )}
+                            {strapiBizPlan.examination_method &&
+                              strapiBizPlan.examination_method.data
+                                .childMarkdownRemark.html !== "" && (
+                                <div>
+                                  <p css={th}>
+                                    予定する審査方法(審査スケジュール、審査構成、留意点等）
+                                  </p>
+                                  <p css={td}>
+                                    <div
+                                      dangerouslySetInnerHTML={{
+                                        __html:
+                                          strapiBizPlan.examination_method.data.childMarkdownRemark.html.replace(
+                                            /\n/g,
+                                            "<br />"
+                                          ),
+                                      }}
+                                    />
+                                  </p>
+                                </div>
+                              )}
+                          </tbody>
+                        </table>
+                      </DetailItemWrapper>
+                    </div>
+                  )}
+                {strapiBizPlan.member_config_role &&
+                  strapiBizPlan.member_config_role.data.childMarkdownRemark
+                    .html !== "" && (
+                    <div id="">
+                      <DetailItemWrapper itemName="事業実施体制">
+                        <table css={table} tw="lg:hidden">
+                          <tbody>
+                            {strapiBizPlan.member_config_role &&
+                              strapiBizPlan.member_config_role.data
+                                .childMarkdownRemark.html !== "" && (
+                                <tr css={tr}>
+                                  <th css={th}>
+                                    メンバー構成と各メンバーの役割
+                                  </th>
+                                  <td css={td}>
+                                    <div
+                                      dangerouslySetInnerHTML={{
+                                        __html:
+                                          strapiBizPlan.member_config_role.data.childMarkdownRemark.html.replace(
+                                            /\n/g,
+                                            "<br />"
+                                          ),
+                                      }}
+                                    />
+                                  </td>
+                                </tr>
+                              )}
+                            {strapiBizPlan.coordination_system &&
+                              strapiBizPlan.coordination_system.data
+                                .childMarkdownRemark.html !== "" && (
+                                <tr css={tr}>
+                                  <th css={th}>他団体との連携体制</th>
+                                  <td css={td}>
+                                    <div
+                                      dangerouslySetInnerHTML={{
+                                        __html:
+                                          strapiBizPlan.coordination_system.data.childMarkdownRemark.html.replace(
+                                            /\n/g,
+                                            "<br />"
+                                          ),
+                                      }}
+                                    />
+                                  </td>
+                                </tr>
+                              )}
+                            {strapiBizPlan.risk_manage_system &&
+                              strapiBizPlan.risk_manage_system.data
+                                .childMarkdownRemark.html !== "" && (
+                                <tr css={tr}>
+                                  <th css={th}>想定されるリスクと管理体制</th>
+                                  <td css={td}>
+                                    <div
+                                      dangerouslySetInnerHTML={{
+                                        __html:
+                                          strapiBizPlan.risk_manage_system.data.childMarkdownRemark.html.replace(
+                                            /\n/g,
+                                            "<br />"
+                                          ),
+                                      }}
+                                    />
+                                  </td>
+                                </tr>
+                              )}
+                          </tbody>
+                        </table>
+
+                        <table css={table} tw="hidden lg:block">
+                          <tbody>
+                            {strapiBizPlan.member_config_role &&
+                              strapiBizPlan.member_config_role.data
+                                .childMarkdownRemark.html !== "" && (
+                                <div>
+                                  <p css={th}>メンバー構成と各メンバーの役割</p>
+                                  <p css={td}>
+                                    <div
+                                      dangerouslySetInnerHTML={{
+                                        __html:
+                                          strapiBizPlan.member_config_role.data.childMarkdownRemark.html.replace(
+                                            /\n/g,
+                                            "<br />"
+                                          ),
+                                      }}
+                                    />
+                                  </p>
+                                </div>
+                              )}
+                            {strapiBizPlan.coordination_system &&
+                              strapiBizPlan.coordination_system.data
+                                .childMarkdownRemark.html !== "" && (
+                                <div>
+                                  <p css={th}>他団体との連携体制</p>
+                                  <p css={td}>
+                                    <div
+                                      dangerouslySetInnerHTML={{
+                                        __html:
+                                          strapiBizPlan.coordination_system.data.childMarkdownRemark.html.replace(
+                                            /\n/g,
+                                            "<br />"
+                                          ),
+                                      }}
+                                    />
+                                  </p>
+                                </div>
+                              )}
+                            {strapiBizPlan.risk_manage_system &&
+                              strapiBizPlan.risk_manage_system.data
+                                .childMarkdownRemark.html !== "" && (
+                                <div>
+                                  <p css={th}>想定されるリスクと管理体制</p>
+                                  <p css={td}>
+                                    <div
+                                      dangerouslySetInnerHTML={{
+                                        __html:
+                                          strapiBizPlan.risk_manage_system.data.childMarkdownRemark.html.replace(
+                                            /\n/g,
+                                            "<br />"
+                                          ),
+                                      }}
+                                    />
+                                  </p>
+                                </div>
+                              )}
+                          </tbody>
+                        </table>
+                      </DetailItemWrapper>
+                    </div>
+                  )}
+
                 <div id="eleventhItem">
                   <DetailItemWrapper itemName="関連する主な実績">
                     <div tw="hidden lg:block">
@@ -4308,7 +4595,172 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                             </p>
                           </div>
                         )}
+                      {strapiBizPlan.is_subsidy_distr && (
+                        <div>
+                          <p css={th}>
+                            本事業について、コロナウイルス感染症に係る助成金や寄付等を受け助成金等を分配している(予定も含む）
+                          </p>
+                          <p css={td}>
+                            {strapiBizPlan.is_subsidy_distr === "true"
+                              ? "あり"
+                              : "なし"}
+                          </p>
+                        </div>
+                      )}
+                      {strapiBizPlan.subsidy_distr_dtl &&
+                        strapiBizPlan.subsidy_distr_dtl.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div>
+                            <p css={th}>内容</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.subsidy_distr_dtl.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.is_etc_subsidy_recv && (
+                        <div>
+                          <p css={th}>
+                            本事業について、国又は地方公共団体から補助金又は貸付金（ふるさと納税を財源とする資金提供を含む）を受けていない。
+                          </p>
+                          <p css={td}>
+                            {strapiBizPlan.is_etc_subsidy_recv === "true"
+                              ? "あり"
+                              : "なし"}
+                          </p>
+                        </div>
+                      )}
+                      {strapiBizPlan.is_etc_biz_distr && (
+                        <div>
+                          <p css={th}>
+                            本事業以外の事業について、コロナウイルス感染症に係る助成金や寄付等を受け助成金等を分配している(予定も含む)
+                          </p>
+                          <p css={td}>
+                            {strapiBizPlan.is_etc_biz_distr === "true"
+                              ? "あり"
+                              : "なし"}
+                          </p>
+                        </div>
+                      )}
+                      {strapiBizPlan.etc_biz_distr_dtl &&
+                        strapiBizPlan.etc_biz_distr_dtl.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div>
+                            <p css={th}>内容</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.etc_biz_distr_dtl.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.other_subsidy_actual &&
+                        strapiBizPlan.other_subsidy_actual.data
+                          .childMarkdownRemark.html !== "" && (
+                          <div>
+                            <p css={th}>その他、助成金等の分配の実績</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.other_subsidy_actual.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.last_year_org_cnt &&
+                        strapiBizPlan.last_year_org_cnt.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div>
+                            <p css={th}>前年度に助成した団体数</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.last_year_org_cnt.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.last_year_subsidy &&
+                        strapiBizPlan.last_year_subsidy.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div>
+                            <p css={th}>前年度の助成総額</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.last_year_subsidy.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.org_strength_fdo &&
+                        strapiBizPlan.org_strength_fdo.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div>
+                            <p css={th}>
+                              事業に関連する調査研究、連携、マッチング、伴走支援の実績、事業事例等
+                            </p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.org_strength_fdo.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.org_strength_ado &&
+                        strapiBizPlan.org_strength_ado.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div>
+                            <p css={th}>事業に関連する調査研究、連携の実績</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.org_strength_ado.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
                     </div>
+
                     <table css={table} tw="lg:hidden">
                       <tbody>
                         {strapiBizPlan.subsidy_actual &&
@@ -4343,6 +4795,172 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                   dangerouslySetInnerHTML={{
                                     __html:
                                       strapiBizPlan.org_strength.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                        {strapiBizPlan.is_subsidy_distr && (
+                          <tr css={tr}>
+                            <th css={th}>
+                              本事業について、コロナウイルス感染症に係る助成金や寄付等を受け助成金等を分配している(予定も含む）
+                            </th>
+                            <td css={td}>
+                              {strapiBizPlan.is_subsidy_distr === "true"
+                                ? "あり"
+                                : "なし"}
+                            </td>
+                          </tr>
+                        )}
+                        {strapiBizPlan.subsidy_distr_dtl &&
+                          strapiBizPlan.subsidy_distr_dtl.data
+                            .childMarkdownRemark.html !== "" && (
+                            <tr css={tr}>
+                              <th css={th}>内容</th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.subsidy_distr_dtl.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                        {strapiBizPlan.is_etc_subsidy_recv && (
+                          <tr css={tr}>
+                            <th css={th}>
+                              本事業について、国又は地方公共団体から補助金又は貸付金（ふるさと納税を財源とする資金提供を含む）を受けていない。
+                            </th>
+                            <td css={td}>
+                              {strapiBizPlan.is_etc_subsidy_recv === "true"
+                                ? "あり"
+                                : "なし"}
+                            </td>
+                          </tr>
+                        )}
+                        {strapiBizPlan.is_etc_biz_distr && (
+                          <tr css={tr}>
+                            <th css={th}>
+                              本事業以外の事業について、コロナウイルス感染症に係る助成金や寄付等を受け助成金等を分配している(予定も含む)
+                            </th>
+                            <td css={td}>
+                              {strapiBizPlan.is_etc_biz_distr === "true"
+                                ? "あり"
+                                : "なし"}
+                            </td>
+                          </tr>
+                        )}
+                        {strapiBizPlan.etc_biz_distr_dtl &&
+                          strapiBizPlan.etc_biz_distr_dtl.data
+                            .childMarkdownRemark.html !== "" && (
+                            <tr css={tr}>
+                              <th css={th}>内容</th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.etc_biz_distr_dtl.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                        {strapiBizPlan.other_subsidy_actual &&
+                          strapiBizPlan.other_subsidy_actual.data
+                            .childMarkdownRemark.html !== "" && (
+                            <tr css={tr}>
+                              <th css={th}>その他、助成金等の分配の実績</th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.other_subsidy_actual.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                        {strapiBizPlan.last_year_org_cnt &&
+                          strapiBizPlan.last_year_org_cnt.data
+                            .childMarkdownRemark.html !== "" && (
+                            <tr css={tr}>
+                              <th css={th}>前年度に助成した団体数</th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.last_year_org_cnt.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                        {strapiBizPlan.last_year_subsidy &&
+                          strapiBizPlan.last_year_subsidy.data
+                            .childMarkdownRemark.html !== "" && (
+                            <tr css={tr}>
+                              <th css={th}>前年度の助成総額</th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.last_year_subsidy.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                        {strapiBizPlan.org_strength_fdo &&
+                          strapiBizPlan.org_strength_fdo.data
+                            .childMarkdownRemark.html !== "" && (
+                            <tr css={tr}>
+                              <th css={th}>
+                                事業に関連する調査研究、連携、マッチング、伴走支援の実績、事業事例等
+                              </th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.org_strength_fdo.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                        {strapiBizPlan.org_strength_ado &&
+                          strapiBizPlan.org_strength_ado.data
+                            .childMarkdownRemark.html !== "" && (
+                            <tr css={tr}>
+                              <th css={th}>
+                                事業に関連する調査研究、連携の実績
+                              </th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.org_strength_ado.data.childMarkdownRemark.html.replace(
                                         /\n/g,
                                         "<br />"
                                       ),
@@ -4864,6 +5482,7 @@ export const pageQuery = graphql`
           }
         }
       }
+      is_subsidy_distr
       subsidy_distr_dtl {
         data {
           childMarkdownRemark {
@@ -4871,6 +5490,8 @@ export const pageQuery = graphql`
           }
         }
       }
+      is_etc_subsidy_recv
+      is_etc_biz_distr
       etc_biz_distr_dtl {
         data {
           childMarkdownRemark {

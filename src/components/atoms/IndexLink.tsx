@@ -11,6 +11,7 @@ const IndexLink = (props: { label: string; url: string }) => {
       css={hCenter}
       tw="w-60 px-4 py-[22px] border border-gray-base justify-between lg:(w-full)"
       href={props.url}
+      target="_blank"
     >
       <p tw="inline-block">{props.label}</p>
       <FontAwesomeIcon icon={faAngleRight} tw="text-gray-black" />

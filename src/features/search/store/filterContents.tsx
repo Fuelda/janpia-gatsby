@@ -154,3 +154,35 @@ export const sdgsGoalArray = [
   { label: "16. 平和と公正をすべての人に", code: "G16" },
   { label: "17. パートナーシップで目標を達成しよう", code: "G17" },
 ];
+
+export const evaluationFactorArray = [
+  { label: "なし", code: "CA-001" },
+  { label: "課題の分析", code: "CA-002" },
+  { label: "事業設計の分析", code: "CA-003" },
+  { label: "実施状況の分析", code: "CA-004" },
+  { label: "アウトカムの分析", code: "CA-005" },
+];
+export const evaluationRequiredArray = [
+  { label: "なし", code: "1" },
+  { label: "定量的データ", code: "2" },
+  { label: "定性的データ", code: "3" },
+  { label: "定量データ及び定性データ", code: "4" },
+];
+export const evaluationMethodArray = [
+  { label: "なし", code: "1" },
+  { label: "文献調査", code: "2" },
+  { label: "アンケート調査", code: "3" },
+  { label: "ワークショップ", code: "4" },
+  { label: "関係者へのインタビュー", code: "5" },
+  { label: "フォーカスグループディスカッション", code: "6" },
+  { label: "ケーススタディ", code: "7" },
+  { label: "直接観察", code: "8" },
+  { label: "定量データの収集", code: "9" },
+  { label: "その他", code: "10" },
+];
+export const evaluationSeasonArray = [
+  { label: "なし", code: "0" },
+  { label: "事前評価", code: "1" },
+  { label: "中間評価", code: "2" },
+  { label: "事後評価", code: "3" },
+];
