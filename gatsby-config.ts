@@ -40,7 +40,7 @@ const strapiConfig = {
     "new",
     "external-link",
   ],
-  singleTypes: [],
+  singleTypes: ["main-visual"],
   remoteFileHeaders: {
     /**
      * Customized request headers

@@ -111,11 +111,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       context: { slug: business_cd },
     });
     createPage({
-      path: `/result/${business_cd}/year-end-report`,
-      component: path.resolve("./src/templates/yearEndReport.tsx"),
-      context: { slug: business_cd },
-    });
-    createPage({
       path: `/result/${business_cd}/interim-report`,
       component: path.resolve("./src/templates/interimReport.tsx"),
       context: { slug: business_cd },
@@ -214,11 +209,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     createPage({
       path: `/result/${business_cd}/progress-report`,
       component: path.resolve("./src/templates/progressReport.tsx"),
-      context: { slug: business_cd },
-    });
-    createPage({
-      path: `/result/${business_cd}/year-end-report`,
-      component: path.resolve("./src/templates/yearEndReport.tsx"),
       context: { slug: business_cd },
     });
     createPage({

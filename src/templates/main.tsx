@@ -297,7 +297,30 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
             <div id="thirdItem">
               {consortiumGroup.length !== 0 && (
                 <DetailItemWrapper itemName="コンソーシアム構成団体">
-                  <table>
+                  <div tw="hidden lg:block">
+                    {consortiumGroup.map((cg: any) => (
+                      <div key={cg.node.organization_cd}>
+                        <p css={th}>
+                          {business_org_type === "F"
+                            ? "実行団体"
+                            : "資金分配団体"}
+                          名
+                        </p>
+                        <p css={td}>
+                          <Link
+                            to="organization"
+                            onClick={() =>
+                              setCurrentGroupCd(cg.node.organization_cd)
+                            }
+                            css={link}
+                          >
+                            {cg.node.organization_name}
+                          </Link>
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                  <table tw="lg:hidden">
                     <tbody>
                       {consortiumGroup.map((cg: any) => (
                         <tr key={cg.node.organization_cd}>

@@ -163,10 +163,10 @@ export const evaluationFactorArray = [
   { label: "アウトカムの分析", code: "CA-005" },
 ];
 export const evaluationRequiredArray = [
-  { label: "なし", code: "1" },
-  { label: "定量的データ", code: "2" },
-  { label: "定性的データ", code: "3" },
-  { label: "定量データ及び定性データ", code: "4" },
+  { label: "なし", code: "0" },
+  { label: "定量的データ", code: "1" },
+  { label: "定性的データ", code: "2" },
+  { label: "定量データ及び定性データ", code: "3" },
 ];
 export const evaluationMethodArray = [
   { label: "なし", code: "1" },

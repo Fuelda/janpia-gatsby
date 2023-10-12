@@ -91,7 +91,10 @@ export default SelectedProject;
 export const pageQuery = graphql`
   query MyQuery($slug: String!) {
     allStrapiOfferingReportManualFDO: allStrapiOfferingReportManual(
-      filter: { biz_cd_fund_distr: { eq: $slug } }
+      filter: {
+        biz_cd_fund_distr: { eq: $slug }
+        business_org_type: { eq: "F" }
+      }
     ) {
       edges {
         node {

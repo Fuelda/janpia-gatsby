@@ -110,6 +110,19 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                 )}
               </div>
               <div css={detailBody}>
+                <table>
+                  <tbody>
+                    {strapiEvaluationPlan &&
+                      strapiEvaluationPlan.apply_type_name && (
+                        <tr>
+                          <th css={thScroll}>申請種別</th>
+                          <td css={tdScroll} colSpan={3}>
+                            {strapiEvaluationPlan.apply_type_name}
+                          </td>
+                        </tr>
+                      )}
+                  </tbody>
+                </table>
                 <div id="firstItem">
                   <DetailItemWrapper itemName="評価スケジュール・実施体制">
                     <div tw="lg:overflow-scroll">
@@ -123,15 +136,6 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                           </tr>
                         </thead>
                         <tbody>
-                          {strapiEvaluationPlan &&
-                            strapiEvaluationPlan.apply_type_name && (
-                              <tr>
-                                <th css={thScroll}>申請種別</th>
-                                <td css={tdScroll} colSpan={3}>
-                                  {strapiEvaluationPlan.apply_type_name}
-                                </td>
-                              </tr>
-                            )}
                           {strapiEvaluationPlan &&
                             (strapiEvaluationPlan.mid_rethink_season ||
                               strapiEvaluationPlan.after_rethink_season) && (
@@ -225,16 +229,46 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                               <tr css={tr}>
                                 <th css={thScroll}>必要な調査</th>
                                 <td css={tdScroll}>
-                                  {strapiEvaluationPlan.prior_investigation &&
-                                    strapiEvaluationPlan.prior_investigation}
+                                  {strapiEvaluationPlan.prior_investigation && (
+                                    <div
+                                      dangerouslySetInnerHTML={{
+                                        __html:
+                                          strapiEvaluationPlan.prior_investigation.replace(
+                                            /\n/g,
+                                            "<br />"
+                                          ),
+                                      }}
+                                      tw="text-[15px]"
+                                    />
+                                  )}
                                 </td>
                                 <td css={tdScroll}>
-                                  {strapiEvaluationPlan.mid_investigation &&
-                                    strapiEvaluationPlan.mid_investigation}
+                                  {strapiEvaluationPlan.mid_investigation && (
+                                    <div
+                                      dangerouslySetInnerHTML={{
+                                        __html:
+                                          strapiEvaluationPlan.mid_investigation.replace(
+                                            /\n/g,
+                                            "<br />"
+                                          ),
+                                      }}
+                                      tw="text-[15px]"
+                                    />
+                                  )}
                                 </td>
                                 <td css={tdScroll}>
-                                  {strapiEvaluationPlan.after_investigation &&
-                                    strapiEvaluationPlan.after_investigation}
+                                  {strapiEvaluationPlan.after_investigation && (
+                                    <div
+                                      dangerouslySetInnerHTML={{
+                                        __html:
+                                          strapiEvaluationPlan.after_investigation.replace(
+                                            /\n/g,
+                                            "<br />"
+                                          ),
+                                      }}
+                                      tw="text-[15px]"
+                                    />
+                                  )}
                                 </td>
                               </tr>
                             )}
@@ -338,11 +372,21 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                                 </td>
                               </tr>
                             )}
+                        </tbody>
+                      </table>
+                    </div>
+                  </DetailItemWrapper>
+                </div>
+                <div id="">
+                  <DetailItemWrapper itemName="補足事項">
+                    <div tw="lg:overflow-scroll">
+                      <table css={table} tw="lg:w-[780px]">
+                        <tbody>
                           {strapiEvaluationPlan &&
                             strapiEvaluationPlan.other_title_1 && (
                               <tr css={tr}>
                                 <th css={thScroll}>タイトル1</th>
-                                <td css={tdScroll} colSpan={3}>
+                                <td css={tdScroll}>
                                   {strapiEvaluationPlan.other_title_1}
                                 </td>
                               </tr>
@@ -351,8 +395,16 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                             strapiEvaluationPlan.other_content_1 && (
                               <tr css={tr}>
                                 <th css={thScroll}>内容1</th>
-                                <td css={tdScroll} colSpan={3}>
-                                  {strapiEvaluationPlan.other_content_1}
+                                <td css={tdScroll}>
+                                  <div
+                                    dangerouslySetInnerHTML={{
+                                      __html:
+                                        strapiEvaluationPlan.other_content_1.replace(
+                                          /\n/g,
+                                          "<br />"
+                                        ),
+                                    }}
+                                  />
                                 </td>
                               </tr>
                             )}
@@ -360,7 +412,7 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                             strapiEvaluationPlan.other_title_2 && (
                               <tr css={tr}>
                                 <th css={thScroll}>タイトル2</th>
-                                <td css={tdScroll} colSpan={3}>
+                                <td css={tdScroll}>
                                   {strapiEvaluationPlan.other_title_2}
                                 </td>
                               </tr>
@@ -369,8 +421,16 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                             strapiEvaluationPlan.other_content_2 && (
                               <tr css={tr}>
                                 <th css={thScroll}>内容2</th>
-                                <td css={tdScroll} colSpan={3}>
-                                  {strapiEvaluationPlan.other_content_2}
+                                <td css={tdScroll}>
+                                  <div
+                                    dangerouslySetInnerHTML={{
+                                      __html:
+                                        strapiEvaluationPlan.other_content_2.replace(
+                                          /\n/g,
+                                          "<br />"
+                                        ),
+                                    }}
+                                  />
                                 </td>
                               </tr>
                             )}
@@ -378,7 +438,7 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                             strapiEvaluationPlan.other_title_3 && (
                               <tr css={tr}>
                                 <th css={thScroll}>タイトル3</th>
-                                <td css={tdScroll} colSpan={3}>
+                                <td css={tdScroll}>
                                   {strapiEvaluationPlan.other_title_3}
                                 </td>
                               </tr>
@@ -387,8 +447,16 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                             strapiEvaluationPlan.other_content_3 && (
                               <tr css={tr}>
                                 <th css={thScroll}>内容3</th>
-                                <td css={tdScroll} colSpan={3}>
-                                  {strapiEvaluationPlan.other_content_3}
+                                <td css={tdScroll}>
+                                  <div
+                                    dangerouslySetInnerHTML={{
+                                      __html:
+                                        strapiEvaluationPlan.other_content_3.replace(
+                                          /\n/g,
+                                          "<br />"
+                                        ),
+                                    }}
+                                  />
                                 </td>
                               </tr>
                             )}

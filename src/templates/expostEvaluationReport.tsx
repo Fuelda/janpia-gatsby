@@ -49,6 +49,7 @@ export const pageQuery = graphql`
   query MyQuery($slug: String!) {
     strapiPostReportManualFDO: strapiPostReportManual(
       biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
     ) {
       data {
         url
@@ -56,6 +57,7 @@ export const pageQuery = graphql`
     }
     strapiPostReportManualADO: strapiPostReportManual(
       biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
     ) {
       data {
         url

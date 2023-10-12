@@ -18,6 +18,8 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
   const pdfUrl = strapiMidReportManual && strapiMidReportManual.data.url;
   const googleDocsViewerUrl = `https://docs.google.com/viewer?url=${pdfUrl}&embedded=true`;
 
+  console.log(pdfUrl);
+
   return (
     <Layout>
       <DetailHeader business_cd={slug} />
@@ -49,6 +51,7 @@ export const pageQuery = graphql`
   query MyQuery($slug: String!) {
     strapiMidReportManualFDO: strapiMidReportManual(
       biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
     ) {
       biz_cd_executive
       biz_cd_fund_distr
@@ -59,6 +62,7 @@ export const pageQuery = graphql`
     }
     strapiMidReportManualADO: strapiMidReportManual(
       biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
     ) {
       biz_cd_executive
       biz_cd_fund_distr

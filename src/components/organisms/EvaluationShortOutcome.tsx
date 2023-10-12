@@ -91,7 +91,15 @@ const EvaluationShortOutcome = (props: {
             )}
             <tr tw="lg:hidden">
               <th css={th}>把握方法</th>
-              <td css={td}>{item.node.index_grasp}</td>
+              <td css={td}>
+                {item.node.index_grasp && (
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: item.node.index_grasp.replace(/\n/g, "<br />"),
+                    }}
+                  />
+                )}
+              </td>
             </tr>
             {item.node.index_goal && (
               <tr tw="lg:hidden">
@@ -165,7 +173,14 @@ const EvaluationShortOutcome = (props: {
                 )}
                 <div>
                   <p css={th}>把握方法</p>
-                  <div css={td}>{item.node.index_grasp}</div>
+                  {item.node.index_grasp && (
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: item.node.index_grasp.replace(/\n/g, "<br />"),
+                      }}
+                      css={td}
+                    />
+                  )}
                 </div>
                 {item.node.index_goal && (
                   <div>

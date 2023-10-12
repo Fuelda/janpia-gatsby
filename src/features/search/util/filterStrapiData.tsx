@@ -129,7 +129,7 @@ export const filterStrapiData = () => {
         searchState.business_category.some(
           (bc) =>
             item.bizPlan.business_category.code &&
-            (item.bizPlan.business_category.subCode
+            (item.bizPlan.business_category.code === 1
               ? bc.code === item.bizPlan.business_category.code &&
                 bc.subCode === item.bizPlan.business_category.subCode
               : bc.code === item.bizPlan.business_category.code)

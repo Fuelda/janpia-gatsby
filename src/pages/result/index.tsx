@@ -11,44 +11,25 @@ import ResultCard from "../../components/molecules/ResultCard";
 import PageNav from "../../features/pagenation/component/molecules/PageNav";
 import ItemPerPage from "../../features/pagenation/component/atoms/ItemPerPage";
 import PageNavTiny from "../../features/pagenation/component/molecules/PageNavTiny";
-import Modal from "react-modal";
-import { useModalContext } from "../../context/modalContext";
-import ModalPrefectures from "../../features/search/component/sidebar/modal/ModalPrefectures";
 import SortSelector from "../../features/sort/component/atoms/SortSelector";
 import ChangeSearchStatusButton from "../../components/atoms/ChangeSearchStatusButton";
-import SearchSpBar from "../../components/organisms/SearchSpBar";
 
 const Result = () => {
   const filteredAllBizPlan = useFilteredStrapiContext();
   const [currentSort, setCurrentSort] = useState("bizPlan");
   const [currentPageNo, setCurrentPageNo] = useState(1);
   const [itemPerPage, setItemPerPage] = useState(30);
-  const [isSpBarOpen, setIsSpBarOpen] = useState(false);
 
-  const sortByBizPlan = (a: any, b: any) => {
-    const bizNameA = a.bizPlan.business_name.toLowerCase();
-    const bizNameB = b.bizPlan.business_name.toLowerCase();
-    return bizNameA < bizNameB ? -1 : 1;
-  };
-  const sortByGroup = (a: any, b: any) => {
-    const mainGroupA = a.group.find((g: any) => {
-      const groupRole =
-        g.business_org_type === "F" ? g.org_role_fdo : g.org_role_fdo;
-      return groupRole === 0 || 1;
-    });
-    const mainGroupNameA = mainGroupA
-      ? mainGroupA.groupData.organization_name.toLowerCase()
-      : "";
-    const mainGroupB = b.group.find((g: any) => {
-      const groupRole =
-        g.business_org_type === "F" ? g.org_role_fdo : g.org_role_fdo;
-      return groupRole === 0 || 1;
-    });
-    const mainGroupNameB = mainGroupB
-      ? mainGroupB.groupData.organization_name.toLowerCase()
-      : "";
-    return mainGroupNameA < mainGroupNameB ? -1 : 1;
-  };
+  const sortByBizPlan = (a: any, b: any) =>
+    new Intl.Collator("ja").compare(
+      a.bizPlan.business_name,
+      b.bizPlan.business_name
+    );
+  const sortByGroup = (a: any, b: any) =>
+    new Intl.Collator("ja").compare(
+      a.mainGroup ? a.mainGroup.node.organization_name : "",
+      b.mainGroup ? b.mainGroup.node.organization_name : ""
+    );
   const sortByYear = (a: any, b: any) => {
     const yearA =
       (a.bizPlan.business_type_name.label &&
