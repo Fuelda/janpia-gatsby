@@ -37,6 +37,7 @@ module.exports = {
           black: "#999999",
           font: "#AFBAC3",
           pale: "#EEEEEE",
+          subtle: "#CCCCCC",
         },
       },
       borderRadius: {

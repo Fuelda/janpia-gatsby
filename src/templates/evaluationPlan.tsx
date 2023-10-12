@@ -213,7 +213,9 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                               </tr>
                             )}
                           {strapiEvaluationPlan &&
-                            strapiEvaluationPlan.prior_imple_priod && (
+                            (strapiEvaluationPlan.prior_imple_priod ||
+                              strapiEvaluationPlan.mid_imple_priod ||
+                              strapiEvaluationPlan.after_imple_priod) && (
                               <tr css={tr}>
                                 <th css={thScroll}>実施時期</th>
                                 <td css={tdScroll}>
@@ -249,7 +251,9 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                               </tr>
                             )}
                           {strapiEvaluationPlan &&
-                            strapiEvaluationPlan.prior_imple_system && (
+                            (strapiEvaluationPlan.prior_imple_system ||
+                              strapiEvaluationPlan.mid_imple_system ||
+                              strapiEvaluationPlan.after_imple_system) && (
                               <tr css={tr}>
                                 <th css={thScroll}>実施体制</th>
                                 <td css={tdScroll}>
@@ -333,7 +337,9 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                               </tr>
                             )}
                           {strapiEvaluationPlan &&
-                            strapiEvaluationPlan.prior_expenses && (
+                            (strapiEvaluationPlan.prior_expenses ||
+                              strapiEvaluationPlan.mid_expenses ||
+                              strapiEvaluationPlan.after_expenses) && (
                               <tr css={tr}>
                                 <th css={thScroll}>評価関連経費（金額）</th>
                                 <td css={tdScroll}>

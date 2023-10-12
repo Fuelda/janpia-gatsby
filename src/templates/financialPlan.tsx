@@ -371,7 +371,7 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                   <div css={detailBody}>
                     <div id="one-firstItem">
                       <DetailItemWrapper itemName="事業費調達計画">
-                        <div tw="lg:overflow-scroll">
+                        <div tw=" lg:overflow-scroll">
                           <table
                             css={table}
                             tw="lg:w-[780px]"
@@ -982,7 +982,7 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                       <DetailItemWrapper itemName="事業費">
                         <div tw="lg:overflow-scroll">
                           <table css={table} tw="lg:w-[780px]">
-                            <tbody>
+                            <tbody className="table__financialPlanFormer--tbody">
                               <tr css={tr}>
                                 <th css={th5col} colSpan={2}>
                                   A. 助成金合計
