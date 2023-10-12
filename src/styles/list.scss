@@ -1,0 +1,7 @@
+.ul {
+  &__check {
+    list-style-position: outside;
+    list-style-image: url(../images/check.svg);
+    margin-left: 24px;
+  }
+}

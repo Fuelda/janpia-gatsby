@@ -149,8 +149,14 @@ export const filterStrapiManualData = () => {
           ))) &&
       //話題のキーワード
       (searchState.topic_keywords.length === 0 ||
-        searchState.topic_keywords.some((tk) =>
-          item.bizPlan.topic_keywords?.some((btk) => btk?.label === tk)
+        searchState.topic_keywords.some(
+          (tk) =>
+            item.bizPlan.topic_keywords?.some((btk) => btk?.label === tk) ||
+            item.bizPlan.business_name?.includes(tk) ||
+            item.bizPlan.business_overview?.data?.business_overview?.includes(
+              tk
+            ) ||
+            item.mainGroup?.node.organization_name?.includes(tk)
         )) &&
       //社会課題
       (isNotSocialIssueSelected ||

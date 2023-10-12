@@ -55,8 +55,6 @@ export const filterStrapiData = () => {
     ? algoliaFilteredBizPlan
     : linkedBizPlan;
 
-  console.log(searchState);
-
   const filteredBizPlan = sourceBizPlan.filter((item) => {
     return (
       //団体名
@@ -159,7 +157,15 @@ export const filterStrapiData = () => {
               parseInt(item.financePlanFormer?.abc_ttl ?? "") <= sa.max
           ))) &&
       //話題のキーワード
-      (searchState.topic_keywords.length === 0 || false) &&
+      (searchState.topic_keywords.length === 0 ||
+        searchState.topic_keywords.some(
+          (tk) =>
+            item.bizPlan.business_name?.includes(tk) ||
+            item.bizPlan.business_overview?.data?.business_overview?.includes(
+              tk
+            ) ||
+            item.mainGroup?.node.organization_name?.includes(tk)
+        )) &&
       //社会課題
       (isNotSocialIssueSelected ||
         (field1_1 && item.bizPlan.field1_1 === "1") ||

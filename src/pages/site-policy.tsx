@@ -62,7 +62,7 @@ const SitePolicy = () => {
                 当ウェブサイトに掲載されている情報は、団体またはJANPIAが著作権を有しており、「私的使用のための複製」や「引用」など著作権法上認められた場合を除き、無断で複製・転用することはできません。
               </p>
               <h3 css={h3Pp}>―免責事項</h3>
-              <ul tw="list-disc list-outside ml-4">
+              <ul tw="list-disc list-outside ml-6">
                 <li>
                   JANPIA及び団体は、当ウェブサイトで公開されている情報について、正確な情報を掲載するように努めておりますが、その完全性・正確性について保証するものではありません。
                 </li>
@@ -83,7 +83,7 @@ const SitePolicy = () => {
                 下記注意事項を順守していただけるウェブサイトからのリンクについては、法人・個人を問わずリンクを設定していただけます。
               </p>
               <h3 css={h3Pp}>［注意事項］</h3>
-              <ul tw="list-disc list-outside ml-4">
+              <ul tw="list-disc list-outside ml-6">
                 <li>
                   JANPIA及び団体は、当ウェブサイトへのリンクにより生じる損害について、一切の責任を負いません。
                 </li>
@@ -95,7 +95,7 @@ const SitePolicy = () => {
                 </li>
                 <li>
                   次の方法によるリンクをお断りします。
-                  <ul tw="list-outside [list-style-image: url(../images/check.svg)]">
+                  <ul className="ul__check">
                     <li>
                       JANPIA又は団体、またその役員・職員を誹謗中傷したり、信用失墜を意図する内容を含む場合
                     </li>
@@ -119,6 +119,7 @@ const SitePolicy = () => {
                     </li>
                   </ul>
                   <p>
+                    <br />
                     上記諸事項に違反している、または、不適切、とJANPIAが判断するリンクを発見した場合には、JANPIAは当該ウェブサイトの運営者にリンク削除の申し入れを行います。当該運営者は必ずこれに従ってください。
                   </p>
                 </li>

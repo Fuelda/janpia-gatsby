@@ -10,6 +10,7 @@ import "./src/styles/modal.scss";
 import "./src/styles/news.scss";
 import "./src/styles/table.scss";
 import "./src/styles/hamburger.scss";
+import "./src/styles/list.scss";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
 export const wrapRootElement = ({ element }) => (

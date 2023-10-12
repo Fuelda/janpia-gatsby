@@ -32,6 +32,11 @@ const contextQuery = graphql`
           field3_7
           field3_8
           field3_9
+          business_overview {
+            data {
+              business_overview
+            }
+          }
         }
       }
     }
@@ -128,6 +133,11 @@ const contextQuery = graphql`
           field3_8
           sdgs_goals {
             value
+          }
+          business_overview {
+            data {
+              business_overview
+            }
           }
         }
       }
