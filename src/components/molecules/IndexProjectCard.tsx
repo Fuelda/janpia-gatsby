@@ -2,7 +2,7 @@ import { StaticImage } from "gatsby-plugin-image";
 import React from "react";
 import "twin.macro";
 import tw from "twin.macro";
-import { vCenter } from "../../styles/base";
+import { hCenter, vCenter } from "../../styles/base";
 import { useStrapiContext } from "../../context/strapiContext";
 
 type IndexProjectCardType = {
@@ -54,12 +54,23 @@ const IndexProjectCard = ({ isFdo }: IndexProjectCardType) => {
           />
         )}
         <div css={vCenter} tw="w-64 justify-around lg:(w-full)">
-          <p tw="text-2xl font-bold text-center lg:(text-lg)">
-            事業数：
+          {/* <p tw="text-2xl font-bold text-center lg:(text-lg)">
+            登録事業数：
             <span tw="text-5xl lg:(text-2xl)">
               {project.length + projectManual.length}
             </span>
-          </p>
+          </p> */}
+          <div tw="text-2xl font-bold text-center lg:(text-lg)" css={hCenter}>
+            <p>
+              登録
+              <br />
+              事業数
+            </p>
+            <p>：</p>
+            <p tw="text-5xl lg:(text-2xl)">
+              {project.length + projectManual.length}
+            </p>
+          </div>
           <div tw="flex gap-5 lg:(flex-col gap-0)">
             <p tw="text-lg">
               実施数：

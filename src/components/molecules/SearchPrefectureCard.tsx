@@ -30,6 +30,7 @@ const SearchPrefectureCard = (props: { area: string }) => {
   let areaName = "";
   let areaColor = tw``;
   let checkColor = tw``;
+  let checkBoxColor = tw``;
 
   switch (props.area) {
     case "hokkaido":
@@ -37,6 +38,7 @@ const SearchPrefectureCard = (props: { area: string }) => {
       areaName = "北海道";
       areaColor = tw`bg-purple-hokkaido`;
       checkColor = tw`fill-purple-hokkaido `;
+      checkBoxColor = tw`!bg-purple-hokkaido opacity-30`;
       break;
     case "tohoku":
       area = checkboxArray.tohoku;
@@ -142,7 +144,7 @@ const SearchPrefectureCard = (props: { area: string }) => {
               width="15.003"
               height="11.252"
               viewBox="0 0 15.003 11.252"
-              css={checkMark}
+              css={checkColor}
             >
               <path
                 id="check"
@@ -166,7 +168,7 @@ const SearchPrefectureCard = (props: { area: string }) => {
             <Checkbox.Root
               id={checkbox}
               onCheckedChange={() => handleCheckbox(checkbox)}
-              css={checkBoxPref}
+              css={[checkBoxPref]}
               checked={prefectures.includes(checkbox)}
             >
               <Checkbox.Indicator tw="flex justify-center">

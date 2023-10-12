@@ -1,5 +1,5 @@
 import { Link, graphql } from "gatsby";
-import React from "react";
+import React, { useEffect } from "react";
 import Layout from "../components/lauout/Layout";
 import DetailHeader from "../components/lauout/DetailHeader";
 import DetailSidebar from "../components/organisms/DetailSidebar";
@@ -28,6 +28,7 @@ import {
   evaluationSeasonArray,
 } from "../features/search/store/filterContents";
 import EvaluationShortOutcome from "../components/organisms/EvaluationShortOutcome";
+import { useDetailContext } from "../context/detailContext";
 
 const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
   const {
@@ -36,7 +37,41 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
     allStrapiAttachedFile,
     evaluationPlanManualFDO,
     evaluationPlanManualADO,
+
+    //サイドバーチェック用
+    strapiFinancePlanFDO,
+    strapiFinancePlanADO,
+    strapiFinancePlanFormerFDO,
+    strapiFinancePlanFormerADO,
+    strapiFinancePlanManualFDO,
+    strapiFinancePlanManualADO,
+    strapiEvaluationPlanManualFDO,
+    strapiEvaluationPlanManualADO,
+    strapiOfferingReportManualFDO,
+    strapiPreReportManualFDO,
+    strapiPreReportManualADO,
+    strapiMidReportManualFDO,
+    strapiMidReportManualADO,
+    strapiPostReportManualFDO,
+    strapiPostReportManualADO,
+    strapiProgressReportManualFDO,
+    strapiProgressReportManualADO,
+    strapiCompleteReportManualFDO,
+    strapiCompleteReportManualADO,
+    strapiSettleReportFDO,
+    strapiSettleReportADO,
   } = data;
+  const {
+    setWithFinance,
+    setWithEval,
+    setWithORM,
+    setWithPreRM,
+    setWithMRM,
+    setWithPostRM,
+    setWithProRM,
+    setWithCRM,
+    setWithSR,
+  } = useDetailContext();
 
   const { slug } = pageContext;
   const evaluationPlanManual =
@@ -77,6 +112,31 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
           .filter((eps: any) => eps.node.info_type === 23)
           .sort((a: any, b: any) => a.node.row_no - b.node.row_no)
       : [];
+
+  useEffect(() => {
+    setWithFinance(
+      strapiFinancePlanFDO ||
+        strapiFinancePlanADO ||
+        strapiFinancePlanFormerFDO ||
+        strapiFinancePlanFormerADO ||
+        strapiFinancePlanManualFDO ||
+        strapiFinancePlanManualADO
+    );
+    setWithEval(
+      strapiEvaluationPlan ||
+        strapiEvaluationPlanManualFDO ||
+        strapiEvaluationPlanManualADO
+    );
+    setWithORM(strapiOfferingReportManualFDO);
+    setWithPreRM(strapiPreReportManualFDO || strapiPreReportManualADO);
+    setWithMRM(strapiMidReportManualFDO || strapiMidReportManualADO);
+    setWithPostRM(strapiPostReportManualFDO || strapiPostReportManualADO);
+    setWithProRM(
+      strapiProgressReportManualFDO || strapiProgressReportManualADO
+    );
+    setWithCRM(strapiCompleteReportManualFDO || strapiCompleteReportManualADO);
+    setWithSR(strapiSettleReportFDO || strapiSettleReportADO);
+  }, []);
 
   console.log(data);
 
@@ -784,6 +844,136 @@ export const pageQuery = graphql`
           }
         }
       }
+    }
+    # サイドバーチェック用
+    strapiFinancePlanFDO: strapiFinancePlan(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiFinancePlanADO: strapiFinancePlan(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
+    ) {
+      id
+    }
+    strapiFinancePlanFormerFDO: strapiFinancePlanFormer(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiFinancePlanFormerADO: strapiFinancePlanFormer(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
+    ) {
+      id
+    }
+    strapiFinancePlanManualFDO: strapiFinancePlanManual(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiFinancePlanManualADO: strapiFinancePlanManual(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
+    ) {
+      id
+    }
+    strapiEvaluationPlan(business_cd: { eq: $slug }) {
+      id
+    }
+    strapiEvaluationPlanManualFDO: strapiEvaluationPlanManual(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiEvaluationPlanManualADO: strapiEvaluationPlanManual(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
+    ) {
+      id
+    }
+    strapiOfferingReportManualFDO: strapiOfferingReportManual(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiPreReportManualFDO: strapiPreReportManual(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiPreReportManualADO: strapiPreReportManual(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
+    ) {
+      id
+    }
+    strapiMidReportManualFDO: strapiMidReportManual(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiMidReportManualADO: strapiMidReportManual(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
+    ) {
+      id
+    }
+    strapiPostReportManualFDO: strapiPostReportManual(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiPostReportManualADO: strapiPostReportManual(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
+    ) {
+      id
+    }
+    strapiProgressReportManualFDO: strapiProgressReportManual(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiProgressReportManualADO: strapiProgressReportManual(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
+    ) {
+      id
+    }
+    strapiCompleteReportManualFDO: strapiCompleteReportManual(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiCompleteReportManualADO: strapiCompleteReportManual(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
+    ) {
+      id
+    }
+    strapiSettleReportFDO: strapiSettleReport(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiSettleReportADO: strapiSettleReport(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
+    ) {
+      id
     }
   }
 `;

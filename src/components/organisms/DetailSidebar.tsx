@@ -11,6 +11,8 @@ const currentSidebar = tw`bg-blue-button border-blue-button text-white`;
 
 const DetailSidebar = (props: { slug: string }) => {
   const {
+    withFinance,
+    withEval,
     withORM,
     withPreRM,
     withMRM,
@@ -21,7 +23,6 @@ const DetailSidebar = (props: { slug: string }) => {
   } = useDetailContext();
   const location = useLocation();
   const path = location.pathname;
-  const slug = props.slug;
 
   return (
     <div
@@ -67,24 +68,28 @@ const DetailSidebar = (props: { slug: string }) => {
       >
         事業計画
       </Link>
-      <Link
-        css={[
-          detailSidebarBlock,
-          path === `/result/${props.slug}/evaluation-plan/` && currentSidebar,
-        ]}
-        to={`/result/${props.slug}/evaluation-plan`}
-      >
-        評価計画
-      </Link>
-      <Link
-        css={[
-          detailSidebarBlock,
-          path === `/result/${props.slug}/financial-plan/` && currentSidebar,
-        ]}
-        to={`/result/${props.slug}/financial-plan`}
-      >
-        資金計画
-      </Link>
+      {withEval && (
+        <Link
+          css={[
+            detailSidebarBlock,
+            path === `/result/${props.slug}/evaluation-plan/` && currentSidebar,
+          ]}
+          to={`/result/${props.slug}/evaluation-plan`}
+        >
+          評価計画
+        </Link>
+      )}
+      {withFinance && (
+        <Link
+          css={[
+            detailSidebarBlock,
+            path === `/result/${props.slug}/financial-plan/` && currentSidebar,
+          ]}
+          to={`/result/${props.slug}/financial-plan`}
+        >
+          資金計画
+        </Link>
+      )}
       {withPreRM && (
         <Link
           css={[

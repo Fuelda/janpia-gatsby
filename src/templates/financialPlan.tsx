@@ -1,5 +1,5 @@
 import { graphql } from "gatsby";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DetailHeader from "../components/lauout/DetailHeader";
 import Layout from "../components/lauout/Layout";
 import {
@@ -29,6 +29,7 @@ import {
   thead,
   tr,
 } from "../styles/table";
+import { useDetailContext } from "../context/detailContext";
 
 const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
@@ -40,12 +41,72 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
     financePlanFormerADO,
     financePlanManualFDO,
     financePlanManualADO,
+    //サイドバーチェック用
+    strapiFinancePlanFDO,
+    strapiFinancePlanADO,
+    strapiFinancePlanFormerFDO,
+    strapiFinancePlanFormerADO,
+    strapiFinancePlanManualFDO,
+    strapiFinancePlanManualADO,
+    strapiEvaluationPlan,
+    strapiEvaluationPlanManualFDO,
+    strapiEvaluationPlanManualADO,
+    strapiOfferingReportManualFDO,
+    strapiPreReportManualFDO,
+    strapiPreReportManualADO,
+    strapiMidReportManualFDO,
+    strapiMidReportManualADO,
+    strapiPostReportManualFDO,
+    strapiPostReportManualADO,
+    strapiProgressReportManualFDO,
+    strapiProgressReportManualADO,
+    strapiCompleteReportManualFDO,
+    strapiCompleteReportManualADO,
+    strapiSettleReportFDO,
+    strapiSettleReportADO,
   } = data;
+  const {
+    setWithFinance,
+    setWithEval,
+    setWithORM,
+    setWithPreRM,
+    setWithMRM,
+    setWithPostRM,
+    setWithProRM,
+    setWithCRM,
+    setWithSR,
+  } = useDetailContext();
+
   const financePlan = financePlanFDO || financePlanADO;
   const financePlanFormer = financePlanFormerFDO || financePlanFormerADO;
   const financePlanManual = financePlanManualFDO || financePlanManualADO;
   const pdfUrl = financePlanManual && financePlanManual.data.url;
   const googleDocsViewerUrl = `https://docs.google.com/viewer?url=${pdfUrl}&embedded=true`;
+
+  useEffect(() => {
+    setWithFinance(
+      strapiFinancePlanFDO ||
+        strapiFinancePlanADO ||
+        strapiFinancePlanFormerFDO ||
+        strapiFinancePlanFormerADO ||
+        strapiFinancePlanManualFDO ||
+        strapiFinancePlanManualADO
+    );
+    setWithEval(
+      strapiEvaluationPlan ||
+        strapiEvaluationPlanManualFDO ||
+        strapiEvaluationPlanManualADO
+    );
+    setWithORM(strapiOfferingReportManualFDO);
+    setWithPreRM(strapiPreReportManualFDO || strapiPreReportManualADO);
+    setWithMRM(strapiMidReportManualFDO || strapiMidReportManualADO);
+    setWithPostRM(strapiPostReportManualFDO || strapiPostReportManualADO);
+    setWithProRM(
+      strapiProgressReportManualFDO || strapiProgressReportManualADO
+    );
+    setWithCRM(strapiCompleteReportManualFDO || strapiCompleteReportManualADO);
+    setWithSR(strapiSettleReportFDO || strapiSettleReportADO);
+  }, []);
 
   console.log(data);
 
@@ -278,12 +339,6 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                   onClick={() => setCurrentTab(1)}
                 >
                   調達の内訳
-                </button>
-                <button
-                  css={[detailTabBtn, currentTab === 2 && detailTabBtnSelected]}
-                  onClick={() => setCurrentTab(2)}
-                >
-                  自己資金・民間資金
                 </button>
                 <button
                   css={[detailTabBtn, currentTab === 3 && detailTabBtnSelected]}
@@ -919,69 +974,12 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                   </div>
                 </div>
               )}
-              {currentTab === 2 && (
-                <div>
-                  <p css={detailCategoryName}>自己資金・民間資金</p>
-                  <div css={detailAnchor}>
-                    <DetailAnchor
-                      title="年度別合計"
-                      anchor={`/result/${slug}/financial-plan/#two-firstItem`}
-                    />
-                    <DetailAnchor
-                      title="内訳"
-                      anchor={`/result/${slug}/financial-plan/#two-secondItem`}
-                    />
-                  </div>
-                  <div css={detailBody}>
-                    <div id="two-firstItem">
-                      <DetailItemWrapper itemName="年度別合計">
-                        <div tw="lg:overflow-scroll">
-                          <table css={table} tw="lg:w-[780px]">
-                            <thead css={thead}>
-                              <tr css={tr}>
-                                <th css={th5col} colSpan={2}></th>
-                                <td css={tdScroll}>2021年度</td>
-                                <td css={tdScroll}>2022年度</td>
-                                <td css={tdScroll}>2023年度</td>
-                                <td css={tdScroll}>2024年度</td>
-                                <td css={tdScroll}>合計</td>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <th css={th5col} colSpan={2}>
-                                  自己資金･民間資金
-                                </th>
-                                <td css={tdScroll}>まだ</td>
-                                <td css={tdScroll}>まだ</td>
-                                <td css={tdScroll}>まだ</td>
-                                <td css={tdScroll}>まだ</td>
-                                <td css={tdScroll}>まだ</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      </DetailItemWrapper>
-                    </div>
-                  </div>
-                </div>
-              )}
               {currentTab === 3 && (
                 <div>
                   <p css={detailCategoryName}>事業費</p>
-                  <div css={detailAnchor}>
-                    <DetailAnchor
-                      title="事業費の明細"
-                      anchor={`/result/${slug}/financial-plan/#three-firstItem`}
-                    />
-                    <DetailAnchor
-                      title="実行団体への助成に充当される費用の年度別概算"
-                      anchor={`/result/${slug}/financial-plan/#three-secondItem`}
-                    />
-                  </div>
                   <div css={detailBody}>
                     <div id="three-firstItem">
-                      <DetailItemWrapper itemName="事業費の明細">
+                      <DetailItemWrapper itemName="事業費">
                         <div tw="lg:overflow-scroll">
                           <table css={table} tw="lg:w-[780px]">
                             <tbody>
@@ -1391,6 +1389,136 @@ export const pageQuery = graphql`
       data {
         url
       }
+    }
+    # サイドバーチェック用
+    strapiFinancePlanFDO: strapiFinancePlan(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiFinancePlanADO: strapiFinancePlan(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
+    ) {
+      id
+    }
+    strapiFinancePlanFormerFDO: strapiFinancePlanFormer(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiFinancePlanFormerADO: strapiFinancePlanFormer(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
+    ) {
+      id
+    }
+    strapiFinancePlanManualFDO: strapiFinancePlanManual(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiFinancePlanManualADO: strapiFinancePlanManual(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
+    ) {
+      id
+    }
+    strapiEvaluationPlan(business_cd: { eq: $slug }) {
+      id
+    }
+    strapiEvaluationPlanManualFDO: strapiEvaluationPlanManual(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiEvaluationPlanManualADO: strapiEvaluationPlanManual(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
+    ) {
+      id
+    }
+    strapiOfferingReportManualFDO: strapiOfferingReportManual(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiPreReportManualFDO: strapiPreReportManual(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiPreReportManualADO: strapiPreReportManual(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
+    ) {
+      id
+    }
+    strapiMidReportManualFDO: strapiMidReportManual(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiMidReportManualADO: strapiMidReportManual(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
+    ) {
+      id
+    }
+    strapiPostReportManualFDO: strapiPostReportManual(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiPostReportManualADO: strapiPostReportManual(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
+    ) {
+      id
+    }
+    strapiProgressReportManualFDO: strapiProgressReportManual(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiProgressReportManualADO: strapiProgressReportManual(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
+    ) {
+      id
+    }
+    strapiCompleteReportManualFDO: strapiCompleteReportManual(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiCompleteReportManualADO: strapiCompleteReportManual(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
+    ) {
+      id
+    }
+    strapiSettleReportFDO: strapiSettleReport(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiSettleReportADO: strapiSettleReport(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
+    ) {
+      id
     }
   }
 `;

@@ -16,7 +16,6 @@ const ResultCard = (props: any) => {
     business_org_type,
     business_name,
     business_status,
-    target_area,
     business_category,
     business_type_name,
   } = bizPlan;

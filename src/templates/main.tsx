@@ -55,6 +55,15 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
     allStrapiGroupLink,
 
     //サイドバーチェック用
+    strapiFinancePlanFDO,
+    strapiFinancePlanADO,
+    strapiFinancePlanFormerFDO,
+    strapiFinancePlanFormerADO,
+    strapiFinancePlanManualFDO,
+    strapiFinancePlanManualADO,
+    strapiEvaluationPlan,
+    strapiEvaluationPlanManualFDO,
+    strapiEvaluationPlanManualADO,
     strapiOfferingReportManualFDO,
     strapiPreReportManualFDO,
     strapiPreReportManualADO,
@@ -142,6 +151,19 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
   };
 
   useEffect(() => {
+    setWithFinance(
+      strapiFinancePlanFDO ||
+        strapiFinancePlanADO ||
+        strapiFinancePlanFormerFDO ||
+        strapiFinancePlanFormerADO ||
+        strapiFinancePlanManualFDO ||
+        strapiFinancePlanManualADO
+    );
+    setWithEval(
+      strapiEvaluationPlan ||
+        strapiEvaluationPlanManualFDO ||
+        strapiEvaluationPlanManualADO
+    );
     setWithORM(strapiOfferingReportManualFDO);
     setWithPreRM(strapiPreReportManualFDO || strapiPreReportManualADO);
     setWithMRM(strapiMidReportManualFDO || strapiMidReportManualADO);
@@ -304,8 +326,8 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
                       <div key={cg.node.organization_cd}>
                         <p css={th}>
                           {business_org_type === "F"
-                            ? "実行団体"
-                            : "資金分配団体"}
+                            ? "資金分配団体"
+                            : "実行団体"}
                           名
                         </p>
                         <p css={td}>
@@ -328,8 +350,8 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
                         <tr key={cg.node.organization_cd}>
                           <th css={th}>
                             {business_org_type === "F"
-                              ? "実行団体"
-                              : "資金分配団体"}
+                              ? "資金分配団体"
+                              : "実行団体"}
                             名
                           </th>
                           <td css={td}>
@@ -546,38 +568,97 @@ export const pageQuery = graphql`
         }
       }
     }
+    # サイドバーチェック用
+    strapiFinancePlanFDO: strapiFinancePlan(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiFinancePlanADO: strapiFinancePlan(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
+    ) {
+      id
+    }
+    strapiFinancePlanFormerFDO: strapiFinancePlanFormer(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiFinancePlanFormerADO: strapiFinancePlanFormer(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
+    ) {
+      id
+    }
+    strapiFinancePlanManualFDO: strapiFinancePlanManual(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiFinancePlanManualADO: strapiFinancePlanManual(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
+    ) {
+      id
+    }
+    strapiEvaluationPlan(business_cd: { eq: $slug }) {
+      id
+    }
+    strapiEvaluationPlanManualFDO: strapiEvaluationPlanManual(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiEvaluationPlanManualADO: strapiEvaluationPlanManual(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
+    ) {
+      id
+    }
     strapiOfferingReportManualFDO: strapiOfferingReportManual(
       biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
     ) {
       id
     }
     strapiPreReportManualFDO: strapiPreReportManual(
       biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
     ) {
       id
     }
     strapiPreReportManualADO: strapiPreReportManual(
       biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
     ) {
       id
     }
     strapiMidReportManualFDO: strapiMidReportManual(
       biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
     ) {
       id
     }
     strapiMidReportManualADO: strapiMidReportManual(
       biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
     ) {
       id
     }
     strapiPostReportManualFDO: strapiPostReportManual(
       biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
     ) {
       id
     }
     strapiPostReportManualADO: strapiPostReportManual(
       biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
     ) {
       id
     }

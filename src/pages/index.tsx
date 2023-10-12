@@ -32,6 +32,7 @@ const Index: React.FC<any> = ({ data }) => {
   const thumbnail = getImage(data.strapiMainVisual.thumbnail.localFile);
 
   useEffect(() => {
+    window.scroll({ top: 0, behavior: "smooth" });
     resetSearchStatus();
   }, []);
 

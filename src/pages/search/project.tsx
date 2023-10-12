@@ -56,8 +56,8 @@ const Project = () => {
             </div>
 
             <SubsidyAmount path={path} />
-            {/* <TopicKeyword path={path} /> */}
-            <AlgoliaIndex path="search" />
+            <TopicKeyword path={path} />
+            {/* <AlgoliaIndex path="search" /> */}
           </div>
           <div css={vCenter} tw="gap-6">
             <ToResultButton />

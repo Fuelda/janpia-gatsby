@@ -43,9 +43,9 @@ const SearchBoxIndex = (props: UseSearchBoxProps) => {
           event.preventDefault();
           event.stopPropagation();
           setQuery("");
-          if (inputRef.current) {
-            inputRef.current.focus();
-          }
+          // if (inputRef.current) {
+          //   inputRef.current.focus();
+          // }
         }}
       >
         <input
@@ -62,7 +62,7 @@ const SearchBoxIndex = (props: UseSearchBoxProps) => {
           onChange={(event) => {
             setQuery(event.currentTarget.value);
           }}
-          autoFocus
+          // autoFocus
         />
         <div
           css={hCenter}

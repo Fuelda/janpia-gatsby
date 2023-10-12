@@ -126,8 +126,9 @@ export const filterStrapiManualData = () => {
         searchState.business_category.some(
           (bc) =>
             item.bizPlan.business_category &&
-            bc.code === item.bizPlan.business_category.code &&
-            bc.subCode === item.bizPlan.business_category.subCode
+            // bc.code === item.bizPlan.business_category.code &&
+            // bc.subCode === item.bizPlan.business_category.subCode
+            bc.code === item.bizPlan.business_category.code
         )) &&
       //事業ステータス
       (searchState.business_status === null ||

@@ -23,7 +23,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
   news.forEach((newsItem) => {
     const newsId = newsItem.node.id;
-    console.log(newsId);
     createPage({
       path: `/news/${newsId}/`,
       component: path.resolve("./src/templates/newsPage.tsx"),

@@ -2,7 +2,7 @@ import React from "react";
 import Layout from "../components/lauout/Layout";
 import "twin.macro";
 import { Link } from "gatsby";
-import { hCenter } from "../styles/base";
+import { hCenter, link } from "../styles/base";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import tw from "twin.macro";
@@ -32,10 +32,7 @@ const PrivacyPolicy = () => {
               <h3 css={h3Pp}>1. 個人情報等の取得・利用</h3>
               <p>
                 当機構は、適法かつ公正な手段により個人情報を取得し、取得の際に示した利用目的の範囲内で、当機構の事業を遂行する上で必要な限りにおいて利用いたします。また、当機構のウェブサイト（
-                <a
-                  href="https://www.janpia.or.jp/"
-                  tw="underline text-blue-link"
-                >
+                <a href="https://www.janpia.or.jp/" css={link}>
                   https://www.janpia.or.jp/
                 </a>
                 ）において、取得した個人情報の利用目的を公表いたします。
