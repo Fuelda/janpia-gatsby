@@ -7,6 +7,7 @@ import SearchBoxIndex from "../component/main/Freeword/SearchBoxIndex";
 import "twin.macro";
 import SearchBoxSidebar from "../component/sidebar/Freeword/SearchBoxSidebar";
 import { useSearchContext } from "../../../context/searchContext";
+import SearchBoxTopicKeyword from "../component/main/Freeword/SearchBoxTopicKeyword";
 
 const searchClient = algoliasearch(
   process.env.GATSBY_ALGOLIA_APP_ID || "",
@@ -47,7 +48,7 @@ const AlgoliaIndex = (props: { path: string }) => {
 
   return (
     <InstantSearch indexName="janpia_search" searchClient={searchClient}>
-      {props.path === "/" ? (
+      {props.path === "/" && (
         <div>
           <div tw="lg:(hidden)">
             <SearchBoxIndex queryHook={queryHook} />
@@ -56,8 +57,10 @@ const AlgoliaIndex = (props: { path: string }) => {
             <SearchBoxSidebar queryHook={queryHook} />
           </div>
         </div>
-      ) : (
-        <SearchBoxSidebar queryHook={queryHook} />
+      )}
+      {props.path === "result" && <SearchBoxSidebar queryHook={queryHook} />}
+      {props.path === "search" && (
+        <SearchBoxTopicKeyword queryHook={queryHook} />
       )}
     </InstantSearch>
   );

@@ -8,6 +8,10 @@ import React, {
 } from "react";
 
 type detailType = {
+  withFinance: boolean;
+  setWithFinance: Dispatch<boolean>;
+  withEval: boolean;
+  setWithEval: Dispatch<boolean>;
   withORM: boolean;
   setWithORM: Dispatch<boolean>;
   withPreRM: boolean;
@@ -25,6 +29,10 @@ type detailType = {
 };
 
 const DetailContext = createContext<detailType>({
+  withFinance: false,
+  setWithFinance: () => {},
+  withEval: false,
+  setWithEval: () => {},
   withORM: false,
   setWithORM: () => {},
   withPreRM: false,
@@ -42,6 +50,8 @@ const DetailContext = createContext<detailType>({
 });
 
 const DetailProvider: FC<{ children: ReactNode }> = ({ children }) => {
+  const [withFinance, setWithFinance] = useState(false);
+  const [withEval, setWithEval] = useState(false);
   const [withORM, setWithORM] = useState(false);
   const [withPreRM, setWithPreRM] = useState(false);
   const [withProRM, setWithProRM] = useState(false);
@@ -50,6 +60,10 @@ const DetailProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [withSR, setWithSR] = useState(false);
   const [withCRM, setWithCRM] = useState(false);
   const value = {
+    withFinance,
+    setWithFinance,
+    withEval,
+    setWithEval,
     withORM,
     setWithORM,
     withPreRM,

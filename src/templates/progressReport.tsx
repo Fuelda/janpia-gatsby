@@ -31,14 +31,14 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
   const sortedProgressReportManual =
     allStrapiProgressReportManual &&
     allStrapiProgressReportManual.sort((a: any, b: any) => {
-      const itemA = a.node.progress_round.code;
-      const itemB = b.node.progress_round.code;
+      const itemA = a.node.progress_round ? a.node.progress_round.code : 0;
+      const itemB = b.node.progress_round ? b.node.progress_round.code : 0;
       return itemA - itemB;
     });
 
   const roundArray = allStrapiProgressReportManual
-    ? allStrapiProgressReportManual.map(
-        (prm: any) => prm.node.progress_round.code
+    ? allStrapiProgressReportManual.map((prm: any) =>
+        prm.node.progress_round ? prm.node.progress_round.code : 0
       )
     : [];
   const minRouond = Math.min(...roundArray);
@@ -49,7 +49,8 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
   const currentItem =
     allStrapiProgressReportManual &&
     allStrapiProgressReportManual.find(
-      (prm: any) => prm.node.progress_round.code === currentTab
+      (prm: any) =>
+        prm.node.progress_round && prm.node.progress_round.code === currentTab
     );
   const currentPdfUrl = currentItem && currentItem.node.data.url;
   const googleDocsViewerUrl = `https://docs.google.com/viewer?url=${currentPdfUrl}&embedded=true`;
@@ -62,19 +63,24 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
         <DetailWrapper category="進捗/年度末報告" slug={slug}>
           <div css={detailTab}>
             {sortedProgressReportManual &&
-              sortedProgressReportManual.map((prm: any) => (
-                <button
-                  key={prm.node.progress_round.code}
-                  css={[
-                    detailRoundTabBtn,
-                    currentTab === prm.node.progress_round.code &&
-                      detailTabBtnSelected,
-                  ]}
-                  onClick={() => setCurrentTab(prm.node.progress_round.code)}
-                >
-                  {prm.node.progress_round.label}
-                </button>
-              ))}
+              sortedProgressReportManual.map(
+                (prm: any) =>
+                  prm.node.progress_round && (
+                    <button
+                      key={prm.node.progress_round.code}
+                      css={[
+                        detailRoundTabBtn,
+                        currentTab === prm.node.progress_round.code &&
+                          detailTabBtnSelected,
+                      ]}
+                      onClick={() =>
+                        setCurrentTab(prm.node.progress_round.code)
+                      }
+                    >
+                      {prm.node.progress_round.label}
+                    </button>
+                  )
+              )}
           </div>
           <div css={detailBody}>
             {currentItem ? (

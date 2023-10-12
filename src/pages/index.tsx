@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import Layout from "../components/lauout/Layout";
-import MainVisual from "../components/organisms/MainVisual";
 import "twin.macro";
 import tw from "twin.macro";
 import { Link, graphql } from "gatsby";
@@ -10,7 +9,7 @@ import AlgoliaIndex from "../features/search/api/AlgoliaIndex";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import IndexLink from "../components/atoms/IndexLink";
-import { StaticImage } from "gatsby-plugin-image";
+import { GatsbyImage, StaticImage, getImage } from "gatsby-plugin-image";
 import { useSearchContext } from "../context/searchContext";
 import ReverseButton from "../components/atoms/ReverseButton";
 
@@ -30,7 +29,7 @@ const Index: React.FC<any> = ({ data }) => {
   const { resetSearchStatus } = useSearchContext();
   const newsEdges = data.allStrapiNew.edges;
   const linkEdges = data.allStrapiExternalLink.edges;
-  console.log(linkEdges);
+  const thumbnail = getImage(data.strapiMainVisual.thumbnail.localFile);
 
   useEffect(() => {
     resetSearchStatus();
@@ -39,7 +38,15 @@ const Index: React.FC<any> = ({ data }) => {
   return (
     <Layout>
       <div tw="mb-24">
-        <MainVisual />
+        <div tw="w-full h-[300px] relative md:(h-[166px])">
+          <GatsbyImage
+            image={thumbnail}
+            alt="サムネイル"
+            tw="w-full h-full absolute top-0 left-0 rounded-10"
+            objectFit="cover"
+          />
+        </div>
+
         <div css={indexBox} tw="mt-10">
           <p tw="text-center text-2xl">
             <FontAwesomeIcon
@@ -143,6 +150,15 @@ export default Index;
 
 export const newsQuery = graphql`
   query MyQuery {
+    strapiMainVisual {
+      thumbnail {
+        localFile {
+          childImageSharp {
+            gatsbyImageData
+          }
+        }
+      }
+    }
     allStrapiNew(limit: 3) {
       edges {
         node {

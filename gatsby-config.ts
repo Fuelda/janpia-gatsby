@@ -156,6 +156,9 @@ const config: GatsbyConfig = {
                       0,
                       3000
                     ),
+                  topic_keywords: node.topic_keywords
+                    ? node.topic_keywords.label
+                    : "",
                 };
               }),
           },

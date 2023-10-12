@@ -1,4 +1,4 @@
-import { Link } from "gatsby";
+import { Link, graphql } from "gatsby";
 import React from "react";
 import "twin.macro";
 import { hCenter, vCenter } from "../../styles/base";
@@ -21,6 +21,7 @@ const DetailSidebar = (props: { slug: string }) => {
   } = useDetailContext();
   const location = useLocation();
   const path = location.pathname;
+  const slug = props.slug;
 
   return (
     <div

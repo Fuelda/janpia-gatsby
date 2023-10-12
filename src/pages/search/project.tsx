@@ -17,6 +17,7 @@ import { useSearchContext } from "../../context/searchContext";
 import BusinessTypeName from "../../features/search/component/main/Business/BusinessTypeName";
 import { useLocation } from "@reach/router";
 import PrefecturesSp from "../../features/search/component/main/Organization/PrefecturesSp";
+import AlgoliaIndex from "../../features/search/api/AlgoliaIndex";
 
 const Project = () => {
   const { resetSearchStatus, searchState } = useSearchContext();
@@ -55,7 +56,8 @@ const Project = () => {
             </div>
 
             <SubsidyAmount path={path} />
-            <TopicKeyword path={path} />
+            {/* <TopicKeyword path={path} /> */}
+            <AlgoliaIndex path="search" />
           </div>
           <div css={vCenter} tw="gap-6">
             <ToResultButton />

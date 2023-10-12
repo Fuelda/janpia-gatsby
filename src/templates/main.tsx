@@ -19,6 +19,8 @@ import { link } from "../styles/base";
 const Main: React.FC<any> = ({ data, pageContext }) => {
   const filteredAllBizPlan = useFilteredStrapiContext();
   const {
+    setWithFinance,
+    setWithEval,
     setWithORM,
     setWithPreRM,
     setWithMRM,
