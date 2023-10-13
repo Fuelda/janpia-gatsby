@@ -16,7 +16,7 @@ const Seo = ({ title, description }: SeoType) => {
 
   const seoInfo = {
     title: title ? title : defaultTitle,
-    description: description || defaultDescription,
+    description: description ? description : defaultDescription,
     image: `${siteUrl}${image}`,
     url: `${siteUrl}${pathname}`,
   };

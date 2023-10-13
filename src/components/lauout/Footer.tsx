@@ -31,11 +31,14 @@ const Footer = (props: { path: string }) => {
             </div>
           </div>
           <div>
-            <StaticImage
-              src="../../images/logo.svg"
-              alt="ロゴ"
-              tw="w-[298px] h-[61px]"
-            />
+            <Link to="/">
+              <StaticImage
+                src="../../images/logo.svg"
+                alt="ロゴ"
+                tw="w-[298px] h-[61px]"
+              />
+            </Link>
+
             <p tw="mt-4 leading-5 lg:(mt-8)">
               〒100-0011
               <br />
