@@ -14,7 +14,6 @@ import { useModalContext } from "../../context/modalContext";
 import ModalPrefectures from "../../features/search/component/sidebar/modal/ModalPrefectures";
 import ModalPrefecturesSp from "../../features/search/component/sidebar/modal/ModalPrefecturesSp";
 import { useLocation } from "@reach/router";
-import Hamburger from "./Hamburger";
 
 Modal.setAppElement("#___gatsby");
 

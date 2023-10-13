@@ -14,6 +14,7 @@ import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { useSearchContext } from "../../context/searchContext";
 import { useLocation } from "@reach/router";
 import PrefecturesSp from "../../features/search/component/main/Organization/PrefecturesSp";
+import Seo from "../../components/lauout/Seo";
 
 const Organization = () => {
   const { resetSearchStatus } = useSearchContext();
@@ -26,6 +27,7 @@ const Organization = () => {
 
   return (
     <Layout>
+      <Seo title="団体から探す | 休眠預金活用事業 情報公開サイト" />
       <div tw="mb-32">
         <div css={pankuzu}>
           <Link to="/">ホーム</Link>

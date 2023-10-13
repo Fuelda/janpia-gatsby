@@ -29,6 +29,7 @@ import {
 } from "../features/search/store/filterContents";
 import EvaluationShortOutcome from "../components/organisms/EvaluationShortOutcome";
 import { useDetailContext } from "../context/detailContext";
+import Seo from "../components/lauout/Seo";
 
 const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
   const {
@@ -142,6 +143,7 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
 
   return (
     <Layout>
+      <Seo title="評価計画 | 休眠預金活用事業 情報公開サイト" />
       <DetailHeader business_cd={slug} />
       <div css={detailFlex}>
         <DetailSidebar slug={slug} />
@@ -162,6 +164,12 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                   title="評価スケジュール・実施体制"
                   anchor={`/result/${slug}/evaluation-plan/#firstItem`}
                 />
+                {evaluationTable.length !== 0 && (
+                  <DetailAnchor
+                    title="評価表"
+                    anchor={`/result/${slug}/evaluation-plan/#thirdItem`}
+                  />
+                )}
                 {evaluationFile.length !== 0 && (
                   <DetailAnchor
                     title="事業設計図"
@@ -531,7 +539,7 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                     </div>
                   </DetailItemWrapper>
                 </div>
-                <div id="">
+                <div id="thirdItem">
                   {evaluationTable.length !== 0 && (
                     <DetailItemWrapper itemName="評価表">
                       <div tw="lg:overflow-scroll">
@@ -542,7 +550,7 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                                 <th css={th2Sub} rowSpan={9}>
                                   {i + 1}
                                 </th>
-                                <th css={th}>評価の要素</th>
+                                <th css={thScroll}>評価の要素</th>
                                 <td css={td}>
                                   {
                                     evaluationFactorArray.find(
@@ -552,25 +560,27 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                                 </td>
                               </tr>
                               <tr>
-                                <th css={th}>評価項目</th>
+                                <th css={thScroll}>評価項目</th>
                                 <td css={td}>{item.node.eval_item}</td>
                               </tr>
                               <tr>
-                                <th css={th}>評価小項目</th>
+                                <th css={thScroll}>評価小項目</th>
                                 <td css={td}>{item.node.eval_sub_item}</td>
                               </tr>
                               <tr>
-                                <th css={th}>評価基準・判断方法（指標など）</th>
+                                <th css={thScroll}>
+                                  評価基準・判断方法（指標など）
+                                </th>
                                 <td css={td}>{item.node.criteria_method}</td>
                               </tr>
                               <tr>
-                                <th css={th}>
+                                <th css={thScroll}>
                                   評価基準・判断基準値（目標値/状態など）
                                 </th>
                                 <td css={td}>{item.node.criteria_st_value}</td>
                               </tr>
                               <tr>
-                                <th css={th}>測定方法・必要なデータ</th>
+                                <th css={thScroll}>測定方法・必要なデータ</th>
                                 <td css={td}>
                                   {
                                     evaluationRequiredArray.find(
@@ -581,11 +591,22 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                                 </td>
                               </tr>
                               <tr>
-                                <th css={th}>測定方法・情報源</th>
-                                <td css={td}>{item.node.mm_if_source}</td>
+                                <th css={thScroll}>測定方法・情報源</th>
+                                <td css={td}>
+                                  {item.node.mm_if_source && (
+                                    <div
+                                      dangerouslySetInnerHTML={{
+                                        __html: item.node.mm_if_source.replace(
+                                          /\n/g,
+                                          "<br />"
+                                        ),
+                                      }}
+                                    />
+                                  )}
+                                </td>
                               </tr>
                               <tr>
-                                <th css={th}>測定方法・データ収集方法</th>
+                                <th css={thScroll}>測定方法・データ収集方法</th>
                                 <td css={td}>
                                   {
                                     evaluationMethodArray.find(
@@ -596,7 +617,7 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                                 </td>
                               </tr>
                               <tr>
-                                <th css={th}>評価時期</th>
+                                <th css={thScroll}>評価時期</th>
                                 <td css={td}>
                                   {
                                     evaluationSeasonArray.find(

@@ -6,11 +6,13 @@ import { hCenter, vCenter, wrapperSp } from "../styles/base";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import ReverseButton from "../components/atoms/ReverseButton";
+import Seo from "../components/lauout/Seo";
 
 const NewsPage: React.FC<any> = ({ data, pageContext }) => {
   const { strapiNew } = data;
   return (
     <Layout>
+      <Seo title="お知らせ | 休眠預金活用事業 情報公開サイト" />
       <div tw="mb-[43px]">
         <div tw="text-sm p-2 bg-blue-base gap-2" css={hCenter}>
           <Link to="/">ホーム</Link>

@@ -30,6 +30,7 @@ import {
   tr,
 } from "../styles/table";
 import { useDetailContext } from "../context/detailContext";
+import Seo from "../components/lauout/Seo";
 
 const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
@@ -112,6 +113,7 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
 
   return (
     <Layout>
+      <Seo title="資金計画 | 休眠預金活用事業 情報公開サイト" />
       <DetailHeader business_cd={slug} />
       <div css={detailFlex}>
         <DetailSidebar slug={slug} />
@@ -981,7 +983,7 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                     <div id="three-firstItem">
                       <DetailItemWrapper itemName="事業費">
                         <div tw="lg:overflow-scroll">
-                          <table css={table} tw="lg:w-[780px]">
+                          <table css={table} tw="lg:w-full">
                             <tbody className="table__financialPlanFormer--tbody">
                               <tr css={tr}>
                                 <th css={th5col} colSpan={2}>

@@ -15,6 +15,7 @@ import { detailAnchor, detailBody, detailFlex } from "../styles/detailPage";
 import { useDetailContext } from "../context/detailContext";
 import { useConsortiumContext } from "../context/consortiumContext";
 import { link } from "../styles/base";
+import Seo from "../components/lauout/Seo";
 
 const Main: React.FC<any> = ({ data, pageContext }) => {
   const filteredAllBizPlan = useFilteredStrapiContext();
@@ -30,7 +31,7 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
     setWithSR,
   } = useDetailContext();
   const { setCurrentGroupCd } = useConsortiumContext();
-  const { slug } = pageContext;
+  const { slug, organization_cd } = pageContext;
   const filteredSingleBizPlan = filteredAllBizPlan.find(
     (item) => item.bizPlan.business_cd === slug
   ) || { bizPlan: {}, group: [] };
@@ -177,10 +178,12 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
     setCurrentGroupCd("");
   }, []);
 
-  console.log(bizPlan);
+  console.log(allStrapiGroupLink);
+  console.log(organization_cd);
 
   return (
     <Layout>
+      <Seo title="事業詳細 | 休眠預金活用事業 情報公開サイト" />
       <DetailHeader business_cd={slug} />
       <div css={detailFlex}>
         <DetailSidebar slug={slug} />

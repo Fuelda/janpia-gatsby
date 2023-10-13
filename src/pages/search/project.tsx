@@ -18,6 +18,7 @@ import BusinessTypeName from "../../features/search/component/main/Business/Busi
 import { useLocation } from "@reach/router";
 import PrefecturesSp from "../../features/search/component/main/Organization/PrefecturesSp";
 import AlgoliaIndex from "../../features/search/api/AlgoliaIndex";
+import Seo from "../../components/lauout/Seo";
 
 const Project = () => {
   const { resetSearchStatus, searchState } = useSearchContext();
@@ -31,6 +32,7 @@ const Project = () => {
 
   return (
     <Layout>
+      <Seo title="事業から探す | 休眠預金活用事業 情報公開サイト" />
       <div tw="mb-32">
         <div css={pankuzu}>
           <Link to="/">ホーム</Link>

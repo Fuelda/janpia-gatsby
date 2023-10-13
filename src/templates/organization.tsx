@@ -33,6 +33,7 @@ import { formatDate } from "../util/formatDate";
 import { useConsortiumContext } from "../context/consortiumContext";
 import { link } from "../styles/base";
 import { useDetailContext } from "../context/detailContext";
+import Seo from "../components/lauout/Seo";
 
 const Organization: React.FC<any> = ({ data, pageContext }) => {
   const { slug, organization_cd } = pageContext;
@@ -176,6 +177,7 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
 
   return (
     <Layout>
+      <Seo title="団体情報 | 休眠預金活用事業 情報公開サイト" />
       <DetailHeader business_cd={slug} />
       <div css={detailFlex}>
         <DetailSidebar slug={slug} />
@@ -670,7 +672,6 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
                       <p css={td}>{displayGroup.node.number_of_employees}名</p>
                     </div>
                     <div>
-                      <p css={th2Sub}></p>
                       <p css={th3}>常勤職員・従業員数</p>
                       <p css={td}>{displayGroup.node.fulltime_employees}名</p>
                     </div>

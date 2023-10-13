@@ -47,15 +47,19 @@ const strapiConfig = {
      * For http request with a image or other files need authorization
      * For expamle: Fetch a CDN file which has a security config when gatsby building needs
      */
-    Referer: "https://your-site-domain/",
+    Referer: "https://johokoukai.janpia.or.jp/",
     // Authorization: "Bearer eyJhabcdefg_replace_it_with_your_own_token",
   },
 };
 
 const config: GatsbyConfig = {
   siteMetadata: {
-    title: `JANPIA disclosure`,
-    siteUrl: `https://www.yourdomain.tld`,
+    title: "休眠預金活用事業 情報公開サイト",
+    desciption:
+      "休眠預金活用事業 情報公開サイト」は休眠預金を活用した事業や団体の情報を公開し、その情報を検索できる休眠預金活用事業の情報公開・情報検索サイトです。",
+    siteUrl: `https://johokoukai.janpia.or.jp`,
+    image: `/kv-summer.png`,
+    icon: `/favicon.png`,
   },
   // More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense.
   // If you use VSCode you can also use the GraphQL plugin
@@ -196,6 +200,7 @@ const config: GatsbyConfig = {
         crossOrigin: `use-credentials`,
       },
     },
+    `gatsby-plugin-react-helmet`,
   ],
 };
 

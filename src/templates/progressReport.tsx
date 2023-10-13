@@ -16,6 +16,7 @@ import {
   detailTabBtnSelected,
 } from "../styles/detailPage";
 import { useDetailContext } from "../context/detailContext";
+import Seo from "../components/lauout/Seo";
 
 const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
@@ -120,6 +121,7 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
 
   return (
     <Layout>
+      <Seo title="進捗/年度末報告 | 休眠預金活用事業 情報公開サイト" />
       <DetailHeader business_cd={slug} />
       <div css={detailFlex}>
         <DetailSidebar slug={slug} />

@@ -13,6 +13,7 @@ import SdgsGoal from "../../features/search/component/main/Issue/SdgsGoal";
 import { useSearchContext } from "../../context/searchContext";
 import BusinessTypeName from "../../features/search/component/main/Issue/BusinessTypeName";
 import { useLocation } from "@reach/router";
+import Seo from "../../components/lauout/Seo";
 
 const Issue = () => {
   const { resetSearchStatus } = useSearchContext();
@@ -25,6 +26,7 @@ const Issue = () => {
 
   return (
     <Layout>
+      <Seo title="社会課題から探す | 休眠預金活用事業 情報公開サイト" />
       <div tw="mb-32">
         <div css={pankuzu}>
           <Link to="/">ホーム</Link>

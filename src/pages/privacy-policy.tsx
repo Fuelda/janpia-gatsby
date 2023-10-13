@@ -6,12 +6,14 @@ import { hCenter, link } from "../styles/base";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import tw from "twin.macro";
+import Seo from "../components/lauout/Seo";
 
 const h3Pp = tw`mt-9 mb-3.5 text-lg font-bold`;
 
 const PrivacyPolicy = () => {
   return (
     <Layout>
+      <Seo title="個人情報について | 休眠預金活用事業 情報公開サイト" />
       <div tw="mb-[109px]">
         <div tw="text-sm p-2 bg-blue-base gap-2" css={hCenter}>
           <Link to="/">ホーム</Link>

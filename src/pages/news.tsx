@@ -6,63 +6,13 @@ import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { hCenter } from "../styles/base";
 import PageNav from "../features/pagenation/component/molecules/PageNav";
 import "twin.macro";
+import Seo from "../components/lauout/Seo";
 
 type NewsType = {
   id: string;
   createdAt: string;
   title: string;
 };
-
-const newsSample = [
-  {
-    node: {
-      id: "aaa",
-      createdAt: "2023.09.28",
-      title: "ああaaaaaaaaaaaaaaaaaaaabeefabbbbbbbbbbbbbあ",
-    },
-  },
-  {
-    node: {
-      id: "aaa",
-      createdAt: "2023.09.28",
-      title: "あああaaaaaaaaaaaaaaabeefabbbbaaaaaaaaaaaaaaabeefabbbb",
-    },
-  },
-  { node: { id: "aaa", createdAt: "2023.09.28", title: "あああ" } },
-  { node: { id: "aaa", createdAt: "2023.09.28", title: "あああ" } },
-  { node: { id: "aaa", createdAt: "2023.09.28", title: "あああ" } },
-  { node: { id: "aaa", createdAt: "2023.09.28", title: "あああ" } },
-  { node: { id: "aaa", createdAt: "2023.09.28", title: "あああ" } },
-  { node: { id: "aaa", createdAt: "2023.09.28", title: "あああ" } },
-  { node: { id: "aaa", createdAt: "2023.09.28", title: "あああ" } },
-  { node: { id: "aaa", createdAt: "2023.09.28", title: "あああ" } },
-  { node: { id: "aaa", createdAt: "2023.09.28", title: "あああ" } },
-  { node: { id: "aaa", createdAt: "2023.09.28", title: "あああ" } },
-  { node: { id: "aaa", createdAt: "2023.09.28", title: "あああ" } },
-  { node: { id: "aaa", createdAt: "2023.09.28", title: "あああ" } },
-  { node: { id: "aaa", createdAt: "2023.09.28", title: "あああ" } },
-  { node: { id: "aaa", createdAt: "2023.09.28", title: "あああ" } },
-  { node: { id: "aaa", createdAt: "2023.09.28", title: "あああ" } },
-  { node: { id: "aaa", createdAt: "2023.09.28", title: "あああ" } },
-  { node: { id: "aaa", createdAt: "2023.09.28", title: "あああ" } },
-  { node: { id: "aaa", createdAt: "2023.09.28", title: "あああ" } },
-  { node: { id: "aaa", createdAt: "2023.09.28", title: "あああ" } },
-  { node: { id: "aaa", createdAt: "2023.09.28", title: "あああ" } },
-  { node: { id: "aaa", createdAt: "2023.09.28", title: "あああ" } },
-  { node: { id: "aaa", createdAt: "2023.09.28", title: "あああ" } },
-  { node: { id: "aaa", createdAt: "2023.09.28", title: "あああ" } },
-  { node: { id: "aaa", createdAt: "2023.09.28", title: "あああ" } },
-  { node: { id: "aaa", createdAt: "2023.09.28", title: "あああ" } },
-  { node: { id: "aaa", createdAt: "2023.09.28", title: "あああ" } },
-  { node: { id: "aaa", createdAt: "2023.09.28", title: "あああ" } },
-  { node: { id: "aaa", createdAt: "2023.09.28", title: "あああ" } },
-  { node: { id: "aaa", createdAt: "2023.09.28", title: "あああ" } },
-  { node: { id: "aaa", createdAt: "2023.09.28", title: "あああ" } },
-  { node: { id: "aaa", createdAt: "2023.09.28", title: "あああ" } },
-  { node: { id: "aaa", createdAt: "2023.09.28", title: "いいい" } },
-  { node: { id: "aaa", createdAt: "2023.09.28", title: "あああ" } },
-  { node: { id: "aaa", createdAt: "2023.09.28", title: "あああ" } },
-];
 
 const News: React.FC<any> = ({ data }) => {
   const [currentPageNo, setCurrentPageNo] = useState(1);
@@ -78,6 +28,7 @@ const News: React.FC<any> = ({ data }) => {
 
   return (
     <Layout>
+      <Seo title="お知らせ | 休眠預金活用事業 情報公開サイト" />
       <div tw="mb-[43px]">
         <div tw="text-sm p-2 bg-blue-base gap-2" css={hCenter}>
           <Link to="/">ホーム</Link>

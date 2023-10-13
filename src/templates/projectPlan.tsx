@@ -34,6 +34,7 @@ import { sdgsGoalArray } from "../features/search/store/filterContents";
 import { formatDate } from "../util/formatDate";
 import "twin.macro";
 import { hCenter } from "../styles/base";
+import Seo from "../components/lauout/Seo";
 
 const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
@@ -118,6 +119,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
 
   return (
     <Layout>
+      <Seo title="事業計画 | 休眠預金活用事業 情報公開サイト" />
       <DetailHeader business_cd={slug} />
       <div css={detailFlex} tw="relative">
         <DetailSidebar slug={slug} />

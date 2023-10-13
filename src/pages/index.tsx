@@ -12,6 +12,7 @@ import IndexLink from "../components/atoms/IndexLink";
 import { GatsbyImage, StaticImage, getImage } from "gatsby-plugin-image";
 import { useSearchContext } from "../context/searchContext";
 import ReverseButton from "../components/atoms/ReverseButton";
+import Seo from "../components/lauout/Seo";
 
 const indexBox = [
   tw`bg-blue-base rounded-10 px-10 pt-7 pb-10 lg:(pb-7)`,
@@ -38,6 +39,7 @@ const Index: React.FC<any> = ({ data }) => {
 
   return (
     <Layout>
+      <Seo />
       <div tw="mb-24">
         <div tw="w-full h-[300px] relative md:(h-[166px])">
           <GatsbyImage

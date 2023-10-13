@@ -18,6 +18,7 @@ import {
   thead,
   thead8col,
 } from "../styles/table";
+import Seo from "../components/lauout/Seo";
 
 const thStandard = tw`bg-blue-base py-3 px-3 text-start border-gray-border border`;
 const thNoBorder = tw`bg-blue-base py-3 px-3 text-start `;
@@ -30,6 +31,7 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
 
   return (
     <Layout>
+      <Seo title="事業完了時精算報告 | 休眠預金活用事業 情報公開サイト" />
       <DetailHeader business_cd={slug} />
       <div css={detailFlex}>
         <DetailSidebar slug={slug} />
