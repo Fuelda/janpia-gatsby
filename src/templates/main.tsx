@@ -179,7 +179,6 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
   }, []);
 
   console.log(allStrapiGroupLink);
-  console.log(organization_cd);
 
   return (
     <Layout>

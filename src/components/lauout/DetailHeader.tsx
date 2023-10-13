@@ -1,6 +1,6 @@
 import { Link } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "twin.macro";
 import tw from "twin.macro";
 import { hCenter, pankuzu } from "../../styles/base";
@@ -14,9 +14,20 @@ const resultCardTip = tw`text-xs py-1 px-1.5 border border-gray-base text-gray-b
 
 const DetailHeader = (props: { business_cd: string }) => {
   const filteredAllBizPlan = useFilteredStrapiContext();
-  const filteredSingleBizPlan = filteredAllBizPlan.find(
-    (item) => item.bizPlan.business_cd === props.business_cd
-  ) || { bizPlan: {}, group: [] };
+  const [headerDataLoaded, setHeaderDataLoaded] = useState(false);
+
+  useEffect(() => {
+    setHeaderDataLoaded(false);
+  }, []);
+  useEffect(() => {
+    filteredAllBizPlan ? setHeaderDataLoaded(true) : setHeaderDataLoaded(false);
+  }, [filteredAllBizPlan]);
+
+  const filteredSingleBizPlan = headerDataLoaded
+    ? filteredAllBizPlan.find(
+        (item) => item.bizPlan.business_cd === props.business_cd
+      )
+    : { bizPlan: {}, group: [] };
   const { bizPlan, group, mainGroup } = filteredSingleBizPlan;
 
   const {

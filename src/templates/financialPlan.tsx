@@ -1000,7 +1000,7 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                                 financePlanFormer.dct_pj_cost_a_ttl && (
                                   <tr css={tr}>
                                     <th css={th2Sub5col}></th>
-                                    <th css={th25col}>
+                                    <th css={th25col} tw="w-1/2">
                                       実行団体への助成に充当される費用
                                     </th>
                                     <td css={tdScroll}>

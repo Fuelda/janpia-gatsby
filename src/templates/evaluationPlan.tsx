@@ -241,7 +241,9 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                               </tr>
                             )}
                           {strapiEvaluationPlan &&
-                            strapiEvaluationPlan.prior_submit_priod && (
+                            (strapiEvaluationPlan.prior_submit_priod ||
+                              strapiEvaluationPlan.mid_submit_priod ||
+                              strapiEvaluationPlan.after_submit_priod) && (
                               <tr css={tr}>
                                 <th css={thScroll}>提出時期</th>
                                 <td css={tdScroll}>

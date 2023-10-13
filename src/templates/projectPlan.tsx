@@ -116,6 +116,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
       : [];
 
   console.log(data);
+  console.log(bizPlanSubSdgs);
 
   return (
     <Layout>
@@ -131,10 +132,12 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                   title="優先的に解決すべき社会課題の諸課題"
                   anchor={`/result/${slug}/project-plan/#firstItem`}
                 />
-                <DetailAnchor
-                  title="SDGsとの関連"
-                  anchor={`/result/${slug}/project-plan/#secondItem`}
-                />
+                {bizPlanSubSdgs.length !== 0 && (
+                  <DetailAnchor
+                    title="SDGsとの関連"
+                    anchor={`/result/${slug}/project-plan/#secondItem`}
+                  />
+                )}
                 <DetailAnchor
                   title="団体の社会的役割"
                   anchor={`/result/${slug}/project-plan/#thirdItem`}
@@ -289,47 +292,49 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                     )}
                   </DetailItemWrapper>
                 </div>
-                <div id="secondItem">
-                  <DetailItemWrapper itemName="SDGsとの関連">
-                    <div tw="overflow-scroll">
-                      <table css={[table, tableScroll]}>
-                        <thead css={thead}>
-                          <tr css={tr}>
-                            <th css={thScroll}>ゴール</th>
-                            <td css={tdScroll}>ターゲット</td>
-                            <td css={tdScroll}>関連性の説明</td>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {bizPlanSubSdgs &&
-                            bizPlanSubSdgs.map((sdgs: any) => (
-                              <tr key={sdgs}>
-                                <th css={tdScroll}>
-                                  {
-                                    sdgsGoalArray.find(
-                                      (sg) => sg.code === sdgs.node.sdgs_goal
-                                    )?.label
-                                  }
-                                </th>
-                                <td css={td3col}>{sdgs.node.sdgs_target}</td>
-                                <td css={td3col}>
-                                  <div
-                                    dangerouslySetInnerHTML={{
-                                      __html:
-                                        sdgs.node.sdgs_description.data.childMarkdownRemark.html.replace(
-                                          /\n/g,
-                                          "<br />"
-                                        ),
-                                    }}
-                                  />
-                                </td>
-                              </tr>
-                            ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </DetailItemWrapper>
-                </div>
+                {bizPlanSubSdgs.length !== 0 && (
+                  <div id="secondItem">
+                    <DetailItemWrapper itemName="SDGsとの関連">
+                      <div tw="overflow-scroll">
+                        <table css={[table, tableScroll]}>
+                          <thead css={thead}>
+                            <tr css={tr}>
+                              <th css={thScroll}>ゴール</th>
+                              <td css={tdScroll}>ターゲット</td>
+                              <td css={tdScroll}>関連性の説明</td>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {bizPlanSubSdgs &&
+                              bizPlanSubSdgs.map((sdgs: any) => (
+                                <tr key={sdgs}>
+                                  <th css={tdScroll}>
+                                    {
+                                      sdgsGoalArray.find(
+                                        (sg) => sg.code === sdgs.node.sdgs_goal
+                                      )?.label
+                                    }
+                                  </th>
+                                  <td css={td3col}>{sdgs.node.sdgs_target}</td>
+                                  <td css={td3col}>
+                                    <div
+                                      dangerouslySetInnerHTML={{
+                                        __html:
+                                          sdgs.node.sdgs_description.data.childMarkdownRemark.html.replace(
+                                            /\n/g,
+                                            "<br />"
+                                          ),
+                                      }}
+                                    />
+                                  </td>
+                                </tr>
+                              ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </DetailItemWrapper>
+                  </div>
+                )}
                 <div id="thirdItem">
                   <DetailItemWrapper itemName="団体の社会的役割">
                     <div tw="hidden lg:block">
