@@ -139,8 +139,6 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
     setWithSR(strapiSettleReportFDO || strapiSettleReportADO);
   }, []);
 
-  console.log(data);
-
   return (
     <Layout>
       <Seo title="評価計画 | 休眠預金活用事業 情報公開サイト" />

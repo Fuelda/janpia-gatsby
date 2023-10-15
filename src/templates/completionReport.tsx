@@ -81,8 +81,6 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
     setWithSR(strapiSettleReportFDO || strapiSettleReportADO);
   }, []);
 
-  console.log(data);
-
   return (
     <Layout>
       <Seo title="事業完了報告 | 休眠預金活用事業 情報公開サイト" />

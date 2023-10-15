@@ -24,7 +24,7 @@ const AlgoliaIndex = (props: { path: string }) => {
 
   const queryHook: SearchBoxProps["queryHook"] = (query, search) => {
     setWithAlgoliaQuery(query ? true : false);
-    console.log(query);
+
     index.search(query, searchOption).then(({ hits }) => {
       const hitCd = hits.map((hit: any) => {
         if (hit.business_cd) {

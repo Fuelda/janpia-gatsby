@@ -81,8 +81,6 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
     setWithSR(strapiSettleReportFDO || strapiSettleReportADO);
   }, []);
 
-  console.log(pdfUrl);
-
   return (
     <Layout>
       <Seo title="中間評価報告 | 休眠預金活用事業 情報公開サイト" />

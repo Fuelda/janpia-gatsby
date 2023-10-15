@@ -115,9 +115,6 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
           .sort((a: any, b: any) => a.node.row_no - b.node.row_no)
       : [];
 
-  console.log(data);
-  console.log(bizPlanSubSdgs);
-
   return (
     <Layout>
       <Seo title="事業計画 | 休眠預金活用事業 情報公開サイト" />

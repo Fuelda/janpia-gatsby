@@ -27,7 +27,10 @@ const NewsPage: React.FC<any> = ({ data, pageContext }) => {
             <p tw="text-sm text-gray-base">{strapiNew.createdAt}</p>
             <div
               dangerouslySetInnerHTML={{
-                __html: strapiNew.content.data.childMarkdownRemark.html,
+                __html: strapiNew.content.data.childMarkdownRemark.html.replace(
+                  /\n/g,
+                  "<br />"
+                ),
               }}
               className="news-body"
               tw="mt-[18px]"

@@ -1,5 +1,4 @@
 import React from "react";
-// import "@fontsource/noto-sans-jp";
 import "@fontsource-variable/noto-sans-jp";
 import "../../styles/global.css";
 import Header from "./Header";
@@ -18,12 +17,9 @@ import { useLocation } from "@reach/router";
 Modal.setAppElement("#___gatsby");
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const filteredAllBizPlan = useFilteredStrapiContext();
   const { isModalOpen, setIsModalOpen } = useModalContext();
   const location = useLocation();
   const path = location.pathname;
-
-  console.log(filteredAllBizPlan);
 
   return (
     <div tw="relative">

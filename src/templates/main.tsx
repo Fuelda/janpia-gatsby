@@ -178,8 +178,6 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
     setCurrentGroupCd("");
   }, []);
 
-  console.log(allStrapiGroupLink);
-
   return (
     <Layout>
       <Seo title="事業詳細 | 休眠預金活用事業 情報公開サイト" />

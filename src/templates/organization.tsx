@@ -173,7 +173,7 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
     setWithSR(strapiSettleReportFDO || strapiSettleReportADO);
   }, []);
 
-  console.log(allStrapiGroup);
+  
 
   return (
     <Layout>

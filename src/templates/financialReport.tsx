@@ -27,7 +27,6 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
   const { strapiSettleReportFDO, strapiSettleReportADO } = data;
   const settleReport = strapiSettleReportFDO || strapiSettleReportADO;
-  console.log(settleReport);
 
   return (
     <Layout>

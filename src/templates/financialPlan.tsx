@@ -109,7 +109,7 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
     setWithSR(strapiSettleReportFDO || strapiSettleReportADO);
   }, []);
 
-  console.log(data);
+  
 
   return (
     <Layout>

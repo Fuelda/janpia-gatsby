@@ -9,35 +9,27 @@ import { useFilteredStrapiContext } from "../../context/filteredStrapiContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import DetailSelector from "../organisms/DetailSelector";
+import { useStrapiContext } from "../../context/strapiContext";
+import { linkCollectionTypes } from "../../util/linkCollectionTypes";
+import { linkCollectionTypesManual } from "../../util/linkCollectionTypesManual";
 
 const resultCardTip = tw`text-xs py-1 px-1.5 border border-gray-base text-gray-base`;
 
 const DetailHeader = (props: { business_cd: string }) => {
-  const filteredAllBizPlan = useFilteredStrapiContext();
-  const [headerDataLoaded, setHeaderDataLoaded] = useState(false);
+  const linkedBizPlan = linkCollectionTypes();
+  const linkedBizPlanManual = linkCollectionTypesManual();
+  const linkedAllBizPlan = [...linkedBizPlan, ...linkedBizPlanManual];
+  const headerBizPlan = linkedAllBizPlan.find(
+    (item) => item.bizPlan.business_cd === props.business_cd
+  );
 
-  useEffect(() => {
-    setHeaderDataLoaded(false);
-  }, []);
-  useEffect(() => {
-    filteredAllBizPlan ? setHeaderDataLoaded(true) : setHeaderDataLoaded(false);
-  }, [filteredAllBizPlan]);
-
-  const filteredSingleBizPlan = headerDataLoaded
-    ? filteredAllBizPlan.find(
-        (item) => item.bizPlan.business_cd === props.business_cd
-      )
-    : { bizPlan: {}, group: [] };
-  const { bizPlan, group, mainGroup } = filteredSingleBizPlan;
-
-  const {
-    business_org_type,
-    business_name,
-    business_status,
-    target_area,
-    business_category,
-    business_type_name,
-  } = bizPlan;
+  const bizPlan = headerBizPlan?.bizPlan;
+  const business_org_type = bizPlan?.business_org_type;
+  const business_name = bizPlan?.business_name;
+  const business_status = bizPlan?.business_status;
+  const business_category = bizPlan?.business_category;
+  const business_type_name = bizPlan?.business_type_name;
+  const mainGroup = headerBizPlan?.mainGroup;
 
   const businessCategoryProperty = businessCategoryArray;
 
@@ -50,28 +42,20 @@ const DetailHeader = (props: { business_cd: string }) => {
     businessStatusText = "終了";
   }
 
-  const mainGroupIndirect =
-    group.length !== 0 &&
-    group.find((g: any) => {
-      const groupRole =
-        g.business_org_type === "F" ? g.org_role_fdo : g.org_role_fdo;
-      return groupRole === 0 || 1;
-    });
-
   let mainGroupName = "";
   if (mainGroup) {
-    mainGroupName = mainGroup.node.organization_name;
-  } else if (mainGroupIndirect) {
-    mainGroupName = mainGroupIndirect.groupData.organization_name;
+    mainGroupName = mainGroup.node.organization_name
+      ? mainGroup.node.organization_name
+      : "";
   } else {
     mainGroupName = "";
   }
 
   let mainGroupPrefecture = "";
   if (mainGroup) {
-    mainGroupPrefecture = mainGroup.node.prefectures;
-  } else if (mainGroupIndirect) {
-    mainGroupPrefecture = mainGroupIndirect.groupData.prefectures;
+    mainGroupPrefecture = mainGroup.node.prefectures
+      ? mainGroup.node.prefectures
+      : "";
   } else {
     mainGroupPrefecture = "";
   }
@@ -93,9 +77,20 @@ const DetailHeader = (props: { business_cd: string }) => {
     businessCategoryLabel = "";
   }
 
-  const businessTypeNameLabel = business_type_name
-    ? business_type_name.label || business_type_name || ""
-    : "";
+  let businessTypeNameLabel = "";
+  if (business_type_name) {
+    if (typeof business_type_name === "string") {
+      businessTypeNameLabel = business_type_name;
+    } else if (
+      typeof business_type_name === "object" &&
+      business_type_name.label
+    ) {
+      businessTypeNameLabel = business_type_name.label;
+    }
+  } else {
+    businessTypeNameLabel = "";
+  }
+
   const splitBusinessTypeName = businessTypeNameLabel.match(/(\d+年度)(.+)/);
   const businessTypeNameYear =
     splitBusinessTypeName && splitBusinessTypeName[1];
@@ -124,7 +119,7 @@ const DetailHeader = (props: { business_cd: string }) => {
       </div>
       <div tw="w-full p-2.5 flex gap-2 mt-3.5 lg:(py-0)">
         <div tw="w-[100px] h-[100px] shrink-0 lg:(w-[23%] h-auto)">
-          {business_org_type === "F" ? (
+          {business_org_type && business_org_type === "F" ? (
             <StaticImage
               src="../../images/thumbnail_shikinbunpai.png"
               alt="サムネイル"
@@ -158,7 +153,7 @@ const DetailHeader = (props: { business_cd: string }) => {
           </div>
           <p tw="text-lg font-bold break-words">{business_name}</p>
           <div tw="mt-3.5 flex gap-7 md:hidden">
-            {(mainGroup || mainGroupIndirect) && (
+            {mainGroup && (
               <div css={hCenter} tw="gap-1.5">
                 <StaticImage
                   src="../../images/office.svg"
@@ -182,7 +177,7 @@ const DetailHeader = (props: { business_cd: string }) => {
         </div>
       </div>
       <div tw="hidden md:(block px-2.5)">
-        {(mainGroup || mainGroupIndirect) && (
+        {mainGroup && (
           <div css={hCenter} tw="gap-1.5">
             <StaticImage
               src="../../images/office.svg"
