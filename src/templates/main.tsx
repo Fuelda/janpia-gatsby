@@ -7,7 +7,6 @@ import "twin.macro";
 import tw from "twin.macro";
 import DetailWrapper from "../components/lauout/DetailWrapper";
 import DetailItemWrapper from "../components/lauout/DetailItemWrapper";
-import { useFilteredStrapiContext } from "../context/filteredStrapiContext";
 import { businessCategoryArray } from "../features/search/store/filterContents";
 import DetailAnchor from "../components/atoms/DetailAnchor";
 import { table, td, th, tr } from "../styles/table";
@@ -16,9 +15,10 @@ import { useDetailContext } from "../context/detailContext";
 import { useConsortiumContext } from "../context/consortiumContext";
 import { link } from "../styles/base";
 import Seo from "../components/lauout/Seo";
+import { linkCollectionTypes } from "../util/linkCollectionTypes";
+import { linkCollectionTypesManual } from "../util/linkCollectionTypesManual";
 
 const Main: React.FC<any> = ({ data, pageContext }) => {
-  const filteredAllBizPlan = useFilteredStrapiContext();
   const {
     setWithFinance,
     setWithEval,
@@ -32,18 +32,35 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
   } = useDetailContext();
   const { setCurrentGroupCd } = useConsortiumContext();
   const { slug, organization_cd } = pageContext;
-  const filteredSingleBizPlan = filteredAllBizPlan.find(
+  const linkedBizPlan = linkCollectionTypes();
+  const linkedBizPlanManual = linkCollectionTypesManual();
+  const linkedAllBizPlan = [...linkedBizPlan, ...linkedBizPlanManual];
+  const headerBizPlan = linkedAllBizPlan.find(
     (item) => item.bizPlan.business_cd === slug
-  ) || { bizPlan: {}, group: [] };
-  const { bizPlan, group, mainGroup } = filteredSingleBizPlan;
-  const {
-    business_org_type,
-    business_name,
-    business_status,
-    target_area,
-    business_category,
-    business_type_name,
-  } = bizPlan;
+  );
+  const bizPlan = headerBizPlan?.bizPlan;
+  const business_org_type = bizPlan?.business_org_type;
+  const business_name = bizPlan?.business_name;
+  const business_status = bizPlan?.business_status;
+  const business_category = bizPlan?.business_category;
+  const business_type_name = bizPlan?.business_type_name;
+  const target_area = bizPlan?.target_area;
+  const mainGroup = headerBizPlan?.mainGroup;
+
+  let businessTypeNameLabel = "";
+  if (business_type_name) {
+    if (typeof business_type_name === "string") {
+      businessTypeNameLabel = business_type_name;
+    } else if (
+      typeof business_type_name === "object" &&
+      business_type_name.label
+    ) {
+      businessTypeNameLabel = business_type_name.label;
+    }
+  } else {
+    businessTypeNameLabel = "";
+  }
+
   const {
     strapiBizPlan,
     strapiBizPlanManualFDO,
@@ -80,18 +97,11 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
     strapiSettleReportADO,
   } = data;
 
-  const mainGroupIndirect =
-    group.length !== 0 &&
-    group.find((g: any) => {
-      const groupRole =
-        g.business_org_type === "F" ? g.org_role_fdo : g.org_role_ado;
-      return groupRole === 0 || 1;
-    });
   let mainGroupName = "";
   if (mainGroup) {
-    mainGroupName = mainGroup.node.organization_name;
-  } else if (mainGroupIndirect) {
-    mainGroupName = mainGroupIndirect.groupData.organization_name;
+    mainGroupName = mainGroup.node.organization_name
+      ? mainGroup.node.organization_name
+      : "";
   } else {
     mainGroupName = "";
   }
@@ -210,7 +220,7 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
                   <p css={th}>事業名</p>
                   <p css={td}>{business_name}</p>
 
-                  {(mainGroup || mainGroupIndirect) && (
+                  {mainGroup && (
                     <div>
                       <p css={th}>団体名</p>
                       <p css={td}>{mainGroupName}</p>
@@ -220,8 +230,7 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
                     <div>
                       <p css={th}>採択事業年度</p>
                       <p css={td}>
-                        {business_type_name &&
-                          (business_type_name.label || business_type_name)}
+                        {businessTypeNameLabel && businessTypeNameLabel}
                       </p>
                     </div>
                   )}
@@ -267,18 +276,17 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
                         <td css={td}>{strapiBizPlan.business_name_sub}</td>
                       </tr>
                     )}
-                    {(mainGroup || mainGroupIndirect) && (
+                    {mainGroup && (
                       <tr>
                         <th css={th}>団体名</th>
                         <td css={td}>{mainGroupName}</td>
                       </tr>
                     )}
-                    {business_type_name && (
+                    {businessTypeNameLabel && (
                       <tr>
                         <th css={th}>採択事業年度</th>
                         <td css={td}>
-                          {business_type_name &&
-                            (business_type_name.label || business_type_name)}
+                          {businessTypeNameLabel && businessTypeNameLabel}
                         </td>
                       </tr>
                     )}
