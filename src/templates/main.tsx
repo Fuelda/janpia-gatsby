@@ -149,6 +149,7 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
     (strapiBizPlanManualADO &&
       strapiBizPlanManualADO.business_overview.data &&
       strapiBizPlanManualADO.business_overview.data.childMarkdownRemark.html);
+  console.log(strapiBizPlanManualFDO);
 
   const linkedAdo =
     business_org_type === "F"
@@ -510,6 +511,7 @@ export const pageQuery = graphql`
     }
     strapiBizPlanManualFDO: strapiBizPlanManual(
       biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
     ) {
       business_overview {
         data {
@@ -521,6 +523,7 @@ export const pageQuery = graphql`
     }
     strapiBizPlanManualADO: strapiBizPlanManual(
       biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
     ) {
       business_overview {
         data {

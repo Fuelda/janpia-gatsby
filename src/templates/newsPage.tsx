@@ -24,7 +24,7 @@ const NewsPage: React.FC<any> = ({ data, pageContext }) => {
         <div tw="px-3.5">
           <h2 tw="text-xl py-6 font-bold">{strapiNew.title}</h2>
           <div>
-            <p tw="text-sm text-gray-base">{strapiNew.createdAt}</p>
+            <p tw="text-sm text-gray-base">{strapiNew.date}</p>
             <div
               dangerouslySetInnerHTML={{
                 __html: strapiNew.content.data.childMarkdownRemark.html.replace(
@@ -52,7 +52,7 @@ export const pageQuery = graphql`
     strapiNew(id: { eq: $slug }) {
       id
       title
-      createdAt(formatString: "YYYY.MM.DD")
+      date(formatString: "YYYY.MM.DD")
       content {
         data {
           childMarkdownRemark {

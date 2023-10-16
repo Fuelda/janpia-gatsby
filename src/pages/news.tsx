@@ -10,7 +10,7 @@ import Seo from "../components/lauout/Seo";
 
 type NewsType = {
   id: string;
-  createdAt: string;
+  date: string;
   title: string;
 };
 
@@ -45,7 +45,7 @@ const News: React.FC<any> = ({ data }) => {
                 tw="flex gap-3.5 lg:(flex-col items-start gap-0)"
                 css={hCenter}
               >
-                <p tw="text-sm text-gray-base">{news.node.createdAt}</p>
+                <p tw="text-sm text-gray-base">{news.node.date}</p>
                 <p tw="break-all">{news.node.title}</p>
               </Link>
             ))}
@@ -73,7 +73,7 @@ export const newsQuery = graphql`
         node {
           id
           title
-          createdAt(formatString: "YYYY.MM.DD")
+          date(formatString: "YYYY.MM.DD")
         }
       }
     }

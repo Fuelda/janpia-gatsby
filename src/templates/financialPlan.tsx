@@ -155,7 +155,7 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                 <tbody className="table__financialPlan--tbody">
                   <tr>
                     <th colSpan={2} className="table__financialPlan--tbody-01">
-                      事業費
+                      事業費 (円)
                     </th>
                     <td>
                       {financePlan.bis_sum &&
@@ -172,7 +172,7 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                     <tr>
                       <th className="table__financialPlan--tbody-sub"></th>
                       <th className="table__financialPlan--tbody-02">
-                        実行団体への助成
+                        実行団体への助成 (円)
                       </th>
                       <td>
                         {financePlan.bis_ado &&
@@ -192,7 +192,7 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                     <tr>
                       <th className="table__financialPlan--tbody-sub"></th>
                       <th className="table__financialPlan--tbody-02">
-                        直接事業費
+                        直接事業費 (円)
                       </th>
                       <td>
                         {financePlan.bis_ado_direct &&
@@ -211,7 +211,7 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                   <tr>
                     <th></th>
                     <th className="table__financialPlan--tbody-02">
-                      管理的経費
+                      管理的経費 (円)
                     </th>
                     <td>
                       {financePlan.bis_manage_sum &&
@@ -232,7 +232,7 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                         colSpan={2}
                         className="table__financialPlan--tbody-02"
                       >
-                        プログラムオフィサー関連経費
+                        プログラムオフィサー関連経費 (円)
                       </th>
                       <td>
                         {financePlan.po_sum_sum &&
@@ -251,7 +251,7 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                   )}
                   <tr>
                     <th colSpan={2} className="table__financialPlan--tbody-01">
-                      評価関連経費
+                      評価関連経費 (円)
                     </th>
                     <td>
                       {financePlan.eval_sum_sum &&
@@ -269,7 +269,7 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                     <tr>
                       <th className="table__financialPlan--tbody-sub"></th>
                       <th className="table__financialPlan--tbody-02">
-                        資金分配団体
+                        資金分配団体 (円)
                       </th>
                       <td>
                         {financePlan &&
@@ -294,7 +294,7 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                   <tr>
                     <th></th>
                     <th className="table__financialPlan--tbody-02">
-                      実行団体用
+                      実行団体用 (円)
                     </th>
                     <td>
                       {financePlan.eval_ado_sum_sum &&
@@ -312,7 +312,7 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                   </tr>
                   <tr>
                     <th colSpan={2} className="table__financialPlan--tbody-02">
-                      合計
+                      合計 (円)
                     </th>
                     <td>
                       {financePlan.sum_sum &&
@@ -401,7 +401,7 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                             <tbody className="table__financialPlanFormer--tbody">
                               <tr css={tr}>
                                 <th css={th5col} colSpan={2}>
-                                  事業費（A+B）
+                                  事業費 (A+B) (円)
                                 </th>
                                 {financePlanFormer.a_plus_b_2020 && (
                                   <td>
@@ -447,7 +447,7 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                               </tr>
                               <tr css={tr}>
                                 <th css={th2Sub5col}></th>
-                                <th css={th25col}>A. 助成金</th>
+                                <th css={th25col}>A. 助成金 (円)</th>
                                 {financePlanFormer.subsidy_2020 && (
                                   <td>
                                     {parseInt(
@@ -493,7 +493,9 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                               </tr>
                               <tr css={tr}>
                                 <th css={th2Sub5col}></th>
-                                <th css={th25col}>B. 自己資金・民間資金</th>
+                                <th css={th25col}>
+                                  B. 自己資金・民間資金 (円)
+                                </th>
                                 {financePlanFormer.own_funds_2020 && (
                                   <td>
                                     {parseInt(
@@ -624,7 +626,7 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                               <tbody className="table__financialPlanFormer--tbody">
                                 <tr css={tr}>
                                   <th css={th5col} colSpan={2}>
-                                    C. プログラムオフィサー 関連経費
+                                    C. プログラムオフィサー 関連経費 (円)
                                   </th>
                                   {financePlanFormer.po_2020 && (
                                     <td>
@@ -707,7 +709,7 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                             <tbody className="table__financialPlanFormer--tbody">
                               <tr css={tr}>
                                 <th css={th6col} colSpan={2}>
-                                  D. 評価関連経費計
+                                  D. 評価関連経費計 (円)
                                 </th>
                                 <td css={td6col}>-</td>
                                 {financePlanFormer.eval_2020 && (
@@ -754,10 +756,10 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                               </tr>
                               <tr css={tr}>
                                 <th css={th2Sub5col}></th>
-                                <th css={th26col}>資金分配団体</th>
+                                <th css={th26col}>資金分配団体 (円)</th>
                                 <td css={td6col}>
                                   {financePlanFormer.eval_fdo_percent &&
-                                    financePlanFormer.eval_fdo_percent}
+                                    financePlanFormer.eval_fdo_percent + "%"}
                                 </td>
                                 {financePlanFormer.eval_fdo_2020 && (
                                   <td>
@@ -803,10 +805,10 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                               </tr>
                               <tr css={tr}>
                                 <th css={th2Sub5col}></th>
-                                <th css={th26col}>実行団体</th>
+                                <th css={th26col}>実行団体 (円)</th>
                                 <td css={td6col}>
                                   {financePlanFormer.eval_ado_percent &&
-                                    financePlanFormer.eval_ado_percent}
+                                    financePlanFormer.eval_ado_percent + "%"}
                                 </td>
                                 {financePlanFormer.eval_ado_2020 && (
                                   <td>
@@ -876,7 +878,7 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                             <tbody className="table__financialPlanFormer--tbody">
                               <tr css={tr}>
                                 <th css={th5col} colSpan={2}>
-                                  助成金計（A+C+D）
+                                  助成金計 (A+C+D) (円)
                                 </th>
                                 {financePlanFormer.abc_2020 && (
                                   <td>
@@ -922,7 +924,7 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                               </tr>
                               <tr css={tr}>
                                 <th css={th5col} colSpan={2}>
-                                  総事業費（A+B+C+D）
+                                  総事業費 (A+B+C+D) (円)
                                 </th>
                                 {financePlanFormer.all_2020 && (
                                   <td>
@@ -985,7 +987,7 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                             <tbody className="table__financialPlanFormer--tbody">
                               <tr css={tr}>
                                 <th css={th5col} colSpan={2}>
-                                  A. 助成金合計
+                                  A. 助成金合計 (円)
                                 </th>
                                 <td css={tdScroll}>
                                   {financePlanFormer.a_ttl &&
@@ -999,7 +1001,7 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                                   <tr css={tr}>
                                     <th css={th2Sub5col}></th>
                                     <th css={th25col} tw="w-1/2">
-                                      実行団体への助成に充当される費用
+                                      実行団体への助成に充当される費用 (円)
                                     </th>
                                     <td css={tdScroll}>
                                       {parseInt(
@@ -1013,7 +1015,7 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                                   <tr css={tr}>
                                     <th css={th2Sub5col}></th>
                                     <th css={th25col} tw="w-1/2">
-                                      直接事業費
+                                      直接事業費 (円)
                                     </th>
                                     <td css={tdScroll}>
                                       {parseInt(
@@ -1025,7 +1027,7 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                               <tr css={tr}>
                                 <th css={th2Sub5col}></th>
                                 <th css={th25col} tw="w-1/2">
-                                  管理的経費
+                                  管理的経費 (円)
                                 </th>
                                 <td css={tdScroll}>
                                   {financePlanFormer.mg_cost_a_ttl &&
@@ -1047,7 +1049,7 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                               </tr>
                               <tr css={tr}>
                                 <th css={th5col} colSpan={2}>
-                                  B. 自己資金・民間資金
+                                  B. 自己資金・民間資金 (円)
                                 </th>
                                 <td css={tdScroll}>
                                   {financePlanFormer.b_ttl &&
@@ -1061,7 +1063,7 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                                   <tr css={tr}>
                                     <th css={th2Sub5col}></th>
                                     <th css={th25col}>
-                                      実行団体への助成に充当される費用
+                                      実行団体への助成に充当される費用 (円)
                                     </th>
                                     <td css={tdScroll}>
                                       {parseInt(
@@ -1074,7 +1076,7 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                                 financePlanFormer.dct_pj_cost_b_ttl_ado && (
                                   <tr css={tr}>
                                     <th css={th2Sub5col}></th>
-                                    <th css={th25col}>直接事業費</th>
+                                    <th css={th25col}>直接事業費 (円)</th>
                                     <td css={tdScroll}>
                                       {parseInt(
                                         financePlanFormer.dct_pj_cost_b_ttl_ado
@@ -1086,7 +1088,7 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                                 financePlanFormer.mg_cost_b_ttl && (
                                   <tr css={tr}>
                                     <th css={th2Sub5col}></th>
-                                    <th css={th25col}>管理的経費</th>
+                                    <th css={th25col}>管理的経費 (円)</th>
                                     <td css={tdScroll}>
                                       {parseInt(
                                         financePlanFormer.mg_cost_b_ttl

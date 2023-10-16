@@ -37,7 +37,7 @@ export const th5col = tw`w-[28%] bg-blue-base py-3 px-3.5 text-start border-gray
 export const th25col = tw`w-[26%] bg-blue-base py-3 px-3.5 text-start border-gray-border border`;
 export const th2Sub5col = tw`w-[2%] bg-blue-base `;
 export const th6col = tw`w-[21%] bg-blue-base py-3 px-3.5 text-start border-gray-border border-t`;
-export const td6col = tw`w-[7%] py-3 px-3.5 border-gray-border border text-start`;
+export const td6col = tw`w-[10%] py-3 px-3.5 border-gray-border border text-start`;
 export const th26col = tw`w-[19%] bg-blue-base py-3 px-3.5 text-start border-gray-border border`;
 
 export const thead8col = tw`bg-blue-base text-center text-[13px]`;

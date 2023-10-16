@@ -349,7 +349,7 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                               strapiEvaluationPlan.mid_expenses ||
                               strapiEvaluationPlan.after_expenses) && (
                               <tr css={tr}>
-                                <th css={thScroll}>評価関連経費（金額）</th>
+                                <th css={thScroll}>評価関連経費（円）</th>
                                 <td css={tdScroll}>
                                   {strapiEvaluationPlan.prior_expenses &&
                                     parseInt(
@@ -407,7 +407,7 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                           {strapiEvaluationPlan &&
                             strapiEvaluationPlan.prior_comm_expenses && (
                               <tr css={tr}>
-                                <th css={thScroll}>内) 外部委託費</th>
+                                <th css={thScroll}>内) 外部委託費（円）</th>
                                 <td css={tdScroll}>
                                   {strapiEvaluationPlan.prior_comm_expenses &&
                                     parseInt(
