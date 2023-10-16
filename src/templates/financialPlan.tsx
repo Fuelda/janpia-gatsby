@@ -109,8 +109,6 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
     setWithSR(strapiSettleReportFDO || strapiSettleReportADO);
   }, []);
 
-  
-
   return (
     <Layout>
       <Seo title="資金計画 | 休眠預金活用事業 情報公開サイト" />
@@ -1014,7 +1012,9 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                                 financePlanFormer.dct_pj_cost_a_ttl_ado && (
                                   <tr css={tr}>
                                     <th css={th2Sub5col}></th>
-                                    <th css={th25col}>直接事業費</th>
+                                    <th css={th25col} tw="w-1/2">
+                                      直接事業費
+                                    </th>
                                     <td css={tdScroll}>
                                       {parseInt(
                                         financePlanFormer.dct_pj_cost_a_ttl_ado
@@ -1024,7 +1024,9 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                                 )}
                               <tr css={tr}>
                                 <th css={th2Sub5col}></th>
-                                <th css={th25col}>管理的経費</th>
+                                <th css={th25col} tw="w-1/2">
+                                  管理的経費
+                                </th>
                                 <td css={tdScroll}>
                                   {financePlanFormer.mg_cost_a_ttl &&
                                     parseInt(
@@ -1034,7 +1036,9 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                               </tr>
                               <tr css={tr}>
                                 <th css={th2Sub5col}></th>
-                                <th css={th25col}>(管理的経費割合)</th>
+                                <th css={th25col} tw="w-1/2">
+                                  (管理的経費割合)
+                                </th>
                                 <td css={tdScroll}>
                                   {financePlanFormer.pct_mg_cost_a_ttl &&
                                     financePlanFormer.pct_mg_cost_a_ttl}
