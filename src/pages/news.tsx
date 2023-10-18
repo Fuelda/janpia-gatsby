@@ -68,7 +68,7 @@ export default News;
 
 export const newsQuery = graphql`
   query MyQuery {
-    allStrapiNew {
+    allStrapiNew(sort: { date: DESC }) {
       edges {
         node {
           id
