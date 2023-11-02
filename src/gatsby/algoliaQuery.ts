@@ -22,6 +22,9 @@ const algoliaQuery = {
               content
             }
           }
+          internal{
+            contentDigest
+          }
         }
       }
     }
