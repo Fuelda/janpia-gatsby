@@ -114,7 +114,7 @@ const config: GatsbyConfig = {
                   id: node.id,
                   insert_id: node.insert_id,
                   content: node.content.data.content.slice(0, 3000),
-                  internal: node.internal.contentDigest,
+                  internal: { contentDigest: node.internal.contentDigest },
                 };
               }),
           },
