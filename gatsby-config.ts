@@ -134,6 +134,7 @@ const config: GatsbyConfig = {
                       0,
                       1500
                     ),
+                  internal: { contentDigest: node.internal.contentDigest },
                 };
               }),
           },
@@ -164,6 +165,7 @@ const config: GatsbyConfig = {
                   topic_keywords: node.topic_keywords
                     ? node.topic_keywords.label
                     : "",
+                  internal: { contentDigest: node.internal.contentDigest },
                 };
               }),
           },

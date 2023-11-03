@@ -61,7 +61,10 @@ const algoliaQuery = {
             data {
               significance
             }
-          }    
+          }  
+          internal{
+            contentDigest
+          }  
         }
       }
     }
@@ -75,6 +78,9 @@ const algoliaQuery = {
           representative_kana
           representative_kana2
           organization_name
+          internal{
+            contentDigest
+          }
         }
       }
     }
@@ -91,6 +97,9 @@ const algoliaQuery = {
             data {
               business_overview
             }
+          }
+          internal{
+            contentDigest
           }
         }
       }
@@ -162,6 +171,9 @@ const algoliaQuery = {
             }
           }
           business_cd
+          internal{
+            contentDigest
+          }
         }
       }
     }
