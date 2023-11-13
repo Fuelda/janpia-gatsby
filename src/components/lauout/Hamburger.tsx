@@ -61,7 +61,7 @@ const Hamburger = (props: { path: string; isOpen: boolean }) => {
               path.includes("/privacy-policy/") && currentSidebar,
             ]}
           >
-            個人情報ほどについて
+            個人情報保護について
           </Link>
           <Link
             to="/site-policy/"
