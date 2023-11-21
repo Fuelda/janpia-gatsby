@@ -1,5 +1,5 @@
 import { Link, graphql } from "gatsby";
-import React from "react";
+import React, { useEffect } from "react";
 import Layout from "../components/lauout/Layout";
 import DetailHeader from "../components/lauout/DetailHeader";
 import DetailSidebar from "../components/organisms/DetailSidebar";
@@ -19,14 +19,87 @@ import {
   thead8col,
 } from "../styles/table";
 import Seo from "../components/lauout/Seo";
+import { useDetailContext } from "../context/detailContext";
 
 const thStandard = tw`bg-blue-base py-3 px-3 text-start border-gray-border border`;
 const thNoBorder = tw`bg-blue-base py-3 px-3 text-start `;
 
 const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
-  const { strapiSettleReportFDO, strapiSettleReportADO } = data;
+  const {
+    strapiSettleReportFDO,
+    strapiSettleReportADO,
+    strapiSettleReportManualFDO,
+    strapiSettleReportManualADO,
+    //サイドバーチェック用
+    strapiFinancePlanFDO,
+    strapiFinancePlanADO,
+    strapiFinancePlanFormerFDO,
+    strapiFinancePlanFormerADO,
+    strapiFinancePlanManualFDO,
+    strapiFinancePlanManualADO,
+    strapiEvaluationPlan,
+    strapiEvaluationPlanManualFDO,
+    strapiEvaluationPlanManualADO,
+    strapiOfferingReportManualFDO,
+    strapiPreReportManualFDO,
+    strapiPreReportManualADO,
+    strapiMidReportManualFDO,
+    strapiMidReportManualADO,
+    strapiPostReportManualFDO,
+    strapiPostReportManualADO,
+    strapiProgressReportManualFDO,
+    strapiProgressReportManualADO,
+    strapiCompleteReportManualFDO,
+    strapiCompleteReportManualADO,
+  } = data;
+  const {
+    setWithFinance,
+    setWithEval,
+    setWithORM,
+    setWithPreRM,
+    setWithMRM,
+    setWithPostRM,
+    setWithProRM,
+    setWithCRM,
+    setWithSR,
+  } = useDetailContext();
+
   const settleReport = strapiSettleReportFDO || strapiSettleReportADO;
+  const settleReportManual =
+    strapiSettleReportManualFDO || strapiSettleReportManualADO;
+  const pdfUrl = settleReportManual && settleReportManual.data.url;
+  const googleDocsViewerUrl = `https://docs.google.com/viewer?url=${pdfUrl}&embedded=true`;
+
+  useEffect(() => {
+    setWithFinance(
+      strapiFinancePlanFDO ||
+        strapiFinancePlanADO ||
+        strapiFinancePlanFormerFDO ||
+        strapiFinancePlanFormerADO ||
+        strapiFinancePlanManualFDO ||
+        strapiFinancePlanManualADO
+    );
+    setWithEval(
+      strapiEvaluationPlan ||
+        strapiEvaluationPlanManualFDO ||
+        strapiEvaluationPlanManualADO
+    );
+    setWithORM(strapiOfferingReportManualFDO);
+    setWithPreRM(strapiPreReportManualFDO || strapiPreReportManualADO);
+    setWithMRM(strapiMidReportManualFDO || strapiMidReportManualADO);
+    setWithPostRM(strapiPostReportManualFDO || strapiPostReportManualADO);
+    setWithProRM(
+      strapiProgressReportManualFDO || strapiProgressReportManualADO
+    );
+    setWithCRM(strapiCompleteReportManualFDO || strapiCompleteReportManualADO);
+    setWithSR(
+      strapiSettleReportFDO ||
+        strapiSettleReportADO ||
+        strapiSettleReportManualFDO ||
+        strapiSettleReportManualADO
+    );
+  }, []);
 
   return (
     <Layout>
@@ -35,6 +108,15 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
       <div css={detailFlex}>
         <DetailSidebar slug={slug} />
         <DetailWrapper category="事業完了時精算報告" slug={slug}>
+          {settleReportManual && (
+            <div>
+              <iframe
+                width="100%"
+                height="500px"
+                src={googleDocsViewerUrl}
+              ></iframe>
+            </div>
+          )}
           {settleReport && (
             <div css={detailAnchor}>
               <DetailAnchor
@@ -566,6 +648,152 @@ export const pageQuery = graphql`
       sikkou_ado_jo
       sikkou_ado_jo_ado
       sikkou_kanri
+    }
+    strapiSettleReportManualFDO: strapiSettleReportManual(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      data {
+        url
+      }
+    }
+    strapiSettleReportManualADO: strapiSettleReportManual(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
+    ) {
+      data {
+        url
+      }
+    }
+    # サイドバーチェック用
+    strapiFinancePlanFDO: strapiFinancePlan(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiFinancePlanADO: strapiFinancePlan(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
+    ) {
+      id
+    }
+    strapiFinancePlanFormerFDO: strapiFinancePlanFormer(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiFinancePlanFormerADO: strapiFinancePlanFormer(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
+    ) {
+      id
+    }
+    strapiFinancePlanManualFDO: strapiFinancePlanManual(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiFinancePlanManualADO: strapiFinancePlanManual(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
+    ) {
+      id
+    }
+    strapiEvaluationPlan(business_cd: { eq: $slug }) {
+      id
+    }
+    strapiEvaluationPlanManualFDO: strapiEvaluationPlanManual(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiEvaluationPlanManualADO: strapiEvaluationPlanManual(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
+    ) {
+      id
+    }
+    strapiOfferingReportManualFDO: strapiOfferingReportManual(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiPreReportManualFDO: strapiPreReportManual(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiPreReportManualADO: strapiPreReportManual(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
+    ) {
+      id
+    }
+    strapiMidReportManualFDO: strapiMidReportManual(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiMidReportManualADO: strapiMidReportManual(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
+    ) {
+      id
+    }
+    strapiPostReportManualFDO: strapiPostReportManual(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiPostReportManualADO: strapiPostReportManual(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
+    ) {
+      id
+    }
+    strapiProgressReportManualFDO: strapiProgressReportManual(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiProgressReportManualADO: strapiProgressReportManual(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
+    ) {
+      id
+    }
+    strapiCompleteReportManualFDO: strapiCompleteReportManual(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiCompleteReportManualADO: strapiCompleteReportManual(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
+    ) {
+      id
+    }
+    strapiSettleReportFDO: strapiSettleReport(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiSettleReportADO: strapiSettleReport(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
+    ) {
+      id
     }
   }
 `;

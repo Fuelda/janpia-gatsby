@@ -67,6 +67,8 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
     strapiCompleteReportManualADO,
     strapiSettleReportFDO,
     strapiSettleReportADO,
+    strapiSettleReportManualFDO,
+    strapiSettleReportManualADO,
   } = data;
   const {
     setWithFinance,
@@ -173,7 +175,12 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
       strapiProgressReportManualFDO || strapiProgressReportManualADO
     );
     setWithCRM(strapiCompleteReportManualFDO || strapiCompleteReportManualADO);
-    setWithSR(strapiSettleReportFDO || strapiSettleReportADO);
+    setWithSR(
+      strapiSettleReportFDO ||
+        strapiSettleReportADO ||
+        strapiSettleReportManualFDO ||
+        strapiSettleReportManualADO
+    );
   }, []);
 
   return (
@@ -5920,6 +5927,18 @@ export const pageQuery = graphql`
       id
     }
     strapiSettleReportADO: strapiSettleReport(
+      biz_cd_executive: { eq: $slug }
+      business_org_type: { eq: "A" }
+    ) {
+      id
+    }
+    strapiSettleReportManualFDO: strapiSettleReportManual(
+      biz_cd_fund_distr: { eq: $slug }
+      business_org_type: { eq: "F" }
+    ) {
+      id
+    }
+    strapiSettleReportManualADO: strapiSettleReportManual(
       biz_cd_executive: { eq: $slug }
       business_org_type: { eq: "A" }
     ) {
