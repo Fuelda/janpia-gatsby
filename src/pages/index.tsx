@@ -162,7 +162,7 @@ export const newsQuery = graphql`
         }
       }
     }
-    allStrapiNew(limit: 3) {
+    allStrapiNew(limit: 3, sort: { createdAt: DESC }) {
       edges {
         node {
           id

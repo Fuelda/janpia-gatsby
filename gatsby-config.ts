@@ -66,7 +66,12 @@ const config: GatsbyConfig = {
   // Learn more at: https://gatsby.dev/graphql-typegen
   graphqlTypegen: true,
   plugins: [
-    // "gatsby-plugin-google-gtag",
+    {
+      resolve: `gatsby-plugin-google-gtag`,
+      options: {
+        trackingIds: [process.env.GATSBY_TRACKING_ID],
+      },
+    },
     "gatsby-plugin-image",
     "gatsby-plugin-sitemap",
     {
