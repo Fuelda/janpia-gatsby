@@ -75,6 +75,8 @@ const algoliaQuery = {
         node {
           id
           organization_cd
+          representative_name
+          representative_name2
           representative_kana
           representative_kana2
           organization_name
