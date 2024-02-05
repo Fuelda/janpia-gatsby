@@ -19,7 +19,7 @@ const AlgoliaIndex = (props: { path: string }) => {
   const { searchSetState } = useSearchContext();
   const { setWithAlgoliaQuery } = searchSetState;
 
-  const index = searchClient.initIndex("janpia_search");
+  const index = searchClient.initIndex("janpia-johokokai");
   const searchOption = { hitsPerPage: 1000 };
 
   const queryHook: SearchBoxProps["queryHook"] = (query, search) => {
@@ -48,7 +48,7 @@ const AlgoliaIndex = (props: { path: string }) => {
   };
 
   return (
-    <InstantSearch indexName="janpia_search" searchClient={searchClient}>
+    <InstantSearch indexName="janpia-johokokai" searchClient={searchClient}>
       {props.path === "/" && (
         <div>
           <div tw="lg:(hidden)">

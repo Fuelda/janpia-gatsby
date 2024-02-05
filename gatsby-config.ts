@@ -109,7 +109,7 @@ const config: GatsbyConfig = {
       options: {
         appId: process.env.GATSBY_ALGOLIA_APP_ID,
         apiKey: process.env.ALGOLIA_ADMIN_KEY,
-        indexName: "janpia_search",
+        indexName: "janpia-johokokai",
         queries: [
           {
             query: algoliaQuery.attachedFileText,
