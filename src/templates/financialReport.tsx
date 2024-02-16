@@ -1,4 +1,4 @@
-import { Link, graphql } from "gatsby";
+import { graphql } from "gatsby";
 import React, { useEffect } from "react";
 import Layout from "../components/lauout/Layout";
 import DetailHeader from "../components/lauout/DetailHeader";
@@ -9,15 +9,7 @@ import DetailWrapper from "../components/lauout/DetailWrapper";
 import DetailAnchor from "../components/atoms/DetailAnchor";
 import { detailAnchor, detailBody, detailFlex } from "../styles/detailPage";
 import DetailItemWrapper from "../components/lauout/DetailItemWrapper";
-import {
-  table,
-  tableWide,
-  td8col,
-  th,
-  th8col,
-  thead,
-  thead8col,
-} from "../styles/table";
+import { tableWide, td8col, th8col, thead8col } from "../styles/table";
 import Seo from "../components/lauout/Seo";
 import { useDetailContext } from "../context/detailContext";
 
@@ -124,7 +116,11 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                 anchor={`/result/${slug}/financial-report/#firstItem`}
               />
               <DetailAnchor
-                title="実行団体の精算"
+                title={`${
+                  settleReport.business_org_type === "F"
+                    ? "資金分配団体"
+                    : "実行団体"
+                }の精算`}
                 anchor={`/result/${slug}/financial-report/#secondItem`}
               />
               {/* <DetailAnchor
@@ -228,28 +224,18 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                       <tbody>
                         <tr>
                           <th css={th8col}>助成機関累計</th>
-                          <td css={td8col}>{settleReport.ruikei_fdo_juryou}</td>
                           <td css={td8col}>
-                            {settleReport.ruikei_fdo_kakutei}
+                            {parseInt(
+                              settleReport.ruikei_fdo_juryou
+                            ).toLocaleString()}
                           </td>
-                          <td css={td8col}>{settleReport.kakashi1}</td>
-                          <td
-                            css={[
-                              th8col,
-                              !settleReport.ruikei_ado_siharai &&
-                                tw`bg-gray-pale text-gray-black`,
-                            ]}
-                          >
-                            {settleReport.ruikei_ado_siharai}
+                          <td css={td8col}>
+                            {parseInt(
+                              settleReport.ruikei_fdo_kakutei
+                            ).toLocaleString()}
                           </td>
-                          <td
-                            css={[
-                              th8col,
-                              !settleReport.ruikei_ado_siharai &&
-                                tw`bg-gray-pale text-gray-black`,
-                            ]}
-                          >
-                            {settleReport.ruikei_ado_kakutei}
+                          <td css={td8col}>
+                            {parseInt(settleReport.kakashi1).toLocaleString()}
                           </td>
                           <td
                             css={[
@@ -258,7 +244,9 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                                 tw`bg-gray-pale text-gray-black`,
                             ]}
                           >
-                            {settleReport.ruikei_ado_zandaka}
+                            {parseInt(
+                              settleReport.ruikei_ado_siharai
+                            ).toLocaleString()}
                           </td>
                           <td
                             css={[
@@ -267,7 +255,31 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                                 tw`bg-gray-pale text-gray-black`,
                             ]}
                           >
-                            {settleReport.ruikei_ado_henkan}
+                            {parseInt(
+                              settleReport.ruikei_ado_kakutei
+                            ).toLocaleString()}
+                          </td>
+                          <td
+                            css={[
+                              th8col,
+                              !settleReport.ruikei_ado_siharai &&
+                                tw`bg-gray-pale text-gray-black`,
+                            ]}
+                          >
+                            {parseInt(
+                              settleReport.ruikei_ado_zandaka
+                            ).toLocaleString()}
+                          </td>
+                          <td
+                            css={[
+                              th8col,
+                              !settleReport.ruikei_ado_siharai &&
+                                tw`bg-gray-pale text-gray-black`,
+                            ]}
+                          >
+                            {parseInt(
+                              settleReport.ruikei_ado_henkan
+                            ).toLocaleString()}
                           </td>
                           <td
                             css={[
@@ -276,7 +288,7 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                                 tw`bg-gray-pale text-gray-black`,
                             ]}
                           >
-                            {settleReport.ruikei_sum}
+                            {parseInt(settleReport.ruikei_sum).toLocaleString()}
                           </td>
                         </tr>
                       </tbody>
@@ -285,7 +297,13 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                 </DetailItemWrapper>
               </div>
               <div id="secondItem">
-                <DetailItemWrapper itemName="実行団体の精算">
+                <DetailItemWrapper
+                  itemName={`${
+                    settleReport.business_org_type === "F"
+                      ? "資金分配団体"
+                      : "実行団体"
+                  }の精算`}
+                >
                   <div tw="w-full overflow-x-scroll">
                     <table
                       css={tableWide}
@@ -316,42 +334,114 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                             <br />
                             精算報告
                           </th>
-                          <th rowSpan={5} css={thStandard}>
+                          <th rowSpan={5} tw="w-[13%]" css={thStandard}>
                             実績額
                           </th>
-                          <th css={thStandard}>2021年度</th>
-                          <td tw="text-end">{settleReport.ado_josei_ado1}</td>
-                          <td tw="text-end">{settleReport.kanri1}</td>
-                          <td tw="text-end">{settleReport.a_ado1}</td>
-                          <td tw="text-end">{settleReport.a_sum1}</td>
+                          <th tw="w-[13%]" css={thStandard}>
+                            2021年度
+                          </th>
+                          <td tw="text-end">
+                            {settleReport.ado_josei_ado1 &&
+                              parseInt(
+                                settleReport.ado_josei_ado1
+                              ).toLocaleString()}
+                          </td>
+                          <td tw="text-end">
+                            {settleReport.kanri1 &&
+                              parseInt(settleReport.kanri1).toLocaleString()}
+                          </td>
+                          <td tw="text-end">
+                            {settleReport.a_ado1 &&
+                              parseInt(settleReport.a_ado1).toLocaleString()}
+                          </td>
+                          <td tw="text-end">
+                            {settleReport.a_sum1 &&
+                              parseInt(settleReport.a_sum1).toLocaleString()}
+                          </td>
                         </tr>
                         <tr>
                           <th css={thStandard}>2022年度</th>
-                          <td tw="text-end">{settleReport.ado_josei_ado2}</td>
-                          <td tw="text-end">{settleReport.kanri2}</td>
-                          <td tw="text-end">{settleReport.a_ado2}</td>
-                          <td tw="text-end">{settleReport.a_sum2}</td>
+                          <td tw="text-end">
+                            {settleReport.ado_josei_ado2 &&
+                              parseInt(
+                                settleReport.ado_josei_ado2
+                              ).toLocaleString()}
+                          </td>
+                          <td tw="text-end">
+                            {settleReport.kanri2 &&
+                              parseInt(settleReport.kanri2).toLocaleString()}
+                          </td>
+                          <td tw="text-end">
+                            {settleReport.a_ado2 &&
+                              parseInt(settleReport.a_ado2).toLocaleString()}
+                          </td>
+                          <td tw="text-end">
+                            {settleReport.a_sum2 &&
+                              parseInt(settleReport.a_sum2).toLocaleString()}
+                          </td>
                         </tr>
                         <tr>
                           <th css={thStandard}>2023年度</th>
-                          <td tw="text-end">{settleReport.ado_josei_ado3}</td>
-                          <td tw="text-end">{settleReport.kanri3}</td>
-                          <td tw="text-end">{settleReport.a_ado3}</td>
-                          <td tw="text-end">{settleReport.a_sum3}</td>
+                          <td tw="text-end">
+                            {settleReport.ado_josei_ado3 &&
+                              parseInt(
+                                settleReport.ado_josei_ado3
+                              ).toLocaleString()}
+                          </td>
+                          <td tw="text-end">
+                            {settleReport.kanri3 &&
+                              parseInt(settleReport.kanri3).toLocaleString()}
+                          </td>
+                          <td tw="text-end">
+                            {settleReport.a_ado3 &&
+                              parseInt(settleReport.a_ado3).toLocaleString()}
+                          </td>
+                          <td tw="text-end">
+                            {settleReport.a_sum3 &&
+                              parseInt(settleReport.a_sum3).toLocaleString()}
+                          </td>
                         </tr>
                         <tr>
                           <th css={thStandard}>2024年度</th>
-                          <td tw="text-end">{settleReport.ado_josei_ado4}</td>
-                          <td tw="text-end">{settleReport.kanri4}</td>
-                          <td tw="text-end">{settleReport.a_ado4}</td>
-                          <td tw="text-end">{settleReport.a_sum4}</td>
+                          <td tw="text-end">
+                            {settleReport.ado_josei_ado4 &&
+                              parseInt(
+                                settleReport.ado_josei_ado4
+                              ).toLocaleString()}
+                          </td>
+                          <td tw="text-end">
+                            {settleReport.kanri4 &&
+                              parseInt(settleReport.kanri4).toLocaleString()}
+                          </td>
+                          <td tw="text-end">
+                            {settleReport.a_ado4 &&
+                              parseInt(settleReport.a_ado4).toLocaleString()}
+                          </td>
+                          <td tw="text-end">
+                            {settleReport.a_sum4 &&
+                              parseInt(settleReport.a_sum4).toLocaleString()}
+                          </td>
                         </tr>
                         <tr>
                           <th css={thStandard}>小計 (A)</th>
-                          <td tw="text-end">{settleReport.a_ado_josei_ado}</td>
-                          <td tw="text-end">{settleReport.a_kanri}</td>
-                          <td tw="text-end">{settleReport.a_ado}</td>
-                          <td tw="text-end">{settleReport.a_sum}</td>
+                          <td tw="text-end">
+                            {settleReport.a_ado_josei_ado &&
+                              parseInt(
+                                settleReport.a_ado_josei_ado
+                              ).toLocaleString()}
+                          </td>
+                          <td tw="text-end">
+                            {settleReport.a_kanri &&
+                              parseInt(settleReport.a_kanri).toLocaleString()}
+                          </td>
+                          <td tw="text-end">
+                            {settleReport.a_ado &&
+                              parseInt(settleReport.a_ado).toLocaleString()}
+                          </td>
+                          <td tw="text-end">
+                            {settleReport.a_sum &&
+                              parseInt(settleReport.a_sum).toLocaleString()}
+                          </td>
                         </tr>
                         <tr>
                           <th rowSpan={4} css={thStandard}>
@@ -361,35 +451,99 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                             資金計画値
                           </th>
                           <th css={thStandard}>助成金 (B)</th>
-                          <td tw="text-end">{settleReport.b_ado_josei_ado}</td>
-                          <td tw="text-end">{settleReport.b_kanri}</td>
-                          <td tw="text-end">{settleReport.b_fdo}</td>
-                          <td tw="text-end">{settleReport.b_sum}</td>
+                          <td tw="text-end">
+                            {settleReport.b_ado_josei_ado &&
+                              parseInt(
+                                settleReport.b_ado_josei_ado
+                              ).toLocaleString()}
+                          </td>
+                          <td tw="text-end">
+                            {settleReport.b_kanri &&
+                              parseInt(settleReport.b_kanri).toLocaleString()}
+                          </td>
+                          <td tw="text-end">
+                            {settleReport.b_fdo &&
+                              parseInt(settleReport.b_fdo).toLocaleString()}
+                          </td>
+                          <td tw="text-end">
+                            {settleReport.b_sum &&
+                              parseInt(settleReport.b_sum).toLocaleString()}
+                          </td>
                         </tr>
                         <tr>
                           <th css={thStandard}>自己資金 (C)</th>
-                          <td tw="text-end">{settleReport.c_ado_josei_ado}</td>
-                          <td tw="text-end">{settleReport.c_kanri}</td>
-                          <td tw="text-end">{settleReport.c_fdo}</td>
-                          <td tw="text-end">{settleReport.c_sum}</td>
+                          <td tw="text-end">
+                            {settleReport.c_ado_josei_ado &&
+                              parseInt(
+                                settleReport.c_ado_josei_ado
+                              ).toLocaleString()}
+                          </td>
+                          <td tw="text-end">
+                            {settleReport.c_kanri &&
+                              parseInt(settleReport.c_kanri).toLocaleString()}
+                          </td>
+                          <td tw="text-end">
+                            {settleReport.c_fdo &&
+                              parseInt(settleReport.c_fdo).toLocaleString()}
+                          </td>
+                          <td tw="text-end">
+                            {settleReport.c_sum &&
+                              parseInt(settleReport.c_sum).toLocaleString()}
+                          </td>
                         </tr>
                         <tr>
                           <th css={thNoBorder}>執行率</th>
                           <th css={thNoBorder}>(D=A/(B+C))</th>
                           <td tw="text-end">
-                            {settleReport.sikkou_ado_jo_ado}
+                            {settleReport.sikkou_ado_jo_ado &&
+                              parseInt(
+                                settleReport.sikkou_ado_jo_ado
+                              ).toLocaleString()}
                           </td>
-                          <td tw="text-end">{settleReport.sikkou_kanri}</td>
-                          <td tw="text-end">{settleReport.sikkou_fdo}</td>
-                          <td tw="text-end">{settleReport.sikkou_sum}</td>
+                          <td tw="text-end">
+                            {settleReport.sikkou_kanri &&
+                              parseInt(
+                                settleReport.sikkou_kanri
+                              ).toLocaleString()}
+                          </td>
+                          <td tw="text-end">
+                            {settleReport.sikkou_fdo &&
+                              parseInt(
+                                settleReport.sikkou_fdo
+                              ).toLocaleString()}
+                          </td>
+                          <td tw="text-end">
+                            {settleReport.sikkou_sum &&
+                              parseInt(
+                                settleReport.sikkou_sum
+                              ).toLocaleString()}
+                          </td>
                         </tr>
                         <tr>
                           <th css={thNoBorder}>確定助成額</th>
                           <th css={thNoBorder}>(E=BxD)</th>
-                          <td tw="text-end">{settleReport.kakashi2_ado}</td>
-                          <td tw="text-end">{settleReport.kakashi3}</td>
-                          <td tw="text-end">{settleReport.kakuteijosei_fdo}</td>
-                          <td tw="text-end">{settleReport.kakuteijosei_sum}</td>
+                          <td tw="text-end">
+                            {settleReport.kakashi2_ado &&
+                              parseInt(
+                                settleReport.kakashi2_ado
+                              ).toLocaleString()}
+                          </td>
+                          <td tw="text-end">
+                            {settleReport.kakashi3 &&
+                              parseInt(settleReport.kakashi3).toLocaleString()}
+                          </td>
+                          <td tw="text-end">
+                            {settleReport.kakuteijosei_fdo &&
+                              parseInt(
+                                settleReport.kakuteijosei_fdo
+                              ).toLocaleString()}
+                          </td>
+                          <td tw="text-end">
+                            {settleReport.kakuteijosei_sum &&
+                              parseInt(
+                                settleReport.kakuteijosei_sum
+                              ).toLocaleString()}
+                          </td>
                         </tr>
                       </tbody>
                     </table>
