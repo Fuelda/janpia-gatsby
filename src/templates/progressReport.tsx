@@ -1,14 +1,11 @@
-import { Link, graphql } from "gatsby";
+import { graphql } from "gatsby";
 import React, { useEffect, useState } from "react";
 import Layout from "../components/lauout/Layout";
 import DetailHeader from "../components/lauout/DetailHeader";
 import DetailSidebar from "../components/organisms/DetailSidebar";
 import "twin.macro";
-import tw from "twin.macro";
 import DetailWrapper from "../components/lauout/DetailWrapper";
-import DetailAnchor from "../components/atoms/DetailAnchor";
 import {
-  detailAnchor,
   detailBody,
   detailFlex,
   detailRoundTabBtn,
@@ -136,10 +133,10 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
           <div css={detailTab}>
             {sortedProgressReportManual &&
               sortedProgressReportManual.map(
-                (prm: any) =>
+                (prm: any, index) =>
                   prm.node.progress_round && (
                     <button
-                      key={prm.node.progress_round.code}
+                      key={index}
                       css={[
                         detailRoundTabBtn,
                         currentTab === prm.node.progress_round.code &&

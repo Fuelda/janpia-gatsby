@@ -223,19 +223,22 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                       </thead>
                       <tbody>
                         <tr>
-                          <th css={th8col}>助成機関累計</th>
+                          <th css={th8col}>助成期間累計</th>
                           <td css={td8col}>
-                            {parseInt(
-                              settleReport.ruikei_fdo_juryou
-                            ).toLocaleString()}
-                          </td>
-                          <td css={td8col}>
-                            {parseInt(
-                              settleReport.ruikei_fdo_kakutei
-                            ).toLocaleString()}
+                            {settleReport.ruikei_fdo_juryou &&
+                              parseInt(
+                                settleReport.ruikei_fdo_juryou
+                              ).toLocaleString()}
                           </td>
                           <td css={td8col}>
-                            {parseInt(settleReport.kakashi1).toLocaleString()}
+                            {settleReport.ruikei_fdo_kakutei &&
+                              parseInt(
+                                settleReport.ruikei_fdo_kakutei
+                              ).toLocaleString()}
+                          </td>
+                          <td css={td8col}>
+                            {settleReport.kakashi1 &&
+                              parseInt(settleReport.kakashi1).toLocaleString()}
                           </td>
                           <td
                             css={[
@@ -244,9 +247,10 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                                 tw`bg-gray-pale text-gray-black`,
                             ]}
                           >
-                            {parseInt(
-                              settleReport.ruikei_ado_siharai
-                            ).toLocaleString()}
+                            {settleReport.ruikei_ado_siharai &&
+                              parseInt(
+                                settleReport.ruikei_ado_siharai
+                              ).toLocaleString()}
                           </td>
                           <td
                             css={[
@@ -255,9 +259,10 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                                 tw`bg-gray-pale text-gray-black`,
                             ]}
                           >
-                            {parseInt(
-                              settleReport.ruikei_ado_kakutei
-                            ).toLocaleString()}
+                            {settleReport.ruikei_ado_kakutei &&
+                              parseInt(
+                                settleReport.ruikei_ado_kakutei
+                              ).toLocaleString()}
                           </td>
                           <td
                             css={[
@@ -266,9 +271,10 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                                 tw`bg-gray-pale text-gray-black`,
                             ]}
                           >
-                            {parseInt(
-                              settleReport.ruikei_ado_zandaka
-                            ).toLocaleString()}
+                            {settleReport.ruikei_ado_zandaka &&
+                              parseInt(
+                                settleReport.ruikei_ado_zandaka
+                              ).toLocaleString()}
                           </td>
                           <td
                             css={[
@@ -277,9 +283,10 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                                 tw`bg-gray-pale text-gray-black`,
                             ]}
                           >
-                            {parseInt(
-                              settleReport.ruikei_ado_henkan
-                            ).toLocaleString()}
+                            {settleReport.ruikei_ado_henkan &&
+                              parseInt(
+                                settleReport.ruikei_ado_henkan
+                              ).toLocaleString()}
                           </td>
                           <td
                             css={[
@@ -288,7 +295,10 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                                 tw`bg-gray-pale text-gray-black`,
                             ]}
                           >
-                            {parseInt(settleReport.ruikei_sum).toLocaleString()}
+                            {settleReport.ruikei_sum &&
+                              parseInt(
+                                settleReport.ruikei_sum
+                              ).toLocaleString()}
                           </td>
                         </tr>
                       </tbody>
