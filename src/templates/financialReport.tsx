@@ -225,20 +225,35 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                         <tr>
                           <th css={th8col}>助成期間累計</th>
                           <td css={td8col}>
-                            {settleReport.ruikei_fdo_juryou &&
-                              parseInt(
-                                settleReport.ruikei_fdo_juryou
-                              ).toLocaleString()}
+                            {settleReport.business_org_type === "F"
+                              ? settleReport.ruikei_fdo_juryou &&
+                                parseInt(
+                                  settleReport.ruikei_fdo_juryou
+                                ).toLocaleString()
+                              : settleReport.ruikei_ado_siharai_ado &&
+                                parseInt(
+                                  settleReport.ruikei_ado_siharai_ado
+                                ).toLocaleString()}
                           </td>
                           <td css={td8col}>
-                            {settleReport.ruikei_fdo_kakutei &&
-                              parseInt(
-                                settleReport.ruikei_fdo_kakutei
-                              ).toLocaleString()}
+                            {settleReport.business_org_type === "F"
+                              ? settleReport.ruikei_fdo_kakutei &&
+                                parseInt(
+                                  settleReport.ruikei_fdo_kakutei
+                                ).toLocaleString()
+                              : settleReport.ruikei_ado_kakutei_ado &&
+                                parseInt(
+                                  settleReport.ruikei_ado_kakutei_ado
+                                ).toLocaleString()}
                           </td>
                           <td css={td8col}>
-                            {settleReport.kakashi1 &&
-                              parseInt(settleReport.kakashi1).toLocaleString()}
+                            {settleReport.business_org_type === "F"
+                              ? settleReport.kakashi1 &&
+                                parseInt(settleReport.kakashi1).toLocaleString()
+                              : settleReport.ruikei_ado_zandaka_ado &&
+                                parseInt(
+                                  settleReport.ruikei_ado_zandaka_ado
+                                ).toLocaleString()}
                           </td>
                           <td
                             css={[

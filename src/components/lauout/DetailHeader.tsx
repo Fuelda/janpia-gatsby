@@ -1,15 +1,13 @@
 import { Link } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "twin.macro";
 import tw from "twin.macro";
 import { hCenter, pankuzu } from "../../styles/base";
 import { businessCategoryArray } from "../../features/search/store/filterContents";
-import { useFilteredStrapiContext } from "../../context/filteredStrapiContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import DetailSelector from "../organisms/DetailSelector";
-import { useStrapiContext } from "../../context/strapiContext";
 import { linkCollectionTypes } from "../../util/linkCollectionTypes";
 import { linkCollectionTypesManual } from "../../util/linkCollectionTypesManual";
 
