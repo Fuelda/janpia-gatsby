@@ -31,13 +31,13 @@ const Footer = (props: { path: string }) => {
             </div>
           </div>
           <div>
-            <Link to="/">
+            <a href="https://www.janpia.or.jp/" target="_blank">
               <StaticImage
                 src="../../images/logo.svg"
                 alt="ロゴ"
                 tw="w-[298px] h-[61px]"
               />
-            </Link>
+            </a>
 
             <p tw="mt-4 leading-5 lg:(mt-8)">
               〒100-0011

@@ -224,7 +224,7 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                       <tbody>
                         <tr>
                           <th css={th8col}>助成期間累計</th>
-                          <td css={td8col}>
+                          <td css={td8col} tw="text-end">
                             {settleReport.business_org_type === "F"
                               ? settleReport.ruikei_fdo_juryou &&
                                 parseInt(
@@ -235,7 +235,7 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                                   settleReport.ruikei_ado_siharai_ado
                                 ).toLocaleString()}
                           </td>
-                          <td css={td8col}>
+                          <td css={td8col} tw="text-end">
                             {settleReport.business_org_type === "F"
                               ? settleReport.ruikei_fdo_kakutei &&
                                 parseInt(
@@ -246,7 +246,7 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                                   settleReport.ruikei_ado_kakutei_ado
                                 ).toLocaleString()}
                           </td>
-                          <td css={td8col}>
+                          <td css={td8col} tw="text-end">
                             {settleReport.business_org_type === "F"
                               ? settleReport.kakashi1 &&
                                 parseInt(settleReport.kakashi1).toLocaleString()
@@ -261,6 +261,7 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                               !settleReport.ruikei_ado_siharai &&
                                 tw`bg-gray-pale text-gray-black`,
                             ]}
+                            tw="text-end"
                           >
                             {settleReport.ruikei_ado_siharai &&
                               parseInt(
@@ -273,6 +274,7 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                               !settleReport.ruikei_ado_siharai &&
                                 tw`bg-gray-pale text-gray-black`,
                             ]}
+                            tw="text-end"
                           >
                             {settleReport.ruikei_ado_kakutei &&
                               parseInt(
@@ -285,6 +287,7 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                               !settleReport.ruikei_ado_siharai &&
                                 tw`bg-gray-pale text-gray-black`,
                             ]}
+                            tw="text-end"
                           >
                             {settleReport.ruikei_ado_zandaka &&
                               parseInt(
@@ -297,6 +300,7 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                               !settleReport.ruikei_ado_siharai &&
                                 tw`bg-gray-pale text-gray-black`,
                             ]}
+                            tw="text-end"
                           >
                             {settleReport.ruikei_ado_henkan &&
                               parseInt(
@@ -309,6 +313,7 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                               !settleReport.ruikei_sum &&
                                 tw`bg-gray-pale text-gray-black`,
                             ]}
+                            tw="text-end"
                           >
                             {settleReport.ruikei_sum &&
                               parseInt(
