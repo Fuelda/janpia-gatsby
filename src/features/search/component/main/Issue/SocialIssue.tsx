@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { socialIssueArray } from "../../../store/filterContents";
 import * as Checkbox from "@radix-ui/react-checkbox";
 import { CheckIcon } from "@radix-ui/react-icons";
@@ -10,6 +10,8 @@ import tw from "twin.macro";
 
 const SocialIssue = () => {
   const { searchState, searchSetState } = useSearchContext();
+  const isFirstRegionRender = useRef(true);
+  const isFirstAllFieldRender = useRef(true);
 
   const {
     field1_1,
@@ -85,6 +87,11 @@ const SocialIssue = () => {
   };
 
   useEffect(() => {
+    if (isFirstRegionRender.current) {
+      isFirstRegionRender.current = false;
+      return;
+    }
+
     setField1_1(region1);
     setField1_2(region1);
     setField1_3(region1);
@@ -96,6 +103,11 @@ const SocialIssue = () => {
   }, [region1, region2, region3]);
 
   useEffect(() => {
+    if (isFirstAllFieldRender.current) {
+      isFirstAllFieldRender.current = false;
+      return;
+    }
+
     setField1_1(allFieldCheck);
     setField1_2(allFieldCheck);
     setField1_3(allFieldCheck);

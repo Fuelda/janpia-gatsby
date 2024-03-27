@@ -1,15 +1,9 @@
 import * as Checkbox from "@radix-ui/react-checkbox";
-import { CheckIcon } from "@radix-ui/react-icons";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useSearchContext } from "../../../../../context/searchContext";
 import { useStrapiContext } from "../../../../../context/strapiContext";
 import { h3, hCenter } from "../../../../../styles/base";
-import {
-  checkBox,
-  checkBoxList,
-  checkBoxSet,
-  checkMark,
-} from "../../../../../styles/form";
+import { checkBox, checkBoxSet, checkMark } from "../../../../../styles/form";
 import "twin.macro";
 import tw from "twin.macro";
 
