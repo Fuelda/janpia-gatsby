@@ -30,6 +30,7 @@ import {
 import EvaluationShortOutcome from "../components/organisms/EvaluationShortOutcome";
 import { useDetailContext } from "../context/detailContext";
 import Seo from "../components/lauout/Seo";
+import tw from "twin.macro";
 
 const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
   const {
@@ -214,7 +215,7 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                               strapiEvaluationPlan.after_rethink_season) && (
                               <tr css={tr}>
                                 <th css={thScroll}>評価計画の見直し時期</th>
-                                <td css={tdScroll}></td>
+                                <td css={tdScroll} tw="bg-gray-300"></td>
                                 <td css={tdScroll}>
                                   {strapiEvaluationPlan &&
                                     strapiEvaluationPlan.mid_rethink_season}
@@ -231,7 +232,13 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                               strapiEvaluationPlan.after_imple_priod) && (
                               <tr css={tr}>
                                 <th css={thScroll}>実施時期</th>
-                                <td css={tdScroll}>
+                                <td
+                                  css={[
+                                    tdScroll,
+                                    !strapiEvaluationPlan.prior_imple_priod &&
+                                      tw`bg-gray-300`,
+                                  ]}
+                                >
                                   {strapiEvaluationPlan.prior_imple_priod &&
                                     strapiEvaluationPlan.prior_imple_priod}
                                 </td>
@@ -251,7 +258,13 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                               strapiEvaluationPlan.after_submit_priod) && (
                               <tr css={tr}>
                                 <th css={thScroll}>提出時期</th>
-                                <td css={tdScroll}>
+                                <td
+                                  css={[
+                                    tdScroll,
+                                    !strapiEvaluationPlan.prior_submit_priod &&
+                                      tw`bg-gray-300`,
+                                  ]}
+                                >
                                   {strapiEvaluationPlan.prior_submit_priod &&
                                     strapiEvaluationPlan.prior_submit_priod}
                                 </td>
@@ -271,7 +284,13 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                               strapiEvaluationPlan.after_imple_system) && (
                               <tr css={tr}>
                                 <th css={thScroll}>実施体制</th>
-                                <td css={tdScroll}>
+                                <td
+                                  css={[
+                                    tdScroll,
+                                    !strapiEvaluationPlan.prior_imple_system &&
+                                      tw`bg-gray-300`,
+                                  ]}
+                                >
                                   {strapiEvaluationPlan.prior_imple_system &&
                                     strapiEvaluationPlan.prior_imple_system}
                                 </td>
@@ -292,7 +311,7 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                                 <th css={thScroll}>
                                   資金分配団体の伴走支援内容
                                 </th>
-                                <td></td>
+                                <td tw="bg-gray-300"></td>
                                 <td css={tdScroll}>
                                   {strapiEvaluationPlan &&
                                     strapiEvaluationPlan.mid_escort_support}
@@ -307,7 +326,13 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                             strapiEvaluationPlan.prior_investigation && (
                               <tr css={tr}>
                                 <th css={thScroll}>必要な調査</th>
-                                <td css={tdScroll}>
+                                <td
+                                  css={[
+                                    tdScroll,
+                                    !strapiEvaluationPlan.prior_investigation &&
+                                      tw`bg-gray-300`,
+                                  ]}
+                                >
                                   {strapiEvaluationPlan.prior_investigation && (
                                     <div
                                       dangerouslySetInnerHTML={{
@@ -357,7 +382,13 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                               strapiEvaluationPlan.after_expenses) && (
                               <tr css={tr}>
                                 <th css={thScroll}>評価関連経費（円）</th>
-                                <td css={tdScroll}>
+                                <td
+                                  css={[
+                                    tdScroll,
+                                    !strapiEvaluationPlan.prior_expenses &&
+                                      tw`bg-gray-300`,
+                                  ]}
+                                >
                                   {strapiEvaluationPlan.prior_expenses &&
                                     parseInt(
                                       strapiEvaluationPlan.prior_expenses
@@ -382,8 +413,14 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                               strapiEvaluationPlan.after_expenses_usage) && (
                               <tr css={tr}>
                                 <th css={thScroll}>評価関連経費の使用方法</th>
-                                <td></td>
-                                <td css={tdScroll}>
+                                <td tw="bg-gray-300"></td>
+                                <td
+                                  css={[
+                                    tdScroll,
+                                    !strapiEvaluationPlan.mid_expenses_usage &&
+                                      tw`bg-gray-300`,
+                                  ]}
+                                >
                                   {strapiEvaluationPlan &&
                                     strapiEvaluationPlan.mid_expenses_usage}
                                 </td>
@@ -400,7 +437,7 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                                 <th css={thScroll}>
                                   評価関連経費を使用することで、どのように評価の質を上げることを目指しますか
                                 </th>
-                                <td></td>
+                                <td tw="bg-gray-300"></td>
                                 <td css={tdScroll}>
                                   {strapiEvaluationPlan &&
                                     strapiEvaluationPlan.mid_improving_mh}
@@ -415,7 +452,13 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                             strapiEvaluationPlan.prior_comm_expenses && (
                               <tr css={tr}>
                                 <th css={thScroll}>内) 外部委託費（円）</th>
-                                <td css={tdScroll}>
+                                <td
+                                  css={[
+                                    tdScroll,
+                                    !strapiEvaluationPlan.prior_comm_expenses &&
+                                      tw`bg-gray-300`,
+                                  ]}
+                                >
                                   {strapiEvaluationPlan.prior_comm_expenses &&
                                     parseInt(
                                       strapiEvaluationPlan.prior_comm_expenses
@@ -439,7 +482,13 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                             strapiEvaluationPlan.prior_consign_detail && (
                               <tr css={tr}>
                                 <th css={thScroll}>外部委託内容</th>
-                                <td css={tdScroll}>
+                                <td
+                                  css={[
+                                    tdScroll,
+                                    !strapiEvaluationPlan.prior_consign_detail &&
+                                      tw`bg-gray-300`,
+                                  ]}
+                                >
                                   {strapiEvaluationPlan.prior_consign_detail &&
                                     strapiEvaluationPlan.prior_consign_detail}
                                 </td>
