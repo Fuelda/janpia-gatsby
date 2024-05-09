@@ -5,3 +5,29 @@
     margin-left: 24px;
   }
 }
+.ol {
+  &__colorNum {
+    list-style: none; /* デフォルトの数字を非表示に */
+    counter-reset: li;
+    li {
+      position: relative;
+      padding-left: 33px;
+      &::before {
+        counter-increment: li;
+        content: counter(li);
+        position: absolute;
+        left: 0;
+        top: 2px; /* 数字のY軸線上の位置を調整 */
+        display: block;
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        background-color: #c85a78;
+        font-size: 17px;
+        color: #fff;
+        line-height: 22px;
+        text-align: center;
+      }
+    }
+  }
+}

@@ -14,11 +14,11 @@ import { useSearchContext } from "../context/searchContext";
 import ReverseButton from "../components/atoms/ReverseButton";
 import Seo from "../components/lauout/Seo";
 
-const indexBox = [
+export const indexBox = [
   tw`bg-blue-base rounded-10 px-10 pt-7 pb-10 lg:(pb-7)`,
   wrapperSp,
 ];
-const searchBox = tw`w-[300px] h-[150px] bg-white rounded-10 px-5 py-2.5 flex justify-between lg:(w-[32.4%] h-auto flex-col px-3)`;
+export const searchBox = tw`w-[300px] h-[150px] bg-white rounded-10 px-5 py-2.5 flex justify-between lg:(w-[32.4%] h-auto flex-col px-3)`;
 
 type NewsType = {
   id: string;

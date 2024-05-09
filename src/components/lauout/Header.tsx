@@ -26,7 +26,11 @@ const Header = (props: { path: string }) => {
               alt="シンボル"
               tw="w-[72px] h-[70px] lg:(w-16 h-16) shrink-0"
             />
-            <h1>休眠預金活用事業 情報公開サイト</h1>
+            <h1>
+              休眠預金活用事業
+              <br />
+              情報公開サイト
+            </h1>
           </Link>
           <nav css={hCenter} tw="gap-6 lg:(hidden)">
             <Link to="/" tw="p-[7px]" css={path === "/" && currentPath}>
@@ -59,6 +63,15 @@ const Header = (props: { path: string }) => {
               css={path.includes("/news/") && currentPath}
             >
               お知らせ
+            </Link>
+            <Link
+              to="/guide/"
+              tw="p-[7px] text-center"
+              css={path.includes("/guide/") && currentPath}
+            >
+              使い方ガイド
+              <br />
+              Q&A
             </Link>
           </nav>
           <div tw="hidden lg:(block absolute right-0 z-[2000])">
