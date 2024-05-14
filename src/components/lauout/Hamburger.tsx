@@ -55,6 +55,15 @@ const Hamburger = (props: { path: string; isOpen: boolean }) => {
             お知らせ
           </Link>
           <Link
+            to="/guide/"
+            css={[
+              detailSidebarBlock,
+              path.includes("/guide/") && currentSidebar,
+            ]}
+          >
+            使い方ガイド/Q&A
+          </Link>
+          <Link
             to="/privacy-policy/"
             css={[
               detailSidebarBlock,
