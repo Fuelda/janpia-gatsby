@@ -18,7 +18,7 @@ export const FAQItem = ({
       <button
         onClick={() => setIsOpen(!isOpen)}
         css={hCenter}
-        tw="justify-between w-full lg:(gap-8)"
+        tw="justify-between w-full gap-2 lg:(gap-8)"
       >
         <div tw="gap-4 flex items-start">
           <p
