@@ -122,14 +122,17 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
         strapiSettleReportManualADO
     );
   }, []);
-
   return (
     <Layout>
       <Seo title="進捗/年度末報告 | 休眠預金活用事業 情報公開サイト" />
       <DetailHeader business_cd={slug} />
       <div css={detailFlex}>
         <DetailSidebar slug={slug} />
-        <DetailWrapper category="進捗/年度末報告" slug={slug}>
+        <DetailWrapper
+          category="進捗/年度末報告"
+          slug={slug}
+          updatedAt={currentItem.node.updatedAt}
+        >
           <div css={detailTab}>
             {sortedProgressReportManual &&
               sortedProgressReportManual.map(
@@ -184,6 +187,7 @@ export const pageQuery = graphql`
     ) {
       edges {
         node {
+          updatedAt(formatString: "YYYY/MM/DD")
           data {
             url
           }
@@ -202,6 +206,7 @@ export const pageQuery = graphql`
     ) {
       edges {
         node {
+          updatedAt(formatString: "YYYY/MM/DD")
           data {
             url
           }

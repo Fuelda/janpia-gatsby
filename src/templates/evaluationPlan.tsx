@@ -1,4 +1,4 @@
-import { Link, graphql } from "gatsby";
+import { graphql } from "gatsby";
 import React, { useEffect } from "react";
 import Layout from "../components/lauout/Layout";
 import DetailHeader from "../components/lauout/DetailHeader";
@@ -11,10 +11,8 @@ import {
   table,
   td,
   tdScroll,
-  th,
   th2Sub,
   thForCircle,
-  thLong,
   thScroll,
   thead,
   tr,
@@ -153,7 +151,15 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
       <DetailHeader business_cd={slug} />
       <div css={detailFlex}>
         <DetailSidebar slug={slug} />
-        <DetailWrapper category="評価計画" slug={slug}>
+        <DetailWrapper
+          category="評価計画"
+          slug={slug}
+          updatedAt={
+            strapiEvaluationPlan
+              ? strapiEvaluationPlan.updatedAt
+              : evaluationPlanManual.updatedAt
+          }
+        >
           {evaluationPlanManual && (
             <div>
               <iframe
@@ -818,6 +824,7 @@ export default EvaluationPlan;
 export const pageQuery = graphql`
   query MyQuery($slug: String!, $insert_id: [String]) {
     strapiEvaluationPlan(business_cd: { eq: $slug }) {
+      updatedAt(formatString: "YYYY/MM/DD")
       business_cd
       business_org_type
       biz_cd_fund_distr
@@ -874,6 +881,7 @@ export const pageQuery = graphql`
     allStrapiEvaluationPlanSub(filter: { business_cd: { eq: $slug } }) {
       edges {
         node {
+          updatedAt(formatString: "YYYY/MM/DD")
           business_cd
           business_org_type
           biz_cd_fund_distr
@@ -905,6 +913,7 @@ export const pageQuery = graphql`
       biz_cd_fund_distr: { eq: $slug }
       business_org_type: { eq: "F" }
     ) {
+      updatedAt(formatString: "YYYY/MM/DD")
       data {
         url
       }
@@ -913,6 +922,7 @@ export const pageQuery = graphql`
       biz_cd_executive: { eq: $slug }
       business_org_type: { eq: "A" }
     ) {
+      updatedAt(formatString: "YYYY/MM/DD")
       data {
         url
       }
@@ -920,6 +930,7 @@ export const pageQuery = graphql`
     allStrapiAttachedFile(filter: { insert_id: { in: $insert_id } }) {
       edges {
         node {
+          updatedAt(formatString: "YYYY/MM/DD")
           item_id
           file_name
           data {
