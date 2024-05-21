@@ -78,6 +78,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
     setWithCRM,
     setWithSR,
   } = useDetailContext();
+  const [updatedAt, setUpdatedAt] = useState("");
 
   const bizPlanManual = strapiBizPlanManualFDO || strapiBizPlanManualADO;
 
@@ -151,6 +152,11 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
       : [];
 
   useEffect(() => {
+    strapiBizPlan && setUpdatedAt(strapiBizPlan.updatedAt);
+    bizPlanManual && setUpdatedAt(bizPlanManual.updatedAt);
+  }, [strapiBizPlan, bizPlanManual]);
+
+  useEffect(() => {
     setWithFinance(
       strapiFinancePlanFDO ||
         strapiFinancePlanADO ||
@@ -186,13 +192,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
       <DetailHeader business_cd={slug} />
       <div css={detailFlex} tw="relative">
         <DetailSidebar slug={slug} />
-        <DetailWrapper
-          category="事業計画"
-          slug={slug}
-          updatedAt={
-            strapiBizPlan ? strapiBizPlan.updatedAt : bizPlanManual.updatedAt
-          }
-        >
+        <DetailWrapper category="事業計画" slug={slug} updatedAt={updatedAt}>
           {strapiBizPlan && (
             <div>
               <div css={detailAnchor}>

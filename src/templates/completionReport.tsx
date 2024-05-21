@@ -95,7 +95,9 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
         <DetailWrapper
           category="事業完了報告"
           slug={slug}
-          updatedAt={strapiCompleteReportManual.updatedAt}
+          updatedAt={
+            strapiCompleteReportManual && strapiCompleteReportManual.updatedAt
+          }
         >
           <div css={detailBody}>
             {strapiCompleteReportManual ? (
