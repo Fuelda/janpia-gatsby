@@ -1,20 +1,15 @@
-import { Link, graphql } from "gatsby";
+import { graphql } from "gatsby";
 import React, { useEffect, useState } from "react";
 import Layout from "../components/lauout/Layout";
 import DetailHeader from "../components/lauout/DetailHeader";
 import DetailSidebar from "../components/organisms/DetailSidebar";
 import "twin.macro";
-import tw from "twin.macro";
 import DetailWrapper from "../components/lauout/DetailWrapper";
-import DetailAnchor from "../components/atoms/DetailAnchor";
 import {
-  detailAnchor,
   detailBody,
-  detailCategoryName,
   detailFlex,
   detailRoundTabBtn,
   detailTab,
-  detailTabBtn,
   detailTabBtnSelected,
 } from "../styles/detailPage";
 import { useDetailContext } from "../context/detailContext";
@@ -122,7 +117,11 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
       <DetailHeader business_cd={slug} />
       <div css={detailFlex}>
         <DetailSidebar slug={slug} />
-        <DetailWrapper category="公募結果報告" slug={slug}>
+        <DetailWrapper
+          category="公募結果報告"
+          slug={slug}
+          updatedAt={currentItem.node.updatedAt}
+        >
           <div css={detailTab}>
             {roundArray.length !== 0 &&
               roundArray.map((round: number) => (
@@ -169,6 +168,7 @@ export const pageQuery = graphql`
     ) {
       edges {
         node {
+          updatedAt(formatString: "YYYY/MM/DD")
           data {
             url
           }

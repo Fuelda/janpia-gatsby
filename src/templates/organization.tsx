@@ -180,13 +180,18 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
     );
   }, []);
 
+  console.log(displayGroup);
   return (
     <Layout>
       <Seo title="団体情報 | 休眠預金活用事業 情報公開サイト" />
       <DetailHeader business_cd={slug} />
       <div css={detailFlex}>
         <DetailSidebar slug={slug} />
-        <DetailWrapper category="団体情報" slug={slug}>
+        <DetailWrapper
+          category="団体情報"
+          slug={slug}
+          updatedAt={displayGroup.node.updatedAt}
+        >
           {consortiumGroup.length !== 0 && (
             <div>
               <button
@@ -940,6 +945,7 @@ export const pageQuery = graphql`
     allStrapiGroup(filter: { organization_cd: { in: $organization_cd } }) {
       edges {
         node {
+          updatedAt(formatString: "YYYY/MM/DD")
           insert_id
           legal_personality
           organization_type_cd

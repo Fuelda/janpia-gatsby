@@ -1,13 +1,11 @@
-import { Link, graphql } from "gatsby";
+import { graphql } from "gatsby";
 import React, { useEffect } from "react";
 import Layout from "../components/lauout/Layout";
 import DetailHeader from "../components/lauout/DetailHeader";
 import DetailSidebar from "../components/organisms/DetailSidebar";
 import "twin.macro";
-import tw from "twin.macro";
 import DetailWrapper from "../components/lauout/DetailWrapper";
-import DetailAnchor from "../components/atoms/DetailAnchor";
-import { detailAnchor, detailBody, detailFlex } from "../styles/detailPage";
+import { detailBody, detailFlex } from "../styles/detailPage";
 import { useDetailContext } from "../context/detailContext";
 import Seo from "../components/lauout/Seo";
 
@@ -94,7 +92,11 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
       <DetailHeader business_cd={slug} />
       <div css={detailFlex}>
         <DetailSidebar slug={slug} />
-        <DetailWrapper category="中間評価報告" slug={slug}>
+        <DetailWrapper
+          category="中間評価報告"
+          slug={slug}
+          updatedAt={strapiMidReportManual.updatedAt}
+        >
           <div css={detailBody}>
             {strapiMidReportManual ? (
               <div>
@@ -122,6 +124,7 @@ export const pageQuery = graphql`
       biz_cd_fund_distr: { eq: $slug }
       business_org_type: { eq: "F" }
     ) {
+      updatedAt(formatString: "YYYY/MM/DD")
       biz_cd_executive
       biz_cd_fund_distr
       business_org_type
@@ -133,6 +136,7 @@ export const pageQuery = graphql`
       biz_cd_executive: { eq: $slug }
       business_org_type: { eq: "A" }
     ) {
+      updatedAt(formatString: "YYYY/MM/DD")
       biz_cd_executive
       biz_cd_fund_distr
       business_org_type
