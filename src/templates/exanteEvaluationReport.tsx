@@ -96,7 +96,7 @@ const ExanteEvaluationReport: React.FC<any> = ({ data, pageContext }) => {
         <DetailWrapper
           category="事前評価報告"
           slug={slug}
-          updatedAt={strapiPreReportManual.updatedAt}
+          updatedAt={strapiPreReportManual && strapiPreReportManual.updatedAt}
         >
           <div css={detailBody}>
             {strapiPreReportManual ? (

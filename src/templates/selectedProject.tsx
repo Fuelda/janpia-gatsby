@@ -120,7 +120,7 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
         <DetailWrapper
           category="公募結果報告"
           slug={slug}
-          updatedAt={currentItem.node.updatedAt}
+          updatedAt={currentItem && currentItem.node.updatedAt}
         >
           <div css={detailTab}>
             {roundArray.length !== 0 &&

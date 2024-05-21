@@ -96,7 +96,7 @@ const ExportEvaluationReport: React.FC<any> = ({ data, pageContext }) => {
         <DetailWrapper
           category="事後評価報告"
           slug={slug}
-          updatedAt={strapiPostReportManual.updatedAt}
+          updatedAt={strapiPostReportManual && strapiPostReportManual.updatedAt}
         >
           <div css={detailBody}>
             {strapiPostReportManual ? (

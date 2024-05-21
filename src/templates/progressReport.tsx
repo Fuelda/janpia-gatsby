@@ -122,6 +122,7 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
         strapiSettleReportManualADO
     );
   }, []);
+
   return (
     <Layout>
       <Seo title="進捗/年度末報告 | 休眠預金活用事業 情報公開サイト" />
@@ -131,7 +132,7 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
         <DetailWrapper
           category="進捗/年度末報告"
           slug={slug}
-          updatedAt={currentItem.node.updatedAt}
+          updatedAt={currentItem && currentItem.node.updatedAt}
         >
           <div css={detailTab}>
             {sortedProgressReportManual &&

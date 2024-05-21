@@ -1,5 +1,5 @@
 import { graphql } from "gatsby";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../components/lauout/Layout";
 import DetailHeader from "../components/lauout/DetailHeader";
 import DetailSidebar from "../components/organisms/DetailSidebar";
@@ -74,6 +74,7 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
     setWithCRM,
     setWithSR,
   } = useDetailContext();
+  const [updatedAt, setUpdatedAt] = useState("");
 
   const { slug } = pageContext;
   const evaluationPlanManual =
@@ -116,6 +117,11 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
       : [];
 
   useEffect(() => {
+    strapiEvaluationPlan && setUpdatedAt(strapiEvaluationPlan.updatedAt);
+    evaluationPlanManual && setUpdatedAt(evaluationPlanManual.updatedAt);
+  }, [strapiEvaluationPlan, evaluationPlanManual]);
+
+  useEffect(() => {
     setWithFinance(
       strapiFinancePlanFDO ||
         strapiFinancePlanADO ||
@@ -151,15 +157,7 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
       <DetailHeader business_cd={slug} />
       <div css={detailFlex}>
         <DetailSidebar slug={slug} />
-        <DetailWrapper
-          category="評価計画"
-          slug={slug}
-          updatedAt={
-            strapiEvaluationPlan
-              ? strapiEvaluationPlan.updatedAt
-              : evaluationPlanManual.updatedAt
-          }
-        >
+        <DetailWrapper category="評価計画" slug={slug} updatedAt={updatedAt}>
           {evaluationPlanManual && (
             <div>
               <iframe

@@ -95,7 +95,7 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
         <DetailWrapper
           category="中間評価報告"
           slug={slug}
-          updatedAt={strapiMidReportManual.updatedAt}
+          updatedAt={strapiMidReportManual && strapiMidReportManual.updatedAt}
         >
           <div css={detailBody}>
             {strapiMidReportManual ? (

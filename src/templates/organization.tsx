@@ -180,7 +180,6 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
     );
   }, []);
 
-  console.log(displayGroup);
   return (
     <Layout>
       <Seo title="団体情報 | 休眠預金活用事業 情報公開サイト" />
@@ -190,7 +189,7 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
         <DetailWrapper
           category="団体情報"
           slug={slug}
-          updatedAt={displayGroup.node.updatedAt}
+          updatedAt={displayGroup && displayGroup.node.updatedAt}
         >
           {consortiumGroup.length !== 0 && (
             <div>
