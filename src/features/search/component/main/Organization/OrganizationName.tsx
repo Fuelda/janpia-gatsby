@@ -1,18 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSearchContext } from "../../../../../context/searchContext";
 import { textField, textFieldSide } from "../../../../../styles/form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 import "twin.macro";
 import { h3 } from "../../../../../styles/base";
+import { navigate } from "gatsby";
 
 const OrganizationName = (props: { path: string }) => {
   const { searchState, searchSetState } = useSearchContext();
+  const [isComposing, setIsComposing] = useState(false);
   const { organization_name } = searchState;
   const { setOrganizationName } = searchSetState;
 
   const handleTextfield = (e: React.ChangeEvent<HTMLInputElement>) => {
     setOrganizationName(e.target.value);
+  };
+
+  const handleEnterKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter" && !isComposing) {
+      navigate("/result");
+    }
   };
 
   return (
@@ -25,6 +33,9 @@ const OrganizationName = (props: { path: string }) => {
           css={props.path.includes("search") ? textField : textFieldSide}
           placeholder="団体名を入力してください"
           value={organization_name}
+          onKeyDown={handleEnterKeyDown}
+          onCompositionStart={() => setIsComposing(true)}
+          onCompositionEnd={() => setIsComposing(false)}
         />
         <button
           tw="absolute top-1/2 transform -translate-y-1/2 right-8"

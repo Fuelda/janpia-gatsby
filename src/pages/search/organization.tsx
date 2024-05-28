@@ -35,7 +35,7 @@ const Organization = () => {
           <p>団体から探す</p>
         </div>
         <h2 tw="text-xl py-6 px-3.5 font-bold">団体から探す</h2>
-        <div css={vCenter} tw="gap-11">
+        <div css={vCenter} tw="relative">
           <div>
             <OrganizationName path={path} />
             <OrganizationTypeCd path={path} />
@@ -52,8 +52,10 @@ const Organization = () => {
 
             <LegalPersonality path={path} />
           </div>
-          <div css={vCenter} tw="gap-6">
+          <div tw="sticky bottom-16 mt-11">
             <ToResultButton />
+          </div>
+          <div tw="mt-6">
             <ResetSearchButton />
           </div>
         </div>
