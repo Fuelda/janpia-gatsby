@@ -1,16 +1,10 @@
 import { Link } from "gatsby";
 import React, { useEffect, useState } from "react";
 import "twin.macro";
-import { hCenter, vCenter } from "../../styles/base";
+import { hCenter } from "../../styles/base";
 import tw from "twin.macro";
 import { useDetailContext } from "../../context/detailContext";
 import { useLocation } from "@reach/router";
-import * as Select from "@radix-ui/react-select";
-import {
-  CheckIcon,
-  ChevronDownIcon,
-  ChevronUpIcon,
-} from "@radix-ui/react-icons";
 import HamburgerButton from "../atoms/HamburgerButton";
 
 const detailSidebarBlock = tw`block py-3 px-6 w-full relative`;
@@ -54,7 +48,7 @@ const DetailSelector = (props: { slug: string }) => {
 
   return (
     <div tw="hidden lg:(block w-full px-2.5 mt-3.5 )">
-      <div tw=" relative">
+      <div tw="relative">
         <button
           tw="w-full px-2 py-2.5  text-start border justify-between"
           css={[
