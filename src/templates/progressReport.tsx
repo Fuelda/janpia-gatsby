@@ -17,15 +17,16 @@ import Seo from "../components/lauout/Seo";
 import DetailItemWrapper from "../components/lauout/DetailItemWrapper";
 import tw from "twin.macro";
 
-const ScrollTable = tw.table`lg:(w-[780px])`;
-const Th = tw.th`bg-blue-base py-3 px-3.5 text-start border-gray-border border lg:(text-[13px] py-0 px-2)`;
-const Td = tw.td`py-3 px-3.5 border-gray-border border text-start lg:(py-2 px-2 break-all)`;
+export const ScrollTable = tw.table`lg:(w-[780px])`;
+export const Th = tw.th`bg-blue-base py-3 px-3.5 text-start border-gray-border border lg:(text-[13px] py-0 px-2)`;
+export const Td = tw.td`py-3 px-3.5 border-gray-border border text-start lg:(py-2 px-2 break-all)`;
 
-const LshapeTableRow: React.FC<{
+export const LshapeTableRow: React.FC<{
   heading: string;
   status: string;
+  contentName?: string;
   content: string;
-}> = ({ heading, status, content }) => {
+}> = ({ heading, status, contentName = "内容", content }) => {
   return (
     <>
       <tr>
@@ -36,13 +37,15 @@ const LshapeTableRow: React.FC<{
       </tr>
       <tr>
         <Th tw="w-[12.5%] border-t-0"></Th>
-        <Th>内容</Th>
+        <Th>{contentName}</Th>
         <Td>
-          <div
-            dangerouslySetInnerHTML={{
-              __html: content.replace(/\n/g, "<br />"),
-            }}
-          />
+          {content && (
+            <div
+              dangerouslySetInnerHTML={{
+                __html: content.replace(/\n/g, "<br />"),
+              }}
+            />
+          )}
         </Td>
       </tr>
     </>
@@ -270,7 +273,7 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
                       {performanceOutput.map((item: any, index: number) => (
                         <tbody key={index}>
                           <tr>
-                            <Th rowSpan={7} tw="w-[6%]">
+                            <Th rowSpan={7} tw="w-[6%] text-center">
                               {index + 1}
                             </Th>
                             <Th tw="w-1/4">アウトプット</Th>
@@ -857,8 +860,8 @@ export const pageQuery = graphql`
       biz_cd_fund_distr
       business_cd
       business_org_type
-      business_period_e(formatString: "yyyy/mm/dd")
-      business_period_s(formatString: "yyyy/mm/dd")
+      business_period_e(formatString: "YYYY/MM/DD")
+      business_period_s(formatString: "YYYY/MM/DD")
       business_type_cd
       business_type_name
       create_date(formatString: "yyyy/mm/dd")
