@@ -93,7 +93,11 @@ const ExanteEvaluationReport: React.FC<any> = ({ data, pageContext }) => {
       <DetailHeader business_cd={slug} />
       <div css={detailFlex}>
         <DetailSidebar slug={slug} />
-        <DetailWrapper category="事前評価報告" slug={slug}>
+        <DetailWrapper
+          category="事前評価報告"
+          slug={slug}
+          updatedAt={strapiPreReportManual && strapiPreReportManual.updatedAt}
+        >
           <div css={detailBody}>
             {strapiPreReportManual ? (
               <div>
@@ -121,6 +125,7 @@ export const pageQuery = graphql`
       biz_cd_fund_distr: { eq: $slug }
       business_org_type: { eq: "F" }
     ) {
+      updatedAt(formatString: "YYYY/MM/DD")
       data {
         url
       }
@@ -129,6 +134,7 @@ export const pageQuery = graphql`
       biz_cd_executive: { eq: $slug }
       business_org_type: { eq: "A" }
     ) {
+      updatedAt(formatString: "YYYY/MM/DD")
       data {
         url
       }
