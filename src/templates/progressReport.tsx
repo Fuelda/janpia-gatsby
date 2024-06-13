@@ -129,7 +129,11 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
       <DetailHeader business_cd={slug} />
       <div css={detailFlex}>
         <DetailSidebar slug={slug} />
-        <DetailWrapper category="進捗/年度末報告" slug={slug}>
+        <DetailWrapper
+          category="進捗/年度末報告"
+          slug={slug}
+          updatedAt={currentItem && currentItem.node.updatedAt}
+        >
           <div css={detailTab}>
             {sortedProgressReportManual &&
               sortedProgressReportManual.map(
@@ -184,6 +188,7 @@ export const pageQuery = graphql`
     ) {
       edges {
         node {
+          updatedAt(formatString: "YYYY/MM/DD")
           data {
             url
           }
@@ -202,6 +207,7 @@ export const pageQuery = graphql`
     ) {
       edges {
         node {
+          updatedAt(formatString: "YYYY/MM/DD")
           data {
             url
           }

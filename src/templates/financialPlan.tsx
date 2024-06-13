@@ -15,7 +15,6 @@ import DetailSidebar from "../components/organisms/DetailSidebar";
 import DetailWrapper from "../components/lauout/DetailWrapper";
 import DetailAnchor from "../components/atoms/DetailAnchor";
 import "twin.macro";
-import tw from "twin.macro";
 import DetailItemWrapper from "../components/lauout/DetailItemWrapper";
 import {
   table,
@@ -79,12 +78,19 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
     setWithCRM,
     setWithSR,
   } = useDetailContext();
+  const [updatedAt, setUpdatedAt] = useState("");
 
   const financePlan = financePlanFDO || financePlanADO;
   const financePlanFormer = financePlanFormerFDO || financePlanFormerADO;
   const financePlanManual = financePlanManualFDO || financePlanManualADO;
   const pdfUrl = financePlanManual && financePlanManual.data.url;
   const googleDocsViewerUrl = `https://docs.google.com/viewer?url=${pdfUrl}&embedded=true`;
+
+  useEffect(() => {
+    financePlan && setUpdatedAt(financePlan.updatedAt);
+    financePlanFormer && setUpdatedAt(financePlanFormer.updatedAt);
+    financePlanManual && setUpdatedAt(financePlanManual.updatedAt);
+  }, [financePlan, financePlanFormer, financePlanManual]);
 
   useEffect(() => {
     setWithFinance(
@@ -122,7 +128,7 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
       <DetailHeader business_cd={slug} />
       <div css={detailFlex}>
         <DetailSidebar slug={slug} />
-        <DetailWrapper category="資金計画" slug={slug}>
+        <DetailWrapper category="資金計画" slug={slug} updatedAt={updatedAt}>
           {financePlanManual && (
             <div>
               <iframe
@@ -1137,6 +1143,7 @@ export const pageQuery = graphql`
       biz_cd_fund_distr: { eq: $slug }
       business_org_type: { eq: "F" }
     ) {
+      updatedAt(formatString: "YYYY/MM/DD")
       financing_plan_no
       business_org_type
       biz_cd_fund_distr
@@ -1176,6 +1183,7 @@ export const pageQuery = graphql`
       biz_cd_executive: { eq: $slug }
       business_org_type: { eq: "A" }
     ) {
+      updatedAt(formatString: "YYYY/MM/DD")
       financing_plan_no
       business_org_type
       biz_cd_fund_distr
@@ -1215,6 +1223,7 @@ export const pageQuery = graphql`
       biz_cd_fund_distr: { eq: $slug }
       business_org_type: { eq: "F" }
     ) {
+      updatedAt(formatString: "YYYY/MM/DD")
       financing_plan_no
       business_org_type
       biz_cd_fund_distr
@@ -1304,6 +1313,7 @@ export const pageQuery = graphql`
       biz_cd_executive: { eq: $slug }
       business_org_type: { eq: "A" }
     ) {
+      updatedAt(formatString: "YYYY/MM/DD")
       financing_plan_no
       business_org_type
       biz_cd_fund_distr
@@ -1393,6 +1403,7 @@ export const pageQuery = graphql`
       biz_cd_fund_distr: { eq: $slug }
       business_org_type: { eq: "F" }
     ) {
+      updatedAt(formatString: "YYYY/MM/DD")
       data {
         url
       }
@@ -1401,6 +1412,7 @@ export const pageQuery = graphql`
       biz_cd_executive: { eq: $slug }
       business_org_type: { eq: "A" }
     ) {
+      updatedAt(formatString: "YYYY/MM/DD")
       data {
         url
       }

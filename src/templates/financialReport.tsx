@@ -1,5 +1,5 @@
 import { graphql } from "gatsby";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../components/lauout/Layout";
 import DetailHeader from "../components/lauout/DetailHeader";
 import DetailSidebar from "../components/organisms/DetailSidebar";
@@ -56,12 +56,18 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
     setWithCRM,
     setWithSR,
   } = useDetailContext();
+  const [updatedAt, setUpdatedAt] = useState("");
 
   const settleReport = strapiSettleReportFDO || strapiSettleReportADO;
   const settleReportManual =
     strapiSettleReportManualFDO || strapiSettleReportManualADO;
   const pdfUrl = settleReportManual && settleReportManual.data.url;
   const googleDocsViewerUrl = `https://docs.google.com/viewer?url=${pdfUrl}&embedded=true`;
+
+  useEffect(() => {
+    settleReport && setUpdatedAt(settleReport.updatedAt);
+    settleReportManual && setUpdatedAt(settleReportManual.updatedAt);
+  }, [settleReport, settleReportManual]);
 
   useEffect(() => {
     setWithFinance(
@@ -99,7 +105,11 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
       <DetailHeader business_cd={slug} />
       <div css={detailFlex}>
         <DetailSidebar slug={slug} />
-        <DetailWrapper category="事業完了時精算報告" slug={slug}>
+        <DetailWrapper
+          category="事業完了時精算報告"
+          slug={slug}
+          updatedAt={updatedAt}
+        >
           {settleReportManual && (
             <div>
               <iframe
@@ -657,6 +667,7 @@ export const pageQuery = graphql`
       business_org_type: { eq: "F" }
       biz_cd_fund_distr: { eq: $slug }
     ) {
+      updatedAt(formatString: "YYYY/MM/DD")
       a_ado
       a_ado1
       a_ado2
@@ -747,6 +758,7 @@ export const pageQuery = graphql`
       business_org_type: { eq: "A" }
       biz_cd_executive: { eq: $slug }
     ) {
+      updatedAt(formatString: "YYYY/MM/DD")
       a_ado
       a_ado1
       a_ado2
@@ -837,6 +849,7 @@ export const pageQuery = graphql`
       biz_cd_fund_distr: { eq: $slug }
       business_org_type: { eq: "F" }
     ) {
+      updatedAt(formatString: "YYYY/MM/DD")
       data {
         url
       }
@@ -845,6 +858,7 @@ export const pageQuery = graphql`
       biz_cd_executive: { eq: $slug }
       business_org_type: { eq: "A" }
     ) {
+      updatedAt(formatString: "YYYY/MM/DD")
       data {
         url
       }

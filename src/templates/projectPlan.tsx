@@ -16,9 +16,7 @@ import {
   tdLshapeWrapper,
   tdScroll,
   th,
-  th1,
   th1_2,
-  th2,
   th2Sub,
   th2Sub_2,
   th2_2,
@@ -33,7 +31,6 @@ import {
 import { sdgsGoalArray } from "../features/search/store/filterContents";
 import { formatDate } from "../util/formatDate";
 import "twin.macro";
-import { hCenter } from "../styles/base";
 import Seo from "../components/lauout/Seo";
 import { useDetailContext } from "../context/detailContext";
 
@@ -81,6 +78,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
     setWithCRM,
     setWithSR,
   } = useDetailContext();
+  const [updatedAt, setUpdatedAt] = useState("");
 
   const bizPlanManual = strapiBizPlanManualFDO || strapiBizPlanManualADO;
 
@@ -154,6 +152,11 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
       : [];
 
   useEffect(() => {
+    strapiBizPlan && setUpdatedAt(strapiBizPlan.updatedAt);
+    bizPlanManual && setUpdatedAt(bizPlanManual.updatedAt);
+  }, [strapiBizPlan, bizPlanManual]);
+
+  useEffect(() => {
     setWithFinance(
       strapiFinancePlanFDO ||
         strapiFinancePlanADO ||
@@ -189,7 +192,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
       <DetailHeader business_cd={slug} />
       <div css={detailFlex} tw="relative">
         <DetailSidebar slug={slug} />
-        <DetailWrapper category="事業計画" slug={slug}>
+        <DetailWrapper category="事業計画" slug={slug} updatedAt={updatedAt}>
           {strapiBizPlan && (
             <div>
               <div css={detailAnchor}>
@@ -5071,6 +5074,7 @@ export const pageQuery = graphql`
       biz_cd_fund_distr: { eq: $slug }
       business_org_type: { eq: "F" }
     ) {
+      updatedAt(formatString: "YYYY/MM/DD")
       data {
         url
       }
@@ -5079,11 +5083,13 @@ export const pageQuery = graphql`
       biz_cd_executive: { eq: $slug }
       business_org_type: { eq: "A" }
     ) {
+      updatedAt(formatString: "YYYY/MM/DD")
       data {
         url
       }
     }
     strapiBizPlan(business_cd: { eq: $slug }) {
+      updatedAt(formatString: "YYYY/MM/DD")
       business_cd
       business_org_type
       biz_cd_fund_distr
@@ -5614,6 +5620,7 @@ export const pageQuery = graphql`
     allStrapiBizPlanSub(filter: { business_cd: { eq: $slug } }) {
       edges {
         node {
+          updatedAt
           business_cd
           business_org_type
           biz_cd_fund_distr
