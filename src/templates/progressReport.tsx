@@ -2,17 +2,14 @@ import { graphql } from "gatsby";
 import React, { useEffect, useState } from "react";
 import Layout from "../components/lauout/Layout";
 import DetailHeader from "../components/lauout/DetailHeader";
-import DetailSidebar from "../components/organisms/DetailSidebar";
 import "twin.macro";
 import DetailWrapper from "../components/lauout/DetailWrapper";
 import {
   detailBody,
-  detailFlex,
   detailRoundTabBtn,
   detailTab,
   detailTabBtnSelected,
 } from "../styles/detailPage";
-import { useDetailContext } from "../context/detailContext";
 import Seo from "../components/lauout/Seo";
 import DetailItemWrapper from "../components/lauout/DetailItemWrapper";
 import tw from "twin.macro";
@@ -61,44 +58,7 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
     allStrapiProgressReportSub,
     allStrapiProgressReportManualFDO,
     allStrapiProgressReportManualADO,
-    //サイドバーチェック用
-    strapiFinancePlanFDO,
-    strapiFinancePlanADO,
-    strapiFinancePlanFormerFDO,
-    strapiFinancePlanFormerADO,
-    strapiFinancePlanManualFDO,
-    strapiFinancePlanManualADO,
-    strapiEvaluationPlan,
-    strapiEvaluationPlanManualFDO,
-    strapiEvaluationPlanManualADO,
-    strapiOfferingReportManualFDO,
-    strapiPreReportManualFDO,
-    strapiPreReportManualADO,
-    strapiMidReportManualFDO,
-    strapiMidReportManualADO,
-    strapiPostReportManualFDO,
-    strapiPostReportManualADO,
-    strapiProgressReportManualFDO,
-    strapiProgressReportManualADO,
-    strapiCompleteReportManualFDO,
-    strapiCompleteReportManualADO,
-    strapiSettleReportFDO,
-    strapiSettleReportADO,
-    strapiSettleReportManualFDO,
-    strapiSettleReportManualADO,
   } = data;
-
-  const {
-    setWithFinance,
-    setWithEval,
-    setWithORM,
-    setWithPreRM,
-    setWithMRM,
-    setWithPostRM,
-    setWithProRM,
-    setWithCRM,
-    setWithSR,
-  } = useDetailContext();
 
   const allStrapiProgressReportManual = [
     ...allStrapiProgressReportManualFDO.edges,
@@ -148,705 +108,671 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
   const currentPdfUrl = currentItem && currentItem.node.data.url;
   const googleDocsViewerUrl = `https://docs.google.com/viewer?url=${currentPdfUrl}&embedded=true`;
 
-  useEffect(() => {
-    setWithFinance(
-      strapiFinancePlanFDO ||
-        strapiFinancePlanADO ||
-        strapiFinancePlanFormerFDO ||
-        strapiFinancePlanFormerADO ||
-        strapiFinancePlanManualFDO ||
-        strapiFinancePlanManualADO
-    );
-    setWithEval(
-      strapiEvaluationPlan ||
-        strapiEvaluationPlanManualFDO ||
-        strapiEvaluationPlanManualADO
-    );
-    setWithORM(strapiOfferingReportManualFDO);
-    setWithPreRM(strapiPreReportManualFDO || strapiPreReportManualADO);
-    setWithMRM(strapiMidReportManualFDO || strapiMidReportManualADO);
-    setWithPostRM(strapiPostReportManualFDO || strapiPostReportManualADO);
-    setWithProRM(
-      strapiProgressReportManualFDO || strapiProgressReportManualADO
-    );
-    setWithCRM(strapiCompleteReportManualFDO || strapiCompleteReportManualADO);
-    setWithSR(
-      strapiSettleReportFDO ||
-        strapiSettleReportADO ||
-        strapiSettleReportManualFDO ||
-        strapiSettleReportManualADO
-    );
-  }, []);
-
   return (
     <Layout>
       <Seo title="進捗/年度末報告 | 休眠預金活用事業 情報公開サイト" />
       <DetailHeader business_cd={slug} />
-      <div css={detailFlex}>
-        <DetailSidebar slug={slug} />
-        <DetailWrapper category="進捗/年度末報告" slug={slug}>
-          <div css={detailTab}>
-            {sortedProgressReportManual &&
-              sortedProgressReportManual.map(
-                (prm: any, index) =>
-                  prm.node.progress_round && (
-                    <button
-                      key={index}
-                      css={[
-                        detailRoundTabBtn,
-                        currentTab === prm.node.progress_round.code &&
-                          detailTabBtnSelected,
-                      ]}
-                      onClick={() =>
-                        setCurrentTab(prm.node.progress_round.code)
-                      }
-                    >
-                      {prm.node.progress_round.label}
-                    </button>
-                  )
-              )}
-          </div>
-          {allStrapiProgressReportManual.length > 0 &&
-            (currentItem ? (
-              <div>
-                {!loaded && <p>PDFのロード中です...</p>}
-                <iframe
-                  width="100%"
-                  height="500px"
-                  src={googleDocsViewerUrl}
-                  onLoad={() => setLoaded(true)}
-                ></iframe>
-              </div>
-            ) : (
-              <p>データはありません</p>
-            ))}
-          {strapiProgressReport && (
-            <div css={detailBody}>
-              <div id="firstItem">
-                <DetailItemWrapper itemName="事業概要">
-                  <div>
-                    <table>
-                      <tbody>
-                        <tr>
-                          <Th rowSpan={2} tw="w-[12.5%]">
-                            実施時期
-                          </Th>
-                          <Th tw="w-[12.5%]">(開始)</Th>
-                          <Td>{strapiProgressReport.business_period_s}</Td>
-                        </tr>
-                        <tr>
-                          <Th>(終了)</Th>
-                          <Td>{strapiProgressReport.business_period_e}</Td>
-                        </tr>
-                        <tr>
-                          <Th colSpan={2}>対象地域</Th>
-                          <Td>{strapiProgressReport.taisyoutiiki}</Td>
-                        </tr>
-                        <tr>
-                          <Th colSpan={2}>事業対象者</Th>
-                          <Td>{strapiProgressReport.jigyoutaisyousya}</Td>
-                        </tr>
-                        <tr>
-                          <Th colSpan={2}>事業対象者人数</Th>
-                          <Td>{strapiProgressReport.jigyoutaisyousya_n}</Td>
-                        </tr>
-                        <tr>
-                          <Th colSpan={2}>事業概要</Th>
-                          <Td>{strapiProgressReport.jigyougaiyou}</Td>
-                        </tr>
-                        {strapiProgressReport.ado_count && (
-                          <tr>
-                            <Th colSpan={2}>実行団体数</Th>
-                            <Td>{strapiProgressReport.ado_count}</Td>
-                          </tr>
-                        )}
-                      </tbody>
-                    </table>
-                  </div>
-                </DetailItemWrapper>
-              </div>
 
-              {actualValue.length > 0 && (
-                <DetailItemWrapper itemName="実測値">
-                  <div tw="lg:overflow-x-scroll">
-                    <ScrollTable>
-                      {performanceOutput.map((item: any, index: number) => (
-                        <tbody key={index}>
-                          <tr>
-                            <Th rowSpan={7} tw="w-[6%] text-center">
-                              {index + 1}
-                            </Th>
-                            <Th tw="w-1/4">アウトプット</Th>
-                            <Td>
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html:
-                                    item.node.output.data.childMarkdownRemark.html.replace(
-                                      /\n/g,
-                                      "<br />"
-                                    ),
-                                }}
-                              />
-                            </Td>
-                          </tr>
-                          <tr>
-                            <Th>
-                              資金支援
-                              <br />
-                              非資金的支援
-                            </Th>
-                            <Td>{item.node.sikintekisien}</Td>
-                          </tr>
-                          <tr>
-                            <Th>指標</Th>
-                            <Td>
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html:
-                                    item.node.output_etc_index.data.childMarkdownRemark.html.replace(
-                                      /\n/g,
-                                      "<br />"
-                                    ),
-                                }}
-                              />
-                            </Td>
-                          </tr>
-                          <tr>
-                            <Th>中間評価時の値・状態</Th>
-                            <Td>
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html:
-                                    item.node.mid_eval.data.childMarkdownRemark.html.replace(
-                                      /\n/g,
-                                      "<br />"
-                                    ),
-                                }}
-                              />
-                            </Td>
-                          </tr>
-                          <tr>
-                            <Th>事後評価時の値・状態</Th>
-                            <Td>
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html:
-                                    item.node.aft_eval.data.childMarkdownRemark.html.replace(
-                                      /\n/g,
-                                      "<br />"
-                                    ),
-                                }}
-                              />
-                            </Td>
-                          </tr>
-                          <tr>
-                            <Th>進捗状況</Th>
-                            <Td>{item.node.sintyokujoukyou}</Td>
-                          </tr>
-                          <tr>
-                            <Th>現在の指標の達成状況</Th>
-                            <Td>
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html:
-                                    item.node.tasseijoukyou.data.childMarkdownRemark.html.replace(
-                                      /\n/g,
-                                      "<br />"
-                                    ),
-                                }}
-                              />
-                            </Td>
-                          </tr>
-                        </tbody>
-                      ))}
-                    </ScrollTable>
-                  </div>
-                </DetailItemWrapper>
-              )}
-              {(performanceOutput.length > 0 ||
-                performanceActviity.length > 0) && (
-                <DetailItemWrapper itemName="活動実績">
-                  <div tw="space-y-4 lg:overflow-x-scroll">
-                    <ScrollTable>
-                      {performanceOutput.map((item: any, index: number) => (
-                        <tbody key={index}>
-                          <tr>
-                            <Th rowSpan={6} tw="w-[6%]">
-                              {index + 1}
-                            </Th>
-                            <Th tw="w-1/4">アウトプット</Th>
-                            <Td>
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html:
-                                    item.node.out_output.data.childMarkdownRemark.html.replace(
-                                      /\n/g,
-                                      "<br />"
-                                    ),
-                                }}
-                              />
-                            </Td>
-                          </tr>
-                          <tr>
-                            <Th>
-                              資金支援
-                              <br />
-                              非資金的支援
-                            </Th>
-                            <Td>{item.node.out_sikintekisien}</Td>
-                          </tr>
-                          <tr>
-                            <Th tw="w-1/4">指標</Th>
-                            <Td>
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html:
-                                    item.node.out_output_etc_index.data.childMarkdownRemark.html.replace(
-                                      /\n/g,
-                                      "<br />"
-                                    ),
-                                }}
-                              />
-                            </Td>
-                          </tr>
-                          <tr>
-                            <Th tw="w-1/4">目標値・目標状態</Th>
-                            <Td>
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html:
-                                    item.node.out_mokuhyou.data.childMarkdownRemark.html.replace(
-                                      /\n/g,
-                                      "<br />"
-                                    ),
-                                }}
-                              />
-                            </Td>
-                          </tr>
-                          <tr>
-                            <Th tw="w-1/4">進捗状況</Th>
-                            <Td>{item.node.out_sintyokujoukyou}</Td>
-                          </tr>
-                          <tr>
-                            <Th tw="w-1/4">概要</Th>
-                            <Td>
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html:
-                                    item.node.out_gaiyou.data.childMarkdownRemark.html.replace(
-                                      /\n/g,
-                                      "<br />"
-                                    ),
-                                }}
-                              />
-                            </Td>
-                          </tr>
-                        </tbody>
-                      ))}
-                    </ScrollTable>
-                    <ScrollTable>
-                      {performanceActviity.map((item: any, index: number) => (
-                        <tbody key={index}>
-                          <tr>
-                            <Th rowSpan={4} tw="w-[6%]">
-                              {index + 1}
-                            </Th>
-                            <Th tw="w-1/4">活動</Th>
-                            <Td>
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html:
-                                    item.node.act_katudou.data.childMarkdownRemark.html.replace(
-                                      /\n/g,
-                                      "<br />"
-                                    ),
-                                }}
-                              />
-                            </Td>
-                          </tr>
-                          <tr>
-                            <Th>
-                              資金支援
-                              <br />
-                              非資金的支援
-                            </Th>
-                            <Td>{item.node.act_k_sikintekisien}</Td>
-                          </tr>
-                          <tr>
-                            <Th>進捗状況</Th>
-                            <Td>{item.node.act_k_sintyoku}</Td>
-                          </tr>
-                          <tr>
-                            <Th>概要</Th>
-                            <Td>
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html:
-                                    item.node.act_k_gaiyou.data.childMarkdownRemark.html.replace(
-                                      /\n/g,
-                                      "<br />"
-                                    ),
-                                }}
-                              />
-                            </Td>
-                          </tr>
-                        </tbody>
-                      ))}
-                    </ScrollTable>
-                  </div>
-                </DetailItemWrapper>
-              )}
-
-              <div id="">
-                <DetailItemWrapper itemName="事業進捗に関する報告">
-                  <div>
-                    <table tw="lg:([&_th]:block [&_td]:block)">
-                      <tbody>
-                        <tr>
-                          <Th tw="w-1/4 lg:w-full">
-                            事業計画に掲げた短期アウトカム達成の見込み
-                          </Th>
-                          <Td>{strapiProgressReport.rep_1}</Td>
-                        </tr>
-                        <tr>
-                          <Th>アウトカムの状況（事業計画書の変更有無）</Th>
-                          <Td>
-                            {strapiProgressReport.rep_2_1 === "1" && (
-                              <p>変更なし</p>
-                            )}
-                            {strapiProgressReport.rep_2_2_naiyou === "1" && (
-                              <p>変更あり_短期アウトカムの内容</p>
-                            )}
-                            {strapiProgressReport.rep_2_2_hyougen === "1" && (
-                              <p>変更あり_短期アウトカムの表現</p>
-                            )}
-                            {strapiProgressReport.rep_2_2_shihyou === "1" && (
-                              <p>変更あり_短期アウトカムの指標</p>
-                            )}
-                            {strapiProgressReport.rep_2_2_mokuhyou === "1" && (
-                              <p>変更あり_短期アウトカムの目標値</p>
-                            )}
-                          </Td>
-                        </tr>
-                        {strapiProgressReport.jigyougaiyou && (
-                          <tr>
-                            <Th>非資金的支援の活動に関する報告</Th>
-                            <Td>
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html:
-                                    strapiProgressReport.rep_6.data.childMarkdownRemark.html.replace(
-                                      /\n/g,
-                                      "<br />"
-                                    ),
-                                }}
-                              />
-                            </Td>
-                          </tr>
-                        )}
-                      </tbody>
-                    </table>
-                  </div>
-                </DetailItemWrapper>
-              </div>
-
-              <div id="">
-                <DetailItemWrapper itemName="短期アウトカムの発現状況">
-                  <div>
-                    <table tw="lg:([&_th]:block [&_td]:block)">
-                      <tbody>
-                        <tr>
-                          <Th tw="w-1/4 lg:w-full">
-                            これまでの活動をとおして把握している変化・改善状況
-                          </Th>
-                          <Td>
-                            <div
-                              dangerouslySetInnerHTML={{
-                                __html:
-                                  strapiProgressReport.hatugenjoukyou.data.childMarkdownRemark.html.replace(
-                                    /\n/g,
-                                    "<br />"
-                                  ),
-                              }}
-                            />
-                          </Td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </DetailItemWrapper>
-              </div>
-
-              <div id="">
-                <DetailItemWrapper itemName="事業上の課題">
-                  <div>
-                    <table tw="lg:([&_th]:block [&_td]:block)">
-                      <tbody>
-                        <tr>
-                          <Th tw="w-1/4 lg:w-full">
-                            事業実施上顕在化したリスク/阻害要因とその対応
-                          </Th>
-                          <Td>
-                            <div
-                              dangerouslySetInnerHTML={{
-                                __html:
-                                  strapiProgressReport.kadai.data.childMarkdownRemark.html.replace(
-                                    /\n/g,
-                                    "<br />"
-                                  ),
-                              }}
-                            />
-                          </Td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </DetailItemWrapper>
-              </div>
-
-              <div id="">
-                <DetailItemWrapper itemName="その他">
-                  <div>
-                    <table>
-                      <tbody>
-                        <tr>
-                          <Td>
-                            <div
-                              dangerouslySetInnerHTML={{
-                                __html:
-                                  strapiProgressReport.etc.data.childMarkdownRemark.html.replace(
-                                    /\n/g,
-                                    "<br />"
-                                  ),
-                              }}
-                            />
-                          </Td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </DetailItemWrapper>
-              </div>
-
-              <div id="">
-                <DetailItemWrapper itemName="広報実績">
-                  <div tw="overflow-x-scroll">
-                    <ScrollTable>
-                      <tbody>
-                        <LshapeTableRow
-                          heading="メディア掲載（TV・ラジオ・新聞・雑誌・WEB等）"
-                          status={strapiProgressReport.media_joukyou}
-                          content={
-                            strapiProgressReport.media_naiyou.data
-                              .childMarkdownRemark.html
-                          }
-                        />
-                        <LshapeTableRow
-                          heading="広報制作物等"
-                          status={strapiProgressReport.seisaku_joukyou}
-                          content={
-                            strapiProgressReport.seisaku_naiyou.data
-                              .childMarkdownRemark.html
-                          }
-                        />
-                        <LshapeTableRow
-                          heading="報告書等"
-                          status={strapiProgressReport.houkoku_joukyou}
-                          content={
-                            strapiProgressReport.houkoku_naiyou.data
-                              .childMarkdownRemark.html
-                          }
-                        />
-                        {strapiProgressReport.event_joukyou && (
-                          <LshapeTableRow
-                            heading="イベント開催等"
-                            status={strapiProgressReport.event_joukyou}
-                            content={
-                              strapiProgressReport.event_naiyou.data
-                                .childMarkdownRemark.html
-                            }
-                          />
-                        )}
-                        {strapiProgressReport.symbol_joukyou && (
-                          <LshapeTableRow
-                            heading="シンボルマークの使用状況"
-                            status={strapiProgressReport.symbol_joukyou}
-                            content={
-                              strapiProgressReport.symbol_naiyou.data
-                                .childMarkdownRemark.html
-                            }
-                          />
-                        )}
-                      </tbody>
-                    </ScrollTable>
-                  </div>
-                </DetailItemWrapper>
-              </div>
-
-              <div id="">
-                <DetailItemWrapper itemName="ガバナンス・コンプライアンス実績">
-                  <div tw="overflow-x-scroll">
-                    <ScrollTable>
-                      <tbody>
-                        <LshapeTableRow
-                          heading="社員総会、理事会、評議会は定款の定める通りに開催されていますか。"
-                          status={strapiProgressReport.gov_soukai_joukyou}
-                          content={
-                            strapiProgressReport.gov_soukai_naiyou.data
-                              .childMarkdownRemark.html
-                          }
-                        />
-                        <LshapeTableRow
-                          heading="内部通報制度は整備されていますか。"
-                          status={strapiProgressReport.gov_tuhou_joukyou}
-                          content={
-                            strapiProgressReport.gov_tuhou_naiyou.data
-                              .childMarkdownRemark.html
-                          }
-                        />
-                        <tr>
-                          <Th colSpan={2}>
-                            上記設問で「はい」の場合、利用はありましたか。
-                          </Th>
-                          <Td>{strapiProgressReport.gov_riyou_joukyou}</Td>
-                        </tr>
-                        <LshapeTableRow
-                          heading="関連する規程の定め通り情報公開を行っていますか。"
-                          status={strapiProgressReport.gov_koukai_joukyou}
-                          content={
-                            strapiProgressReport.gov_koukai_naiyou.data
-                              .childMarkdownRemark.html
-                          }
-                        />
-                        <LshapeTableRow
-                          heading="コンプライアンス委員会は定期的に開催されていますか。"
-                          status={strapiProgressReport.gov_kaisai_joukyou}
-                          content={
-                            strapiProgressReport.gov_kaisai_naiyou.data
-                              .childMarkdownRemark.html
-                          }
-                        />
-                        <LshapeTableRow
-                          heading="報告年度の内部監査又は外部監査を実施予定ですか（実施済みの場合含む）。"
-                          status={strapiProgressReport.kansa_yotei_joukyou}
-                          content={
-                            strapiProgressReport.kansa_yotei_naiyou.data
-                              .childMarkdownRemark.html
-                          }
-                        />
-                      </tbody>
-                    </ScrollTable>
-                  </div>
-                </DetailItemWrapper>
-              </div>
-
-              <div id="">
-                <DetailItemWrapper itemName="規定類の整備に関する報告">
-                  <div tw="overflow-x-scroll">
-                    <ScrollTable>
-                      <tbody>
-                        <LshapeTableRow
-                          heading="規程類をwebサイト上で広く一般公開していますか。"
-                          status={strapiProgressReport.kitei_koukai_joukyou}
-                          content={
-                            strapiProgressReport.kitei_koukai_naiyou.data
-                              .childMarkdownRemark.html
-                          }
-                        />
-                        {strapiProgressReport.kitei_jhoukoku_joukyou && (
-                          <LshapeTableRow
-                            heading="変更があった規程類に関してJANPIAに報告しましたか。"
-                            status={strapiProgressReport.kitei_jhoukoku_joukyou}
-                            content={
-                              strapiProgressReport.kitei_jhoukoku_naiyou.data
-                                .childMarkdownRemark.html
-                            }
-                          />
-                        )}
-                        {strapiProgressReport.kitei_fhoukoku_joukyou && (
-                          <LshapeTableRow
-                            heading="変更があった規程類に関して資金分配団体に報告しましたか。"
-                            status={strapiProgressReport.kitei_fhoukoku_joukyou}
-                            content={
-                              strapiProgressReport.kitei_fhoukoku_naiyou.data
-                                .childMarkdownRemark.html
-                            }
-                          />
-                        )}
-                        <LshapeTableRow
-                          heading="関連する規程の定めどおり情報公開を行っていますか。"
-                          status={strapiProgressReport.koukai_joukyou}
-                          content={
-                            strapiProgressReport.koukai_naiyou.data
-                              .childMarkdownRemark.html
-                          }
-                        />
-                        {strapiProgressReport.jigyounaiyou_select && (
-                          <LshapeTableRow
-                            heading="報告年度の監査が未実施（実施予定なし）の実行団体はありますか。"
-                            status={strapiProgressReport.jigyounaiyou_select}
-                            content={
-                              strapiProgressReport.jigyounaiyou_text.data
-                                .childMarkdownRemark.html
-                            }
-                          />
-                        )}
-                      </tbody>
-                    </ScrollTable>
-                  </div>
-                </DetailItemWrapper>
-              </div>
-
-              <div id="">
-                <DetailItemWrapper itemName="その他">
-                  <div tw="overflow-x-scroll">
-                    <table tw="table-fixed lg:([&_th]:(block w-full) [&_td]:(block w-full))">
-                      <tbody>
-                        <tr>
-                          <Th rowSpan={3} tw="w-[12.5%]">
-                            シンボルマークの使用状況
-                          </Th>
-                          <Th>自団体のウェブサイトで表示</Th>
-                          <Td tw="w-[6%]">
-                            {strapiProgressReport.etc_1_web === "1" && <p>○</p>}
-                          </Td>
-                          <Th>広報制作物に表示</Th>
-                          <Td tw="w-[6%]">
-                            {strapiProgressReport.etc_1_kouhou === "1" && (
-                              <p>○</p>
-                            )}
-                          </Td>
-                        </tr>
-                        <tr>
-                          <Th>報告書に表示</Th>
-                          <Td tw="w-[6%]">
-                            {strapiProgressReport.etc_1_houkoku === "1" && (
-                              <p>○</p>
-                            )}
-                          </Td>
-                          <Th>イベント実施時に表示</Th>
-                          <Td tw="w-[6%]">
-                            {strapiProgressReport.etc_1_houkoku === "1" && (
-                              <p>○</p>
-                            )}
-                          </Td>
-                        </tr>
-                        <tr>
-                          <Th>その他</Th>
-                          <Td tw="w-[6%]">
-                            {strapiProgressReport.etc_1_etc === "1" && <p>○</p>}
-                          </Td>
-                          <Td colSpan={2}>{strapiProgressReport.etc_1_1}</Td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </DetailItemWrapper>
-              </div>
+      <DetailWrapper category="進捗/年度末報告" slug={slug}>
+        <div css={detailTab}>
+          {sortedProgressReportManual &&
+            sortedProgressReportManual.map(
+              (prm: any, index) =>
+                prm.node.progress_round && (
+                  <button
+                    key={index}
+                    css={[
+                      detailRoundTabBtn,
+                      currentTab === prm.node.progress_round.code &&
+                        detailTabBtnSelected,
+                    ]}
+                    onClick={() => setCurrentTab(prm.node.progress_round.code)}
+                  >
+                    {prm.node.progress_round.label}
+                  </button>
+                )
+            )}
+        </div>
+        {allStrapiProgressReportManual.length > 0 &&
+          (currentItem ? (
+            <div>
+              {!loaded && <p>PDFのロード中です...</p>}
+              <iframe
+                width="100%"
+                height="500px"
+                src={googleDocsViewerUrl}
+                onLoad={() => setLoaded(true)}
+              ></iframe>
             </div>
-          )}
-        </DetailWrapper>
-      </div>
+          ) : (
+            <p>データはありません</p>
+          ))}
+        {strapiProgressReport && (
+          <div css={detailBody}>
+            <div id="firstItem">
+              <DetailItemWrapper itemName="事業概要">
+                <div>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <Th rowSpan={2} tw="w-[12.5%]">
+                          実施時期
+                        </Th>
+                        <Th tw="w-[12.5%]">(開始)</Th>
+                        <Td>{strapiProgressReport.business_period_s}</Td>
+                      </tr>
+                      <tr>
+                        <Th>(終了)</Th>
+                        <Td>{strapiProgressReport.business_period_e}</Td>
+                      </tr>
+                      <tr>
+                        <Th colSpan={2}>対象地域</Th>
+                        <Td>{strapiProgressReport.taisyoutiiki}</Td>
+                      </tr>
+                      <tr>
+                        <Th colSpan={2}>事業対象者</Th>
+                        <Td>{strapiProgressReport.jigyoutaisyousya}</Td>
+                      </tr>
+                      <tr>
+                        <Th colSpan={2}>事業対象者人数</Th>
+                        <Td>{strapiProgressReport.jigyoutaisyousya_n}</Td>
+                      </tr>
+                      <tr>
+                        <Th colSpan={2}>事業概要</Th>
+                        <Td>{strapiProgressReport.jigyougaiyou}</Td>
+                      </tr>
+                      {strapiProgressReport.ado_count && (
+                        <tr>
+                          <Th colSpan={2}>実行団体数</Th>
+                          <Td>{strapiProgressReport.ado_count}</Td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </DetailItemWrapper>
+            </div>
+
+            {actualValue.length > 0 && (
+              <DetailItemWrapper itemName="実測値">
+                <div tw="lg:overflow-x-scroll">
+                  <ScrollTable>
+                    {performanceOutput.map((item: any, index: number) => (
+                      <tbody key={index}>
+                        <tr>
+                          <Th rowSpan={7} tw="w-[6%] text-center">
+                            {index + 1}
+                          </Th>
+                          <Th tw="w-1/4">アウトプット</Th>
+                          <Td>
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html:
+                                  item.node.output.data.childMarkdownRemark.html.replace(
+                                    /\n/g,
+                                    "<br />"
+                                  ),
+                              }}
+                            />
+                          </Td>
+                        </tr>
+                        <tr>
+                          <Th>
+                            資金支援
+                            <br />
+                            非資金的支援
+                          </Th>
+                          <Td>{item.node.sikintekisien}</Td>
+                        </tr>
+                        <tr>
+                          <Th>指標</Th>
+                          <Td>
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html:
+                                  item.node.output_etc_index.data.childMarkdownRemark.html.replace(
+                                    /\n/g,
+                                    "<br />"
+                                  ),
+                              }}
+                            />
+                          </Td>
+                        </tr>
+                        <tr>
+                          <Th>中間評価時の値・状態</Th>
+                          <Td>
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html:
+                                  item.node.mid_eval.data.childMarkdownRemark.html.replace(
+                                    /\n/g,
+                                    "<br />"
+                                  ),
+                              }}
+                            />
+                          </Td>
+                        </tr>
+                        <tr>
+                          <Th>事後評価時の値・状態</Th>
+                          <Td>
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html:
+                                  item.node.aft_eval.data.childMarkdownRemark.html.replace(
+                                    /\n/g,
+                                    "<br />"
+                                  ),
+                              }}
+                            />
+                          </Td>
+                        </tr>
+                        <tr>
+                          <Th>進捗状況</Th>
+                          <Td>{item.node.sintyokujoukyou}</Td>
+                        </tr>
+                        <tr>
+                          <Th>現在の指標の達成状況</Th>
+                          <Td>
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html:
+                                  item.node.tasseijoukyou.data.childMarkdownRemark.html.replace(
+                                    /\n/g,
+                                    "<br />"
+                                  ),
+                              }}
+                            />
+                          </Td>
+                        </tr>
+                      </tbody>
+                    ))}
+                  </ScrollTable>
+                </div>
+              </DetailItemWrapper>
+            )}
+            {(performanceOutput.length > 0 ||
+              performanceActviity.length > 0) && (
+              <DetailItemWrapper itemName="活動実績">
+                <div tw="space-y-4 lg:overflow-x-scroll">
+                  <ScrollTable>
+                    {performanceOutput.map((item: any, index: number) => (
+                      <tbody key={index}>
+                        <tr>
+                          <Th rowSpan={6} tw="w-[6%]">
+                            {index + 1}
+                          </Th>
+                          <Th tw="w-1/4">アウトプット</Th>
+                          <Td>
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html:
+                                  item.node.out_output.data.childMarkdownRemark.html.replace(
+                                    /\n/g,
+                                    "<br />"
+                                  ),
+                              }}
+                            />
+                          </Td>
+                        </tr>
+                        <tr>
+                          <Th>
+                            資金支援
+                            <br />
+                            非資金的支援
+                          </Th>
+                          <Td>{item.node.out_sikintekisien}</Td>
+                        </tr>
+                        <tr>
+                          <Th tw="w-1/4">指標</Th>
+                          <Td>
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html:
+                                  item.node.out_output_etc_index.data.childMarkdownRemark.html.replace(
+                                    /\n/g,
+                                    "<br />"
+                                  ),
+                              }}
+                            />
+                          </Td>
+                        </tr>
+                        <tr>
+                          <Th tw="w-1/4">目標値・目標状態</Th>
+                          <Td>
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html:
+                                  item.node.out_mokuhyou.data.childMarkdownRemark.html.replace(
+                                    /\n/g,
+                                    "<br />"
+                                  ),
+                              }}
+                            />
+                          </Td>
+                        </tr>
+                        <tr>
+                          <Th tw="w-1/4">進捗状況</Th>
+                          <Td>{item.node.out_sintyokujoukyou}</Td>
+                        </tr>
+                        <tr>
+                          <Th tw="w-1/4">概要</Th>
+                          <Td>
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html:
+                                  item.node.out_gaiyou.data.childMarkdownRemark.html.replace(
+                                    /\n/g,
+                                    "<br />"
+                                  ),
+                              }}
+                            />
+                          </Td>
+                        </tr>
+                      </tbody>
+                    ))}
+                  </ScrollTable>
+                  <ScrollTable>
+                    {performanceActviity.map((item: any, index: number) => (
+                      <tbody key={index}>
+                        <tr>
+                          <Th rowSpan={4} tw="w-[6%]">
+                            {index + 1}
+                          </Th>
+                          <Th tw="w-1/4">活動</Th>
+                          <Td>
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html:
+                                  item.node.act_katudou.data.childMarkdownRemark.html.replace(
+                                    /\n/g,
+                                    "<br />"
+                                  ),
+                              }}
+                            />
+                          </Td>
+                        </tr>
+                        <tr>
+                          <Th>
+                            資金支援
+                            <br />
+                            非資金的支援
+                          </Th>
+                          <Td>{item.node.act_k_sikintekisien}</Td>
+                        </tr>
+                        <tr>
+                          <Th>進捗状況</Th>
+                          <Td>{item.node.act_k_sintyoku}</Td>
+                        </tr>
+                        <tr>
+                          <Th>概要</Th>
+                          <Td>
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html:
+                                  item.node.act_k_gaiyou.data.childMarkdownRemark.html.replace(
+                                    /\n/g,
+                                    "<br />"
+                                  ),
+                              }}
+                            />
+                          </Td>
+                        </tr>
+                      </tbody>
+                    ))}
+                  </ScrollTable>
+                </div>
+              </DetailItemWrapper>
+            )}
+
+            <div id="">
+              <DetailItemWrapper itemName="事業進捗に関する報告">
+                <div>
+                  <table tw="lg:([&_th]:block [&_td]:block)">
+                    <tbody>
+                      <tr>
+                        <Th tw="w-1/4 lg:w-full">
+                          事業計画に掲げた短期アウトカム達成の見込み
+                        </Th>
+                        <Td>{strapiProgressReport.rep_1}</Td>
+                      </tr>
+                      <tr>
+                        <Th>アウトカムの状況（事業計画書の変更有無）</Th>
+                        <Td>
+                          {strapiProgressReport.rep_2_1 === "1" && (
+                            <p>変更なし</p>
+                          )}
+                          {strapiProgressReport.rep_2_2_naiyou === "1" && (
+                            <p>変更あり_短期アウトカムの内容</p>
+                          )}
+                          {strapiProgressReport.rep_2_2_hyougen === "1" && (
+                            <p>変更あり_短期アウトカムの表現</p>
+                          )}
+                          {strapiProgressReport.rep_2_2_shihyou === "1" && (
+                            <p>変更あり_短期アウトカムの指標</p>
+                          )}
+                          {strapiProgressReport.rep_2_2_mokuhyou === "1" && (
+                            <p>変更あり_短期アウトカムの目標値</p>
+                          )}
+                        </Td>
+                      </tr>
+                      {strapiProgressReport.jigyougaiyou && (
+                        <tr>
+                          <Th>非資金的支援の活動に関する報告</Th>
+                          <Td>
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html:
+                                  strapiProgressReport.rep_6.data.childMarkdownRemark.html.replace(
+                                    /\n/g,
+                                    "<br />"
+                                  ),
+                              }}
+                            />
+                          </Td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </DetailItemWrapper>
+            </div>
+
+            <div id="">
+              <DetailItemWrapper itemName="短期アウトカムの発現状況">
+                <div>
+                  <table tw="lg:([&_th]:block [&_td]:block)">
+                    <tbody>
+                      <tr>
+                        <Th tw="w-1/4 lg:w-full">
+                          これまでの活動をとおして把握している変化・改善状況
+                        </Th>
+                        <Td>
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html:
+                                strapiProgressReport.hatugenjoukyou.data.childMarkdownRemark.html.replace(
+                                  /\n/g,
+                                  "<br />"
+                                ),
+                            }}
+                          />
+                        </Td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </DetailItemWrapper>
+            </div>
+
+            <div id="">
+              <DetailItemWrapper itemName="事業上の課題">
+                <div>
+                  <table tw="lg:([&_th]:block [&_td]:block)">
+                    <tbody>
+                      <tr>
+                        <Th tw="w-1/4 lg:w-full">
+                          事業実施上顕在化したリスク/阻害要因とその対応
+                        </Th>
+                        <Td>
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html:
+                                strapiProgressReport.kadai.data.childMarkdownRemark.html.replace(
+                                  /\n/g,
+                                  "<br />"
+                                ),
+                            }}
+                          />
+                        </Td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </DetailItemWrapper>
+            </div>
+
+            <div id="">
+              <DetailItemWrapper itemName="その他">
+                <div>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <Td>
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html:
+                                strapiProgressReport.etc.data.childMarkdownRemark.html.replace(
+                                  /\n/g,
+                                  "<br />"
+                                ),
+                            }}
+                          />
+                        </Td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </DetailItemWrapper>
+            </div>
+
+            <div id="">
+              <DetailItemWrapper itemName="広報実績">
+                <div tw="overflow-x-scroll">
+                  <ScrollTable>
+                    <tbody>
+                      <LshapeTableRow
+                        heading="メディア掲載（TV・ラジオ・新聞・雑誌・WEB等）"
+                        status={strapiProgressReport.media_joukyou}
+                        content={
+                          strapiProgressReport.media_naiyou.data
+                            .childMarkdownRemark.html
+                        }
+                      />
+                      <LshapeTableRow
+                        heading="広報制作物等"
+                        status={strapiProgressReport.seisaku_joukyou}
+                        content={
+                          strapiProgressReport.seisaku_naiyou.data
+                            .childMarkdownRemark.html
+                        }
+                      />
+                      <LshapeTableRow
+                        heading="報告書等"
+                        status={strapiProgressReport.houkoku_joukyou}
+                        content={
+                          strapiProgressReport.houkoku_naiyou.data
+                            .childMarkdownRemark.html
+                        }
+                      />
+                      {strapiProgressReport.event_joukyou && (
+                        <LshapeTableRow
+                          heading="イベント開催等"
+                          status={strapiProgressReport.event_joukyou}
+                          content={
+                            strapiProgressReport.event_naiyou.data
+                              .childMarkdownRemark.html
+                          }
+                        />
+                      )}
+                      {strapiProgressReport.symbol_joukyou && (
+                        <LshapeTableRow
+                          heading="シンボルマークの使用状況"
+                          status={strapiProgressReport.symbol_joukyou}
+                          content={
+                            strapiProgressReport.symbol_naiyou.data
+                              .childMarkdownRemark.html
+                          }
+                        />
+                      )}
+                    </tbody>
+                  </ScrollTable>
+                </div>
+              </DetailItemWrapper>
+            </div>
+
+            <div id="">
+              <DetailItemWrapper itemName="ガバナンス・コンプライアンス実績">
+                <div tw="overflow-x-scroll">
+                  <ScrollTable>
+                    <tbody>
+                      <LshapeTableRow
+                        heading="社員総会、理事会、評議会は定款の定める通りに開催されていますか。"
+                        status={strapiProgressReport.gov_soukai_joukyou}
+                        content={
+                          strapiProgressReport.gov_soukai_naiyou.data
+                            .childMarkdownRemark.html
+                        }
+                      />
+                      <LshapeTableRow
+                        heading="内部通報制度は整備されていますか。"
+                        status={strapiProgressReport.gov_tuhou_joukyou}
+                        content={
+                          strapiProgressReport.gov_tuhou_naiyou.data
+                            .childMarkdownRemark.html
+                        }
+                      />
+                      <tr>
+                        <Th colSpan={2}>
+                          上記設問で「はい」の場合、利用はありましたか。
+                        </Th>
+                        <Td>{strapiProgressReport.gov_riyou_joukyou}</Td>
+                      </tr>
+                      <LshapeTableRow
+                        heading="関連する規程の定め通り情報公開を行っていますか。"
+                        status={strapiProgressReport.gov_koukai_joukyou}
+                        content={
+                          strapiProgressReport.gov_koukai_naiyou.data
+                            .childMarkdownRemark.html
+                        }
+                      />
+                      <LshapeTableRow
+                        heading="コンプライアンス委員会は定期的に開催されていますか。"
+                        status={strapiProgressReport.gov_kaisai_joukyou}
+                        content={
+                          strapiProgressReport.gov_kaisai_naiyou.data
+                            .childMarkdownRemark.html
+                        }
+                      />
+                      <LshapeTableRow
+                        heading="報告年度の内部監査又は外部監査を実施予定ですか（実施済みの場合含む）。"
+                        status={strapiProgressReport.kansa_yotei_joukyou}
+                        content={
+                          strapiProgressReport.kansa_yotei_naiyou.data
+                            .childMarkdownRemark.html
+                        }
+                      />
+                    </tbody>
+                  </ScrollTable>
+                </div>
+              </DetailItemWrapper>
+            </div>
+
+            <div id="">
+              <DetailItemWrapper itemName="規定類の整備に関する報告">
+                <div tw="overflow-x-scroll">
+                  <ScrollTable>
+                    <tbody>
+                      <LshapeTableRow
+                        heading="規程類をwebサイト上で広く一般公開していますか。"
+                        status={strapiProgressReport.kitei_koukai_joukyou}
+                        content={
+                          strapiProgressReport.kitei_koukai_naiyou.data
+                            .childMarkdownRemark.html
+                        }
+                      />
+                      {strapiProgressReport.kitei_jhoukoku_joukyou && (
+                        <LshapeTableRow
+                          heading="変更があった規程類に関してJANPIAに報告しましたか。"
+                          status={strapiProgressReport.kitei_jhoukoku_joukyou}
+                          content={
+                            strapiProgressReport.kitei_jhoukoku_naiyou.data
+                              .childMarkdownRemark.html
+                          }
+                        />
+                      )}
+                      {strapiProgressReport.kitei_fhoukoku_joukyou && (
+                        <LshapeTableRow
+                          heading="変更があった規程類に関して資金分配団体に報告しましたか。"
+                          status={strapiProgressReport.kitei_fhoukoku_joukyou}
+                          content={
+                            strapiProgressReport.kitei_fhoukoku_naiyou.data
+                              .childMarkdownRemark.html
+                          }
+                        />
+                      )}
+                      <LshapeTableRow
+                        heading="関連する規程の定めどおり情報公開を行っていますか。"
+                        status={strapiProgressReport.koukai_joukyou}
+                        content={
+                          strapiProgressReport.koukai_naiyou.data
+                            .childMarkdownRemark.html
+                        }
+                      />
+                      {strapiProgressReport.jigyounaiyou_select && (
+                        <LshapeTableRow
+                          heading="報告年度の監査が未実施（実施予定なし）の実行団体はありますか。"
+                          status={strapiProgressReport.jigyounaiyou_select}
+                          content={
+                            strapiProgressReport.jigyounaiyou_text.data
+                              .childMarkdownRemark.html
+                          }
+                        />
+                      )}
+                    </tbody>
+                  </ScrollTable>
+                </div>
+              </DetailItemWrapper>
+            </div>
+
+            <div id="">
+              <DetailItemWrapper itemName="その他">
+                <div tw="overflow-x-scroll">
+                  <table tw="table-fixed lg:([&_th]:(block w-full) [&_td]:(block w-full))">
+                    <tbody>
+                      <tr>
+                        <Th rowSpan={3} tw="w-[12.5%]">
+                          シンボルマークの使用状況
+                        </Th>
+                        <Th>自団体のウェブサイトで表示</Th>
+                        <Td tw="w-[6%]">
+                          {strapiProgressReport.etc_1_web === "1" && <p>○</p>}
+                        </Td>
+                        <Th>広報制作物に表示</Th>
+                        <Td tw="w-[6%]">
+                          {strapiProgressReport.etc_1_kouhou === "1" && (
+                            <p>○</p>
+                          )}
+                        </Td>
+                      </tr>
+                      <tr>
+                        <Th>報告書に表示</Th>
+                        <Td tw="w-[6%]">
+                          {strapiProgressReport.etc_1_houkoku === "1" && (
+                            <p>○</p>
+                          )}
+                        </Td>
+                        <Th>イベント実施時に表示</Th>
+                        <Td tw="w-[6%]">
+                          {strapiProgressReport.etc_1_houkoku === "1" && (
+                            <p>○</p>
+                          )}
+                        </Td>
+                      </tr>
+                      <tr>
+                        <Th>その他</Th>
+                        <Td tw="w-[6%]">
+                          {strapiProgressReport.etc_1_etc === "1" && <p>○</p>}
+                        </Td>
+                        <Td colSpan={2}>{strapiProgressReport.etc_1_1}</Td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </DetailItemWrapper>
+            </div>
+          </div>
+        )}
+      </DetailWrapper>
     </Layout>
   );
 };
@@ -1173,149 +1099,6 @@ export const pageQuery = graphql`
           }
         }
       }
-    }
-
-    # サイドバーチェック用
-    strapiFinancePlanFDO: strapiFinancePlan(
-      biz_cd_fund_distr: { eq: $slug }
-      business_org_type: { eq: "F" }
-    ) {
-      id
-    }
-    strapiFinancePlanADO: strapiFinancePlan(
-      biz_cd_executive: { eq: $slug }
-      business_org_type: { eq: "A" }
-    ) {
-      id
-    }
-    strapiFinancePlanFormerFDO: strapiFinancePlanFormer(
-      biz_cd_fund_distr: { eq: $slug }
-      business_org_type: { eq: "F" }
-    ) {
-      id
-    }
-    strapiFinancePlanFormerADO: strapiFinancePlanFormer(
-      biz_cd_executive: { eq: $slug }
-      business_org_type: { eq: "A" }
-    ) {
-      id
-    }
-    strapiFinancePlanManualFDO: strapiFinancePlanManual(
-      biz_cd_fund_distr: { eq: $slug }
-      business_org_type: { eq: "F" }
-    ) {
-      id
-    }
-    strapiFinancePlanManualADO: strapiFinancePlanManual(
-      biz_cd_executive: { eq: $slug }
-      business_org_type: { eq: "A" }
-    ) {
-      id
-    }
-    strapiEvaluationPlan(business_cd: { eq: $slug }) {
-      id
-    }
-    strapiEvaluationPlanManualFDO: strapiEvaluationPlanManual(
-      biz_cd_fund_distr: { eq: $slug }
-      business_org_type: { eq: "F" }
-    ) {
-      id
-    }
-    strapiEvaluationPlanManualADO: strapiEvaluationPlanManual(
-      biz_cd_executive: { eq: $slug }
-      business_org_type: { eq: "A" }
-    ) {
-      id
-    }
-    strapiOfferingReportManualFDO: strapiOfferingReportManual(
-      biz_cd_fund_distr: { eq: $slug }
-      business_org_type: { eq: "F" }
-    ) {
-      id
-    }
-    strapiPreReportManualFDO: strapiPreReportManual(
-      biz_cd_fund_distr: { eq: $slug }
-      business_org_type: { eq: "F" }
-    ) {
-      id
-    }
-    strapiPreReportManualADO: strapiPreReportManual(
-      biz_cd_executive: { eq: $slug }
-      business_org_type: { eq: "A" }
-    ) {
-      id
-    }
-    strapiMidReportManualFDO: strapiMidReportManual(
-      biz_cd_fund_distr: { eq: $slug }
-      business_org_type: { eq: "F" }
-    ) {
-      id
-    }
-    strapiMidReportManualADO: strapiMidReportManual(
-      biz_cd_executive: { eq: $slug }
-      business_org_type: { eq: "A" }
-    ) {
-      id
-    }
-    strapiPostReportManualFDO: strapiPostReportManual(
-      biz_cd_fund_distr: { eq: $slug }
-      business_org_type: { eq: "F" }
-    ) {
-      id
-    }
-    strapiPostReportManualADO: strapiPostReportManual(
-      biz_cd_executive: { eq: $slug }
-      business_org_type: { eq: "A" }
-    ) {
-      id
-    }
-    strapiProgressReportManualFDO: strapiProgressReportManual(
-      biz_cd_fund_distr: { eq: $slug }
-      business_org_type: { eq: "F" }
-    ) {
-      id
-    }
-    strapiProgressReportManualADO: strapiProgressReportManual(
-      biz_cd_executive: { eq: $slug }
-      business_org_type: { eq: "A" }
-    ) {
-      id
-    }
-    strapiCompleteReportManualFDO: strapiCompleteReportManual(
-      biz_cd_fund_distr: { eq: $slug }
-      business_org_type: { eq: "F" }
-    ) {
-      id
-    }
-    strapiCompleteReportManualADO: strapiCompleteReportManual(
-      biz_cd_executive: { eq: $slug }
-      business_org_type: { eq: "A" }
-    ) {
-      id
-    }
-    strapiSettleReportFDO: strapiSettleReport(
-      biz_cd_fund_distr: { eq: $slug }
-      business_org_type: { eq: "F" }
-    ) {
-      id
-    }
-    strapiSettleReportADO: strapiSettleReport(
-      biz_cd_executive: { eq: $slug }
-      business_org_type: { eq: "A" }
-    ) {
-      id
-    }
-    strapiSettleReportManualFDO: strapiSettleReportManual(
-      biz_cd_fund_distr: { eq: $slug }
-      business_org_type: { eq: "F" }
-    ) {
-      id
-    }
-    strapiSettleReportManualADO: strapiSettleReportManual(
-      biz_cd_executive: { eq: $slug }
-      business_org_type: { eq: "A" }
-    ) {
-      id
     }
   }
 `;

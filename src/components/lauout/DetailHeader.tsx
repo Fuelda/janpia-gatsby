@@ -7,7 +7,6 @@ import { hCenter, pankuzu } from "../../styles/base";
 import { businessCategoryArray } from "../../features/search/store/filterContents";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
-import DetailSelector from "../organisms/DetailSelector";
 import { linkCollectionTypes } from "../../util/linkCollectionTypes";
 import { linkCollectionTypesManual } from "../../util/linkCollectionTypesManual";
 
@@ -195,9 +194,6 @@ const DetailHeader = (props: { business_cd: string }) => {
             <p>{businessCategoryLabel}</p>
           </div>
         )}
-      </div>
-      <div>
-        <DetailSelector slug={props.business_cd} />
       </div>
     </div>
   );
