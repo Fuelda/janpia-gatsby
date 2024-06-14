@@ -5,6 +5,7 @@ import DetailHeader from "../components/lauout/DetailHeader";
 import "twin.macro";
 import DetailWrapper from "../components/lauout/DetailWrapper";
 import {
+  detailAnchor,
   detailBody,
   detailRoundTabBtn,
   detailTab,
@@ -13,6 +14,7 @@ import {
 import Seo from "../components/lauout/Seo";
 import DetailItemWrapper from "../components/lauout/DetailItemWrapper";
 import { LshapeTableRow, ScrollTable, Td, Th } from "./progressReport";
+import DetailAnchor from "../components/atoms/DetailAnchor";
 
 type ormType = {
   node: {
@@ -58,6 +60,42 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
       <Seo title="公募結果報告 | 休眠預金活用事業 情報公開サイト" />
       <DetailHeader business_cd={slug} />
       <DetailWrapper category="公募結果報告" slug={slug}>
+        {allStrapiOfferingReport.edges.length > 0 && currentItem && (
+          <div css={detailAnchor}>
+            <DetailAnchor
+              title="公募〜選定の結果"
+              anchor={`/result/${slug}/selected-project/#firstItem`}
+            />
+            <DetailAnchor
+              title="公募プロセス/説明会・個別相談会"
+              anchor={`/result/${slug}/selected-project/#secondItem`}
+            />
+            <DetailAnchor
+              title="公募プロセス/実行団体の募集"
+              anchor={`/result/${slug}/selected-project/#thirdItem`}
+            />
+            <DetailAnchor
+              title="公募プロセス/申請団体の審査"
+              anchor={`/result/${slug}/selected-project/#fourthItem`}
+            />
+            <DetailAnchor
+              title="公募の設計/申請団体数・実行団体の事業内容"
+              anchor={`/result/${slug}/selected-project/#fifthItem`}
+            />
+            <DetailAnchor
+              title="選定結果の通知及び公開の状況"
+              anchor={`/result/${slug}/selected-project/#sixthItem`}
+            />
+            <DetailAnchor
+              title="広報実績（公募関連以外）"
+              anchor={`/result/${slug}/selected-project/#seventhItem`}
+            />
+            <DetailAnchor
+              title="ガバナンス・コンプライアンス体制等の確認"
+              anchor={`/result/${slug}/selected-project/#eighthItem`}
+            />
+          </div>
+        )}
         <div css={detailTab}>
           {roundArray.length > 0 &&
             roundArray.map((round: number) => (
@@ -90,7 +128,7 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
             ))}
           {allStrapiOfferingReport.edges.length > 0 && currentItem && (
             <>
-              <div>
+              <div id="firstItem">
                 <DetailItemWrapper itemName="公募〜選定の結果">
                   <div>
                     <table tw="table-fixed">
@@ -116,7 +154,7 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                   </div>
                 </DetailItemWrapper>
               </div>
-              <div>
+              <div id="secondItem">
                 <DetailItemWrapper itemName="公募プロセス/説明会・個別相談会">
                   <div>
                     <table tw="lg:([&_th]:(block w-full) [&_td]:(block w-full))">
@@ -210,7 +248,7 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                   </div>
                 </DetailItemWrapper>
               </div>
-              <div>
+              <div id="thirdItem">
                 <DetailItemWrapper itemName="公募プロセス/実行団体の募集">
                   <div>
                     <table tw="lg:([&_th]:(block w-full) [&_td]:(block w-full))">
@@ -344,7 +382,7 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                   </div>
                 </DetailItemWrapper>
               </div>
-              <div>
+              <div id="fourthItem">
                 <DetailItemWrapper itemName="公募プロセス/申請団体の審査">
                   <div>
                     <table tw="lg:([&_th]:(block w-full) [&_td]:(block w-full))">
@@ -490,7 +528,7 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                   </div>
                 </DetailItemWrapper>
               </div>
-              <div>
+              <div id="fifthItem">
                 <DetailItemWrapper itemName="公募の設計/申請団体数・実行団体の事業内容">
                   <div tw="overflow-x-scroll">
                     <ScrollTable>
@@ -518,7 +556,7 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                   </div>
                 </DetailItemWrapper>
               </div>
-              <div>
+              <div id="sixthItem">
                 <DetailItemWrapper itemName="選定結果の通知及び公開の状況">
                   <div tw="overflow-x-scroll">
                     <ScrollTable>
@@ -564,7 +602,7 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                   </div>
                 </DetailItemWrapper>
               </div>
-              <div>
+              <div id="seventhItem">
                 <DetailItemWrapper itemName="広報実績（公募関連以外） ">
                   <div tw="overflow-x-scroll">
                     <ScrollTable>
@@ -598,7 +636,7 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                   </div>
                 </DetailItemWrapper>
               </div>
-              <div>
+              <div id="eighthItem">
                 <DetailItemWrapper itemName="ガバナンス・コンプライアンス体制等の確認">
                   <div tw="overflow-x-scroll">
                     <ScrollTable>

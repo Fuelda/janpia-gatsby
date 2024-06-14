@@ -4,10 +4,11 @@ import Layout from "../components/lauout/Layout";
 import DetailHeader from "../components/lauout/DetailHeader";
 import "twin.macro";
 import DetailWrapper from "../components/lauout/DetailWrapper";
-import { detailBody } from "../styles/detailPage";
+import { detailAnchor, detailBody } from "../styles/detailPage";
 import Seo from "../components/lauout/Seo";
 import DetailItemWrapper from "../components/lauout/DetailItemWrapper";
 import { LshapeTableRow, ScrollTable, Td, Th } from "./progressReport";
+import DetailAnchor from "../components/atoms/DetailAnchor";
 
 const InterimReport: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
@@ -45,6 +46,22 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
       <DetailHeader business_cd={slug} />
 
       <DetailWrapper category="中間評価報告" slug={slug}>
+        {strapiMidReport && (
+          <div css={detailAnchor}>
+            <DetailAnchor
+              title="評価計画"
+              anchor={`/result/${slug}/interim-report/#firstItem`}
+            />
+            <DetailAnchor
+              title="事業進捗の評価"
+              anchor={`/result/${slug}/interim-report/#secondItem`}
+            />
+            <DetailAnchor
+              title="事業の改善結果"
+              anchor={`/result/${slug}/interim-report/#thirdItem`}
+            />
+          </div>
+        )}
         <div css={detailBody}>
           {strapiMidReportManual && (
             <div>
@@ -57,7 +74,7 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
           )}
           {strapiMidReport && (
             <>
-              <div>
+              <div id="firstItem">
                 <h2 tw="font-bold mb-4 text-lg">評価計画</h2>
                 <DetailItemWrapper itemName="中間評価の目的：事業中間時点でみえてきた事業上の課題とそれを改善するために中間評価で確認したいこと">
                   <div>
@@ -241,7 +258,7 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
                   </div>
                 </DetailItemWrapper>
               </div>
-              <div>
+              <div id="secondItem">
                 <h2 tw="font-bold mb-4 text-lg">事業進捗の評価</h2>
                 <DetailItemWrapper itemName="アウトプットの実績">
                   <div tw="lg:overflow-x-scroll">
@@ -441,7 +458,7 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
                   </div>
                 </DetailItemWrapper>
               </div>
-              <div>
+              <div id="thirdItem">
                 <h2 tw="font-bold mb-4 text-lg">事業の改善結果</h2>
                 <DetailItemWrapper itemName="事業の改善結果">
                   <div tw="lg:overflow-x-scroll">
