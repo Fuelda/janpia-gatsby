@@ -6,14 +6,17 @@ import tw from "twin.macro";
 import { useLocation } from "@reach/router";
 import HamburgerButton from "../atoms/HamburgerButton";
 import { detailPageLinkType } from "../lauout/DetailWrapper";
+import { CircularProgress } from "@mui/material";
 
 const detailSidebarBlock = tw`block py-3 px-6 w-full relative`;
 const currentSidebar = tw` text-blue-button font-bold before:(w-1.5 h-4/5 bg-blue-button absolute left-0 top-1/2 transform -translate-y-1/2)`;
 
 const DetailSelector = ({
   detailPageLink,
+  isLoading,
 }: {
   detailPageLink: detailPageLinkType[];
+  isLoading: boolean;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentCategory, setCurrentCategory] = useState("");
@@ -72,7 +75,11 @@ const DetailSelector = ({
               : tw`h-0 `
           }
         >
-          {detailPageLink &&
+          {detailPageLink && isOpen && isLoading ? (
+            <div tw="w-full justify-center my-8 text-blue-button hidden lg:(flex)">
+              <CircularProgress color="inherit" />
+            </div>
+          ) : (
             detailPageLink.map((link) => (
               <Link
                 css={[detailSidebarBlock, path === link.path && currentSidebar]}
@@ -80,7 +87,8 @@ const DetailSelector = ({
               >
                 {link.title}
               </Link>
-            ))}
+            ))
+          )}
         </div>
       </div>
     </div>

@@ -4,6 +4,7 @@ import DetailFooter from "./DetailFooter";
 import DetailSidebar from "../organisms/DetailSidebar";
 import DetailSelector from "../organisms/DetailSelector";
 import { Spinner } from "@radix-ui/themes";
+import { CircularProgress } from "@mui/material";
 
 export type detailPageLinkType = {
   title: string;
@@ -144,18 +145,27 @@ const DetailWrapper: React.FC<{
 
   return (
     <div tw="flex gap-[5px] mt-6 relative lg:(block mt-3.5)">
-      <DetailSelector detailPageLink={detailPageLink} />
-      <Spinner loading={isLoading}>
+      <DetailSelector detailPageLink={detailPageLink} isLoading={isLoading} />
+      {isLoading ? (
+        <div tw="w-[205px] flex justify-center mt-8 text-blue-button lg:(hidden)">
+          <CircularProgress color="inherit" />
+        </div>
+      ) : (
         <DetailSidebar detailPageLink={detailPageLink} />
-      </Spinner>
-      {/* <DetailSidebar detailPageLink={detailPageLink} /> */}
+      )}
       <Spinner />
       <div tw="border w-[80%] border-gray-border mb-[80px] lg:(w-full border-0 mt-6)">
         <p tw="py-2.5 px-3.5 text-lg font-bold w-full border-b border-gray-border lg:(border-0 bg-blue-base)">
           {category}
         </p>
         <div tw="py-6 px-3.5">{children}</div>
-        <DetailFooter detailPageLink={detailPageLink} />
+        {isLoading ? (
+          <div tw="w-full justify-center mt-8 text-blue-button hidden lg:(flex)">
+            <CircularProgress color="inherit" />
+          </div>
+        ) : (
+          <DetailFooter detailPageLink={detailPageLink} />
+        )}
       </div>
     </div>
   );
