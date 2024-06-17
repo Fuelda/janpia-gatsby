@@ -50,7 +50,9 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
         updatedAt={
           strapiMidReportManual
             ? strapiMidReportManual.updatedAt
-            : strapiMidReport.updatedAt
+            : strapiMidReport
+            ? strapiMidReport.updatedAt
+            : undefined
         }
       >
         {strapiMidReport && (

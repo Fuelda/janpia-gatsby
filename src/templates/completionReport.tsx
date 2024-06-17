@@ -60,7 +60,9 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
         updatedAt={
           strapiCompleteReportManual
             ? strapiCompleteReportManual.updatedAt
-            : strapiCompleteReport.updatedAt
+            : strapiCompleteReport
+            ? strapiCompleteReport.updatedAt
+            : undefined
         }
       >
         <div css={detailBody}>

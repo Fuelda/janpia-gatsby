@@ -129,7 +129,9 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
         updatedAt={
           currentManualItem
             ? currentManualItem.node.updatedAt
-            : currentItem.node.updatedAt
+            : currentItem
+            ? currentItem.node.updatedAt
+            : undefined
         }
       >
         <div css={detailTab}>
