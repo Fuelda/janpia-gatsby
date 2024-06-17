@@ -54,12 +54,13 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
     <Layout>
       <Seo title="事業完了報告 | 休眠預金活用事業 情報公開サイト" />
       <DetailHeader business_cd={slug} />
-
       <DetailWrapper
         category="事業完了報告"
         slug={slug}
         updatedAt={
-          strapiCompleteReportManual && strapiCompleteReportManual.updatedAt
+          strapiCompleteReportManual
+            ? strapiCompleteReportManual.updatedAt
+            : strapiCompleteReport.updatedAt
         }
       >
         <div css={detailBody}>
@@ -804,7 +805,7 @@ export const pageQuery = graphql`
           }
         }
       }
-      updatedAt(formatString: "yyyy/mm/dd")
+      updatedAt(formatString: "YYYY/MM/DD")
     }
     allStrapiCompleteReportSub(filter: { business_cd: { eq: $slug } }) {
       edges {
@@ -834,7 +835,7 @@ export const pageQuery = graphql`
           res_contents
           res_result
           row_no
-          updatedAt(formatString: "yyyy/mm/dd")
+          updatedAt(formatString: "YYYY/MM/DD")
           work_attempt
           work_class
           work_degree

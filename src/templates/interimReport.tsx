@@ -47,7 +47,11 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
       <DetailWrapper
         category="中間評価報告"
         slug={slug}
-        updatedAt={strapiMidReportManual && strapiMidReportManual.updatedAt}
+        updatedAt={
+          strapiMidReportManual
+            ? strapiMidReportManual.updatedAt
+            : strapiMidReport.updatedAt
+        }
       >
         {strapiMidReport && (
           <div css={detailAnchor}>
@@ -807,7 +811,7 @@ export const pageQuery = graphql`
           }
         }
       }
-      updatedAt(formatString: "yyyy/mm/dd")
+      updatedAt(formatString: "YYYY/MM/DD")
     }
     allStrapiMidReportSub(filter: { business_cd: { eq: $slug } }) {
       edges {
@@ -836,7 +840,7 @@ export const pageQuery = graphql`
           str_inout
           str_name
           str_post
-          updatedAt(formatString: "yyyy/mm/dd")
+          updatedAt(formatString: "YYYY/MM/DD")
         }
       }
     }

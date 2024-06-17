@@ -943,7 +943,7 @@ export const pageQuery = graphql`
               }
             }
           }
-          updatedAt(formatString: "yyyy/mm/dd")
+          updatedAt(formatString: "YYYY/MM/DD")
           web_select
           web_text
         }
