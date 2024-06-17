@@ -21,7 +21,11 @@ const ExportEvaluationReport: React.FC<any> = ({ data, pageContext }) => {
     <Layout>
       <Seo title="事後評価報告 | 休眠預金活用事業 情報公開サイト" />
       <DetailHeader business_cd={slug} />
-      <DetailWrapper category="事後評価報告" slug={slug}>
+      <DetailWrapper
+        category="事後評価報告"
+        slug={slug}
+        updatedAt={strapiPostReportManual && strapiPostReportManual.updatedAt}
+      >
         <div css={detailBody}>
           {strapiPostReportManual ? (
             <div>
@@ -48,6 +52,7 @@ export const pageQuery = graphql`
       biz_cd_fund_distr: { eq: $slug }
       business_org_type: { eq: "F" }
     ) {
+      updatedAt(formatString: "YYYY/MM/DD")
       data {
         url
       }
@@ -56,6 +61,7 @@ export const pageQuery = graphql`
       biz_cd_executive: { eq: $slug }
       business_org_type: { eq: "A" }
     ) {
+      updatedAt(formatString: "YYYY/MM/DD")
       data {
         url
       }

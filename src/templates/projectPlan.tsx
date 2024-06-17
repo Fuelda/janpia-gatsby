@@ -1,5 +1,5 @@
 import { graphql } from "gatsby";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../components/lauout/Layout";
 import DetailHeader from "../components/lauout/DetailHeader";
 import { detailAnchor, detailBody } from "../styles/detailPage";
@@ -40,7 +40,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
     strapiBizPlanManualFDO,
     strapiBizPlanManualADO,
   } = data;
-
+  const [updatedAt, setUpdatedAt] = useState("");
   const bizPlanManual = strapiBizPlanManualFDO || strapiBizPlanManualADO;
 
   const pdfUrl = bizPlanManual && bizPlanManual.data && bizPlanManual.data.url;
@@ -112,12 +112,16 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
           .sort((a: any, b: any) => a.node.row_no - b.node.row_no)
       : [];
 
+  useEffect(() => {
+    strapiBizPlan && setUpdatedAt(strapiBizPlan.updatedAt);
+    bizPlanManual && setUpdatedAt(bizPlanManual.updatedAt);
+  }, [strapiBizPlan, bizPlanManual]);
+
   return (
     <Layout>
       <Seo title="事業計画 | 休眠預金活用事業 情報公開サイト" />
       <DetailHeader business_cd={slug} />
-
-      <DetailWrapper category="事業計画" slug={slug}>
+      <DetailWrapper category="事業計画" slug={slug} updatedAt={updatedAt}>
         {strapiBizPlan && (
           <div>
             <div css={detailAnchor}>
@@ -4973,6 +4977,7 @@ export const pageQuery = graphql`
       biz_cd_fund_distr: { eq: $slug }
       business_org_type: { eq: "F" }
     ) {
+      updatedAt(formatString: "YYYY/MM/DD")
       data {
         url
       }
@@ -4981,11 +4986,13 @@ export const pageQuery = graphql`
       biz_cd_executive: { eq: $slug }
       business_org_type: { eq: "A" }
     ) {
+      updatedAt(formatString: "YYYY/MM/DD")
       data {
         url
       }
     }
     strapiBizPlan(business_cd: { eq: $slug }) {
+      updatedAt(formatString: "YYYY/MM/DD")
       business_cd
       business_org_type
       biz_cd_fund_distr
@@ -5516,6 +5523,7 @@ export const pageQuery = graphql`
     allStrapiBizPlanSub(filter: { business_cd: { eq: $slug } }) {
       edges {
         node {
+          updatedAt
           business_cd
           business_org_type
           biz_cd_fund_distr

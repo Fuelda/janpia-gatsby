@@ -1,8 +1,8 @@
 import { graphql } from "gatsby";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../components/lauout/Layout";
 import DetailHeader from "../components/lauout/DetailHeader";
-import { detailAnchor, detailBody, detailFlex } from "../styles/detailPage";
+import { detailAnchor, detailBody } from "../styles/detailPage";
 import DetailAnchor from "../components/atoms/DetailAnchor";
 import DetailWrapper from "../components/lauout/DetailWrapper";
 import DetailItemWrapper from "../components/lauout/DetailItemWrapper";
@@ -36,7 +36,7 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
     evaluationPlanManualFDO,
     evaluationPlanManualADO,
   } = data;
-
+  const [updatedAt, setUpdatedAt] = useState("");
   const { slug } = pageContext;
   const evaluationPlanManual =
     evaluationPlanManualFDO || evaluationPlanManualADO;
@@ -77,11 +77,16 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
           .sort((a: any, b: any) => a.node.row_no - b.node.row_no)
       : [];
 
+  useEffect(() => {
+    strapiEvaluationPlan && setUpdatedAt(strapiEvaluationPlan.updatedAt);
+    evaluationPlanManual && setUpdatedAt(evaluationPlanManual.updatedAt);
+  }, [strapiEvaluationPlan, evaluationPlanManual]);
+
   return (
     <Layout>
       <Seo title="評価計画 | 休眠預金活用事業 情報公開サイト" />
       <DetailHeader business_cd={slug} />
-      <DetailWrapper category="評価計画" slug={slug}>
+      <DetailWrapper category="評価計画" slug={slug} updatedAt={updatedAt}>
         {evaluationPlanManual && (
           <div>
             <iframe
@@ -742,6 +747,7 @@ export default EvaluationPlan;
 export const pageQuery = graphql`
   query MyQuery($slug: String!, $insert_id: [String]) {
     strapiEvaluationPlan(business_cd: { eq: $slug }) {
+      updatedAt(formatString: "YYYY/MM/DD")
       business_cd
       business_org_type
       biz_cd_fund_distr
@@ -798,6 +804,7 @@ export const pageQuery = graphql`
     allStrapiEvaluationPlanSub(filter: { business_cd: { eq: $slug } }) {
       edges {
         node {
+          updatedAt(formatString: "YYYY/MM/DD")
           business_cd
           business_org_type
           biz_cd_fund_distr
@@ -829,6 +836,7 @@ export const pageQuery = graphql`
       biz_cd_fund_distr: { eq: $slug }
       business_org_type: { eq: "F" }
     ) {
+      updatedAt(formatString: "YYYY/MM/DD")
       data {
         url
       }
@@ -837,6 +845,7 @@ export const pageQuery = graphql`
       biz_cd_executive: { eq: $slug }
       business_org_type: { eq: "A" }
     ) {
+      updatedAt(formatString: "YYYY/MM/DD")
       data {
         url
       }
@@ -844,6 +853,7 @@ export const pageQuery = graphql`
     allStrapiAttachedFile(filter: { insert_id: { in: $insert_id } }) {
       edges {
         node {
+          updatedAt(formatString: "YYYY/MM/DD")
           item_id
           file_name
           data {

@@ -9,7 +9,6 @@ import { businessCategoryArray } from "../features/search/store/filterContents";
 import DetailAnchor from "../components/atoms/DetailAnchor";
 import { td, th } from "../styles/table";
 import { detailAnchor, detailBody } from "../styles/detailPage";
-
 import { useConsortiumContext } from "../context/consortiumContext";
 import { link } from "../styles/base";
 import Seo from "../components/lauout/Seo";

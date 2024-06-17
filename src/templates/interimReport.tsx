@@ -1,10 +1,10 @@
 import { graphql } from "gatsby";
-import React from "react";
+import React, { useEffect } from "react";
 import Layout from "../components/lauout/Layout";
 import DetailHeader from "../components/lauout/DetailHeader";
 import "twin.macro";
 import DetailWrapper from "../components/lauout/DetailWrapper";
-import { detailAnchor, detailBody } from "../styles/detailPage";
+import { detailAnchor, detailBody, detailFlex } from "../styles/detailPage";
 import Seo from "../components/lauout/Seo";
 import DetailItemWrapper from "../components/lauout/DetailItemWrapper";
 import { LshapeTableRow, ScrollTable, Td, Th } from "./progressReport";
@@ -44,8 +44,11 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
     <Layout>
       <Seo title="中間評価報告 | 休眠預金活用事業 情報公開サイト" />
       <DetailHeader business_cd={slug} />
-
-      <DetailWrapper category="中間評価報告" slug={slug}>
+      <DetailWrapper
+        category="中間評価報告"
+        slug={slug}
+        updatedAt={strapiMidReportManual && strapiMidReportManual.updatedAt}
+      >
         {strapiMidReport && (
           <div css={detailAnchor}>
             <DetailAnchor
@@ -841,6 +844,7 @@ export const pageQuery = graphql`
       biz_cd_fund_distr: { eq: $slug }
       business_org_type: { eq: "F" }
     ) {
+      updatedAt(formatString: "YYYY/MM/DD")
       biz_cd_executive
       biz_cd_fund_distr
       business_org_type
@@ -852,6 +856,7 @@ export const pageQuery = graphql`
       biz_cd_executive: { eq: $slug }
       business_org_type: { eq: "A" }
     ) {
+      updatedAt(formatString: "YYYY/MM/DD")
       biz_cd_executive
       biz_cd_fund_distr
       business_org_type

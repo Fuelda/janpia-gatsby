@@ -59,7 +59,11 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
     <Layout>
       <Seo title="公募結果報告 | 休眠預金活用事業 情報公開サイト" />
       <DetailHeader business_cd={slug} />
-      <DetailWrapper category="公募結果報告" slug={slug}>
+      <DetailWrapper
+        category="公募結果報告"
+        slug={slug}
+        updatedAt={currentItem && currentItem.node.updatedAt}
+      >
         {allStrapiOfferingReport.edges.length > 0 && currentItem && (
           <div css={detailAnchor}>
             <DetailAnchor
@@ -953,6 +957,7 @@ export const pageQuery = graphql`
     ) {
       edges {
         node {
+          updatedAt(formatString: "YYYY/MM/DD")
           data {
             url
           }
