@@ -1,7 +1,6 @@
 import { Link } from "gatsby";
 import React from "react";
 import "twin.macro";
-import { vCenter } from "../../styles/base";
 import tw from "twin.macro";
 import { useLocation } from "@reach/router";
 import { detailPageLinkType } from "../lauout/DetailWrapper";
@@ -18,10 +17,7 @@ const DetailSidebar = ({
   const path = location.pathname;
 
   return (
-    <div
-      tw="w-[205px] !justify-start gap-[5px] sticky top-0 lg:(hidden)"
-      css={vCenter}
-    >
+    <div tw="w-[205px] flex flex-col items-center justify-start gap-[5px] top-0 lg:(hidden)">
       {detailPageLink &&
         detailPageLink.map((link) => (
           <Link
