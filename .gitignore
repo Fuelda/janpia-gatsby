@@ -1,6 +1,6 @@
 node_modules/
 .cache/
-# devのときだけpublicをコメントアウトする。
+# devとfeat/phase2/mainのときだけpublicをコメントアウトする。
 # public
 src/gatsby-types.d.ts
 .env.*
