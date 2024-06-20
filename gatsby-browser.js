@@ -11,8 +11,6 @@ import "./src/styles/table.scss";
 import "./src/styles/hamburger.scss";
 import "./src/styles/list.scss";
 import "@fortawesome/fontawesome-svg-core/styles.css";
-import "@radix-ui/themes/styles.css";
-import { Theme } from "@radix-ui/themes";
 
 export const wrapRootElement = ({ element }) => (
   <StrapiProvider>
@@ -20,9 +18,7 @@ export const wrapRootElement = ({ element }) => (
       <AlgoliaStrapiProvider>
         <FilteredStrapiProvider>
           <ModalProvider>
-            <ConsortiumProvider>
-              <Theme>{element}</Theme>
-            </ConsortiumProvider>
+            <ConsortiumProvider>{element}</ConsortiumProvider>
           </ModalProvider>
         </FilteredStrapiProvider>
       </AlgoliaStrapiProvider>

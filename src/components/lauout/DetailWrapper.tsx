@@ -3,7 +3,6 @@ import "twin.macro";
 import DetailFooter from "./DetailFooter";
 import DetailSidebar from "../organisms/DetailSidebar";
 import DetailSelector from "../organisms/DetailSelector";
-import { Spinner } from "@radix-ui/themes";
 import { CircularProgress } from "@mui/material";
 
 export type detailPageLinkType = {

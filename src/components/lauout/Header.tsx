@@ -29,7 +29,7 @@ const Header = (props: { path: string }) => {
             <h1>
               休眠預金活用事業
               <br />
-              　情報公開サイト
+              情報公開サイト
             </h1>
           </Link>
           <nav css={hCenter} tw="gap-6 lg:(hidden)">
