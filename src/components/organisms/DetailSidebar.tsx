@@ -19,8 +19,10 @@ const DetailSidebar = ({
 
   return (
     <div
-      tw="w-[205px] justify-start gap-[5px] sticky top-0 lg:(hidden)"
-      css={vCenter}
+      css={[
+        vCenter,
+        tw`w-[205px] justify-start gap-[5px] sticky top-0 lg:hidden`,
+      ]}
     >
       {detailPageLink &&
         detailPageLink.map((link) => (
