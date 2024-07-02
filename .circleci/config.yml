@@ -21,7 +21,7 @@ jobs:
       - save_cache:
           key: app-build-cache-{{ .Branch }}
           paths:
-            - ./build
+            - ./public
       - run:
           name: Deploy to Netlify
           command: npx netlify-cli deploy --prod --dir=public --auth $NETLIFY_ACCESS_TOKEN --site $NETLIFY_SITE_ID
