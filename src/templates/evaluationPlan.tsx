@@ -29,6 +29,7 @@ import EvaluationShortOutcome from "../components/organisms/EvaluationShortOutco
 import { useDetailContext } from "../context/detailContext";
 import Seo from "../components/lauout/Seo";
 import tw from "twin.macro";
+import useStrapiPdf from "../hooks/useStrapiPdf";
 
 const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
   const {
@@ -79,8 +80,11 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
   const evaluationPlanManual =
     evaluationPlanManualFDO || evaluationPlanManualADO;
-  const pdfUrl = evaluationPlanManual && evaluationPlanManual.data.url;
-  const googleDocsViewerUrl = `https://docs.google.com/viewer?url=${pdfUrl}&embedded=true`;
+  const { pdfUrl, isPdfLoading } = useStrapiPdf(
+    slug,
+    "evaluation-plan-manuals"
+  );
+
   const evaluationFile = allStrapiAttachedFile.edges.filter(
     (af: any) => af.node.item_id === "attach_fileupload_item2"
   );
@@ -158,13 +162,13 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
       <div css={detailFlex}>
         <DetailSidebar slug={slug} />
         <DetailWrapper category="評価計画" slug={slug} updatedAt={updatedAt}>
-          {evaluationPlanManual && (
+          {evaluationPlanManual && pdfUrl && (
             <div>
-              <iframe
-                width="100%"
-                height="500px"
-                src={googleDocsViewerUrl}
-              ></iframe>
+              {isPdfLoading ? (
+                <p>Loading...</p>
+              ) : (
+                <iframe width="100%" height="500px" src={pdfUrl}></iframe>
+              )}
             </div>
           )}
           {strapiEvaluationPlan && (
@@ -912,18 +916,12 @@ export const pageQuery = graphql`
       business_org_type: { eq: "F" }
     ) {
       updatedAt(formatString: "YYYY/MM/DD")
-      data {
-        url
-      }
     }
     evaluationPlanManualADO: strapiEvaluationPlanManual(
       biz_cd_executive: { eq: $slug }
       business_org_type: { eq: "A" }
     ) {
       updatedAt(formatString: "YYYY/MM/DD")
-      data {
-        url
-      }
     }
     allStrapiAttachedFile(filter: { insert_id: { in: $insert_id } }) {
       edges {
