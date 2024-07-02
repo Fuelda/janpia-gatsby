@@ -30,6 +30,7 @@ import {
 } from "../styles/table";
 import { useDetailContext } from "../context/detailContext";
 import Seo from "../components/lauout/Seo";
+import useStrapiPdf from "../hooks/useStrapiPdf";
 
 const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
@@ -83,8 +84,7 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
   const financePlan = financePlanFDO || financePlanADO;
   const financePlanFormer = financePlanFormerFDO || financePlanFormerADO;
   const financePlanManual = financePlanManualFDO || financePlanManualADO;
-  const pdfUrl = financePlanManual && financePlanManual.data.url;
-  const googleDocsViewerUrl = `https://docs.google.com/viewer?url=${pdfUrl}&embedded=true`;
+  const { pdfUrl, isPdfLoading } = useStrapiPdf(slug, "finance-plan-manuals");
 
   useEffect(() => {
     financePlan && setUpdatedAt(financePlan.updatedAt);
@@ -129,13 +129,13 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
       <div css={detailFlex}>
         <DetailSidebar slug={slug} />
         <DetailWrapper category="資金計画" slug={slug} updatedAt={updatedAt}>
-          {financePlanManual && (
+          {financePlanManual && pdfUrl && (
             <div>
-              <iframe
-                width="100%"
-                height="500px"
-                src={googleDocsViewerUrl}
-              ></iframe>
+              {isPdfLoading ? (
+                <p>Loading...</p>
+              ) : (
+                <iframe width="100%" height="500px" src={pdfUrl}></iframe>
+              )}
             </div>
           )}
           {financePlan && (
@@ -1404,18 +1404,12 @@ export const pageQuery = graphql`
       business_org_type: { eq: "F" }
     ) {
       updatedAt(formatString: "YYYY/MM/DD")
-      data {
-        url
-      }
     }
     financePlanManualADO: strapiFinancePlanManual(
       biz_cd_executive: { eq: $slug }
       business_org_type: { eq: "A" }
     ) {
       updatedAt(formatString: "YYYY/MM/DD")
-      data {
-        url
-      }
     }
     # サイドバーチェック用
     strapiFinancePlanFDO: strapiFinancePlan(

@@ -14,6 +14,7 @@ import {
 } from "../styles/detailPage";
 import { useDetailContext } from "../context/detailContext";
 import Seo from "../components/lauout/Seo";
+import useStrapiSelectedReportPdf from "../hooks/useStrapiSelectedReportPdf";
 
 type ormType = {
   node: {
@@ -73,12 +74,21 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
     ? allStrapiOfferingReportManual.edges.map((orm: ormType) => orm.node.round)
     : [];
 
+  const { pdfUrlArray, isPdfLoading } = useStrapiSelectedReportPdf(
+    slug,
+    "offering-report-manuals"
+  );
+
   const currentItem =
+    pdfUrlArray &&
+    pdfUrlArray.length > 0 &&
+    pdfUrlArray.find((item) => item.round === currentTab);
+  const currentQueryItem =
     allStrapiOfferingReportManual &&
     allStrapiOfferingReportManual.edges.find(
       (orm: ormType) => orm.node.round === currentTab
     );
-  const currentPdfUrl = currentItem && currentItem.node.data.url;
+  const currentPdfUrl = currentItem && currentItem.url;
   const googleDocsViewerUrl = `https://docs.google.com/viewer?url=${currentPdfUrl}&embedded=true`;
 
   useEffect(() => {
@@ -120,7 +130,7 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
         <DetailWrapper
           category="公募結果報告"
           slug={slug}
-          updatedAt={currentItem && currentItem.node.updatedAt}
+          updatedAt={currentQueryItem && currentQueryItem.node.updatedAt}
         >
           <div css={detailTab}>
             {roundArray.length !== 0 &&
@@ -169,9 +179,6 @@ export const pageQuery = graphql`
       edges {
         node {
           updatedAt(formatString: "YYYY/MM/DD")
-          data {
-            url
-          }
           biz_cd_fund_distr
           business_org_type
           round

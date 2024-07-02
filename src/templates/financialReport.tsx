@@ -12,6 +12,7 @@ import DetailItemWrapper from "../components/lauout/DetailItemWrapper";
 import { tableWide, td8col, th8col, thead8col } from "../styles/table";
 import Seo from "../components/lauout/Seo";
 import { useDetailContext } from "../context/detailContext";
+import useStrapiPdf from "../hooks/useStrapiPdf";
 
 const thStandard = tw`bg-blue-base py-3 px-3 text-start border-gray-border border`;
 const thNoBorder = tw`bg-blue-base py-3 px-3 text-start `;
@@ -61,8 +62,7 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
   const settleReport = strapiSettleReportFDO || strapiSettleReportADO;
   const settleReportManual =
     strapiSettleReportManualFDO || strapiSettleReportManualADO;
-  const pdfUrl = settleReportManual && settleReportManual.data.url;
-  const googleDocsViewerUrl = `https://docs.google.com/viewer?url=${pdfUrl}&embedded=true`;
+  const { pdfUrl, isPdfLoading } = useStrapiPdf(slug, "settle-report-manuals");
 
   useEffect(() => {
     settleReport && setUpdatedAt(settleReport.updatedAt);
@@ -98,7 +98,7 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
         strapiSettleReportManualADO
     );
   }, []);
-  console.log(settleReport);
+
   return (
     <Layout>
       <Seo title="事業完了時精算報告 | 休眠預金活用事業 情報公開サイト" />
@@ -110,13 +110,13 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
           slug={slug}
           updatedAt={updatedAt}
         >
-          {settleReportManual && (
+          {settleReportManual && pdfUrl && (
             <div>
-              <iframe
-                width="100%"
-                height="500px"
-                src={googleDocsViewerUrl}
-              ></iframe>
+              {isPdfLoading ? (
+                <p>Loading...</p>
+              ) : (
+                <iframe width="100%" height="500px" src={pdfUrl}></iframe>
+              )}
             </div>
           )}
           {settleReport && (
@@ -1043,18 +1043,12 @@ export const pageQuery = graphql`
       business_org_type: { eq: "F" }
     ) {
       updatedAt(formatString: "YYYY/MM/DD")
-      data {
-        url
-      }
     }
     strapiSettleReportManualADO: strapiSettleReportManual(
       biz_cd_executive: { eq: $slug }
       business_org_type: { eq: "A" }
     ) {
       updatedAt(formatString: "YYYY/MM/DD")
-      data {
-        url
-      }
     }
     # サイドバーチェック用
     strapiFinancePlanFDO: strapiFinancePlan(

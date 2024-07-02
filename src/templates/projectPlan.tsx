@@ -33,6 +33,7 @@ import { formatDate } from "../util/formatDate";
 import "twin.macro";
 import Seo from "../components/lauout/Seo";
 import { useDetailContext } from "../context/detailContext";
+import useStrapiPdf from "../hooks/useStrapiPdf";
 
 const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
@@ -81,9 +82,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
   const [updatedAt, setUpdatedAt] = useState("");
 
   const bizPlanManual = strapiBizPlanManualFDO || strapiBizPlanManualADO;
-
-  const pdfUrl = bizPlanManual && bizPlanManual.data && bizPlanManual.data.url;
-  const googleDocsViewerUrl = `https://docs.google.com/viewer?url=${pdfUrl}&embedded=true`;
+  const { pdfUrl, isPdfLoading } = useStrapiPdf(slug, "biz-plan-manuals");
 
   const bizPlanSubSdgs =
     allStrapiBizPlanSub.edges.length !== 0 &&
@@ -5051,13 +5050,13 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
               </div>
             </div>
           )}
-          {bizPlanManual && googleDocsViewerUrl && (
+          {bizPlanManual && pdfUrl && (
             <div>
-              <iframe
-                width="100%"
-                height="500px"
-                src={googleDocsViewerUrl}
-              ></iframe>
+              {isPdfLoading ? (
+                <p>Loading...</p>
+              ) : (
+                <iframe width="100%" height="500px" src={pdfUrl}></iframe>
+              )}
             </div>
           )}
         </DetailWrapper>
@@ -5075,18 +5074,12 @@ export const pageQuery = graphql`
       business_org_type: { eq: "F" }
     ) {
       updatedAt(formatString: "YYYY/MM/DD")
-      data {
-        url
-      }
     }
     strapiBizPlanManualADO: strapiBizPlanManual(
       biz_cd_executive: { eq: $slug }
       business_org_type: { eq: "A" }
     ) {
       updatedAt(formatString: "YYYY/MM/DD")
-      data {
-        url
-      }
     }
     strapiBizPlan(business_cd: { eq: $slug }) {
       updatedAt(formatString: "YYYY/MM/DD")
