@@ -13,6 +13,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Check initial disk space
+        run: df -h
+
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+          sudo rm -rf "/usr/local/share/boost"
+          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+
+      - name: Check disk space after cleanup
+        run: df -h
+
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
@@ -29,10 +42,18 @@ jobs:
             ${{ runner.os }}-node-
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
+
+      - name: Clear Gatsby cache
+        run: |
+          npm cache clean --force
+          npx gatsby clean
 
       - name: Build Gatsby site
         run: npm run build
+
+      - name: Check disk usage after build
+        run: du -sh *
 
       - name: Install Netlify CLI
         run: npm install -g netlify-cli
