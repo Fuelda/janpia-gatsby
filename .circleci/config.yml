@@ -14,7 +14,7 @@ jobs:
           command: npm run build
       - run:
           name: Deploy to Netlify
-          command: npx netlify-cli deploy --prod --dir=public
+          command: npx netlify-cli deploy --prod --dir=public --auth $NETLIFY_ACCESS_TOKEN --site $NETLIFY_SITE_ID
 
 workflows:
   version: 2
@@ -23,4 +23,4 @@ workflows:
       - build-and-deploy:
           filters:
             branches:
-              only: main
+              only: master
