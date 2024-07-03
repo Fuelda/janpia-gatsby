@@ -196,36 +196,35 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
                   <table>
                     <tbody>
                       <tr>
-                        <Th rowSpan={2} tw="w-[12.5%]">
-                          実施時期
-                        </Th>
-                        <Th tw="w-[12.5%]">(開始)</Th>
-                        <Td>{strapiProgressReport.business_period_s}</Td>
+                        <Th tw="w-[25%]">事業期間</Th>
+
+                        <Td>開始 {strapiProgressReport.business_period_s}</Td>
+                        <Td>終了 {strapiProgressReport.business_period_e}</Td>
                       </tr>
                       <tr>
-                        <Th>(終了)</Th>
-                        <Td>{strapiProgressReport.business_period_e}</Td>
+                        <Th>対象地域</Th>
+                        <Td colSpan={2}>{strapiProgressReport.taisyoutiiki}</Td>
                       </tr>
                       <tr>
-                        <Th colSpan={2}>対象地域</Th>
-                        <Td>{strapiProgressReport.taisyoutiiki}</Td>
+                        <Th>事業対象者</Th>
+                        <Td colSpan={2}>
+                          {strapiProgressReport.jigyoutaisyousya}
+                        </Td>
                       </tr>
                       <tr>
-                        <Th colSpan={2}>事業対象者</Th>
-                        <Td>{strapiProgressReport.jigyoutaisyousya}</Td>
+                        <Th>事業対象者人数</Th>
+                        <Td colSpan={2}>
+                          {strapiProgressReport.jigyoutaisyousya_n}
+                        </Td>
                       </tr>
                       <tr>
-                        <Th colSpan={2}>事業対象者人数</Th>
-                        <Td>{strapiProgressReport.jigyoutaisyousya_n}</Td>
-                      </tr>
-                      <tr>
-                        <Th colSpan={2}>事業概要</Th>
-                        <Td>{strapiProgressReport.jigyougaiyou}</Td>
+                        <Th>事業概要</Th>
+                        <Td colSpan={2}>{strapiProgressReport.jigyougaiyou}</Td>
                       </tr>
                       {strapiProgressReport.ado_count && (
                         <tr>
-                          <Th colSpan={2}>実行団体数</Th>
-                          <Td>{strapiProgressReport.ado_count}</Td>
+                          <Th>実行団体数</Th>
+                          <Td colSpan={2}>{strapiProgressReport.ado_count}</Td>
                         </tr>
                       )}
                     </tbody>
@@ -357,11 +356,7 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
                             </Td>
                           </tr>
                           <tr>
-                            <Th>
-                              資金支援
-                              <br />
-                              非資金的支援
-                            </Th>
+                            <Th>資金支援 / 非資金的支援</Th>
                             <Td>{item.node.out_sikintekisien}</Td>
                           </tr>
                           <tr>
@@ -434,11 +429,7 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
                             </Td>
                           </tr>
                           <tr>
-                            <Th>
-                              資金支援
-                              <br />
-                              非資金的支援
-                            </Th>
+                            <Th>資金支援 / 非資金的支援</Th>
                             <Td>{item.node.act_k_sikintekisien}</Td>
                           </tr>
                           <tr>

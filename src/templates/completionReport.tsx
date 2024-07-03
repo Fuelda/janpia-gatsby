@@ -4,10 +4,11 @@ import Layout from "../components/lauout/Layout";
 import DetailHeader from "../components/lauout/DetailHeader";
 import "twin.macro";
 import DetailWrapper from "../components/lauout/DetailWrapper";
-import { detailBody } from "../styles/detailPage";
+import { detailAnchor, detailBody } from "../styles/detailPage";
 import Seo from "../components/lauout/Seo";
 import DetailItemWrapper from "../components/lauout/DetailItemWrapper";
 import { LshapeTableRow, ScrollTable, Td, Th } from "./progressReport";
+import DetailAnchor from "../components/atoms/DetailAnchor";
 
 const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
@@ -62,6 +63,55 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
           strapiCompleteReportManual && strapiCompleteReportManual.updatedAt
         }
       >
+        {strapiCompleteReport && (
+          <div css={detailAnchor}>
+            <DetailAnchor
+              title="事業概要"
+              anchor={`/result/${slug}/completion-report/#firstItem`}
+            />
+            <DetailAnchor
+              title="広報実績"
+              anchor={`/result/${slug}/completion-report/#secondItem`}
+            />
+            {strapiCompleteReport.soukatsu.data.childMarkdownRemark.html && (
+              <DetailAnchor
+                title="事業の総括およびその価値"
+                anchor={`/result/${slug}/completion-report/#thirdItem`}
+              />
+            )}
+            {strapiCompleteReport.kadai.data.childMarkdownRemark.html && (
+              <DetailAnchor
+                title="課題設定、事業設計に関する振返り"
+                anchor={`/result/${slug}/completion-report/#fourthItem`}
+              />
+            )}
+            {strapiCompleteReport.unexp_outcome.data.childMarkdownRemark
+              .html && (
+              <DetailAnchor
+                title="想定外のアウトカム、活動、波及効果など"
+                anchor={`/result/${slug}/completion-report/#fifthItem`}
+              />
+            )}
+            {strapiCompleteReport.task_change.data.childMarkdownRemark.html && (
+              <DetailAnchor
+                title="事業終了時の課題を取り巻く環境や対象者の変化と次の活動"
+                anchor={`/result/${slug}/completion-report/#sixthItem`}
+              />
+            )}
+            <DetailAnchor
+              title="ガバナンス・コンプライアンス実績"
+              anchor={`/result/${slug}/completion-report/#seventhItem`}
+            />
+            <DetailAnchor
+              title="ガバナンス・コンプライアンス体制"
+              anchor={`/result/${slug}/completion-report/#ninthItem`}
+            />
+            <DetailAnchor
+              title="その他"
+              anchor={`/result/${slug}/completion-report/#eighthItem`}
+            />
+          </div>
+        )}
         <div css={detailBody}>
           {strapiCompleteReportManual && (
             <div>
@@ -74,28 +124,23 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
           )}
           {strapiCompleteReport && (
             <>
-              <div>
+              <div id="firstItem">
                 <DetailItemWrapper itemName="事業概要">
                   <div>
                     <table>
                       <tr>
-                        <Th rowSpan={2} tw="w-[12.5%]">
-                          実施時期
-                        </Th>
-                        <Th tw="w-[12.5%]">(開始)</Th>
-                        <Td>{strapiCompleteReport.business_period_s}</Td>
+                        <Th tw="w-[25%]">実施時期</Th>
+
+                        <Td>開始日 {strapiCompleteReport.business_period_s}</Td>
+                        <Td>終了日 {strapiCompleteReport.business_period_e}</Td>
                       </tr>
                       <tr>
-                        <Th>(終了)</Th>
-                        <Td>{strapiCompleteReport.business_period_e}</Td>
+                        <Th>対象地域</Th>
+                        <Td colSpan={2}>{strapiCompleteReport.taisyoutiiki}</Td>
                       </tr>
                       <tr>
-                        <Th colSpan={2}>対象地域</Th>
-                        <Td>{strapiCompleteReport.taisyoutiiki}</Td>
-                      </tr>
-                      <tr>
-                        <Th colSpan={2}>事業対象者</Th>
-                        <Td>
+                        <Th>事業対象者</Th>
+                        <Td colSpan={2}>
                           <div
                             dangerouslySetInnerHTML={{
                               __html:
@@ -108,8 +153,8 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                         </Td>
                       </tr>
                       <tr>
-                        <Th colSpan={2}>事業対象者人数</Th>
-                        <Td>
+                        <Th>事業対象者人数</Th>
+                        <Td colSpan={2}>
                           <div
                             dangerouslySetInnerHTML={{
                               __html:
@@ -122,8 +167,8 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                         </Td>
                       </tr>
                       <tr>
-                        <Th colSpan={2}>事業概要</Th>
-                        <Td>
+                        <Th>事業概要</Th>
+                        <Td colSpan={2}>
                           <div
                             dangerouslySetInnerHTML={{
                               __html:
@@ -136,14 +181,14 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                         </Td>
                       </tr>
                       <tr>
-                        <Th colSpan={2}>実行団体数</Th>
-                        <Td>{strapiCompleteReport.ado_count}</Td>
+                        <Th>実行団体数</Th>
+                        <Td colSpan={2}>{strapiCompleteReport.ado_count}</Td>
                       </tr>
                     </table>
                   </div>
                 </DetailItemWrapper>
               </div>
-              <div>
+              <div id="secondItem">
                 <DetailItemWrapper itemName="広報実績">
                   <div tw="lg:overflow-x-scroll">
                     <ScrollTable>
@@ -186,7 +231,7 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                 </DetailItemWrapper>
               </div>
               {strapiCompleteReport.soukatsu.data.childMarkdownRemark.html && (
-                <div>
+                <div id="thirdItem">
                   <DetailItemWrapper itemName="事業の総括およびその価値">
                     <div>
                       <div
@@ -204,7 +249,7 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                 </div>
               )}
               {strapiCompleteReport.kadai.data.childMarkdownRemark.html && (
-                <div>
+                <div id="fourthItem">
                   <DetailItemWrapper itemName="課題設定、事業設計に関する振返り">
                     <div>
                       <div
@@ -371,7 +416,7 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
               )}
               {strapiCompleteReport.unexp_outcome.data.childMarkdownRemark
                 .html && (
-                <div>
+                <div id="fifthItem">
                   <DetailItemWrapper itemName="想定外のアウトカム、活動、波及効果など">
                     <div>
                       <div
@@ -390,7 +435,7 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
               )}
               {strapiCompleteReport.task_change.data.childMarkdownRemark
                 .html && (
-                <div>
+                <div id="sixthItem">
                   <DetailItemWrapper itemName="事業終了時の課題を取り巻く環境や対象者の変化と次の活動">
                     <div>
                       <table>
@@ -461,7 +506,7 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                   </DetailItemWrapper>
                 </div>
               )}
-              <div>
+              <div id="seventhItem">
                 <DetailItemWrapper itemName="ガバナンス・コンプライアンス実績">
                   <div tw="lg:overflow-x-scroll">
                     <ScrollTable>
@@ -490,6 +535,16 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                               .childMarkdownRemark.html
                           }
                         />
+                      </tbody>
+                    </ScrollTable>
+                  </div>
+                </DetailItemWrapper>
+              </div>
+              <div id="ninthItem">
+                <DetailItemWrapper itemName="ガバナンス・コンプライアンス体制">
+                  <div tw="lg:overflow-x-scroll">
+                    <ScrollTable>
+                      <tbody>
                         <LshapeTableRow
                           heading="社員総会、評議会、株主総会、理事会、取締役会などは定款の定める通りに開催されていますか。"
                           status={strapiCompleteReport.joukyou_10_2_1}
@@ -569,7 +624,7 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                   </div>
                 </DetailItemWrapper>
               </div>
-              <div>
+              <div id="eighthItem">
                 <DetailItemWrapper itemName="その他">
                   <div>
                     <table tw="lg:([&_th]:(block w-full) [&_td]:(block w-full))">
