@@ -376,7 +376,15 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                             <td tw="text-center">実行団体への助成</td>
                           )}
                           <td tw="text-center">管理的経費</td>
-                          <td tw="text-center">資金分配団体用</td>
+                          <td
+                            tw="text-center"
+                            css={
+                              settleReport.business_org_type === "A" &&
+                              tw`bg-gray-pale text-gray-black`
+                            }
+                          >
+                            資金分配団体用
+                          </td>
                           <td tw="text-center">実行団体用</td>
                         </tr>
                       </thead>
@@ -384,19 +392,19 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                         <tr>
                           <th
                             rowSpan={5}
-                            tw="[writing-mode:vertical-rl]"
+                            tw="[writing-mode:vertical-rl] w-12"
                             css={thStandard}
                           >
                             年度末の精算報告
                           </th>
                           <th
                             rowSpan={5}
-                            tw="[writing-mode:vertical-rl]"
+                            tw="[writing-mode:vertical-rl] w-12"
                             css={thStandard}
                           >
                             実績額
                           </th>
-                          <th tw="" css={thStandard}>
+                          <th tw="w-32" css={thStandard}>
                             2021年度
                           </th>
                           <td tw="text-end">
@@ -421,13 +429,23 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                               {parseInt(settleReport.a_po1).toLocaleString()}
                             </td>
                           )}
-                          <td tw="text-end">
+                          <td
+                            tw="text-end"
+                            css={
+                              !settleReport.a_fdo1 &&
+                              tw`bg-gray-pale text-gray-black`
+                            }
+                          >
                             {settleReport.a_fdo1 &&
                               parseInt(settleReport.a_fdo1).toLocaleString()}
                           </td>
                           <td tw="text-end">
                             {settleReport.a_ado1 &&
                               parseInt(settleReport.a_ado1).toLocaleString()}
+                            {settleReport.a_ado_ado1 &&
+                              parseInt(
+                                settleReport.a_ado_ado1
+                              ).toLocaleString()}
                           </td>
                           <td tw="text-end">
                             {settleReport.a_sum1 &&
@@ -458,13 +476,23 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                               {parseInt(settleReport.a_po2).toLocaleString()}
                             </td>
                           )}
-                          <td tw="text-end">
+                          <td
+                            tw="text-end"
+                            css={
+                              !settleReport.a_fdo2 &&
+                              tw`bg-gray-pale text-gray-black`
+                            }
+                          >
                             {settleReport.a_fdo2 &&
                               parseInt(settleReport.a_fdo2).toLocaleString()}
                           </td>
                           <td tw="text-end">
                             {settleReport.a_ado2 &&
                               parseInt(settleReport.a_ado2).toLocaleString()}
+                            {settleReport.a_ado_ado2 &&
+                              parseInt(
+                                settleReport.a_ado_ado2
+                              ).toLocaleString()}
                           </td>
                           <td tw="text-end">
                             {settleReport.a_sum2 &&
@@ -495,13 +523,23 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                               {parseInt(settleReport.a_po3).toLocaleString()}
                             </td>
                           )}
-                          <td tw="text-end">
+                          <td
+                            tw="text-end"
+                            css={
+                              !settleReport.a_fdo3 &&
+                              tw`bg-gray-pale text-gray-black`
+                            }
+                          >
                             {settleReport.a_fdo3 &&
                               parseInt(settleReport.a_fdo3).toLocaleString()}
                           </td>
                           <td tw="text-end">
                             {settleReport.a_ado3 &&
                               parseInt(settleReport.a_ado3).toLocaleString()}
+                            {settleReport.a_ado_ado3 &&
+                              parseInt(
+                                settleReport.a_ado_ado3
+                              ).toLocaleString()}
                           </td>
                           <td tw="text-end">
                             {settleReport.a_sum3 &&
@@ -532,13 +570,23 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                               {parseInt(settleReport.a_po4).toLocaleString()}
                             </td>
                           )}
-                          <td tw="text-end">
+                          <td
+                            tw="text-end"
+                            css={
+                              !settleReport.a_fdo4 &&
+                              tw`bg-gray-pale text-gray-black`
+                            }
+                          >
                             {settleReport.a_fdo4 &&
                               parseInt(settleReport.a_fdo4).toLocaleString()}
                           </td>
                           <td tw="text-end">
                             {settleReport.a_ado4 &&
                               parseInt(settleReport.a_ado4).toLocaleString()}
+                            {settleReport.a_ado_ado4 &&
+                              parseInt(
+                                settleReport.a_ado_ado4
+                              ).toLocaleString()}
                           </td>
                           <td tw="text-end">
                             {settleReport.a_sum4 &&
@@ -569,13 +617,21 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                               {parseInt(settleReport.a_po).toLocaleString()}
                             </td>
                           )}
-                          <td tw="text-end">
+                          <td
+                            tw="text-end"
+                            css={
+                              !settleReport.a_fdo &&
+                              tw`bg-gray-pale text-gray-black`
+                            }
+                          >
                             {settleReport.a_fdo &&
                               parseInt(settleReport.a_fdo).toLocaleString()}
                           </td>
                           <td tw="text-end">
                             {settleReport.a_ado &&
                               parseInt(settleReport.a_ado).toLocaleString()}
+                            {settleReport.a_ado_ado &&
+                              parseInt(settleReport.a_ado_ado).toLocaleString()}
                           </td>
                           <td tw="text-end">
                             {settleReport.a_sum &&
@@ -620,13 +676,21 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                               {parseInt(settleReport.b_po).toLocaleString()}
                             </td>
                           )}
-                          <td tw="text-end">
+                          <td
+                            tw="text-end"
+                            css={
+                              !settleReport.b_fdo &&
+                              tw`bg-gray-pale text-gray-black`
+                            }
+                          >
                             {settleReport.b_fdo &&
                               parseInt(settleReport.b_fdo).toLocaleString()}
                           </td>
                           <td tw="text-end">
                             {settleReport.b_ado &&
                               parseInt(settleReport.b_ado).toLocaleString()}
+                            {settleReport.b_ado_ado &&
+                              parseInt(settleReport.b_ado_ado).toLocaleString()}
                           </td>
                           <td tw="text-end">
                             {settleReport.b_sum &&
@@ -658,13 +722,21 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                                 parseInt(settleReport.c_po).toLocaleString()}
                             </td>
                           )}
-                          <td tw="text-end">
+                          <td
+                            tw="text-end"
+                            css={
+                              !settleReport.c_fdo &&
+                              tw`bg-gray-pale text-gray-black`
+                            }
+                          >
                             {settleReport.c_fdo &&
                               parseInt(settleReport.c_fdo).toLocaleString()}
                           </td>
                           <td tw="text-end">
                             {settleReport.c_ado &&
                               parseInt(settleReport.c_ado).toLocaleString()}
+                            {settleReport.c_ado_ado &&
+                              parseInt(settleReport.c_ado_ado).toLocaleString()}
                           </td>
                           <td tw="text-end">
                             {settleReport.c_sum &&
@@ -703,7 +775,13 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                                 ).toLocaleString()}
                             </td>
                           )}
-                          <td tw="text-end">
+                          <td
+                            tw="text-end"
+                            css={
+                              !settleReport.sikkou_fdo &&
+                              tw`bg-gray-pale text-gray-black`
+                            }
+                          >
                             {settleReport.sikkou_fdo &&
                               parseInt(
                                 settleReport.sikkou_fdo
@@ -713,6 +791,10 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                             {settleReport.sikkou_ado &&
                               parseInt(
                                 settleReport.sikkou_ado
+                              ).toLocaleString()}
+                            {settleReport.sikkou_ado_ado &&
+                              parseInt(
+                                settleReport.sikkou_ado_ado
                               ).toLocaleString()}
                           </td>
                           <td tw="text-end">
@@ -749,7 +831,13 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                               ).toLocaleString()}
                             </td>
                           )}
-                          <td tw="text-end">
+                          <td
+                            tw="text-end"
+                            css={
+                              !settleReport.kakuteijosei_fdo &&
+                              tw`bg-gray-pale text-gray-black`
+                            }
+                          >
                             {settleReport.kakuteijosei_fdo &&
                               parseInt(
                                 settleReport.kakuteijosei_fdo
@@ -759,6 +847,10 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                             {settleReport.kakuteijosei_ado &&
                               parseInt(
                                 settleReport.kakuteijosei_ado
+                              ).toLocaleString()}
+                            {settleReport.kakuteijosei_ado_ado &&
+                              parseInt(
+                                settleReport.kakuteijosei_ado_ado
                               ).toLocaleString()}
                           </td>
                           <td tw="text-end">
