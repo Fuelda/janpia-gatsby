@@ -27,12 +27,12 @@ import {
 import EvaluationShortOutcome from "../components/organisms/EvaluationShortOutcome";
 import Seo from "../components/lauout/Seo";
 import tw from "twin.macro";
+import { useAttachedFile } from "../hooks/useAttachedFile";
 
 const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
   const {
     strapiEvaluationPlan,
     allStrapiEvaluationPlanSub,
-    allStrapiAttachedFile,
     evaluationPlanManualFDO,
     evaluationPlanManualADO,
   } = data;
@@ -42,9 +42,8 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
     evaluationPlanManualFDO || evaluationPlanManualADO;
   const pdfUrl = evaluationPlanManual && evaluationPlanManual.data.url;
   const googleDocsViewerUrl = `https://docs.google.com/viewer?url=${pdfUrl}&embedded=true`;
-  const evaluationFile = allStrapiAttachedFile.edges.filter(
-    (af: any) => af.node.item_id === "attach_fileupload_item2"
-  );
+  const insertId = strapiEvaluationPlan && strapiEvaluationPlan.insert_id;
+  const { attachedFileData } = useAttachedFile(insertId);
 
   const evaluationTable =
     allStrapiEvaluationPlanSub.edges.length !== 0
@@ -109,7 +108,7 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                   anchor={`/result/${slug}/evaluation-plan/#thirdItem`}
                 />
               )}
-              {evaluationFile.length !== 0 && (
+              {attachedFileData.length > 0 && (
                 <DetailAnchor
                   title="事業設計図"
                   anchor={`/result/${slug}/evaluation-plan/#secondItem`}
@@ -719,15 +718,15 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                   </DetailItemWrapper>
                 </div>
               )}
-              {evaluationFile.length !== 0 && (
+              {attachedFileData.length > 0 && (
                 <div id="secondItem">
                   <DetailItemWrapper itemName="事業設計図">
                     <div tw="flex gap-[5px] flex-wrap">
-                      {evaluationFile.map((ef: any) => (
+                      {attachedFileData.map((file) => (
                         <AttachedFileLink
-                          filePath={ef.node.data.url}
-                          fileName={ef.node.file_name}
-                          key={ef.node.data.url}
+                          filePath={file.url}
+                          fileName={file.fileName}
+                          key={file.url}
                         />
                       ))}
                     </div>
@@ -745,7 +744,7 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
 export default EvaluationPlan;
 
 export const pageQuery = graphql`
-  query MyQuery($slug: String!, $insert_id: [String]) {
+  query MyQuery($slug: String!) {
     strapiEvaluationPlan(business_cd: { eq: $slug }) {
       updatedAt(formatString: "YYYY/MM/DD")
       business_cd
@@ -848,18 +847,6 @@ export const pageQuery = graphql`
       updatedAt(formatString: "YYYY/MM/DD")
       data {
         url
-      }
-    }
-    allStrapiAttachedFile(filter: { insert_id: { in: $insert_id } }) {
-      edges {
-        node {
-          updatedAt(formatString: "YYYY/MM/DD")
-          item_id
-          file_name
-          data {
-            url
-          }
-        }
       }
     }
   }

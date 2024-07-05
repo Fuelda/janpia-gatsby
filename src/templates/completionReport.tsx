@@ -9,6 +9,8 @@ import Seo from "../components/lauout/Seo";
 import DetailItemWrapper from "../components/lauout/DetailItemWrapper";
 import { LshapeTableRow, ScrollTable, Td, Th } from "./progressReport";
 import DetailAnchor from "../components/atoms/DetailAnchor";
+import { useAttachedFile } from "../hooks/useAttachedFile";
+import AttachedFileLink from "../components/atoms/AttachedFileLink";
 
 const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
@@ -18,6 +20,8 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
     strapiCompleteReportManualFDO,
     strapiCompleteReportManualADO,
   } = data;
+  const insertId = strapiCompleteReport && strapiCompleteReport.insert_id;
+  const { attachedFileData } = useAttachedFile(insertId);
 
   const outcome =
     allStrapiCompleteReportSub.edges.length > 0 &&
@@ -110,6 +114,12 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
               title="その他"
               anchor={`/result/${slug}/completion-report/#eighthItem`}
             />
+            {attachedFileData.length > 0 && (
+              <DetailAnchor
+                title="添付欄"
+                anchor={`/result/${slug}/completion-report/#tenthItem`}
+              />
+            )}
           </div>
         )}
         <div css={detailBody}>
@@ -648,6 +658,21 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                   </div>
                 </DetailItemWrapper>
               </div>
+              {attachedFileData.length > 0 && (
+                <div id="tenthItem">
+                  <DetailItemWrapper itemName="添付欄">
+                    <div tw="flex gap-[5px] flex-wrap">
+                      {attachedFileData.map((file) => (
+                        <AttachedFileLink
+                          filePath={file.url}
+                          fileName={file.fileName}
+                          key={file.url}
+                        />
+                      ))}
+                    </div>
+                  </DetailItemWrapper>
+                </div>
+              )}
             </>
           )}
         </div>
