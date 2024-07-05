@@ -4952,33 +4952,18 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                 </DetailItemWrapper>
               </div>
             </div>
-<<<<<<< HEAD
           </div>
         )}
-        {bizPlanManual && googleDocsViewerUrl && (
+        {bizPlanManual && pdfUrl && (
           <div>
-            <iframe
-              width="100%"
-              height="500px"
-              src={googleDocsViewerUrl}
-            ></iframe>
+            {isPdfLoading ? (
+              <p>Loading...</p>
+            ) : (
+              <iframe width="100%" height="500px" src={pdfUrl}></iframe>
+            )}
           </div>
         )}
       </DetailWrapper>
-=======
-          )}
-          {bizPlanManual && pdfUrl && (
-            <div>
-              {isPdfLoading ? (
-                <p>Loading...</p>
-              ) : (
-                <iframe width="100%" height="500px" src={pdfUrl}></iframe>
-              )}
-            </div>
-          )}
-        </DetailWrapper>
-      </div>
->>>>>>> origin/master
     </Layout>
   );
 };
