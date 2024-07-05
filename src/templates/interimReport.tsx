@@ -1,5 +1,5 @@
 import { graphql } from "gatsby";
-import React, { useEffect } from "react";
+import React from "react";
 import Layout from "../components/lauout/Layout";
 import DetailHeader from "../components/lauout/DetailHeader";
 import "twin.macro";
@@ -11,6 +11,7 @@ import { LshapeTableRow, ScrollTable, Td, Th } from "./progressReport";
 import DetailAnchor from "../components/atoms/DetailAnchor";
 import { useAttachedFile } from "../hooks/useAttachedFile";
 import AttachedFileLink from "../components/atoms/AttachedFileLink";
+import useStrapiPdf from "../hooks/useStrapiPdf";
 
 const InterimReport: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
@@ -41,8 +42,7 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
 
   const strapiMidReportManual =
     strapiMidReportManualFDO || strapiMidReportManualADO;
-  const pdfUrl = strapiMidReportManual && strapiMidReportManual.data.url;
-  const googleDocsViewerUrl = `https://docs.google.com/viewer?url=${pdfUrl}&embedded=true`;
+  const { pdfUrl, isPdfLoading } = useStrapiPdf(slug, "mid-report-manuals");
 
   return (
     <Layout>
@@ -80,14 +80,16 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
           </div>
         )}
         <div css={detailBody}>
-          {strapiMidReportManual && (
+          {strapiMidReportManual && pdfUrl ? (
             <div>
-              <iframe
-                width="100%"
-                height="500px"
-                src={googleDocsViewerUrl}
-              ></iframe>
+              {isPdfLoading ? (
+                <p>Loading...</p>
+              ) : (
+                <iframe width="100%" height="500px" src={pdfUrl}></iframe>
+              )}
             </div>
+          ) : (
+            <p>データはありません</p>
           )}
           {strapiMidReport && (
             <>
@@ -871,9 +873,6 @@ export const pageQuery = graphql`
       biz_cd_executive
       biz_cd_fund_distr
       business_org_type
-      data {
-        url
-      }
     }
     strapiMidReportManualADO: strapiMidReportManual(
       biz_cd_executive: { eq: $slug }
@@ -883,9 +882,6 @@ export const pageQuery = graphql`
       biz_cd_executive
       biz_cd_fund_distr
       business_org_type
-      data {
-        url
-      }
     }
   }
 `;

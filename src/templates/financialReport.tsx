@@ -10,6 +10,7 @@ import { detailAnchor, detailBody } from "../styles/detailPage";
 import DetailItemWrapper from "../components/lauout/DetailItemWrapper";
 import { tableWide, td8col, th8col, thead8col } from "../styles/table";
 import Seo from "../components/lauout/Seo";
+import useStrapiPdf from "../hooks/useStrapiPdf";
 
 const thStandard = tw`bg-blue-base py-3 px-3 text-start border-gray-border border`;
 const thNoBorder = tw`bg-blue-base py-3 px-3 text-start `;
@@ -27,8 +28,7 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
   const settleReport = strapiSettleReportFDO || strapiSettleReportADO;
   const settleReportManual =
     strapiSettleReportManualFDO || strapiSettleReportManualADO;
-  const pdfUrl = settleReportManual && settleReportManual.data.url;
-  const googleDocsViewerUrl = `https://docs.google.com/viewer?url=${pdfUrl}&embedded=true`;
+  const { pdfUrl, isPdfLoading } = useStrapiPdf(slug, "settle-report-manuals");
 
   useEffect(() => {
     settleReport && setUpdatedAt(settleReport.updatedAt);
@@ -43,13 +43,13 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
         slug={slug}
         updatedAt={updatedAt}
       >
-        {settleReportManual && (
+        {settleReportManual && pdfUrl && (
           <div>
-            <iframe
-              width="100%"
-              height="500px"
-              src={googleDocsViewerUrl}
-            ></iframe>
+            {isPdfLoading ? (
+              <p>Loading...</p>
+            ) : (
+              <iframe width="100%" height="500px" src={pdfUrl}></iframe>
+            )}
           </div>
         )}
         {settleReport && (
@@ -66,10 +66,6 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
               }の精算`}
               anchor={`/result/${slug}/financial-report/#secondItem`}
             />
-            {/* <DetailAnchor
-              title="実行団体の精算"
-              anchor={`/result/${slug}/financial-report/#thirdItem`}
-            /> */}
           </div>
         )}
         {settleReport && (
@@ -283,10 +279,18 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                     <thead css={thead8col}>
                       <tr>
                         <th colSpan={3} rowSpan={2}></th>
-                        <td colSpan={2} tw="text-center">
+                        <td
+                          colSpan={settleReport.a_ado_josei ? 3 : 2}
+                          tw="text-center"
+                        >
                           事業費
                         </td>
-                        <td rowSpan={2} tw="text-center">
+                        {settleReport.a_po && (
+                          <td rowSpan={2} tw="text-center">
+                            PO関連経費
+                          </td>
+                        )}
+                        <td tw="text-center" colSpan={2}>
                           評価関連経費
                         </td>
                         <td rowSpan={2} tw="text-center">
@@ -295,20 +299,39 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                       </tr>
                       <tr>
                         <td tw="text-center">直接事業費</td>
+                        {settleReport.a_ado_josei && (
+                          <td tw="text-center">実行団体への助成</td>
+                        )}
                         <td tw="text-center">管理的経費</td>
+                        <td
+                          tw="text-center"
+                          css={
+                            settleReport.business_org_type === "A" &&
+                            tw`bg-gray-pale text-gray-black`
+                          }
+                        >
+                          資金分配団体用
+                        </td>
+                        <td tw="text-center">実行団体用</td>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <th rowSpan={5} tw="w-[11.5%]" css={thStandard}>
-                          年度末の
-                          <br />
-                          精算報告
+                        <th
+                          rowSpan={5}
+                          tw="[writing-mode:vertical-rl] w-12"
+                          css={thStandard}
+                        >
+                          年度末の精算報告
                         </th>
-                        <th rowSpan={5} tw="w-[13%]" css={thStandard}>
+                        <th
+                          rowSpan={5}
+                          tw="[writing-mode:vertical-rl] w-12"
+                          css={thStandard}
+                        >
                           実績額
                         </th>
-                        <th tw="w-[13%]" css={thStandard}>
+                        <th tw="w-32" css={thStandard}>
                           2021年度
                         </th>
                         <td tw="text-end">
@@ -317,13 +340,35 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                               settleReport.ado_josei_ado1
                             ).toLocaleString()}
                         </td>
+                        {settleReport.a_ado_josei && (
+                          <td tw="text-end">
+                            {parseInt(settleReport.ado_josei1).toLocaleString()}
+                          </td>
+                        )}
                         <td tw="text-end">
                           {settleReport.kanri1 &&
                             parseInt(settleReport.kanri1).toLocaleString()}
                         </td>
+                        {settleReport.a_po && (
+                          <td tw="text-end">
+                            {parseInt(settleReport.a_po1).toLocaleString()}
+                          </td>
+                        )}
+                        <td
+                          tw="text-end"
+                          css={
+                            !settleReport.a_fdo1 &&
+                            tw`bg-gray-pale text-gray-black`
+                          }
+                        >
+                          {settleReport.a_fdo1 &&
+                            parseInt(settleReport.a_fdo1).toLocaleString()}
+                        </td>
                         <td tw="text-end">
                           {settleReport.a_ado1 &&
                             parseInt(settleReport.a_ado1).toLocaleString()}
+                          {settleReport.a_ado_ado1 &&
+                            parseInt(settleReport.a_ado_ado1).toLocaleString()}
                         </td>
                         <td tw="text-end">
                           {settleReport.a_sum1 &&
@@ -338,13 +383,35 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                               settleReport.ado_josei_ado2
                             ).toLocaleString()}
                         </td>
+                        {settleReport.a_ado_josei && (
+                          <td tw="text-end">
+                            {parseInt(settleReport.ado_josei2).toLocaleString()}
+                          </td>
+                        )}
                         <td tw="text-end">
                           {settleReport.kanri2 &&
                             parseInt(settleReport.kanri2).toLocaleString()}
                         </td>
+                        {settleReport.a_po && (
+                          <td tw="text-end">
+                            {parseInt(settleReport.a_po2).toLocaleString()}
+                          </td>
+                        )}
+                        <td
+                          tw="text-end"
+                          css={
+                            !settleReport.a_fdo2 &&
+                            tw`bg-gray-pale text-gray-black`
+                          }
+                        >
+                          {settleReport.a_fdo2 &&
+                            parseInt(settleReport.a_fdo2).toLocaleString()}
+                        </td>
                         <td tw="text-end">
                           {settleReport.a_ado2 &&
                             parseInt(settleReport.a_ado2).toLocaleString()}
+                          {settleReport.a_ado_ado2 &&
+                            parseInt(settleReport.a_ado_ado2).toLocaleString()}
                         </td>
                         <td tw="text-end">
                           {settleReport.a_sum2 &&
@@ -359,13 +426,35 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                               settleReport.ado_josei_ado3
                             ).toLocaleString()}
                         </td>
+                        {settleReport.a_ado_josei && (
+                          <td tw="text-end">
+                            {parseInt(settleReport.ado_josei3).toLocaleString()}
+                          </td>
+                        )}
                         <td tw="text-end">
                           {settleReport.kanri3 &&
                             parseInt(settleReport.kanri3).toLocaleString()}
                         </td>
+                        {settleReport.a_po && (
+                          <td tw="text-end">
+                            {parseInt(settleReport.a_po3).toLocaleString()}
+                          </td>
+                        )}
+                        <td
+                          tw="text-end"
+                          css={
+                            !settleReport.a_fdo3 &&
+                            tw`bg-gray-pale text-gray-black`
+                          }
+                        >
+                          {settleReport.a_fdo3 &&
+                            parseInt(settleReport.a_fdo3).toLocaleString()}
+                        </td>
                         <td tw="text-end">
                           {settleReport.a_ado3 &&
                             parseInt(settleReport.a_ado3).toLocaleString()}
+                          {settleReport.a_ado_ado3 &&
+                            parseInt(settleReport.a_ado_ado3).toLocaleString()}
                         </td>
                         <td tw="text-end">
                           {settleReport.a_sum3 &&
@@ -380,13 +469,35 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                               settleReport.ado_josei_ado4
                             ).toLocaleString()}
                         </td>
+                        {settleReport.a_ado_josei && (
+                          <td tw="text-end">
+                            {parseInt(settleReport.ado_josei4).toLocaleString()}
+                          </td>
+                        )}
                         <td tw="text-end">
                           {settleReport.kanri4 &&
                             parseInt(settleReport.kanri4).toLocaleString()}
                         </td>
+                        {settleReport.a_po && (
+                          <td tw="text-end">
+                            {parseInt(settleReport.a_po4).toLocaleString()}
+                          </td>
+                        )}
+                        <td
+                          tw="text-end"
+                          css={
+                            !settleReport.a_fdo4 &&
+                            tw`bg-gray-pale text-gray-black`
+                          }
+                        >
+                          {settleReport.a_fdo4 &&
+                            parseInt(settleReport.a_fdo4).toLocaleString()}
+                        </td>
                         <td tw="text-end">
                           {settleReport.a_ado4 &&
                             parseInt(settleReport.a_ado4).toLocaleString()}
+                          {settleReport.a_ado_ado4 &&
+                            parseInt(settleReport.a_ado_ado4).toLocaleString()}
                         </td>
                         <td tw="text-end">
                           {settleReport.a_sum4 &&
@@ -401,13 +512,37 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                               settleReport.a_ado_josei_ado
                             ).toLocaleString()}
                         </td>
+                        {settleReport.a_ado_josei && (
+                          <td tw="text-end">
+                            {parseInt(
+                              settleReport.a_ado_josei
+                            ).toLocaleString()}
+                          </td>
+                        )}
                         <td tw="text-end">
                           {settleReport.a_kanri &&
                             parseInt(settleReport.a_kanri).toLocaleString()}
                         </td>
+                        {settleReport.a_po && (
+                          <td tw="text-end">
+                            {parseInt(settleReport.a_po).toLocaleString()}
+                          </td>
+                        )}
+                        <td
+                          tw="text-end"
+                          css={
+                            !settleReport.a_fdo &&
+                            tw`bg-gray-pale text-gray-black`
+                          }
+                        >
+                          {settleReport.a_fdo &&
+                            parseInt(settleReport.a_fdo).toLocaleString()}
+                        </td>
                         <td tw="text-end">
                           {settleReport.a_ado &&
                             parseInt(settleReport.a_ado).toLocaleString()}
+                          {settleReport.a_ado_ado &&
+                            parseInt(settleReport.a_ado_ado).toLocaleString()}
                         </td>
                         <td tw="text-end">
                           {settleReport.a_sum &&
@@ -415,10 +550,18 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                         </td>
                       </tr>
                       <tr>
-                        <th rowSpan={4} css={thStandard}>
+                        <th
+                          rowSpan={4}
+                          css={thStandard}
+                          tw="[writing-mode:vertical-rl]"
+                        >
                           事業完了時の精算
                         </th>
-                        <th rowSpan={2} css={thStandard}>
+                        <th
+                          rowSpan={2}
+                          css={thStandard}
+                          tw="[writing-mode:vertical-rl]"
+                        >
                           資金計画値
                         </th>
                         <th css={thStandard}>助成金 (B)</th>
@@ -428,13 +571,37 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                               settleReport.b_ado_josei_ado
                             ).toLocaleString()}
                         </td>
+                        {settleReport.a_ado_josei && (
+                          <td tw="text-end">
+                            {parseInt(
+                              settleReport.b_ado_josei
+                            ).toLocaleString()}
+                          </td>
+                        )}
                         <td tw="text-end">
                           {settleReport.b_kanri &&
                             parseInt(settleReport.b_kanri).toLocaleString()}
                         </td>
-                        <td tw="text-end">
+                        {settleReport.a_po && (
+                          <td tw="text-end">
+                            {parseInt(settleReport.b_po).toLocaleString()}
+                          </td>
+                        )}
+                        <td
+                          tw="text-end"
+                          css={
+                            !settleReport.b_fdo &&
+                            tw`bg-gray-pale text-gray-black`
+                          }
+                        >
                           {settleReport.b_fdo &&
                             parseInt(settleReport.b_fdo).toLocaleString()}
+                        </td>
+                        <td tw="text-end">
+                          {settleReport.b_ado &&
+                            parseInt(settleReport.b_ado).toLocaleString()}
+                          {settleReport.b_ado_ado &&
+                            parseInt(settleReport.b_ado_ado).toLocaleString()}
                         </td>
                         <td tw="text-end">
                           {settleReport.b_sum &&
@@ -449,13 +616,38 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                               settleReport.c_ado_josei_ado
                             ).toLocaleString()}
                         </td>
+                        {settleReport.a_ado_josei && (
+                          <td tw="text-end">
+                            {parseInt(
+                              settleReport.c_ado_josei
+                            ).toLocaleString()}
+                          </td>
+                        )}
                         <td tw="text-end">
                           {settleReport.c_kanri &&
                             parseInt(settleReport.c_kanri).toLocaleString()}
                         </td>
-                        <td tw="text-end">
+                        {settleReport.a_po && (
+                          <td tw="text-end">
+                            {settleReport.c_po &&
+                              parseInt(settleReport.c_po).toLocaleString()}
+                          </td>
+                        )}
+                        <td
+                          tw="text-end"
+                          css={
+                            !settleReport.c_fdo &&
+                            tw`bg-gray-pale text-gray-black`
+                          }
+                        >
                           {settleReport.c_fdo &&
                             parseInt(settleReport.c_fdo).toLocaleString()}
+                        </td>
+                        <td tw="text-end">
+                          {settleReport.c_ado &&
+                            parseInt(settleReport.c_ado).toLocaleString()}
+                          {settleReport.c_ado_ado &&
+                            parseInt(settleReport.c_ado_ado).toLocaleString()}
                         </td>
                         <td tw="text-end">
                           {settleReport.c_sum &&
@@ -463,7 +655,9 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                         </td>
                       </tr>
                       <tr>
-                        <th css={thNoBorder}>執行率</th>
+                        <th css={thNoBorder} tw="[writing-mode:vertical-rl]">
+                          執行率
+                        </th>
                         <th css={thNoBorder}>(D=A/(B+C))</th>
                         <td tw="text-end">
                           {settleReport.sikkou_ado_jo_ado &&
@@ -471,15 +665,42 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                               settleReport.sikkou_ado_jo_ado
                             ).toLocaleString()}
                         </td>
+                        {settleReport.a_ado_josei && (
+                          <td tw="text-end">
+                            {parseInt(
+                              settleReport.sikkou_ado_jo
+                            ).toLocaleString()}
+                          </td>
+                        )}
                         <td tw="text-end">
                           {settleReport.sikkou_kanri &&
                             parseInt(
                               settleReport.sikkou_kanri
                             ).toLocaleString()}
                         </td>
-                        <td tw="text-end">
+                        {settleReport.a_po && (
+                          <td tw="text-end">
+                            {settleReport.sikkou_po &&
+                              parseInt(settleReport.sikkou_po).toLocaleString()}
+                          </td>
+                        )}
+                        <td
+                          tw="text-end"
+                          css={
+                            !settleReport.sikkou_fdo &&
+                            tw`bg-gray-pale text-gray-black`
+                          }
+                        >
                           {settleReport.sikkou_fdo &&
                             parseInt(settleReport.sikkou_fdo).toLocaleString()}
+                        </td>
+                        <td tw="text-end">
+                          {settleReport.sikkou_ado &&
+                            parseInt(settleReport.sikkou_ado).toLocaleString()}
+                          {settleReport.sikkou_ado_ado &&
+                            parseInt(
+                              settleReport.sikkou_ado_ado
+                            ).toLocaleString()}
                         </td>
                         <td tw="text-end">
                           {settleReport.sikkou_sum &&
@@ -487,7 +708,9 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                         </td>
                       </tr>
                       <tr>
-                        <th css={thNoBorder}>確定助成額</th>
+                        <th css={thNoBorder} tw="[writing-mode:vertical-rl]">
+                          確定助成額
+                        </th>
                         <th css={thNoBorder}>(E=BxD)</th>
                         <td tw="text-end">
                           {settleReport.kakashi2_ado &&
@@ -495,14 +718,42 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                               settleReport.kakashi2_ado
                             ).toLocaleString()}
                         </td>
+                        {settleReport.a_ado_josei && (
+                          <td tw="text-end">
+                            {parseInt(settleReport.kakashi2).toLocaleString()}
+                          </td>
+                        )}
                         <td tw="text-end">
                           {settleReport.kakashi3 &&
                             parseInt(settleReport.kakashi3).toLocaleString()}
                         </td>
-                        <td tw="text-end">
+                        {settleReport.a_po && (
+                          <td tw="text-end">
+                            {parseInt(
+                              settleReport.kakuteijosei_po
+                            ).toLocaleString()}
+                          </td>
+                        )}
+                        <td
+                          tw="text-end"
+                          css={
+                            !settleReport.kakuteijosei_fdo &&
+                            tw`bg-gray-pale text-gray-black`
+                          }
+                        >
                           {settleReport.kakuteijosei_fdo &&
                             parseInt(
                               settleReport.kakuteijosei_fdo
+                            ).toLocaleString()}
+                        </td>
+                        <td tw="text-end">
+                          {settleReport.kakuteijosei_ado &&
+                            parseInt(
+                              settleReport.kakuteijosei_ado
+                            ).toLocaleString()}
+                          {settleReport.kakuteijosei_ado_ado &&
+                            parseInt(
+                              settleReport.kakuteijosei_ado_ado
                             ).toLocaleString()}
                         </td>
                         <td tw="text-end">
@@ -517,67 +768,6 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                 </div>
               </DetailItemWrapper>
             </div>
-            {/* <div id="thirdItem">
-              <DetailItemWrapper itemName="実行団体の精算">
-                <div tw="w-full overflow-x-scroll">
-                  <table
-                    css={tableWide}
-                    className="table__settleReport__exective2"
-                  >
-                    <thead css={thead8col}>
-                      <tr>
-                        <th colSpan={2} rowSpan={2}></th>
-                        <td colSpan={2} tw="text-center">
-                          事業費
-                        </td>
-                      </tr>
-                      <tr>
-                        <td tw="text-center">直接事業費</td>
-                        <td tw="text-center">管理的経費</td>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th rowSpan={5} tw="w-[19%]" css={thStandard}>
-                          事業完了時の精算
-                        </th>
-                        <th css={thStandard} tw="w-1/3">
-                          助成金支払額 (a)
-                        </th>
-                        <td colSpan={2} tw="text-end">
-                          公開不可
-                        </td>
-                      </tr>
-                      <tr>
-                        <th tw="w-[19%]" css={thStandard}>
-                          確定事業額 (b)
-                        </th>
-                        <td tw="text-end">公開不可</td>
-                        <td tw="text-end">公開不可</td>
-                      </tr>
-                      <tr>
-                        <th css={thStandard}>残額 (c=a+b)</th>
-                        <td colSpan={2} tw="text-end">
-                          公開不可
-                        </td>
-                      </tr>
-                      <tr>
-                        <th css={thStandard}>自己資金割合 (d=C/(B+C))</th>
-                        <td colSpan={2} tw="text-end">
-                          公開不可
-                        </td>
-                      </tr>
-                      <tr>
-                        <th css={thStandard}>資金分配団体への返還額 (cxd)</th>
-                        <td colSpan={2} tw="text-end">
-                          公開不可
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </DetailItemWrapper>
-            </div> */}
           </div>
         )}
       </DetailWrapper>
@@ -646,6 +836,8 @@ export const pageQuery = graphql`
       c_ado_josei
       c_ado_josei_ado
       c_kanri
+      c_po
+      c_ado
       c_sum
       create_date(formatString: "YYYY/MM/DD")
       executive_grp_cd
@@ -679,6 +871,9 @@ export const pageQuery = graphql`
       sikkou_ado_jo
       sikkou_ado_jo_ado
       sikkou_kanri
+      sikkou_po
+      sikkou_ado
+      sikkou_sum
     }
     strapiSettleReportADO: strapiSettleReport(
       business_org_type: { eq: "A" }
@@ -737,6 +932,8 @@ export const pageQuery = graphql`
       c_ado_josei
       c_ado_josei_ado
       c_kanri
+      c_po
+      c_ado
       c_sum
       create_date(formatString: "YYYY/MM/DD")
       executive_grp_cd
@@ -770,24 +967,21 @@ export const pageQuery = graphql`
       sikkou_ado_jo
       sikkou_ado_jo_ado
       sikkou_kanri
+      sikkou_po
+      sikkou_ado
+      sikkou_sum
     }
     strapiSettleReportManualFDO: strapiSettleReportManual(
       biz_cd_fund_distr: { eq: $slug }
       business_org_type: { eq: "F" }
     ) {
       updatedAt(formatString: "YYYY/MM/DD")
-      data {
-        url
-      }
     }
     strapiSettleReportManualADO: strapiSettleReportManual(
       biz_cd_executive: { eq: $slug }
       business_org_type: { eq: "A" }
     ) {
       updatedAt(formatString: "YYYY/MM/DD")
-      data {
-        url
-      }
     }
   }
 `;

@@ -28,6 +28,7 @@ import EvaluationShortOutcome from "../components/organisms/EvaluationShortOutco
 import Seo from "../components/lauout/Seo";
 import tw from "twin.macro";
 import { useAttachedFile } from "../hooks/useAttachedFile";
+import useStrapiPdf from "../hooks/useStrapiPdf";
 
 const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
   const {
@@ -40,10 +41,12 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
   const evaluationPlanManual =
     evaluationPlanManualFDO || evaluationPlanManualADO;
-  const pdfUrl = evaluationPlanManual && evaluationPlanManual.data.url;
-  const googleDocsViewerUrl = `https://docs.google.com/viewer?url=${pdfUrl}&embedded=true`;
   const insertId = strapiEvaluationPlan && strapiEvaluationPlan.insert_id;
   const { attachedFileData } = useAttachedFile(insertId);
+  const { pdfUrl, isPdfLoading } = useStrapiPdf(
+    slug,
+    "evaluation-plan-manuals"
+  );
 
   const evaluationTable =
     allStrapiEvaluationPlanSub.edges.length !== 0
@@ -86,13 +89,13 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
       <Seo title="評価計画 | 休眠預金活用事業 情報公開サイト" />
       <DetailHeader business_cd={slug} />
       <DetailWrapper category="評価計画" slug={slug} updatedAt={updatedAt}>
-        {evaluationPlanManual && (
+        {evaluationPlanManual && pdfUrl && (
           <div>
-            <iframe
-              width="100%"
-              height="500px"
-              src={googleDocsViewerUrl}
-            ></iframe>
+            {isPdfLoading ? (
+              <p>Loading...</p>
+            ) : (
+              <iframe width="100%" height="500px" src={pdfUrl}></iframe>
+            )}
           </div>
         )}
         {strapiEvaluationPlan && (
@@ -836,18 +839,12 @@ export const pageQuery = graphql`
       business_org_type: { eq: "F" }
     ) {
       updatedAt(formatString: "YYYY/MM/DD")
-      data {
-        url
-      }
     }
     evaluationPlanManualADO: strapiEvaluationPlanManual(
       biz_cd_executive: { eq: $slug }
       business_org_type: { eq: "A" }
     ) {
       updatedAt(formatString: "YYYY/MM/DD")
-      data {
-        url
-      }
     }
   }
 `;

@@ -15,6 +15,7 @@ import Seo from "../components/lauout/Seo";
 import DetailItemWrapper from "../components/lauout/DetailItemWrapper";
 import { LshapeTableRow, ScrollTable, Td, Th } from "./progressReport";
 import DetailAnchor from "../components/atoms/DetailAnchor";
+import useStrapiSelectedReportPdf from "../hooks/useStrapiSelectedReportPdf";
 
 type ormType = {
   node: {
@@ -41,18 +42,28 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
       ? allStrapiOfferingReport.edges.map((or: any) => or.node.koubo_nm)
       : [];
 
+  const { pdfUrlArray } = useStrapiSelectedReportPdf(
+    slug,
+    "offering-report-manuals"
+  );
+
   const currentItem =
     allStrapiOfferingReportManual.edges.length > 0
-      ? allStrapiOfferingReportManual.edges.find(
-          (orm: ormType) => orm.node.round === currentTab
-        )
+      ? pdfUrlArray &&
+        pdfUrlArray.length > 0 &&
+        pdfUrlArray.find((item) => item.round === currentTab)
       : allStrapiOfferingReport.edges.find(
           (or: any) => or.node.koubo_nm === currentTab
         );
+  const currentQueryItem =
+    allStrapiOfferingReportManual &&
+    allStrapiOfferingReportManual.edges.find(
+      (orm: ormType) => orm.node.round === currentTab
+    );
   const currentPdfUrl =
     allStrapiOfferingReportManual.edges.length > 0 &&
     currentItem &&
-    currentItem.node.data.url;
+    currentItem.url;
   const googleDocsViewerUrl = `https://docs.google.com/viewer?url=${currentPdfUrl}&embedded=true`;
 
   return (
@@ -62,7 +73,11 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
       <DetailWrapper
         category="公募結果報告"
         slug={slug}
-        updatedAt={currentItem && currentItem.node.updatedAt}
+        updatedAt={
+          currentQueryItem
+            ? currentQueryItem.node.updatedAt
+            : currentItem && currentItem.node.updatedAt
+        }
       >
         {allStrapiOfferingReport.edges.length > 0 && currentItem && (
           <div css={detailAnchor}>
@@ -958,9 +973,6 @@ export const pageQuery = graphql`
       edges {
         node {
           updatedAt(formatString: "YYYY/MM/DD")
-          data {
-            url
-          }
           biz_cd_fund_distr
           business_org_type
           round

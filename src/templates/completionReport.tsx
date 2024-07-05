@@ -11,6 +11,7 @@ import { LshapeTableRow, ScrollTable, Td, Th } from "./progressReport";
 import DetailAnchor from "../components/atoms/DetailAnchor";
 import { useAttachedFile } from "../hooks/useAttachedFile";
 import AttachedFileLink from "../components/atoms/AttachedFileLink";
+import useStrapiPdf from "../hooks/useStrapiPdf";
 
 const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
@@ -51,9 +52,10 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
 
   const strapiCompleteReportManual =
     strapiCompleteReportManualFDO || strapiCompleteReportManualADO;
-  const pdfUrl =
-    strapiCompleteReportManual && strapiCompleteReportManual.data.url;
-  const googleDocsViewerUrl = `https://docs.google.com/viewer?url=${pdfUrl}&embedded=true`;
+  const { pdfUrl, isPdfLoading } = useStrapiPdf(
+    slug,
+    "complete-report-manuals"
+  );
 
   return (
     <Layout>
@@ -123,14 +125,16 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
           </div>
         )}
         <div css={detailBody}>
-          {strapiCompleteReportManual && (
+          {strapiCompleteReportManual && pdfUrl ? (
             <div>
-              <iframe
-                width="100%"
-                height="500px"
-                src={googleDocsViewerUrl}
-              ></iframe>
+              {isPdfLoading ? (
+                <p>Loading...</p>
+              ) : (
+                <iframe width="100%" height="500px" src={pdfUrl}></iframe>
+              )}
             </div>
+          ) : (
+            <p>データはありません</p>
           )}
           {strapiCompleteReport && (
             <>
@@ -927,18 +931,12 @@ export const pageQuery = graphql`
       business_org_type: { eq: "F" }
     ) {
       updatedAt(formatString: "YYYY/MM/DD")
-      data {
-        url
-      }
     }
     strapiCompleteReportManualADO: strapiCompleteReportManual(
       biz_cd_executive: { eq: $slug }
       business_org_type: { eq: "A" }
     ) {
       updatedAt(formatString: "YYYY/MM/DD")
-      data {
-        url
-      }
     }
   }
 `;

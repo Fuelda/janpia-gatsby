@@ -15,6 +15,7 @@ import Seo from "../components/lauout/Seo";
 import DetailItemWrapper from "../components/lauout/DetailItemWrapper";
 import tw from "twin.macro";
 import DetailAnchor from "../components/atoms/DetailAnchor";
+import useStrapiProgressReportPdf from "../hooks/useStrapiProgressReportPdf";
 
 export const ScrollTable = tw.table`lg:(w-[780px])`;
 export const Th = tw.th`bg-blue-base py-3 px-3.5 text-start border-gray-border border lg:(text-[13px] py-0 px-2)`;
@@ -101,13 +102,22 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
     setCurrentTab(minRouond);
   }, [minRouond]);
 
+  const { pdfUrlArray } = useStrapiProgressReportPdf(
+    slug,
+    "progress-report-manuals"
+  );
   const currentItem =
+    pdfUrlArray &&
+    pdfUrlArray.length > 0 &&
+    pdfUrlArray.find((item) => item.round === currentTab);
+  const currentQueryItem =
     allStrapiProgressReportManual &&
     allStrapiProgressReportManual.find(
       (prm: any) =>
         prm.node.progress_round && prm.node.progress_round.code === currentTab
     );
-  const currentPdfUrl = currentItem && currentItem.node.data.url;
+
+  const currentPdfUrl = currentItem && currentItem.url;
   const googleDocsViewerUrl = `https://docs.google.com/viewer?url=${currentPdfUrl}&embedded=true`;
 
   return (
@@ -117,7 +127,7 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
       <DetailWrapper
         category="進捗/年度末報告"
         slug={slug}
-        updatedAt={currentItem && currentItem.node.updatedAt}
+        updatedAt={currentQueryItem && currentQueryItem.node.updatedAt}
       >
         {strapiProgressReport && (
           <div css={detailAnchor}>
@@ -174,20 +184,18 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
                 )
             )}
         </div>
-        {allStrapiProgressReportManual.length > 0 &&
-          (currentItem ? (
-            <div>
-              {!loaded && <p>PDFのロード中です...</p>}
-              <iframe
-                width="100%"
-                height="500px"
-                src={googleDocsViewerUrl}
-                onLoad={() => setLoaded(true)}
-              ></iframe>
-            </div>
-          ) : (
-            <p>データはありません</p>
-          ))}
+        {currentItem ? (
+          <div>
+            <iframe
+              width="100%"
+              height="500px"
+              src={googleDocsViewerUrl}
+              onLoad={() => setLoaded(true)}
+            ></iframe>
+          </div>
+        ) : (
+          <p>データはありません</p>
+        )}
         {strapiProgressReport && (
           <div css={detailBody}>
             <div id="firstItem">
@@ -1107,9 +1115,6 @@ export const pageQuery = graphql`
       edges {
         node {
           updatedAt(formatString: "YYYY/MM/DD")
-          data {
-            url
-          }
           progress_round {
             code
             label
@@ -1126,9 +1131,6 @@ export const pageQuery = graphql`
       edges {
         node {
           updatedAt(formatString: "YYYY/MM/DD")
-          data {
-            url
-          }
           progress_round {
             code
             label
