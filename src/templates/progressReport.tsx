@@ -184,7 +184,7 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
                 )
             )}
         </div>
-        {currentItem ? (
+        {currentItem && (
           <div>
             <iframe
               width="100%"
@@ -193,8 +193,6 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
               onLoad={() => setLoaded(true)}
             ></iframe>
           </div>
-        ) : (
-          <p>データはありません</p>
         )}
         {strapiProgressReport && (
           <div css={detailBody}>

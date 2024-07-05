@@ -118,18 +118,18 @@ const config: GatsbyConfig = {
         apiKey: process.env.ALGOLIA_ADMIN_KEY,
         indexName: "janpia-johokokai",
         queries: [
-          {
-            query: algoliaQuery.attachedFileText,
-            transformer: ({ data }: any) =>
-              data.allStrapiAttachedFileText.edges.map(({ node }: any) => {
-                return {
-                  id: node.id,
-                  insert_id: node.insert_id,
-                  content: node.content.data.content.slice(0, 3000),
-                  internal: { contentDigest: node.internal.contentDigest },
-                };
-              }),
-          },
+          // {
+          //   query: algoliaQuery.attachedFileText,
+          //   transformer: ({ data }: any) =>
+          //     data.allStrapiAttachedFileText.edges.map(({ node }: any) => {
+          //       return {
+          //         id: node.id,
+          //         insert_id: node.insert_id,
+          //         content: node.content.data.content.slice(0, 3000),
+          //         internal: { contentDigest: node.internal.contentDigest },
+          //       };
+          //     }),
+          // },
           {
             query: algoliaQuery.bizPlan,
             transformer: ({ data }: any) =>
