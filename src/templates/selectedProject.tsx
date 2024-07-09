@@ -179,34 +179,24 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                     <table tw="lg:([&_th]:(block w-full) [&_td]:(block w-full))">
                       <tbody>
                         <tr>
-                          <Th tw="w-1/4">
-                            <p>説明会の告知期間</p>
-                            <p>
-                              {currentItem.node.kokutikikan_ks_se &&
-                                "(告知開始～説明会終了)"}
-                              {currentItem.node.kokutikikan_ks_ue &&
-                                "(告知開始～受付終了)"}
-                              {currentItem.node.kokutikikan_ks_us &&
-                                "(告知開始～受付開始)"}
-                            </p>
-                          </Th>
+                          <Th tw="w-1/4">説明会の告知期間</Th>
                           <Td>
                             {currentItem.node.kokutikikan_ks_se}
                             {currentItem.node.kokutikikan_ks_ue}
-                            {currentItem.node.kokutikikan_ks_us}
+                            {currentItem.node.kokutikikan_ks_us}日
                           </Td>
                         </tr>
                         <tr>
                           <Th>説明会への参加団体数</Th>
-                          <Td>{currentItem.node.sankadantaisuu}</Td>
+                          <Td>{currentItem.node.sankadantaisuu}団体</Td>
                         </tr>
                         <tr>
                           <Th>説明会の実施回数</Th>
-                          <Td>{currentItem.node.setumei_jissikaisuu}</Td>
+                          <Td>{currentItem.node.setumei_jissikaisuu}回</Td>
                         </tr>
                         <tr>
                           <Th>個別相談会の実施回数（電話相談も含む）</Th>
-                          <Td>{currentItem.node.soudan_jissikaisuu}</Td>
+                          <Td>{currentItem.node.soudan_jissikaisuu}回</Td>
                         </tr>
                         <tr>
                           <Th>評価に関する説明の実施有無</Th>
@@ -273,18 +263,10 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                     <table tw="lg:([&_th]:(block w-full) [&_td]:(block w-full))">
                       <tbody>
                         <tr>
-                          <Th tw="w-1/4">
-                            <p>募集の受付期間</p>
-                            <p>
-                              {currentItem.node.b_uketukekikan_us_ue &&
-                                "(受付開始～受付終了)"}
-                              {currentItem.node.b_uketukekikan_ks_be &&
-                                "(告知開始～募集受付開始)"}
-                            </p>
-                          </Th>
+                          <Th tw="w-1/4">募集の受付期間</Th>
                           <Td>
                             {currentItem.node.b_uketukekikan_us_ue}
-                            {currentItem.node.b_uketukekikan_ks_be}
+                            {currentItem.node.b_uketukekikan_ks_be}日
                           </Td>
                         </tr>
                         {currentItem.node.b_uketukekikan_goukei && (
@@ -298,59 +280,40 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                     <table tw="table-fixed lg:([&_th]:(block w-full) [&_td]:(block w-full))">
                       <tbody>
                         <tr>
-                          <Th rowSpan={4} tw="w-[12.5%]">
-                            募集の告知媒体の種類
-                          </Th>
-                          <Th>HP</Th>
-                          <Td tw="w-[6%]">
-                            {currentItem.node.bosyuusyurui_hp === "1" && (
-                              <p>○</p>
-                            )}
-                          </Td>
-                          <Th>SNS</Th>
-                          <Td tw="w-[6%]">
-                            {currentItem.node.bosyuusyurui_sns === "1" && (
-                              <p>○</p>
-                            )}
-                          </Td>
-                          <Th>メール</Th>
-                          <Td tw="w-[6%]">
-                            {currentItem.node.bosyuusyurui_mail === "1" && (
-                              <p>○</p>
-                            )}
-                          </Td>
-                        </tr>
-                        <tr>
-                          <Th>チラシ</Th>
-                          <Td tw="w-[6%]">
-                            {currentItem.node.bosyuusyurui_chirashi === "1" && (
-                              <p>○</p>
-                            )}
-                          </Td>
-                          <Th>関連組織を通じた広報 </Th>
-                          <Td tw="w-[6%]">
-                            {currentItem.node.bosyuusyurui_kouhou === "1" && (
-                              <p>○</p>
-                            )}
-                          </Td>
-                          <Th>プレスリリース </Th>
-                          <Td tw="w-[6%]">
-                            {currentItem.node.bosyuusyurui_press === "1" && (
-                              <p>○</p>
-                            )}
+                          <Th tw="w-[25%]">募集の告知媒体の種類</Th>
+                          <Td>
+                            <p>
+                              {currentItem.node.bosyuusyurui_hp === "1" && "HP"}
+                            </p>
+                            <p>
+                              {currentItem.node.bosyuusyurui_sns === "1" &&
+                                "SNS"}
+                            </p>
+                            <p>
+                              {currentItem.node.bosyuusyurui_mail === "1" &&
+                                "メール"}
+                            </p>
+                            <p>
+                              {currentItem.node.bosyuusyurui_chirashi === "1" &&
+                                "チラシ"}
+                            </p>
+                            <p>
+                              {currentItem.node.bosyuusyurui_kouhou === "1" &&
+                                "関連組織を通じた広報"}
+                            </p>
+                            <p>
+                              {currentItem.node.bosyuusyurui_press === "1" &&
+                                "プレスリリース"}
+                            </p>
+                            <p>
+                              {currentItem.node.bosyuusyurui_etc === "1" &&
+                                "その他"}
+                            </p>
                           </Td>
                         </tr>
                         <tr>
-                          <Th>その他</Th>
-                          <Td tw="w-[6%]">
-                            {currentItem.node.bosyuusyurui_etc === "1" && (
-                              <p>○</p>
-                            )}
-                          </Td>
                           <Th>具体的な方法</Th>
-                          <Td colSpan={3}>
-                            {currentItem.node.gutaitekinahouhou}
-                          </Td>
+                          <Td>{currentItem.node.gutaitekinahouhou}</Td>
                         </tr>
                       </tbody>
                     </table>
@@ -391,9 +354,13 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                     <table tw="lg:([&_th]:(block w-full) [&_td]:(block w-full))">
                       <tbody>
                         <LshapeTableRow
-                          heading="公募に申請した団体の情報を、募集終了時に Web サイト上で公表しましたか"
+                          heading="公募に申請した団体の情報を、募集終了時にWebサイト上で公表しましたか"
                           status={currentItem.node.web_select}
-                          contentName="URL"
+                          contentName={
+                            currentItem.node.web_select === "はい"
+                              ? "URL"
+                              : "公開予定日"
+                          }
                           content={currentItem.node.web_text}
                         />
                       </tbody>
@@ -410,17 +377,29 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                           <Th tw="w-1/4 border-b-0" colSpan={2}>
                             審査委員の人数（合計）
                           </Th>
-                          <Td>{currentItem.node.sinsaiin_nm2}</Td>
+                          <Td>{currentItem.node.sinsaiin_nm2}人</Td>
                         </tr>
                         <tr>
                           <Th tw="w-[12.5%] border-y-0"></Th>
                           <Th>外部委員</Th>
-                          <Td>{currentItem.node.gaibuiin}</Td>
+                          <Td>{currentItem.node.gaibuiin}人</Td>
                         </tr>
                         <tr>
                           <Th tw="w-[12.5%] border-t-0"></Th>
                           <Th>内部委員</Th>
-                          <Td>{currentItem.node.naibuiin}</Td>
+                          <Td>{currentItem.node.naibuiin}人</Td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <table tw="lg:([&_th]:(block w-full) [&_td]:(block w-full))">
+                      <tbody>
+                        <tr>
+                          <Th tw="w-1/2">
+                            （利益相反の防止）資金分配団体と申請団体との間で、
+                            (1) 役員の兼職関係がないこと、および (2)
+                            過去に兼職関係があった場合は退任後６ヶ月間以上経過していることを確認しましたか。
+                          </Th>
+                          <Td>{currentItem.node.riekiihan_kakunin}</Td>
                         </tr>
                       </tbody>
                     </table>
@@ -428,14 +407,6 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                       <tbody>
                         <tr>
                           <Th tw="w-1/4">
-                            （利益相反の防止）資金分配団体と申請団体との間で、
-                            (1) 役員の兼職関係がないこと、および (2)
-                            過去に兼職関係があった場合は退任後６ヶ月間以上経過していることを確認しましたか。
-                          </Th>
-                          <Td>{currentItem.node.riekiihan_kakunin}</Td>
-                        </tr>
-                        <tr>
-                          <Th>
                             （利益相反の防止）その他に実行団体との利益相反の防止に関して実施したことがあれば記載してください。
                           </Th>
                           <Td>
@@ -680,7 +651,7 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                         />
                         <tr>
                           <Th colSpan={2}>
-                            上記設問で「はい（”整備していない”、”その他”以外を選択）」の場合、利用はありましたか。
+                            「はい」の場合、利用はありましたか。
                           </Th>
                           <Td>{currentItem.node.riyouumu}</Td>
                         </tr>

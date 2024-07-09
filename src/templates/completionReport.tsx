@@ -125,7 +125,7 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
           </div>
         )}
         <div css={detailBody}>
-          {strapiCompleteReportManual && pdfUrl ? (
+          {strapiCompleteReportManual && pdfUrl && (
             <div>
               {isPdfLoading ? (
                 <p>Loading...</p>
@@ -133,8 +133,6 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                 <iframe width="100%" height="500px" src={pdfUrl}></iframe>
               )}
             </div>
-          ) : (
-            <p>データはありません</p>
           )}
           {strapiCompleteReport && (
             <>
