@@ -6,6 +6,7 @@ import "twin.macro";
 import DetailWrapper from "../components/lauout/DetailWrapper";
 import { detailBody } from "../styles/detailPage";
 import Seo from "../components/lauout/Seo";
+import useStrapiPdf from "../hooks/useStrapiPdf";
 
 const ExanteEvaluationReport: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
@@ -13,8 +14,7 @@ const ExanteEvaluationReport: React.FC<any> = ({ data, pageContext }) => {
 
   const strapiPreReportManual =
     strapiPreReportManualFDO || strapiPreReportManualADO;
-  const pdfUrl = strapiPreReportManual && strapiPreReportManual.data.url;
-  const googleDocsViewerUrl = `https://docs.google.com/viewer?url=${pdfUrl}&embedded=true`;
+  const { pdfUrl, isPdfLoading } = useStrapiPdf(slug, "pre-report-manuals");
 
   return (
     <Layout>
@@ -26,13 +26,13 @@ const ExanteEvaluationReport: React.FC<any> = ({ data, pageContext }) => {
         updatedAt={strapiPreReportManual && strapiPreReportManual.updatedAt}
       >
         <div css={detailBody}>
-          {strapiPreReportManual ? (
+          {strapiPreReportManual && pdfUrl ? (
             <div>
-              <iframe
-                width="100%"
-                height="500px"
-                src={googleDocsViewerUrl}
-              ></iframe>
+              {isPdfLoading ? (
+                <p>Loading...</p>
+              ) : (
+                <iframe width="100%" height="500px" src={pdfUrl}></iframe>
+              )}
             </div>
           ) : (
             <p>データはありません</p>
@@ -52,18 +52,12 @@ export const pageQuery = graphql`
       business_org_type: { eq: "F" }
     ) {
       updatedAt(formatString: "YYYY/MM/DD")
-      data {
-        url
-      }
     }
     strapiPreReportManualADO: strapiPreReportManual(
       biz_cd_executive: { eq: $slug }
       business_org_type: { eq: "A" }
     ) {
       updatedAt(formatString: "YYYY/MM/DD")
-      data {
-        url
-      }
     }
   }
 `;

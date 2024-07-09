@@ -9,6 +9,9 @@ import Seo from "../components/lauout/Seo";
 import DetailItemWrapper from "../components/lauout/DetailItemWrapper";
 import { LshapeTableRow, ScrollTable, Td, Th } from "./progressReport";
 import DetailAnchor from "../components/atoms/DetailAnchor";
+import { useAttachedFile } from "../hooks/useAttachedFile";
+import AttachedFileLink from "../components/atoms/AttachedFileLink";
+import useStrapiPdf from "../hooks/useStrapiPdf";
 
 const InterimReport: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
@@ -18,6 +21,8 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
     strapiMidReportManualFDO,
     strapiMidReportManualADO,
   } = data;
+  const insertId = strapiMidReport && strapiMidReport.insert_id;
+  const { attachedFileData } = useAttachedFile(insertId);
 
   const implementSystem =
     allStrapiMidReportSub.edges.length > 0 &&
@@ -37,8 +42,7 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
 
   const strapiMidReportManual =
     strapiMidReportManualFDO || strapiMidReportManualADO;
-  const pdfUrl = strapiMidReportManual && strapiMidReportManual.data.url;
-  const googleDocsViewerUrl = `https://docs.google.com/viewer?url=${pdfUrl}&embedded=true`;
+  const { pdfUrl, isPdfLoading } = useStrapiPdf(slug, "mid-report-manuals");
 
   return (
     <Layout>
@@ -63,17 +67,29 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
               title="事業の改善結果"
               anchor={`/result/${slug}/interim-report/#thirdItem`}
             />
+            <DetailAnchor
+              title="広報に関する報告"
+              anchor={`/result/${slug}/interim-report/#fourthItem`}
+            />
+            {attachedFileData.length > 0 && (
+              <DetailAnchor
+                title="添付欄"
+                anchor={`/result/${slug}/interim-report/#sixthItem`}
+              />
+            )}
           </div>
         )}
         <div css={detailBody}>
-          {strapiMidReportManual && (
+          {strapiMidReportManual && pdfUrl ? (
             <div>
-              <iframe
-                width="100%"
-                height="500px"
-                src={googleDocsViewerUrl}
-              ></iframe>
+              {isPdfLoading ? (
+                <p>Loading...</p>
+              ) : (
+                <iframe width="100%" height="500px" src={pdfUrl}></iframe>
+              )}
             </div>
+          ) : (
+            <p>データはありません</p>
           )}
           {strapiMidReport && (
             <>
@@ -163,7 +179,7 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
                     <table tw="lg:([&_th]:(block w-full) [&_td]:(block w-full))">
                       <tbody>
                         <tr>
-                          <Th tw="w-1/4">1. 調査方法</Th>
+                          <Th tw="w-1/4">調査方法</Th>
                           <Td>
                             <div
                               dangerouslySetInnerHTML={{
@@ -177,7 +193,7 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
                           </Td>
                         </tr>
                         <tr>
-                          <Th>2. 調査実施時期</Th>
+                          <Th>調査実施時期</Th>
                           <Td>
                             <div
                               dangerouslySetInnerHTML={{
@@ -191,7 +207,7 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
                           </Td>
                         </tr>
                         <tr>
-                          <Th>3. 調査結果の検証方法</Th>
+                          <Th>調査結果の検証方法</Th>
                           <Td>
                             <div
                               dangerouslySetInnerHTML={{
@@ -215,7 +231,7 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
                     <table tw="lg:([&_th]:(block w-full) [&_td]:(block w-full))">
                       <tbody>
                         <tr>
-                          <Th tw="w-1/4">1. 調査方法</Th>
+                          <Th tw="w-1/4">検証方法</Th>
                           <Td>
                             <div
                               dangerouslySetInnerHTML={{
@@ -229,7 +245,7 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
                           </Td>
                         </tr>
                         <tr>
-                          <Th>2. 実施時期</Th>
+                          <Th>実施時期</Th>
                           <Td>
                             <div
                               dangerouslySetInnerHTML={{
@@ -243,7 +259,7 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
                           </Td>
                         </tr>
                         <tr>
-                          <Th>3. 事業計画書や資金計画書への反映実施時期</Th>
+                          <Th>事業計画書や資金計画書への反映実施時期</Th>
                           <Td>
                             <div
                               dangerouslySetInnerHTML={{
@@ -273,7 +289,8 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
                               <Th rowSpan={7} key={index} tw="w-[6%]">
                                 {index + 1}
                               </Th>
-                              <Td colSpan={2}>{item.node.op_output}</Td>
+                              <Th tw="w-1/4">アウトプット</Th>
+                              <Td>{item.node.op_output}</Td>
                             </tr>
                             <tr>
                               <Th tw="w-1/4">資金支援/非資金的支援</Th>
@@ -536,42 +553,35 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
                   </div>
                 </DetailItemWrapper>
               </div>
-              <div>
+              <div id="fourthItem">
                 <h2 tw="font-bold mb-4 text-lg">広報に関する報告</h2>
                 <DetailItemWrapper itemName="シンボルマークの活用状況">
                   <div>
                     <table tw="table-fixed lg:([&_th]:(block w-full) [&_td]:(block w-full))">
                       <tbody>
                         <tr>
-                          <Th>自団体のウェブサイトで表示</Th>
-                          <Td tw="w-[6%]">
-                            {strapiMidReport.symbolmark_web === "1" && <p>○</p>}
+                          <Td>
+                            <p>
+                              {strapiMidReport.symbolmark_web === "1" &&
+                                "自団体のウェブサイトで表示"}
+                            </p>
+                            <p>
+                              {strapiMidReport.symbolmark_seisaku === "1" &&
+                                "広報制作物に表示"}
+                            </p>
+                            <p>
+                              {strapiMidReport.symbolmark_houkoku === "1" &&
+                                "報告書に表示"}
+                            </p>
+                            <p>
+                              {strapiMidReport.symbolmark_event === "1" &&
+                                "イベント実施時に表示"}
+                            </p>
+                            <p>
+                              {strapiMidReport.symbolmark_etc === "1" &&
+                                "その他：" + strapiMidReport.etc_1_1}
+                            </p>
                           </Td>
-                          <Th>広報制作物に表示 </Th>
-                          <Td tw="w-[6%]">
-                            {strapiMidReport.symbolmark_seisaku === "1" && (
-                              <p>○</p>
-                            )}
-                          </Td>
-                          <Th>報告書に表示 </Th>
-                          <Td tw="w-[6%]">
-                            {strapiMidReport.symbolmark_houkoku === "1" && (
-                              <p>○</p>
-                            )}
-                          </Td>
-                        </tr>
-                        <tr>
-                          <Th>イベント実施時に表示</Th>
-                          <Td tw="w-[6%]">
-                            {strapiMidReport.symbolmark_event === "1" && (
-                              <p>○</p>
-                            )}
-                          </Td>
-                          <Th>その他</Th>
-                          <Td tw="w-[6%]">
-                            {strapiMidReport.symbolmark_etc === "1" && <p>○</p>}
-                          </Td>
-                          <Td colSpan={2}>{strapiMidReport.etc_1_1}</Td>
                         </tr>
                       </tbody>
                     </table>
@@ -620,6 +630,21 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
                   </div>
                 </DetailItemWrapper>
               </div>
+              {attachedFileData.length > 0 && (
+                <div id="sixth">
+                  <DetailItemWrapper itemName="添付欄">
+                    <div tw="flex gap-[5px] flex-wrap">
+                      {attachedFileData.map((file) => (
+                        <AttachedFileLink
+                          filePath={file.url}
+                          fileName={file.fileName}
+                          key={file.url}
+                        />
+                      ))}
+                    </div>
+                  </DetailItemWrapper>
+                </div>
+              )}
             </>
           )}
         </div>
@@ -848,9 +873,6 @@ export const pageQuery = graphql`
       biz_cd_executive
       biz_cd_fund_distr
       business_org_type
-      data {
-        url
-      }
     }
     strapiMidReportManualADO: strapiMidReportManual(
       biz_cd_executive: { eq: $slug }
@@ -860,9 +882,6 @@ export const pageQuery = graphql`
       biz_cd_executive
       biz_cd_fund_distr
       business_org_type
-      data {
-        url
-      }
     }
   }
 `;

@@ -15,6 +15,7 @@ import Seo from "../components/lauout/Seo";
 import DetailItemWrapper from "../components/lauout/DetailItemWrapper";
 import tw from "twin.macro";
 import DetailAnchor from "../components/atoms/DetailAnchor";
+import useStrapiProgressReportPdf from "../hooks/useStrapiProgressReportPdf";
 
 export const ScrollTable = tw.table`lg:(w-[780px])`;
 export const Th = tw.th`bg-blue-base py-3 px-3.5 text-start border-gray-border border lg:(text-[13px] py-0 px-2)`;
@@ -101,13 +102,22 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
     setCurrentTab(minRouond);
   }, [minRouond]);
 
+  const { pdfUrlArray } = useStrapiProgressReportPdf(
+    slug,
+    "progress-report-manuals"
+  );
   const currentItem =
+    pdfUrlArray &&
+    pdfUrlArray.length > 0 &&
+    pdfUrlArray.find((item) => item.round === currentTab);
+  const currentQueryItem =
     allStrapiProgressReportManual &&
     allStrapiProgressReportManual.find(
       (prm: any) =>
         prm.node.progress_round && prm.node.progress_round.code === currentTab
     );
-  const currentPdfUrl = currentItem && currentItem.node.data.url;
+
+  const currentPdfUrl = currentItem && currentItem.url;
   const googleDocsViewerUrl = `https://docs.google.com/viewer?url=${currentPdfUrl}&embedded=true`;
 
   return (
@@ -117,7 +127,7 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
       <DetailWrapper
         category="進捗/年度末報告"
         slug={slug}
-        updatedAt={currentItem && currentItem.node.updatedAt}
+        updatedAt={currentQueryItem && currentQueryItem.node.updatedAt}
       >
         {strapiProgressReport && (
           <div css={detailAnchor}>
@@ -125,6 +135,12 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
               title="事業概要"
               anchor={`/result/${slug}/progress-report/#firstItem`}
             />
+            {strapiProgressReport.soukatsu.data.childMarkdownRemark.html && (
+              <DetailAnchor
+                title="進捗報告の概要"
+                anchor={`/result/${slug}/progress-report/#ninthItem`}
+              />
+            )}
             <DetailAnchor
               title="活動実績"
               anchor={`/result/${slug}/progress-report/#secondItem`}
@@ -153,6 +169,10 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
               title="規定類の整備に関する報告"
               anchor={`/result/${slug}/progress-report/#eighthItem`}
             />
+            <DetailAnchor
+              title="シンボルマークの活用状況"
+              anchor={`/result/${slug}/progress-report/#tenthItem`}
+            />
           </div>
         )}
         <div css={detailTab}>
@@ -174,20 +194,16 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
                 )
             )}
         </div>
-        {allStrapiProgressReportManual.length > 0 &&
-          (currentItem ? (
-            <div>
-              {!loaded && <p>PDFのロード中です...</p>}
-              <iframe
-                width="100%"
-                height="500px"
-                src={googleDocsViewerUrl}
-                onLoad={() => setLoaded(true)}
-              ></iframe>
-            </div>
-          ) : (
-            <p>データはありません</p>
-          ))}
+        {currentItem && (
+          <div>
+            <iframe
+              width="100%"
+              height="500px"
+              src={googleDocsViewerUrl}
+              onLoad={() => setLoaded(true)}
+            ></iframe>
+          </div>
+        )}
         {strapiProgressReport && (
           <div css={detailBody}>
             <div id="firstItem">
@@ -196,36 +212,35 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
                   <table>
                     <tbody>
                       <tr>
-                        <Th rowSpan={2} tw="w-[12.5%]">
-                          実施時期
-                        </Th>
-                        <Th tw="w-[12.5%]">(開始)</Th>
-                        <Td>{strapiProgressReport.business_period_s}</Td>
+                        <Th tw="w-[25%]">事業期間</Th>
+
+                        <Td>開始 {strapiProgressReport.business_period_s}</Td>
+                        <Td>終了 {strapiProgressReport.business_period_e}</Td>
                       </tr>
                       <tr>
-                        <Th>(終了)</Th>
-                        <Td>{strapiProgressReport.business_period_e}</Td>
+                        <Th>対象地域</Th>
+                        <Td colSpan={2}>{strapiProgressReport.taisyoutiiki}</Td>
                       </tr>
                       <tr>
-                        <Th colSpan={2}>対象地域</Th>
-                        <Td>{strapiProgressReport.taisyoutiiki}</Td>
+                        <Th>事業対象者</Th>
+                        <Td colSpan={2}>
+                          {strapiProgressReport.jigyoutaisyousya}
+                        </Td>
                       </tr>
                       <tr>
-                        <Th colSpan={2}>事業対象者</Th>
-                        <Td>{strapiProgressReport.jigyoutaisyousya}</Td>
+                        <Th>事業対象者人数</Th>
+                        <Td colSpan={2}>
+                          {strapiProgressReport.jigyoutaisyousya_n}
+                        </Td>
                       </tr>
                       <tr>
-                        <Th colSpan={2}>事業対象者人数</Th>
-                        <Td>{strapiProgressReport.jigyoutaisyousya_n}</Td>
-                      </tr>
-                      <tr>
-                        <Th colSpan={2}>事業概要</Th>
-                        <Td>{strapiProgressReport.jigyougaiyou}</Td>
+                        <Th>事業概要</Th>
+                        <Td colSpan={2}>{strapiProgressReport.jigyougaiyou}</Td>
                       </tr>
                       {strapiProgressReport.ado_count && (
                         <tr>
-                          <Th colSpan={2}>実行団体数</Th>
-                          <Td>{strapiProgressReport.ado_count}</Td>
+                          <Th>実行団体数</Th>
+                          <Td colSpan={2}>{strapiProgressReport.ado_count}</Td>
                         </tr>
                       )}
                     </tbody>
@@ -233,12 +248,37 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
                 </div>
               </DetailItemWrapper>
             </div>
-
+            {strapiProgressReport.soukatsu.data.childMarkdownRemark.html && (
+              <div id="ninthItem">
+                <DetailItemWrapper itemName="進捗報告の概要">
+                  <div>
+                    <table>
+                      <tbody>
+                        <tr>
+                          <Th tw="w-[25%]">総括</Th>
+                          <Td>
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html:
+                                  strapiProgressReport.soukatsu.data.childMarkdownRemark.html.replace(
+                                    /\n/g,
+                                    "<br />"
+                                  ),
+                              }}
+                            />
+                          </Td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </DetailItemWrapper>
+              </div>
+            )}
             {actualValue.length > 0 && (
-              <DetailItemWrapper itemName="実測値">
+              <DetailItemWrapper itemName="実績値">
                 <div tw="lg:overflow-x-scroll">
                   <ScrollTable>
-                    {performanceOutput.map((item: any, index: number) => (
+                    {actualValue.map((item: any, index: number) => (
                       <tbody key={index}>
                         <tr>
                           <Th rowSpan={7} tw="w-[6%] text-center">
@@ -357,11 +397,7 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
                             </Td>
                           </tr>
                           <tr>
-                            <Th>
-                              資金支援
-                              <br />
-                              非資金的支援
-                            </Th>
+                            <Th>資金支援 / 非資金的支援</Th>
                             <Td>{item.node.out_sikintekisien}</Td>
                           </tr>
                           <tr>
@@ -434,11 +470,7 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
                             </Td>
                           </tr>
                           <tr>
-                            <Th>
-                              資金支援
-                              <br />
-                              非資金的支援
-                            </Th>
+                            <Th>資金支援 / 非資金的支援</Th>
                             <Td>{item.node.act_k_sikintekisien}</Td>
                           </tr>
                           <tr>
@@ -767,46 +799,34 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
               </DetailItemWrapper>
             </div>
 
-            <div id="">
-              <DetailItemWrapper itemName="その他">
+            <div id="tenthItem">
+              <DetailItemWrapper itemName="シンボルマークの活用状況">
                 <div tw="overflow-x-scroll">
                   <table tw="table-fixed lg:([&_th]:(block w-full) [&_td]:(block w-full))">
                     <tbody>
                       <tr>
-                        <Th rowSpan={3} tw="w-[12.5%]">
-                          シンボルマークの使用状況
-                        </Th>
-                        <Th>自団体のウェブサイトで表示</Th>
-                        <Td tw="w-[6%]">
-                          {strapiProgressReport.etc_1_web === "1" && <p>○</p>}
+                        <Td>
+                          <p>
+                            {strapiProgressReport.etc_1_web === "1" &&
+                              "自団体のウェブサイトで表示"}
+                          </p>
+                          <p>
+                            {strapiProgressReport.etc_1_kouhou === "1" &&
+                              "広報制作物に表示"}
+                          </p>
+                          <p>
+                            {strapiProgressReport.etc_1_houkoku === "1" &&
+                              "報告書に表示"}
+                          </p>
+                          <p>
+                            {strapiProgressReport.etc_1_houkoku === "1" &&
+                              "イベント実施時に表示"}
+                          </p>
+                          <p>
+                            {strapiProgressReport.etc_1_etc === "1" &&
+                              "その他：" + strapiProgressReport.etc_1_1}
+                          </p>
                         </Td>
-                        <Th>広報制作物に表示</Th>
-                        <Td tw="w-[6%]">
-                          {strapiProgressReport.etc_1_kouhou === "1" && (
-                            <p>○</p>
-                          )}
-                        </Td>
-                      </tr>
-                      <tr>
-                        <Th>報告書に表示</Th>
-                        <Td tw="w-[6%]">
-                          {strapiProgressReport.etc_1_houkoku === "1" && (
-                            <p>○</p>
-                          )}
-                        </Td>
-                        <Th>イベント実施時に表示</Th>
-                        <Td tw="w-[6%]">
-                          {strapiProgressReport.etc_1_houkoku === "1" && (
-                            <p>○</p>
-                          )}
-                        </Td>
-                      </tr>
-                      <tr>
-                        <Th>その他</Th>
-                        <Td tw="w-[6%]">
-                          {strapiProgressReport.etc_1_etc === "1" && <p>○</p>}
-                        </Td>
-                        <Td colSpan={2}>{strapiProgressReport.etc_1_1}</Td>
                       </tr>
                     </tbody>
                   </table>
@@ -825,6 +845,7 @@ export default ProgressReport;
 export const pageQuery = graphql`
   query MyQuery($slug: String!) {
     strapiProgressReport(business_cd: { eq: $slug }) {
+      ado_count
       biz_cd_executive
       biz_cd_fund_distr
       business_cd
@@ -1116,9 +1137,6 @@ export const pageQuery = graphql`
       edges {
         node {
           updatedAt(formatString: "YYYY/MM/DD")
-          data {
-            url
-          }
           progress_round {
             code
             label
@@ -1135,9 +1153,6 @@ export const pageQuery = graphql`
       edges {
         node {
           updatedAt(formatString: "YYYY/MM/DD")
-          data {
-            url
-          }
           progress_round {
             code
             label

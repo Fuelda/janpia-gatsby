@@ -27,12 +27,13 @@ import {
 import EvaluationShortOutcome from "../components/organisms/EvaluationShortOutcome";
 import Seo from "../components/lauout/Seo";
 import tw from "twin.macro";
+import { useAttachedFile } from "../hooks/useAttachedFile";
+import useStrapiPdf from "../hooks/useStrapiPdf";
 
 const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
   const {
     strapiEvaluationPlan,
     allStrapiEvaluationPlanSub,
-    allStrapiAttachedFile,
     evaluationPlanManualFDO,
     evaluationPlanManualADO,
   } = data;
@@ -40,10 +41,11 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
   const evaluationPlanManual =
     evaluationPlanManualFDO || evaluationPlanManualADO;
-  const pdfUrl = evaluationPlanManual && evaluationPlanManual.data.url;
-  const googleDocsViewerUrl = `https://docs.google.com/viewer?url=${pdfUrl}&embedded=true`;
-  const evaluationFile = allStrapiAttachedFile.edges.filter(
-    (af: any) => af.node.item_id === "attach_fileupload_item2"
+  const insertId = strapiEvaluationPlan && strapiEvaluationPlan.insert_id;
+  const { attachedFileData } = useAttachedFile(insertId);
+  const { pdfUrl, isPdfLoading } = useStrapiPdf(
+    slug,
+    "evaluation-plan-manuals"
   );
 
   const evaluationTable =
@@ -87,13 +89,13 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
       <Seo title="評価計画 | 休眠預金活用事業 情報公開サイト" />
       <DetailHeader business_cd={slug} />
       <DetailWrapper category="評価計画" slug={slug} updatedAt={updatedAt}>
-        {evaluationPlanManual && (
+        {evaluationPlanManual && pdfUrl && (
           <div>
-            <iframe
-              width="100%"
-              height="500px"
-              src={googleDocsViewerUrl}
-            ></iframe>
+            {isPdfLoading ? (
+              <p>Loading...</p>
+            ) : (
+              <iframe width="100%" height="500px" src={pdfUrl}></iframe>
+            )}
           </div>
         )}
         {strapiEvaluationPlan && (
@@ -109,7 +111,7 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                   anchor={`/result/${slug}/evaluation-plan/#thirdItem`}
                 />
               )}
-              {evaluationFile.length !== 0 && (
+              {attachedFileData.length > 0 && (
                 <DetailAnchor
                   title="事業設計図"
                   anchor={`/result/${slug}/evaluation-plan/#secondItem`}
@@ -719,15 +721,15 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                   </DetailItemWrapper>
                 </div>
               )}
-              {evaluationFile.length !== 0 && (
+              {attachedFileData.length > 0 && (
                 <div id="secondItem">
                   <DetailItemWrapper itemName="事業設計図">
                     <div tw="flex gap-[5px] flex-wrap">
-                      {evaluationFile.map((ef: any) => (
+                      {attachedFileData.map((file) => (
                         <AttachedFileLink
-                          filePath={ef.node.data.url}
-                          fileName={ef.node.file_name}
-                          key={ef.node.data.url}
+                          filePath={file.url}
+                          fileName={file.fileName}
+                          key={file.url}
                         />
                       ))}
                     </div>
@@ -745,7 +747,7 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
 export default EvaluationPlan;
 
 export const pageQuery = graphql`
-  query MyQuery($slug: String!, $insert_id: [String]) {
+  query MyQuery($slug: String!) {
     strapiEvaluationPlan(business_cd: { eq: $slug }) {
       updatedAt(formatString: "YYYY/MM/DD")
       business_cd
@@ -837,30 +839,12 @@ export const pageQuery = graphql`
       business_org_type: { eq: "F" }
     ) {
       updatedAt(formatString: "YYYY/MM/DD")
-      data {
-        url
-      }
     }
     evaluationPlanManualADO: strapiEvaluationPlanManual(
       biz_cd_executive: { eq: $slug }
       business_org_type: { eq: "A" }
     ) {
       updatedAt(formatString: "YYYY/MM/DD")
-      data {
-        url
-      }
-    }
-    allStrapiAttachedFile(filter: { insert_id: { in: $insert_id } }) {
-      edges {
-        node {
-          updatedAt(formatString: "YYYY/MM/DD")
-          item_id
-          file_name
-          data {
-            url
-          }
-        }
-      }
     }
   }
 `;
