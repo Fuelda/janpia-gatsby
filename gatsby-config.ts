@@ -104,6 +104,7 @@ const config: GatsbyConfig = {
       resolve: `gatsby-source-strapi`,
       options: strapiConfig,
     },
+    // TODO: Algoliaの様子を見て復旧する
     // {
     //   resolve: `gatsby-plugin-algolia`,
     //   options: {
