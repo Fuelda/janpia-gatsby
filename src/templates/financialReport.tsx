@@ -290,7 +290,15 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                             PO関連経費
                           </td>
                         )}
-                        <td tw="text-center" colSpan={2}>
+                        <td
+                          tw="text-center"
+                          colSpan={2}
+                          css={
+                            !settleReport.business_type_name.includes(
+                              "通常枠"
+                            ) && tw`bg-gray-pale text-gray-black`
+                          }
+                        >
                           評価関連経費
                         </td>
                         <td rowSpan={2} tw="text-center">
@@ -306,7 +314,10 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                         <td
                           tw="text-center"
                           css={
-                            settleReport.business_org_type === "A" &&
+                            (settleReport.business_org_type === "A" ||
+                              !settleReport.business_type_name.includes(
+                                "通常枠"
+                              )) &&
                             tw`bg-gray-pale text-gray-black`
                           }
                         >
@@ -315,7 +326,10 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                         <td
                           tw="text-center"
                           css={
-                            settleReport.business_org_type === "A" &&
+                            (settleReport.business_org_type === "A" ||
+                              !settleReport.business_type_name.includes(
+                                "通常枠"
+                              )) &&
                             tw`bg-gray-pale text-gray-black`
                           }
                         >
