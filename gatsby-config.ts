@@ -111,6 +111,7 @@ const config: GatsbyConfig = {
       resolve: `gatsby-source-strapi`,
       options: strapiConfig,
     },
+    // TODO: Algoliaの様子を見て復旧する
     {
       resolve: `gatsby-plugin-algolia`,
       options: {
@@ -183,6 +184,8 @@ const config: GatsbyConfig = {
           },
         ],
         chunkSize: 10000,
+        enablePartialUpdates: true,
+        skipIndexing: process.env.NODE_ENV !== "production",
         settings: {
           queryLanguages: ["ja"],
         },

@@ -117,7 +117,7 @@ const SearchPrefectureCard = (props: { area: string }) => {
   const pickupPref = (pref: string) => {
     const prefLength = filteredAllBizPlan.filter(
       (item) =>
-        item.group.some((g: any) => g.groupData.prefectures === pref) ||
+        item.group?.some((g: any) => g.groupData?.prefectures === pref) ||
         item.mainGroup?.node.prefectures === pref
     ).length;
     return prefLength;
