@@ -69,7 +69,7 @@ const AlgoliaIndex = (props: { path: string }) => {
 
           setAlgoliaHits(hitCd);
         });
-      }, 1000), // 300ミリ秒のデバウンス時間
+      }, 1000), // 1秒のデバウンス時間
     [index, setAlgoliaHits]
   );
 
