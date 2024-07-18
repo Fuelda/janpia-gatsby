@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useCallback } from "react";
 import algoliasearch from "algoliasearch/lite";
 import { InstantSearch, SearchBox, Hits } from "react-instantsearch";
 import type { SearchBoxProps } from "react-instantsearch";
@@ -8,11 +8,30 @@ import "twin.macro";
 import SearchBoxSidebar from "../component/sidebar/Freeword/SearchBoxSidebar";
 import { useSearchContext } from "../../../context/searchContext";
 import SearchBoxTopicKeyword from "../component/main/Freeword/SearchBoxTopicKeyword";
+import debounce from "lodash/debounce";
 
-const searchClient = algoliasearch(
+const algoliaClient = algoliasearch(
   process.env.GATSBY_ALGOLIA_APP_ID || "",
   process.env.GATSBY_ALGOLIA_SEARCH_KEY || ""
 );
+
+const searchClient = {
+  ...algoliaClient,
+  search(requests: any): Promise<{ results: any[] }> {
+    if (requests.every(({ params }: { params: any }) => !params.query)) {
+      return Promise.resolve({
+        results: requests.map(() => ({
+          hits: [],
+          nbHits: 0,
+          nbPages: 0,
+          page: 0,
+          processingTimeMS: 0,
+        })),
+      });
+    }
+    return algoliaClient.search(requests);
+  },
+};
 
 const AlgoliaIndex = (props: { path: string }) => {
   const { setAlgoliaHits } = useAlgoliaStrapiContext();
@@ -22,30 +41,45 @@ const AlgoliaIndex = (props: { path: string }) => {
   const index = searchClient.initIndex("janpia-johokokai");
   const searchOption = { hitsPerPage: 1000 };
 
-  const queryHook: SearchBoxProps["queryHook"] = (query, search) => {
-    setWithAlgoliaQuery(query ? true : false);
-
-    index.search(query, searchOption).then(({ hits }) => {
-      const hitCd = hits.map((hit: any) => {
-        if (hit.business_cd) {
-          return { code: hit.business_cd, type: "business" };
-        } else if (hit.organization_cd) {
-          return { code: hit.organization_cd, type: "organization" };
-        } else if (hit.insert_id) {
-          return { code: hit.insert_id, type: "attachedFile" };
-        } else if (hit.biz_cd_executive || hit.biz_cd_fund_distr) {
-          return {
-            code: hit.biz_cd_executive || hit.biz_cd_fund_distr,
-            type: "business",
-          };
-        } else {
-          return { code: "", type: "" };
+  const debouncedSearch = useMemo(
+    () =>
+      debounce((query: string) => {
+        if (!query) {
+          setAlgoliaHits([]);
+          return;
         }
-      });
 
-      setAlgoliaHits(hitCd);
-    });
-  };
+        index.search(query, searchOption).then(({ hits }) => {
+          const hitCd = hits.map((hit: any) => {
+            if (hit.business_cd) {
+              return { code: hit.business_cd, type: "business" };
+            } else if (hit.organization_cd) {
+              return { code: hit.organization_cd, type: "organization" };
+            } else if (hit.insert_id) {
+              return { code: hit.insert_id, type: "attachedFile" };
+            } else if (hit.biz_cd_executive || hit.biz_cd_fund_distr) {
+              return {
+                code: hit.biz_cd_executive || hit.biz_cd_fund_distr,
+                type: "business",
+              };
+            } else {
+              return { code: "", type: "" };
+            }
+          });
+
+          setAlgoliaHits(hitCd);
+        });
+      }, 1000), // 1秒のデバウンス時間
+    [index, setAlgoliaHits]
+  );
+
+  const queryHook: SearchBoxProps["queryHook"] = useCallback(
+    (query: any, search: any) => {
+      setWithAlgoliaQuery(query ? true : false);
+      debouncedSearch(query);
+    },
+    [setWithAlgoliaQuery, debouncedSearch]
+  );
 
   return (
     <InstantSearch indexName="janpia-johokokai" searchClient={searchClient}>
