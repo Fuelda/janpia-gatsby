@@ -12,6 +12,7 @@ import DetailAnchor from "../components/atoms/DetailAnchor";
 import { useAttachedFile } from "../hooks/useAttachedFile";
 import AttachedFileLink from "../components/atoms/AttachedFileLink";
 import useStrapiPdf from "../hooks/useStrapiPdf";
+import { formatAndConvertNextDate } from "../util/formatDate";
 
 const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
@@ -56,17 +57,17 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
     slug,
     "complete-report-manuals"
   );
-
+  console.log(strapiCompleteReport);
   return (
     <Layout>
       <Seo title="事業完了報告 | 休眠預金活用事業 情報公開サイト" />
       <DetailHeader business_cd={slug} />
-
       <DetailWrapper
         category="事業完了報告"
         slug={slug}
         updatedAt={
-          strapiCompleteReportManual && strapiCompleteReportManual.updatedAt
+          (strapiCompleteReport && strapiCompleteReport.updatedAt) ||
+          (strapiCompleteReportManual && strapiCompleteReportManual.updatedAt)
         }
       >
         {strapiCompleteReport && (
@@ -142,9 +143,18 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                     <table>
                       <tr>
                         <Th tw="w-[25%]">実施時期</Th>
-
-                        <Td>開始日 {strapiCompleteReport.business_period_s}</Td>
-                        <Td>終了日 {strapiCompleteReport.business_period_e}</Td>
+                        <Td>
+                          開始日{" "}
+                          {formatAndConvertNextDate(
+                            strapiCompleteReport.business_period_s
+                          )}
+                        </Td>
+                        <Td>
+                          終了日{" "}
+                          {formatAndConvertNextDate(
+                            strapiCompleteReport.business_period_e
+                          )}
+                        </Td>
                       </tr>
                       <tr>
                         <Th>対象地域</Th>
@@ -192,10 +202,12 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                           />
                         </Td>
                       </tr>
-                      <tr>
-                        <Th>実行団体数</Th>
-                        <Td colSpan={2}>{strapiCompleteReport.ado_count}</Td>
-                      </tr>
+                      {strapiCompleteReport.ado_count && (
+                        <tr>
+                          <Th>実行団体数</Th>
+                          <Td colSpan={2}>{strapiCompleteReport.ado_count}</Td>
+                        </tr>
+                      )}
                     </table>
                   </div>
                 </DetailItemWrapper>
@@ -617,14 +629,16 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                             }
                           />
                         )}
-                        <LshapeTableRow
-                          heading="事業完了した実行団体へ事業完了時監査を行いましたか。"
-                          status={strapiCompleteReport.joukyou_10_2_8}
-                          content={
-                            strapiCompleteReport.naiyou_10_2_8.data
-                              .childMarkdownRemark.html
-                          }
-                        />
+                        {strapiCompleteReport.joukyou_10_2_8 && (
+                          <LshapeTableRow
+                            heading="事業完了した実行団体へ事業完了時監査を行いましたか。"
+                            status={strapiCompleteReport.joukyou_10_2_8}
+                            content={
+                              strapiCompleteReport.naiyou_10_2_8.data
+                                .childMarkdownRemark.html
+                            }
+                          />
+                        )}
                         <tr>
                           <Th colSpan={2}>
                             本事業に対して、国や地方公共団体からの補助金・助成金等を申請、または受領していますか。
@@ -886,7 +900,7 @@ export const pageQuery = graphql`
           }
         }
       }
-      updatedAt(formatString: "yyyy/mm/dd")
+      updatedAt(formatString: "YYYY/MM/DD")
     }
     allStrapiCompleteReportSub(filter: { business_cd: { eq: $slug } }) {
       edges {
@@ -916,7 +930,7 @@ export const pageQuery = graphql`
           res_contents
           res_result
           row_no
-          updatedAt(formatString: "yyyy/mm/dd")
+          updatedAt(formatString: "YYYY/MM/DD")
           work_attempt
           work_class
           work_degree

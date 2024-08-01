@@ -98,7 +98,7 @@ const DetailHeader = (props: { business_cd: string }) => {
       "通常枠") ||
     (splitBusinessTypeName &&
       splitBusinessTypeName.length >= 2 &&
-      splitBusinessTypeName[2] === "コロナ枠" &&
+      (splitBusinessTypeName[2] === "コロナ枠" || "緊急枠") &&
       "緊急支援枠");
 
   return (

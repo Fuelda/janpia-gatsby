@@ -162,11 +162,11 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                       </thead>
                       <tbody>
                         <tr>
-                          <Td>{currentItem.node.senteiyotei}</Td>
-                          <Td>{currentItem.node.sinseijigyou}</Td>
-                          <Td>{currentItem.node.sinseidantai}</Td>
-                          <Td>{currentItem.node.senteijigyou}</Td>
-                          <Td>{currentItem.node.senteidantai}</Td>
+                          <Td tw="text-end">{currentItem.node.senteiyotei}</Td>
+                          <Td tw="text-end">{currentItem.node.sinseijigyou}</Td>
+                          <Td tw="text-end">{currentItem.node.sinseidantai}</Td>
+                          <Td tw="text-end">{currentItem.node.senteijigyou}</Td>
+                          <Td tw="text-end">{currentItem.node.senteidantai}</Td>
                         </tr>
                       </tbody>
                     </table>
@@ -206,22 +206,25 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                           <Th>評価に関する説明の主な実施者</Th>
                           <Td>{currentItem.node.omonajissisya}</Td>
                         </tr>
-                        <tr>
-                          <Th>
-                            上記設問で「その他」を選んだ場合、その実施者を記載してください。
-                          </Th>
-                          <Td>
-                            <div
-                              dangerouslySetInnerHTML={{
-                                __html:
-                                  currentItem.node.jissisya_etc.data.childMarkdownRemark.html.replace(
-                                    /\n/g,
-                                    "<br />"
-                                  ),
-                              }}
-                            />
-                          </Td>
-                        </tr>
+                        {currentItem.node.jissisya_etc.data.childMarkdownRemark
+                          .html && (
+                          <tr>
+                            <Th>
+                              上記設問で「その他」を選んだ場合、その実施者を記載してください。
+                            </Th>
+                            <Td>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    currentItem.node.jissisya_etc.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
+                                }}
+                              />
+                            </Td>
+                          </tr>
+                        )}
                         <tr>
                           <Th>
                             説明会・個別相談会で工夫したこと、よかったことを記載してください。
@@ -311,10 +314,12 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                             </p>
                           </Td>
                         </tr>
-                        <tr>
-                          <Th>具体的な方法</Th>
-                          <Td>{currentItem.node.gutaitekinahouhou}</Td>
-                        </tr>
+                        {currentItem.node.gutaitekinahouhou && (
+                          <tr>
+                            <Th>具体的な方法</Th>
+                            <Td>{currentItem.node.gutaitekinahouhou}</Td>
+                          </tr>
+                        )}
                       </tbody>
                     </table>
                     <table tw="lg:([&_th]:(block w-full) [&_td]:(block w-full))">
@@ -405,22 +410,25 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                     </table>
                     <table tw="lg:([&_th]:(block w-full) [&_td]:(block w-full))">
                       <tbody>
-                        <tr>
-                          <Th tw="w-1/4">
-                            （利益相反の防止）その他に実行団体との利益相反の防止に関して実施したことがあれば記載してください。
-                          </Th>
-                          <Td>
-                            <div
-                              dangerouslySetInnerHTML={{
-                                __html:
-                                  currentItem.node.riekiihan_etc.data.childMarkdownRemark.html.replace(
-                                    /\n/g,
-                                    "<br />"
-                                  ),
-                              }}
-                            />
-                          </Td>
-                        </tr>
+                        {currentItem.node.riekiihan_etc.data.childMarkdownRemark
+                          .html && (
+                          <tr>
+                            <Th tw="w-1/4">
+                              （利益相反の防止）その他に実行団体との利益相反の防止に関して実施したことがあれば記載してください。
+                            </Th>
+                            <Td>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    currentItem.node.riekiihan_etc.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
+                                }}
+                              />
+                            </Td>
+                          </tr>
+                        )}
                         <tr>
                           <Th>
                             審査の過程で第三者の意見聴取等、専門的な意見をどのように取り入れましたか。
@@ -649,12 +657,14 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                               .childMarkdownRemark.html
                           }
                         />
-                        <tr>
-                          <Th colSpan={2}>
-                            「はい」の場合、利用はありましたか。
-                          </Th>
-                          <Td>{currentItem.node.riyouumu}</Td>
-                        </tr>
+                        {currentItem.node.riyouumu && (
+                          <tr>
+                            <Th colSpan={2}>
+                              「はい」の場合、利用はありましたか。
+                            </Th>
+                            <Td>{currentItem.node.riyouumu}</Td>
+                          </tr>
+                        )}
                         <LshapeTableRow
                           heading="利益相反防止のための自己申告を定期的に行っていますか。"
                           status={currentItem.node.riekisouhan_select}
@@ -733,6 +743,7 @@ export const pageQuery = graphql`
           }
           bosyuusyurui_chirashi
           bosyuusyurui_etc
+          gutaitekinahouhou
           bosyuusyurui_hp
           bosyuusyurui_kouhou
           bosyuusyurui_mail
@@ -868,6 +879,7 @@ export const pageQuery = graphql`
           s_koukai_select
           s_koukai_text
           s_tuuti_select
+          s_tuuti_text
           sankadantaisuu
           senmontekiiken {
             data {
@@ -929,7 +941,7 @@ export const pageQuery = graphql`
               }
             }
           }
-          updatedAt(formatString: "yyyy/mm/dd")
+          updatedAt(formatString: "YYYY/MM/DD")
           web_select
           web_text
         }

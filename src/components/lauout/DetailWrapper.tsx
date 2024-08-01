@@ -104,7 +104,7 @@ const DetailWrapper: React.FC<{
 
       return responses.some((d) => d && d.data.length > 0);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       return false;
     }
   };

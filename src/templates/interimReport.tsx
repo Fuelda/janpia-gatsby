@@ -12,6 +12,7 @@ import DetailAnchor from "../components/atoms/DetailAnchor";
 import { useAttachedFile } from "../hooks/useAttachedFile";
 import AttachedFileLink from "../components/atoms/AttachedFileLink";
 import useStrapiPdf from "../hooks/useStrapiPdf";
+import tw from "twin.macro";
 
 const InterimReport: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
@@ -51,7 +52,10 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
       <DetailWrapper
         category="中間評価報告"
         slug={slug}
-        updatedAt={strapiMidReportManual && strapiMidReportManual.updatedAt}
+        updatedAt={
+          (strapiMidReport && strapiMidReport.updatedAt) ||
+          (strapiMidReportManual && strapiMidReportManual.updatedAt)
+        }
       >
         {strapiMidReport && (
           <div css={detailAnchor}>
@@ -80,7 +84,7 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
           </div>
         )}
         <div css={detailBody}>
-          {strapiMidReportManual && pdfUrl ? (
+          {strapiMidReportManual && pdfUrl && (
             <div>
               {isPdfLoading ? (
                 <p>Loading...</p>
@@ -88,8 +92,6 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
                 <iframe width="100%" height="500px" src={pdfUrl}></iframe>
               )}
             </div>
-          ) : (
-            <p>データはありません</p>
           )}
           {strapiMidReport && (
             <>
@@ -292,10 +294,12 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
                               <Th tw="w-1/4">アウトプット</Th>
                               <Td>{item.node.op_output}</Td>
                             </tr>
-                            <tr>
-                              <Th tw="w-1/4">資金支援/非資金的支援</Th>
-                              <Td>{item.node.op_sikinteki}</Td>
-                            </tr>
+                            {item.node.op_sikinteki && (
+                              <tr>
+                                <Th tw="w-1/4">資金支援/非資金的支援</Th>
+                                <Td>{item.node.op_sikinteki}</Td>
+                              </tr>
+                            )}
                             <tr>
                               <Th>指標</Th>
                               <Td>{item.node.op_index}</Td>
@@ -325,18 +329,21 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
               </div>
               <div>
                 <DetailItemWrapper itemName="短期アウトカムにつながりそうな、活動直後にみられた受益者、対象者、関係団体等の変化（言動）があれば記載してください。 ">
-                  <div>
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html:
-                          strapiMidReport.oc_related_change.data.childMarkdownRemark.html.replace(
-                            /\n/g,
-                            "<br />"
-                          ),
-                      }}
-                      tw="py-3 px-3.5 border-gray-border border text-start break-all lg:(py-2 px-2)"
-                    />
-                  </div>
+                  {strapiMidReport.oc_related_change.data.childMarkdownRemark
+                    .html && (
+                    <div>
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html:
+                            strapiMidReport.oc_related_change.data.childMarkdownRemark.html.replace(
+                              /\n/g,
+                              "<br />"
+                            ),
+                        }}
+                        tw="py-3 px-3.5 border-gray-border border text-start break-all lg:(py-2 px-2)"
+                      />
+                    </div>
+                  )}
                 </DetailItemWrapper>
               </div>
               <div>
@@ -351,12 +358,23 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
                                 {index + 1}
                               </Th>
                               <Th tw="w-1/4">アウトカムで捉える変化の主体</Th>
-                              <Td>{item.node.oc_actor}</Td>
+                              <Td
+                                css={
+                                  item.node.oc_sikinteki === "非資金的支援" &&
+                                  tw`bg-gray-pale text-gray-black`
+                                }
+                              >
+                                {item.node.oc_sikinteki === "非資金的支援"
+                                  ? ""
+                                  : item.node.oc_actor}
+                              </Td>
                             </tr>
-                            <tr>
-                              <Th>資金支援/非資金的支援</Th>
-                              <Td>{item.node.oc_sikinteki}</Td>
-                            </tr>
+                            {item.node.oc_sikinteki && (
+                              <tr>
+                                <Th>資金支援/非資金的支援</Th>
+                                <Td>{item.node.oc_sikinteki}</Td>
+                              </tr>
+                            )}
                             <tr>
                               <Th>指標</Th>
                               <Td>{item.node.oc_index}</Td>
@@ -427,7 +445,7 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
                       <tbody>
                         <tr>
                           <Th>
-                            A.アウトカムが発現するための活動が適切に実施され、アウトプットは想定どおり積み上げられているか
+                            アウトカムが発現するための活動が適切に実施され、アウトプットは想定どおり積み上げられているか
                           </Th>
                           <Td>
                             <div
@@ -443,7 +461,7 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
                         </tr>
                         <tr>
                           <Th>
-                            B.アウトカム発現への貢献要因や阻害要因を把握し、事業改善につなげられているか
+                            アウトカム発現への貢献要因や阻害要因を把握し、事業改善につなげられているか
                           </Th>
                           <Td>
                             <div
@@ -459,7 +477,7 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
                         </tr>
                         <tr>
                           <Th>
-                            C.組織基盤強化や、事業活動が円滑に進むための環境づくりができているか。また事業終了後を見据え、活動が継続するための取り組みが進んでいるか
+                            組織基盤強化や、事業活動が円滑に進むための環境づくりができているか。また事業終了後を見据え、活動が継続するための取り組みが進んでいるか
                           </Th>
                           <Td>
                             <div
@@ -491,7 +509,7 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
                       </thead>
                       <tbody>
                         <tr>
-                          <Th>a.事業設計（ロジックモデル）の改善ポイント</Th>
+                          <Th>事業設計（ロジックモデル）の改善ポイント</Th>
                           <Td>
                             <div
                               dangerouslySetInnerHTML={{
@@ -505,7 +523,7 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
                           </Td>
                         </tr>
                         <tr>
-                          <Th>b.事業計画書の改善ポイント</Th>
+                          <Th>事業計画書の改善ポイント</Th>
                           <Td>
                             <div
                               dangerouslySetInnerHTML={{
@@ -519,7 +537,7 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
                           </Td>
                         </tr>
                         <tr>
-                          <Th>c. その他</Th>
+                          <Th>その他</Th>
                           <Td>
                             <div
                               dangerouslySetInnerHTML={{
@@ -832,7 +850,7 @@ export const pageQuery = graphql`
           }
         }
       }
-      updatedAt(formatString: "yyyy/mm/dd")
+      updatedAt(formatString: "YYYY/MM/DD")
     }
     allStrapiMidReportSub(filter: { business_cd: { eq: $slug } }) {
       edges {
@@ -861,7 +879,7 @@ export const pageQuery = graphql`
           str_inout
           str_name
           str_post
-          updatedAt(formatString: "yyyy/mm/dd")
+          updatedAt(formatString: "YYYY/MM/DD")
         }
       }
     }

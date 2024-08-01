@@ -16,6 +16,9 @@ import DetailItemWrapper from "../components/lauout/DetailItemWrapper";
 import tw from "twin.macro";
 import DetailAnchor from "../components/atoms/DetailAnchor";
 import useStrapiProgressReportPdf from "../hooks/useStrapiProgressReportPdf";
+import { formatAndConvertNextDate } from "../util/formatDate";
+import { useAttachedFile } from "../hooks/useAttachedFile";
+import AttachedFileLink from "../components/atoms/AttachedFileLink";
 
 export const ScrollTable = tw.table`lg:(w-[780px])`;
 export const Th = tw.th`bg-blue-base py-3 px-3.5 text-start border-gray-border border lg:(text-[13px] py-0 px-2)`;
@@ -35,19 +38,21 @@ export const LshapeTableRow: React.FC<{
         </Th>
         <Td>{status}</Td>
       </tr>
-      <tr>
-        <Th tw="w-[12.5%] border-t-0"></Th>
-        <Th>{contentName}</Th>
-        <Td>
-          {content && (
-            <div
-              dangerouslySetInnerHTML={{
-                __html: content.replace(/\n/g, "<br />"),
-              }}
-            />
-          )}
-        </Td>
-      </tr>
+      {content && (
+        <tr>
+          <Th tw="w-[12.5%] border-t-0"></Th>
+          <Th>{contentName}</Th>
+          <Td>
+            {content && (
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: content.replace(/\n/g, "<br />"),
+                }}
+              />
+            )}
+          </Td>
+        </tr>
+      )}
     </>
   );
 };
@@ -55,9 +60,10 @@ export const LshapeTableRow: React.FC<{
 const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
   const [currentTab, setCurrentTab] = useState(1);
+  const [currentTabManual, setCurrentTabManual] = useState(1);
   const [loaded, setLoaded] = useState(false);
   const {
-    strapiProgressReport,
+    allStrapiProgressReport,
     allStrapiProgressReportSub,
     allStrapiProgressReportManualFDO,
     allStrapiProgressReportManualADO,
@@ -67,6 +73,16 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
     ...allStrapiProgressReportManualFDO.edges,
     ...allStrapiProgressReportManualADO.edges,
   ];
+
+  const targetTermArray = allStrapiProgressReport.edges.map(
+    (report: any) => report.node.target_term
+  );
+  const currentItem = allStrapiProgressReport.edges.find(
+    (report: any) => report.node.target_term === currentTab
+  );
+
+  const insertId = currentItem && currentItem.node.insert_id;
+  const { attachedFileData } = useAttachedFile(insertId);
 
   const actualValue =
     allStrapiProgressReportSub.edges.length !== 0 &&
@@ -84,6 +100,7 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
       .filter((prs: any) => prs.node.info_type === "21")
       .sort((a: any, b: any) => a.node.row_no - b.node.row_no);
 
+  // 手入力データに対する処理
   const sortedProgressReportManual =
     allStrapiProgressReportManual &&
     allStrapiProgressReportManual.sort((a: any, b: any) => {
@@ -99,25 +116,26 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
     : [];
   const minRouond = Math.min(...roundArray);
   useEffect(() => {
-    setCurrentTab(minRouond);
+    setCurrentTabManual(minRouond);
   }, [minRouond]);
 
   const { pdfUrlArray } = useStrapiProgressReportPdf(
     slug,
     "progress-report-manuals"
   );
-  const currentItem =
+  const currentItemManual =
     pdfUrlArray &&
     pdfUrlArray.length > 0 &&
-    pdfUrlArray.find((item) => item.round === currentTab);
+    pdfUrlArray.find((item) => item.round === currentTabManual);
   const currentQueryItem =
     allStrapiProgressReportManual &&
     allStrapiProgressReportManual.find(
       (prm: any) =>
-        prm.node.progress_round && prm.node.progress_round.code === currentTab
+        prm.node.progress_round &&
+        prm.node.progress_round.code === currentTabManual
     );
 
-  const currentPdfUrl = currentItem && currentItem.url;
+  const currentPdfUrl = currentItemManual && currentItemManual.url;
   const googleDocsViewerUrl = `https://docs.google.com/viewer?url=${currentPdfUrl}&embedded=true`;
 
   return (
@@ -127,15 +145,18 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
       <DetailWrapper
         category="進捗/年度末報告"
         slug={slug}
-        updatedAt={currentQueryItem && currentQueryItem.node.updatedAt}
+        updatedAt={
+          (currentItem && currentItem.node.updatedAt) ||
+          (currentQueryItem && currentQueryItem.node.updatedAt)
+        }
       >
-        {strapiProgressReport && (
+        {currentItem && currentItem.node && (
           <div css={detailAnchor}>
             <DetailAnchor
               title="事業概要"
               anchor={`/result/${slug}/progress-report/#firstItem`}
             />
-            {strapiProgressReport.soukatsu.data.childMarkdownRemark.html && (
+            {currentItem.node.soukatsu.data.childMarkdownRemark.html && (
               <DetailAnchor
                 title="進捗報告の概要"
                 anchor={`/result/${slug}/progress-report/#ninthItem`}
@@ -145,34 +166,52 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
               title="活動実績"
               anchor={`/result/${slug}/progress-report/#secondItem`}
             />
-            <DetailAnchor
-              title="事業進捗に関する報告"
-              anchor={`/result/${slug}/progress-report/#thirdItem`}
-            />
-            <DetailAnchor
-              title="短期アウトカムの発現状況"
-              anchor={`/result/${slug}/progress-report/#fourthItem`}
-            />
-            <DetailAnchor
-              title="事業上の課題"
-              anchor={`/result/${slug}/progress-report/#fifthItem`}
-            />
+            {(currentItem.node.rep_1 ||
+              currentItem.node.rep_6.data.childMarkdownRemark.html) && (
+              <DetailAnchor
+                title="事業進捗に関する報告"
+                anchor={`/result/${slug}/progress-report/#thirdItem`}
+              />
+            )}
+            {currentItem.node.hatugenjoukyou.data.childMarkdownRemark.html && (
+              <DetailAnchor
+                title="短期アウトカムの発現状況"
+                anchor={`/result/${slug}/progress-report/#fourthItem`}
+              />
+            )}
+            {currentItem.node.kadai.data.childMarkdownRemark.html && (
+              <DetailAnchor
+                title="事業上の課題"
+                anchor={`/result/${slug}/progress-report/#fifthItem`}
+              />
+            )}
             <DetailAnchor
               title="広報実績"
               anchor={`/result/${slug}/progress-report/#sixthItem`}
             />
-            <DetailAnchor
-              title="ガバナンス・コンプライアンス実績"
-              anchor={`/result/${slug}/progress-report/#seventhItem`}
-            />
-            <DetailAnchor
-              title="規定類の整備に関する報告"
-              anchor={`/result/${slug}/progress-report/#eighthItem`}
-            />
+            {(currentItem.node.gov_soukai_joukyou ||
+              currentItem.node.gov_tuhou_joukyou) && (
+              <DetailAnchor
+                title="ガバナンス・コンプライアンス実績"
+                anchor={`/result/${slug}/progress-report/#seventhItem`}
+              />
+            )}
+            {currentItem.node.kitei_koukai_joukyou && (
+              <DetailAnchor
+                title="規定類の整備に関する報告"
+                anchor={`/result/${slug}/progress-report/#eighthItem`}
+              />
+            )}
             <DetailAnchor
               title="シンボルマークの活用状況"
               anchor={`/result/${slug}/progress-report/#tenthItem`}
             />
+            {attachedFileData.length > 0 && (
+              <DetailAnchor
+                title="添付欄"
+                anchor={`/result/${slug}/progress-report/#eleventhItem`}
+              />
+            )}
           </div>
         )}
         <div css={detailTab}>
@@ -184,17 +223,34 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
                     key={index}
                     css={[
                       detailRoundTabBtn,
-                      currentTab === prm.node.progress_round.code &&
+                      currentTabManual === prm.node.progress_round.code &&
                         detailTabBtnSelected,
                     ]}
-                    onClick={() => setCurrentTab(prm.node.progress_round.code)}
+                    onClick={() =>
+                      setCurrentTabManual(prm.node.progress_round.code)
+                    }
                   >
                     {prm.node.progress_round.label}
                   </button>
                 )
             )}
         </div>
-        {currentItem && (
+        <div css={detailTab}>
+          {targetTermArray.length > 0 &&
+            targetTermArray.map((term: any, index: number) => (
+              <button
+                key={index}
+                css={[
+                  detailRoundTabBtn,
+                  currentTab === term && detailTabBtnSelected,
+                ]}
+                onClick={() => setCurrentTab(term)}
+              >
+                {term}
+              </button>
+            ))}
+        </div>
+        {currentItemManual && (
           <div>
             <iframe
               width="100%"
@@ -204,7 +260,7 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
             ></iframe>
           </div>
         )}
-        {strapiProgressReport && (
+        {currentItem && currentItem.node && (
           <div css={detailBody}>
             <div id="firstItem">
               <DetailItemWrapper itemName="事業概要">
@@ -214,33 +270,41 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
                       <tr>
                         <Th tw="w-[25%]">事業期間</Th>
 
-                        <Td>開始 {strapiProgressReport.business_period_s}</Td>
-                        <Td>終了 {strapiProgressReport.business_period_e}</Td>
+                        <Td>
+                          開始{" "}
+                          {formatAndConvertNextDate(
+                            currentItem.node.business_period_s
+                          )}
+                        </Td>
+                        <Td>
+                          終了{" "}
+                          {formatAndConvertNextDate(
+                            currentItem.node.business_period_e
+                          )}
+                        </Td>
                       </tr>
                       <tr>
                         <Th>対象地域</Th>
-                        <Td colSpan={2}>{strapiProgressReport.taisyoutiiki}</Td>
+                        <Td colSpan={2}>{currentItem.node.taisyoutiiki}</Td>
                       </tr>
                       <tr>
                         <Th>事業対象者</Th>
-                        <Td colSpan={2}>
-                          {strapiProgressReport.jigyoutaisyousya}
-                        </Td>
+                        <Td colSpan={2}>{currentItem.node.jigyoutaisyousya}</Td>
                       </tr>
                       <tr>
                         <Th>事業対象者人数</Th>
                         <Td colSpan={2}>
-                          {strapiProgressReport.jigyoutaisyousya_n}
+                          {currentItem.node.jigyoutaisyousya_n}
                         </Td>
                       </tr>
                       <tr>
                         <Th>事業概要</Th>
-                        <Td colSpan={2}>{strapiProgressReport.jigyougaiyou}</Td>
+                        <Td colSpan={2}>{currentItem.node.jigyougaiyou}</Td>
                       </tr>
-                      {strapiProgressReport.ado_count && (
+                      {currentItem.node.ado_count && (
                         <tr>
                           <Th>実行団体数</Th>
-                          <Td colSpan={2}>{strapiProgressReport.ado_count}</Td>
+                          <Td colSpan={2}>{currentItem.node.ado_count}</Td>
                         </tr>
                       )}
                     </tbody>
@@ -248,7 +312,7 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
                 </div>
               </DetailItemWrapper>
             </div>
-            {strapiProgressReport.soukatsu.data.childMarkdownRemark.html && (
+            {currentItem.node.soukatsu.data.childMarkdownRemark.html && (
               <div id="ninthItem">
                 <DetailItemWrapper itemName="進捗報告の概要">
                   <div>
@@ -260,7 +324,7 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
                             <div
                               dangerouslySetInnerHTML={{
                                 __html:
-                                  strapiProgressReport.soukatsu.data.childMarkdownRemark.html.replace(
+                                  currentItem.node.soukatsu.data.childMarkdownRemark.html.replace(
                                     /\n/g,
                                     "<br />"
                                   ),
@@ -297,14 +361,16 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
                             />
                           </Td>
                         </tr>
-                        <tr>
-                          <Th>
-                            資金支援
-                            <br />
-                            非資金的支援
-                          </Th>
-                          <Td>{item.node.sikintekisien}</Td>
-                        </tr>
+                        {item.node.sikintekisien && (
+                          <tr>
+                            <Th>
+                              資金支援
+                              <br />
+                              非資金的支援
+                            </Th>
+                            <Td>{item.node.sikintekisien}</Td>
+                          </tr>
+                        )}
                         <tr>
                           <Th>指標</Th>
                           <Td>
@@ -396,10 +462,12 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
                               />
                             </Td>
                           </tr>
-                          <tr>
-                            <Th>資金支援 / 非資金的支援</Th>
-                            <Td>{item.node.out_sikintekisien}</Td>
-                          </tr>
+                          {item.node.out_sikintekisien && (
+                            <tr>
+                              <Th>資金支援 / 非資金的支援</Th>
+                              <Td>{item.node.out_sikintekisien}</Td>
+                            </tr>
+                          )}
                           <tr>
                             <Th tw="w-1/4">指標</Th>
                             <Td>
@@ -469,10 +537,12 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
                               />
                             </Td>
                           </tr>
-                          <tr>
-                            <Th>資金支援 / 非資金的支援</Th>
-                            <Td>{item.node.act_k_sikintekisien}</Td>
-                          </tr>
+                          {item.node.act_k_sikintekisien && (
+                            <tr>
+                              <Th>資金支援 / 非資金的支援</Th>
+                              <Td>{item.node.act_k_sikintekisien}</Td>
+                            </tr>
+                          )}
                           <tr>
                             <Th>進捗状況</Th>
                             <Td>{item.node.act_k_sintyoku}</Td>
@@ -499,45 +569,78 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
               </div>
             )}
 
-            <div id="thirdItem">
-              <DetailItemWrapper itemName="事業進捗に関する報告">
-                <div>
-                  <table tw="lg:([&_th]:block [&_td]:block)">
-                    <tbody>
-                      <tr>
-                        <Th tw="w-1/4 lg:w-full">
-                          事業計画に掲げた短期アウトカム達成の見込み
-                        </Th>
-                        <Td>{strapiProgressReport.rep_1}</Td>
-                      </tr>
-                      <tr>
-                        <Th>アウトカムの状況（事業計画書の変更有無）</Th>
-                        <Td>
-                          {strapiProgressReport.rep_2_1 === "1" && (
-                            <p>変更なし</p>
-                          )}
-                          {strapiProgressReport.rep_2_2_naiyou === "1" && (
-                            <p>変更あり_短期アウトカムの内容</p>
-                          )}
-                          {strapiProgressReport.rep_2_2_hyougen === "1" && (
-                            <p>変更あり_短期アウトカムの表現</p>
-                          )}
-                          {strapiProgressReport.rep_2_2_shihyou === "1" && (
-                            <p>変更あり_短期アウトカムの指標</p>
-                          )}
-                          {strapiProgressReport.rep_2_2_mokuhyou === "1" && (
-                            <p>変更あり_短期アウトカムの目標値</p>
-                          )}
-                        </Td>
-                      </tr>
-                      {strapiProgressReport.jigyougaiyou && (
+            {(currentItem.node.rep_1 ||
+              currentItem.node.rep_6.data.childMarkdownRemark.html) && (
+              <div id="thirdItem">
+                <DetailItemWrapper itemName="事業進捗に関する報告">
+                  <div>
+                    <table tw="lg:([&_th]:block [&_td]:block)">
+                      <tbody>
                         <tr>
-                          <Th>非資金的支援の活動に関する報告</Th>
+                          <Th tw="w-1/4 lg:w-full">
+                            事業計画に掲げた短期アウトカム達成の見込み
+                          </Th>
+                          <Td>{currentItem.node.rep_1}</Td>
+                        </tr>
+                        <tr>
+                          <Th>アウトカムの状況（事業計画書の変更有無）</Th>
+                          <Td>
+                            {currentItem.node.rep_2_1 === "1" && (
+                              <p>変更なし</p>
+                            )}
+                            {currentItem.node.rep_2_2_naiyou === "1" && (
+                              <p>変更あり_短期アウトカムの内容</p>
+                            )}
+                            {currentItem.node.rep_2_2_hyougen === "1" && (
+                              <p>変更あり_短期アウトカムの表現</p>
+                            )}
+                            {currentItem.node.rep_2_2_shihyou === "1" && (
+                              <p>変更あり_短期アウトカムの指標</p>
+                            )}
+                            {currentItem.node.rep_2_2_mokuhyou === "1" && (
+                              <p>変更あり_短期アウトカムの目標値</p>
+                            )}
+                          </Td>
+                        </tr>
+                        {currentItem.node.rep_6.data.childMarkdownRemark
+                          .html && (
+                          <tr>
+                            <Th>非資金的支援の活動に関する報告</Th>
+                            <Td>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    currentItem.node.rep_6.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
+                                }}
+                              />
+                            </Td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+                </DetailItemWrapper>
+              </div>
+            )}
+
+            {currentItem.node.hatugenjoukyou.data.childMarkdownRemark.html && (
+              <div id="fourthItem">
+                <DetailItemWrapper itemName="短期アウトカムの発現状況">
+                  <div>
+                    <table tw="lg:([&_th]:block [&_td]:block)">
+                      <tbody>
+                        <tr>
+                          <Th tw="w-1/4 lg:w-full">
+                            これまでの活動をとおして把握している変化・改善状況
+                          </Th>
                           <Td>
                             <div
                               dangerouslySetInnerHTML={{
                                 __html:
-                                  strapiProgressReport.rep_6.data.childMarkdownRemark.html.replace(
+                                  currentItem.node.hatugenjoukyou.data.childMarkdownRemark.html.replace(
                                     /\n/g,
                                     "<br />"
                                   ),
@@ -545,90 +648,67 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
                             />
                           </Td>
                         </tr>
-                      )}
-                    </tbody>
-                  </table>
-                </div>
-              </DetailItemWrapper>
-            </div>
+                      </tbody>
+                    </table>
+                  </div>
+                </DetailItemWrapper>
+              </div>
+            )}
 
-            <div id="fourthItem">
-              <DetailItemWrapper itemName="短期アウトカムの発現状況">
-                <div>
-                  <table tw="lg:([&_th]:block [&_td]:block)">
-                    <tbody>
-                      <tr>
-                        <Th tw="w-1/4 lg:w-full">
-                          これまでの活動をとおして把握している変化・改善状況
-                        </Th>
-                        <Td>
-                          <div
-                            dangerouslySetInnerHTML={{
-                              __html:
-                                strapiProgressReport.hatugenjoukyou.data.childMarkdownRemark.html.replace(
-                                  /\n/g,
-                                  "<br />"
-                                ),
-                            }}
-                          />
-                        </Td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </DetailItemWrapper>
-            </div>
+            {currentItem.node.kadai.data.childMarkdownRemark.html && (
+              <div id="fifthItem">
+                <DetailItemWrapper itemName="事業上の課題">
+                  <div>
+                    <table tw="lg:([&_th]:block [&_td]:block)">
+                      <tbody>
+                        <tr>
+                          <Th tw="w-1/4 lg:w-full">
+                            事業実施上顕在化したリスク/阻害要因とその対応
+                          </Th>
+                          <Td>
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html:
+                                  currentItem.node.kadai.data.childMarkdownRemark.html.replace(
+                                    /\n/g,
+                                    "<br />"
+                                  ),
+                              }}
+                            />
+                          </Td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </DetailItemWrapper>
+              </div>
+            )}
 
-            <div id="fifthItem">
-              <DetailItemWrapper itemName="事業上の課題">
-                <div>
-                  <table tw="lg:([&_th]:block [&_td]:block)">
-                    <tbody>
-                      <tr>
-                        <Th tw="w-1/4 lg:w-full">
-                          事業実施上顕在化したリスク/阻害要因とその対応
-                        </Th>
-                        <Td>
-                          <div
-                            dangerouslySetInnerHTML={{
-                              __html:
-                                strapiProgressReport.kadai.data.childMarkdownRemark.html.replace(
-                                  /\n/g,
-                                  "<br />"
-                                ),
-                            }}
-                          />
-                        </Td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </DetailItemWrapper>
-            </div>
-
-            <div id="">
-              <DetailItemWrapper itemName="その他">
-                <div>
-                  <table>
-                    <tbody>
-                      <tr>
-                        <Td>
-                          <div
-                            dangerouslySetInnerHTML={{
-                              __html:
-                                strapiProgressReport.etc.data.childMarkdownRemark.html.replace(
-                                  /\n/g,
-                                  "<br />"
-                                ),
-                            }}
-                          />
-                        </Td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </DetailItemWrapper>
-            </div>
+            {currentItem.node.etc.data.childMarkdownRemark.html && (
+              <div id="">
+                <DetailItemWrapper itemName="その他">
+                  <div>
+                    <table>
+                      <tbody>
+                        <tr>
+                          <Td>
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html:
+                                  currentItem.node.etc.data.childMarkdownRemark.html.replace(
+                                    /\n/g,
+                                    "<br />"
+                                  ),
+                              }}
+                            />
+                          </Td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </DetailItemWrapper>
+              </div>
+            )}
 
             <div id="sixthItem">
               <DetailItemWrapper itemName="広報実績">
@@ -637,44 +717,44 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
                     <tbody>
                       <LshapeTableRow
                         heading="メディア掲載（TV・ラジオ・新聞・雑誌・WEB等）"
-                        status={strapiProgressReport.media_joukyou}
+                        status={currentItem.node.media_joukyou}
                         content={
-                          strapiProgressReport.media_naiyou.data
-                            .childMarkdownRemark.html
+                          currentItem.node.media_naiyou.data.childMarkdownRemark
+                            .html
                         }
                       />
                       <LshapeTableRow
                         heading="広報制作物等"
-                        status={strapiProgressReport.seisaku_joukyou}
+                        status={currentItem.node.seisaku_joukyou}
                         content={
-                          strapiProgressReport.seisaku_naiyou.data
+                          currentItem.node.seisaku_naiyou.data
                             .childMarkdownRemark.html
                         }
                       />
                       <LshapeTableRow
                         heading="報告書等"
-                        status={strapiProgressReport.houkoku_joukyou}
+                        status={currentItem.node.houkoku_joukyou}
                         content={
-                          strapiProgressReport.houkoku_naiyou.data
+                          currentItem.node.houkoku_naiyou.data
                             .childMarkdownRemark.html
                         }
                       />
-                      {strapiProgressReport.event_joukyou && (
+                      {currentItem.node.event_joukyou && (
                         <LshapeTableRow
                           heading="イベント開催等"
-                          status={strapiProgressReport.event_joukyou}
+                          status={currentItem.node.event_joukyou}
                           content={
-                            strapiProgressReport.event_naiyou.data
+                            currentItem.node.event_naiyou.data
                               .childMarkdownRemark.html
                           }
                         />
                       )}
-                      {strapiProgressReport.symbol_joukyou && (
+                      {currentItem.node.symbol_joukyou && (
                         <LshapeTableRow
                           heading="シンボルマークの使用状況"
-                          status={strapiProgressReport.symbol_joukyou}
+                          status={currentItem.node.symbol_joukyou}
                           content={
-                            strapiProgressReport.symbol_naiyou.data
+                            currentItem.node.symbol_naiyou.data
                               .childMarkdownRemark.html
                           }
                         />
@@ -685,154 +765,189 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
               </DetailItemWrapper>
             </div>
 
-            <div id="seventhItem">
-              <DetailItemWrapper itemName="ガバナンス・コンプライアンス実績">
-                <div tw="overflow-x-scroll">
-                  <ScrollTable>
-                    <tbody>
-                      <LshapeTableRow
-                        heading="社員総会、理事会、評議会は定款の定める通りに開催されていますか。"
-                        status={strapiProgressReport.gov_soukai_joukyou}
-                        content={
-                          strapiProgressReport.gov_soukai_naiyou.data
-                            .childMarkdownRemark.html
-                        }
-                      />
-                      <LshapeTableRow
-                        heading="内部通報制度は整備されていますか。"
-                        status={strapiProgressReport.gov_tuhou_joukyou}
-                        content={
-                          strapiProgressReport.gov_tuhou_naiyou.data
-                            .childMarkdownRemark.html
-                        }
-                      />
-                      <tr>
-                        <Th colSpan={2}>
-                          上記設問で「はい」の場合、利用はありましたか。
-                        </Th>
-                        <Td>{strapiProgressReport.gov_riyou_joukyou}</Td>
-                      </tr>
-                      <LshapeTableRow
-                        heading="関連する規程の定め通り情報公開を行っていますか。"
-                        status={strapiProgressReport.gov_koukai_joukyou}
-                        content={
-                          strapiProgressReport.gov_koukai_naiyou.data
-                            .childMarkdownRemark.html
-                        }
-                      />
-                      <LshapeTableRow
-                        heading="コンプライアンス委員会は定期的に開催されていますか。"
-                        status={strapiProgressReport.gov_kaisai_joukyou}
-                        content={
-                          strapiProgressReport.gov_kaisai_naiyou.data
-                            .childMarkdownRemark.html
-                        }
-                      />
-                      <LshapeTableRow
-                        heading="報告年度の内部監査又は外部監査を実施予定ですか（実施済みの場合含む）。"
-                        status={strapiProgressReport.kansa_yotei_joukyou}
-                        content={
-                          strapiProgressReport.kansa_yotei_naiyou.data
-                            .childMarkdownRemark.html
-                        }
-                      />
-                    </tbody>
-                  </ScrollTable>
-                </div>
-              </DetailItemWrapper>
-            </div>
+            {(currentItem.node.gov_soukai_joukyou ||
+              currentItem.node.gov_tuhou_joukyou) && (
+              <div id="seventhItem">
+                <DetailItemWrapper itemName="ガバナンス・コンプライアンス実績">
+                  <div tw="overflow-x-scroll">
+                    <ScrollTable>
+                      <tbody>
+                        <LshapeTableRow
+                          heading="社員総会、理事会、評議会は定款の定める通りに開催されていますか。"
+                          status={currentItem.node.gov_soukai_joukyou}
+                          content={
+                            currentItem.node.gov_soukai_naiyou.data
+                              .childMarkdownRemark.html
+                          }
+                        />
+                        <LshapeTableRow
+                          heading="内部通報制度は整備されていますか。"
+                          status={currentItem.node.gov_tuhou_joukyou}
+                          content={
+                            currentItem.node.gov_tuhou_naiyou.data
+                              .childMarkdownRemark.html
+                          }
+                        />
+                        {currentItem.node.gov_riyou_joukyou && (
+                          <tr>
+                            <Th colSpan={2}>
+                              上記設問で「はい」の場合、利用はありましたか。
+                            </Th>
+                            <Td>{currentItem.node.gov_riyou_joukyou}</Td>
+                          </tr>
+                        )}
+                        {currentItem.node.gov_koukai_joukyou && (
+                          <LshapeTableRow
+                            heading="関連する規程の定め通り情報公開を行っていますか。"
+                            status={currentItem.node.gov_koukai_joukyou}
+                            content={
+                              currentItem.node.gov_koukai_naiyou.data
+                                .childMarkdownRemark.html
+                            }
+                          />
+                        )}
+                        {currentItem.node.gov_kaisai_joukyou && (
+                          <LshapeTableRow
+                            heading="コンプライアンス委員会は定期的に開催されていますか。"
+                            status={currentItem.node.gov_kaisai_joukyou}
+                            content={
+                              currentItem.node.gov_kaisai_naiyou.data
+                                .childMarkdownRemark.html
+                            }
+                          />
+                        )}
+                        {currentItem.node.kansa_yotei_joukyou && (
+                          <LshapeTableRow
+                            heading="報告年度の内部監査又は外部監査を実施予定ですか（実施済みの場合含む）。"
+                            status={currentItem.node.kansa_yotei_joukyou}
+                            content={
+                              currentItem.node.kansa_yotei_naiyou.data
+                                .childMarkdownRemark.html
+                            }
+                          />
+                        )}
+                      </tbody>
+                    </ScrollTable>
+                  </div>
+                </DetailItemWrapper>
+              </div>
+            )}
 
-            <div id="eighthItem">
-              <DetailItemWrapper itemName="規定類の整備に関する報告">
-                <div tw="overflow-x-scroll">
-                  <ScrollTable>
-                    <tbody>
-                      <LshapeTableRow
-                        heading="規程類をwebサイト上で広く一般公開していますか。"
-                        status={strapiProgressReport.kitei_koukai_joukyou}
-                        content={
-                          strapiProgressReport.kitei_koukai_naiyou.data
-                            .childMarkdownRemark.html
-                        }
-                      />
-                      {strapiProgressReport.kitei_jhoukoku_joukyou && (
+            {currentItem.node.kitei_koukai_joukyou && (
+              <div id="eighthItem">
+                <DetailItemWrapper itemName="規定類の整備に関する報告">
+                  <div tw="overflow-x-scroll">
+                    <ScrollTable>
+                      <tbody>
                         <LshapeTableRow
-                          heading="変更があった規程類に関してJANPIAに報告しましたか。"
-                          status={strapiProgressReport.kitei_jhoukoku_joukyou}
+                          heading="規程類をwebサイト上で広く一般公開していますか。"
+                          status={currentItem.node.kitei_koukai_joukyou}
                           content={
-                            strapiProgressReport.kitei_jhoukoku_naiyou.data
+                            currentItem.node.kitei_koukai_naiyou.data
                               .childMarkdownRemark.html
                           }
                         />
-                      )}
-                      {strapiProgressReport.kitei_fhoukoku_joukyou && (
+                        {currentItem.node.kitei_jhoukoku_joukyou && (
+                          <LshapeTableRow
+                            heading="変更があった規程類に関してJANPIAに報告しましたか。"
+                            status={currentItem.node.kitei_jhoukoku_joukyou}
+                            content={
+                              currentItem.node.kitei_jhoukoku_naiyou.data
+                                .childMarkdownRemark.html
+                            }
+                          />
+                        )}
+                        {currentItem.node.kitei_fhoukoku_joukyou && (
+                          <LshapeTableRow
+                            heading="変更があった規程類に関して資金分配団体に報告しましたか。"
+                            status={currentItem.node.kitei_fhoukoku_joukyou}
+                            content={
+                              currentItem.node.kitei_fhoukoku_naiyou.data
+                                .childMarkdownRemark.html
+                            }
+                          />
+                        )}
                         <LshapeTableRow
-                          heading="変更があった規程類に関して資金分配団体に報告しましたか。"
-                          status={strapiProgressReport.kitei_fhoukoku_joukyou}
+                          heading="関連する規程の定めどおり情報公開を行っていますか。"
+                          status={currentItem.node.koukai_joukyou}
                           content={
-                            strapiProgressReport.kitei_fhoukoku_naiyou.data
+                            currentItem.node.koukai_naiyou.data
                               .childMarkdownRemark.html
                           }
                         />
-                      )}
-                      <LshapeTableRow
-                        heading="関連する規程の定めどおり情報公開を行っていますか。"
-                        status={strapiProgressReport.koukai_joukyou}
-                        content={
-                          strapiProgressReport.koukai_naiyou.data
-                            .childMarkdownRemark.html
-                        }
-                      />
-                      {strapiProgressReport.jigyounaiyou_select && (
-                        <LshapeTableRow
-                          heading="報告年度の監査が未実施（実施予定なし）の実行団体はありますか。"
-                          status={strapiProgressReport.jigyounaiyou_select}
-                          content={
-                            strapiProgressReport.jigyounaiyou_text.data
-                              .childMarkdownRemark.html
-                          }
-                        />
-                      )}
-                    </tbody>
-                  </ScrollTable>
-                </div>
-              </DetailItemWrapper>
-            </div>
+                        {currentItem.node.jigyounaiyou_select && (
+                          <LshapeTableRow
+                            heading="報告年度の監査が未実施（実施予定なし）の実行団体はありますか。"
+                            status={currentItem.node.jigyounaiyou_select}
+                            content={
+                              currentItem.node.jigyounaiyou_text.data
+                                .childMarkdownRemark.html
+                            }
+                          />
+                        )}
+                      </tbody>
+                    </ScrollTable>
+                  </div>
+                </DetailItemWrapper>
+              </div>
+            )}
 
-            <div id="tenthItem">
-              <DetailItemWrapper itemName="シンボルマークの活用状況">
-                <div tw="overflow-x-scroll">
-                  <table tw="table-fixed lg:([&_th]:(block w-full) [&_td]:(block w-full))">
-                    <tbody>
-                      <tr>
-                        <Td>
-                          <p>
-                            {strapiProgressReport.etc_1_web === "1" &&
-                              "自団体のウェブサイトで表示"}
-                          </p>
-                          <p>
-                            {strapiProgressReport.etc_1_kouhou === "1" &&
-                              "広報制作物に表示"}
-                          </p>
-                          <p>
-                            {strapiProgressReport.etc_1_houkoku === "1" &&
-                              "報告書に表示"}
-                          </p>
-                          <p>
-                            {strapiProgressReport.etc_1_houkoku === "1" &&
-                              "イベント実施時に表示"}
-                          </p>
-                          <p>
-                            {strapiProgressReport.etc_1_etc === "1" &&
-                              "その他：" + strapiProgressReport.etc_1_1}
-                          </p>
-                        </Td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </DetailItemWrapper>
-            </div>
+            {(currentItem.node.etc_1_web === "1" ||
+              currentItem.node.etc_1_kouhou === "1" ||
+              currentItem.node.etc_1_houkoku === "1" ||
+              currentItem.node.etc_1_event === "1" ||
+              currentItem.node.etc_1_etc === "1") && (
+              <div id="tenthItem">
+                <DetailItemWrapper itemName="シンボルマークの活用状況">
+                  <div tw="overflow-x-scroll">
+                    <table tw="table-fixed lg:([&_th]:(block w-full) [&_td]:(block w-full))">
+                      <tbody>
+                        <tr>
+                          <Td>
+                            <p>
+                              {currentItem.node.etc_1_web === "1" &&
+                                "自団体のウェブサイトで表示"}
+                            </p>
+                            <p>
+                              {currentItem.node.etc_1_kouhou === "1" &&
+                                "広報制作物に表示"}
+                            </p>
+                            <p>
+                              {currentItem.node.etc_1_houkoku === "1" &&
+                                "報告書に表示"}
+                            </p>
+                            <p>
+                              {currentItem.node.etc_1_event === "1" &&
+                                "イベント実施時に表示"}
+                            </p>
+                            <p>
+                              {currentItem.node.etc_1_etc === "1" &&
+                                "その他：" + currentItem.node.etc_1_1}
+                            </p>
+                          </Td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </DetailItemWrapper>
+              </div>
+            )}
+
+            {attachedFileData.length > 0 && (
+              <div id="eleventhItem">
+                <DetailItemWrapper itemName="添付欄">
+                  <div tw="flex gap-[5px] flex-wrap">
+                    {attachedFileData.map((file) => (
+                      <AttachedFileLink
+                        filePath={file.url}
+                        fileName={file.fileName}
+                        key={file.url}
+                      />
+                    ))}
+                  </div>
+                </DetailItemWrapper>
+              </div>
+            )}
           </div>
         )}
       </DetailWrapper>
@@ -844,193 +959,200 @@ export default ProgressReport;
 
 export const pageQuery = graphql`
   query MyQuery($slug: String!) {
-    strapiProgressReport(business_cd: { eq: $slug }) {
-      ado_count
-      biz_cd_executive
-      biz_cd_fund_distr
-      business_cd
-      business_org_type
-      business_period_e(formatString: "YYYY/MM/DD")
-      business_period_s(formatString: "YYYY/MM/DD")
-      business_type_cd
-      business_type_name
-      create_date(formatString: "yyyy/mm/dd")
-      etc {
-        data {
-          childMarkdownRemark {
-            html
+    allStrapiProgressReport(filter: { business_cd: { eq: $slug } }) {
+      edges {
+        node {
+          ado_count
+          biz_cd_executive
+          biz_cd_fund_distr
+          business_cd
+          business_org_type
+          business_period_e(formatString: "YYYY/MM/DD")
+          business_period_s(formatString: "YYYY/MM/DD")
+          business_type_cd
+          business_type_name
+          create_date(formatString: "yyyy/mm/dd")
+          etc {
+            data {
+              childMarkdownRemark {
+                html
+              }
+            }
           }
+          etc_1_etc
+          etc_1_event
+          etc_1_houkoku
+          etc_1_kouhou
+          etc_1_web
+          event_joukyou
+          event_naiyou {
+            data {
+              childMarkdownRemark {
+                html
+              }
+            }
+          }
+          executive_grp_cd
+          fund_distr_grp_cd
+          gov_kaisai_joukyou
+          gov_kaisai_naiyou {
+            data {
+              childMarkdownRemark {
+                html
+              }
+            }
+          }
+          gov_koukai_naiyou {
+            data {
+              childMarkdownRemark {
+                html
+              }
+            }
+          }
+          gov_riyou_joukyou
+          gov_koukai_joukyou
+          gov_soukai_joukyou
+          gov_soukai_naiyou {
+            data {
+              childMarkdownRemark {
+                html
+              }
+            }
+          }
+          gov_tuhou_joukyou
+          gov_tuhou_naiyou {
+            data {
+              childMarkdownRemark {
+                html
+              }
+            }
+          }
+          hatugenjoukyou {
+            data {
+              childMarkdownRemark {
+                html
+              }
+            }
+          }
+          houkoku_joukyou
+          houkoku_naiyou {
+            data {
+              childMarkdownRemark {
+                html
+              }
+            }
+          }
+          insert_id
+          jigyougaiyou
+          jigyounaiyou_text {
+            data {
+              childMarkdownRemark {
+                html
+              }
+            }
+          }
+          jigyoutaisyousya
+          jigyoutaisyousya_n
+          kadai {
+            data {
+              childMarkdownRemark {
+                html
+              }
+            }
+          }
+          kansa_yotei_joukyou
+          kansa_yotei_naiyou {
+            data {
+              childMarkdownRemark {
+                html
+              }
+            }
+          }
+          kitei_fhoukoku_joukyou
+          kitei_fhoukoku_naiyou {
+            data {
+              childMarkdownRemark {
+                html
+              }
+            }
+          }
+          kitei_jhoukoku_naiyou {
+            data {
+              childMarkdownRemark {
+                html
+              }
+            }
+          }
+          kitei_koukai_joukyou
+          kitei_koukai_naiyou {
+            data {
+              childMarkdownRemark {
+                html
+              }
+            }
+          }
+          kitei_jhoukoku_joukyou
+          koukai_joukyou
+          koukai_naiyou {
+            data {
+              childMarkdownRemark {
+                html
+              }
+            }
+          }
+          media_joukyou
+          media_naiyou {
+            data {
+              childMarkdownRemark {
+                html
+              }
+            }
+          }
+          rep_1
+          rep_2_1
+          rep_2_2_hyougen
+          rep_2_2_mokuhyou
+          rep_2_2_naiyou
+          rep_2_2_shihyou
+          rep_6 {
+            data {
+              childMarkdownRemark {
+                html
+              }
+            }
+          }
+          seisaku_joukyou
+          seisaku_naiyou {
+            data {
+              childMarkdownRemark {
+                html
+              }
+            }
+          }
+          select_bp
+          soukatsu {
+            data {
+              childMarkdownRemark {
+                html
+              }
+            }
+          }
+          strapi_id
+          symbol_joukyou
+          symbol_naiyou {
+            data {
+              childMarkdownRemark {
+                html
+              }
+            }
+          }
+          taisyoutiiki
+          target_term
+          updatedAt(formatString: "YYYY/MM/DD")
         }
       }
-      etc_1_etc
-      etc_1_event
-      etc_1_houkoku
-      etc_1_kouhou
-      etc_1_web
-      event_joukyou
-      event_naiyou {
-        data {
-          childMarkdownRemark {
-            html
-          }
-        }
-      }
-      executive_grp_cd
-      fund_distr_grp_cd
-      gov_kaisai_joukyou
-      gov_kaisai_naiyou {
-        data {
-          childMarkdownRemark {
-            html
-          }
-        }
-      }
-      gov_koukai_naiyou {
-        data {
-          childMarkdownRemark {
-            html
-          }
-        }
-      }
-      gov_riyou_joukyou
-      gov_soukai_joukyou
-      gov_soukai_naiyou {
-        data {
-          childMarkdownRemark {
-            html
-          }
-        }
-      }
-      gov_tuhou_joukyou
-      gov_tuhou_naiyou {
-        data {
-          childMarkdownRemark {
-            html
-          }
-        }
-      }
-      hatugenjoukyou {
-        data {
-          childMarkdownRemark {
-            html
-          }
-        }
-      }
-      houkoku_joukyou
-      houkoku_naiyou {
-        data {
-          childMarkdownRemark {
-            html
-          }
-        }
-      }
-      insert_id
-      jigyougaiyou
-      jigyounaiyou_text {
-        data {
-          childMarkdownRemark {
-            html
-          }
-        }
-      }
-      jigyoutaisyousya
-      jigyoutaisyousya_n
-      kadai {
-        data {
-          childMarkdownRemark {
-            html
-          }
-        }
-      }
-      kansa_yotei_joukyou
-      kansa_yotei_naiyou {
-        data {
-          childMarkdownRemark {
-            html
-          }
-        }
-      }
-      kitei_fhoukoku_joukyou
-      kitei_fhoukoku_naiyou {
-        data {
-          childMarkdownRemark {
-            html
-          }
-        }
-      }
-      kitei_jhoukoku_naiyou {
-        data {
-          childMarkdownRemark {
-            html
-          }
-        }
-      }
-      kitei_koukai_joukyou
-      kitei_koukai_naiyou {
-        data {
-          childMarkdownRemark {
-            html
-          }
-        }
-      }
-      koukai_joukyou
-      koukai_naiyou {
-        data {
-          childMarkdownRemark {
-            html
-          }
-        }
-      }
-      media_joukyou
-      media_naiyou {
-        data {
-          childMarkdownRemark {
-            html
-          }
-        }
-      }
-      rep_1
-      rep_2_1
-      rep_2_2_hyougen
-      rep_2_2_mokuhyou
-      rep_2_2_naiyou
-      rep_2_2_shihyou
-      rep_6 {
-        data {
-          childMarkdownRemark {
-            html
-          }
-        }
-      }
-      seisaku_joukyou
-      seisaku_naiyou {
-        data {
-          childMarkdownRemark {
-            html
-          }
-        }
-      }
-      select_bp
-      soukatsu {
-        data {
-          childMarkdownRemark {
-            html
-          }
-        }
-      }
-      strapi_id
-      symbol_joukyou
-      symbol_naiyou {
-        data {
-          childMarkdownRemark {
-            html
-          }
-        }
-      }
-      taisyoutiiki
-      target_term
-      updatedAt(formatString: "yyyy/mm/dd")
     }
+
     allStrapiProgressReportSub(filter: { business_cd: { eq: $slug } }) {
       edges {
         node {
@@ -1091,6 +1213,7 @@ export const pageQuery = graphql`
               }
             }
           }
+          out_sikintekisien
           out_output_etc_index {
             data {
               childMarkdownRemark {
