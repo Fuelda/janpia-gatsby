@@ -57,7 +57,7 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
     slug,
     "complete-report-manuals"
   );
-  console.log(strapiCompleteReport);
+
   return (
     <Layout>
       <Seo title="事業完了報告 | 休眠預金活用事業 情報公開サイト" />
@@ -76,20 +76,28 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
               title="事業概要"
               anchor={`/result/${slug}/completion-report/#firstItem`}
             />
-            <DetailAnchor
-              title="広報実績"
-              anchor={`/result/${slug}/completion-report/#secondItem`}
-            />
             {strapiCompleteReport.soukatsu.data.childMarkdownRemark.html && (
               <DetailAnchor
-                title="事業の総括およびその価値"
+                title="事業総括"
                 anchor={`/result/${slug}/completion-report/#thirdItem`}
               />
             )}
             {strapiCompleteReport.kadai.data.childMarkdownRemark.html && (
               <DetailAnchor
-                title="課題設定、事業設計に関する振返り"
+                title="課題・事業設計の振返り"
                 anchor={`/result/${slug}/completion-report/#fourthItem`}
+              />
+            )}
+            {outcome.length > 0 && (
+              <DetailAnchor
+                title="今回の事業実施で達成される状態"
+                anchor={`/result/${slug}/completion-report/#eleventhItem`}
+              />
+            )}
+            {work.length > 0 && (
+              <DetailAnchor
+                title="資金分配団体としての非資金的支援の取り組み総括"
+                anchor={`/result/${slug}/completion-report/#twelfthItem`}
               />
             )}
             {strapiCompleteReport.unexp_outcome.data.childMarkdownRemark
@@ -105,18 +113,26 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                 anchor={`/result/${slug}/completion-report/#sixthItem`}
               />
             )}
+            {performance.length > 0 && (
+              <DetailAnchor
+                title="外部との連携実績"
+                anchor={`/result/${slug}/completion-report/#thirteenthItem`}
+              />
+            )}
+            <DetailAnchor
+              title="広報実績"
+              anchor={`/result/${slug}/completion-report/#secondItem`}
+            />
             <DetailAnchor
               title="ガバナンス・コンプライアンス実績"
               anchor={`/result/${slug}/completion-report/#seventhItem`}
             />
-            <DetailAnchor
-              title="ガバナンス・コンプライアンス体制"
-              anchor={`/result/${slug}/completion-report/#ninthItem`}
-            />
-            <DetailAnchor
-              title="その他"
-              anchor={`/result/${slug}/completion-report/#eighthItem`}
-            />
+            {strapiCompleteReport.etc.data.childMarkdownRemark.html && (
+              <DetailAnchor
+                title="その他"
+                anchor={`/result/${slug}/completion-report/#eighthItem`}
+              />
+            )}
             {attachedFileData.length > 0 && (
               <DetailAnchor
                 title="添付欄"
@@ -212,48 +228,6 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                   </div>
                 </DetailItemWrapper>
               </div>
-              <div id="secondItem">
-                <DetailItemWrapper itemName="広報実績">
-                  <div tw="lg:overflow-x-scroll">
-                    <ScrollTable>
-                      <tbody>
-                        <LshapeTableRow
-                          heading="シンボルマークの活用状況									"
-                          status={strapiCompleteReport.joukyou_9_1}
-                          content={
-                            strapiCompleteReport.naiyou_9_1.data
-                              .childMarkdownRemark.html
-                          }
-                        />
-                        <LshapeTableRow
-                          heading="メディア掲載（TV・ラジオ・新聞・雑誌・WEB等）"
-                          status={strapiCompleteReport.joukyou_9_2}
-                          content={
-                            strapiCompleteReport.naiyou_9_2.data
-                              .childMarkdownRemark.html
-                          }
-                        />
-                        <LshapeTableRow
-                          heading="広報制作物等"
-                          status={strapiCompleteReport.joukyou_9_3}
-                          content={
-                            strapiCompleteReport.naiyou_9_3.data
-                              .childMarkdownRemark.html
-                          }
-                        />
-                        <LshapeTableRow
-                          heading="報告書等"
-                          status={strapiCompleteReport.joukyou_9_4}
-                          content={
-                            strapiCompleteReport.naiyou_9_4.data
-                              .childMarkdownRemark.html
-                          }
-                        />
-                      </tbody>
-                    </ScrollTable>
-                  </div>
-                </DetailItemWrapper>
-              </div>
               {strapiCompleteReport.soukatsu.data.childMarkdownRemark.html && (
                 <div id="thirdItem">
                   <DetailItemWrapper itemName="事業の総括およびその価値">
@@ -290,9 +264,10 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                   </DetailItemWrapper>
                 </div>
               )}
-              {outcome && (
-                <div>
-                  <DetailItemWrapper itemName="短期アウトカム">
+              {outcome.length > 0 && (
+                <div id="eleventhItem">
+                  <DetailItemWrapper itemName="今回の事業実施で達成される状態">
+                    <p tw="font-bold mb-4">短期アウトカム</p>
                     <div tw="lg:overflow-x-scroll">
                       <ScrollTable>
                         <tbody>
@@ -304,14 +279,18 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                                 </Th>
                                 <Td colSpan={2}>{item.node.oc_outcome}</Td>
                               </tr>
-                              <tr>
-                                <Th tw="w-1/4">指標</Th>
-                                <Td>{item.node.oc_index}</Td>
-                              </tr>
-                              <tr>
-                                <Th>目標値・目標状態</Th>
-                                <Td>{item.node.oc_goal}</Td>
-                              </tr>
+                              {item.node.oc_index && (
+                                <tr>
+                                  <Th tw="w-1/4">指標</Th>
+                                  <Td>{item.node.oc_index}</Td>
+                                </tr>
+                              )}
+                              {item.node.oc_goal && (
+                                <tr>
+                                  <Th>目標値・目標状態</Th>
+                                  <Td>{item.node.oc_goal}</Td>
+                                </tr>
+                              )}
                               <tr>
                                 <Th>アウトカム結果</Th>
                                 <Td>{item.node.oc_result}</Td>
@@ -328,7 +307,7 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                   </DetailItemWrapper>
                 </div>
               )}
-              {output && (
+              {output.length > 0 && (
                 <div>
                   <DetailItemWrapper itemName="アウトプット">
                     <div tw="lg:overflow-x-scroll">
@@ -342,12 +321,14 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                                 </Th>
                                 <Td colSpan={2}>{item.node.op_output}</Td>
                               </tr>
+                              {item.node.op_sikinteki && (
+                                <tr>
+                                  <Th tw="w-1/4">資金支援/非資金的支援</Th>
+                                  <Td>{item.node.op_sikinteki}</Td>
+                                </tr>
+                              )}
                               <tr>
-                                <Th tw="w-1/4">資金支援/非資金的支援</Th>
-                                <Td>{item.node.op_sikinteki}</Td>
-                              </tr>
-                              <tr>
-                                <Th>指標</Th>
+                                <Th tw="w-1/4">指標</Th>
                                 <Td>{item.node.op_index}</Td>
                               </tr>
                               <tr>
@@ -355,11 +336,11 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                                 <Td>{item.node.op_goal}</Td>
                               </tr>
                               <tr>
-                                <Th>アウトカム結果</Th>
+                                <Th>アウトプット結果</Th>
                                 <Td>{item.node.op_result}</Td>
                               </tr>
                               <tr>
-                                <Th>アウトカム考察</Th>
+                                <Th>アウトプット考察</Th>
                                 <Td>{item.node.op_consider}</Td>
                               </tr>
                             </>
@@ -370,7 +351,7 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                   </DetailItemWrapper>
                 </div>
               )}
-              {activity && (
+              {activity.length > 0 && (
                 <div>
                   <DetailItemWrapper itemName="活動">
                     <div tw="lg:overflow-x-scroll">
@@ -384,12 +365,14 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                                 </Th>
                                 <Td colSpan={2}>{item.node.act_activity}</Td>
                               </tr>
+                              {item.node.act_sikinteki && (
+                                <tr>
+                                  <Th tw="w-1/4">資金支援/非資金的支援</Th>
+                                  <Td>{item.node.act_sikinteki}</Td>
+                                </tr>
+                              )}
                               <tr>
-                                <Th tw="w-1/4">資金支援/非資金的支援</Th>
-                                <Td>{item.node.act_sikinteki}</Td>
-                              </tr>
-                              <tr>
-                                <Th>活動結果</Th>
+                                <Th tw="w-1/4">活動結果</Th>
                                 <Td>{item.node.act_sintyoku}</Td>
                               </tr>
                               <tr>
@@ -404,9 +387,9 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                   </DetailItemWrapper>
                 </div>
               )}
-              {work && (
-                <div>
-                  <DetailItemWrapper itemName="取り組み">
+              {work.length > 0 && (
+                <div id="twelfthItem">
+                  <DetailItemWrapper itemName="資金分配団体としての非資金的支援の取り組み総括">
                     <div tw="lg:overflow-x-scroll">
                       <ScrollTable>
                         <tbody>
@@ -416,7 +399,8 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                                 <Th rowSpan={4} key={index} tw="w-[6%]">
                                   {index + 1}
                                 </Th>
-                                <Td colSpan={2}>{item.node.work_attempt}</Td>
+                                <Th tw="w-1/4">取り組み</Th>
+                                <Td>{item.node.work_attempt}</Td>
                               </tr>
                               <tr>
                                 <Th tw="w-1/4">取り組み分類</Th>
@@ -478,30 +462,33 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                               />
                             </Td>
                           </tr>
-                          <tr>
-                            <Th>
-                              本事業を行なっている中で生じた実行団体や受益者のもっとも重要な変化だと感じた点
-                            </Th>
-                            <Td>
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html:
-                                    strapiCompleteReport.major_change.data.childMarkdownRemark.html.replace(
-                                      /\n/g,
-                                      "<br />"
-                                    ),
-                                }}
-                              />
-                            </Td>
-                          </tr>
+                          {strapiCompleteReport.major_change.data
+                            .childMarkdownRemark.html && (
+                            <tr>
+                              <Th>
+                                本事業を行なっている中で生じた実行団体や受益者のもっとも重要な変化だと感じた点
+                              </Th>
+                              <Td>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiCompleteReport.major_change.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </Td>
+                            </tr>
+                          )}
                         </tbody>
                       </table>
                     </div>
                   </DetailItemWrapper>
                 </div>
               )}
-              {performance && (
-                <div>
+              {performance.length > 0 && (
+                <div id="thirteenthItem">
                   <DetailItemWrapper itemName="外部との連携実績">
                     <div tw="lg:overflow-x-scroll">
                       <ScrollTable>
@@ -512,7 +499,8 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                                 <Th rowSpan={3} key={index} tw="w-[6%]">
                                   {index + 1}
                                 </Th>
-                                <Td colSpan={2}>{item.node.res_activity}</Td>
+                                <Th tw="w-1/4">活動</Th>
+                                <Td>{item.node.res_activity}</Td>
                               </tr>
                               <tr>
                                 <Th tw="w-1/4">実施内容</Th>
@@ -530,8 +518,51 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                   </DetailItemWrapper>
                 </div>
               )}
+              <div id="secondItem">
+                <DetailItemWrapper itemName="広報実績">
+                  <div tw="lg:overflow-x-scroll">
+                    <ScrollTable>
+                      <tbody>
+                        <LshapeTableRow
+                          heading="シンボルマークの活用状況									"
+                          status={strapiCompleteReport.joukyou_9_1}
+                          content={
+                            strapiCompleteReport.naiyou_9_1.data
+                              .childMarkdownRemark.html
+                          }
+                        />
+                        <LshapeTableRow
+                          heading="メディア掲載（TV・ラジオ・新聞・雑誌・WEB等）"
+                          status={strapiCompleteReport.joukyou_9_2}
+                          content={
+                            strapiCompleteReport.naiyou_9_2.data
+                              .childMarkdownRemark.html
+                          }
+                        />
+                        <LshapeTableRow
+                          heading="広報制作物等"
+                          status={strapiCompleteReport.joukyou_9_3}
+                          content={
+                            strapiCompleteReport.naiyou_9_3.data
+                              .childMarkdownRemark.html
+                          }
+                        />
+                        <LshapeTableRow
+                          heading="報告書等"
+                          status={strapiCompleteReport.joukyou_9_4}
+                          content={
+                            strapiCompleteReport.naiyou_9_4.data
+                              .childMarkdownRemark.html
+                          }
+                        />
+                      </tbody>
+                    </ScrollTable>
+                  </div>
+                </DetailItemWrapper>
+              </div>
               <div id="seventhItem">
                 <DetailItemWrapper itemName="ガバナンス・コンプライアンス実績">
+                  <p tw="font-bold mb-4">規程類の整備状況</p>
                   <div tw="lg:overflow-x-scroll">
                     <ScrollTable>
                       <tbody>
@@ -650,30 +681,32 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                   </div>
                 </DetailItemWrapper>
               </div>
-              <div id="eighthItem">
-                <DetailItemWrapper itemName="その他">
-                  <div>
-                    <table tw="lg:([&_th]:(block w-full) [&_td]:(block w-full))">
-                      <tbody>
-                        <Th tw="w-1/4">
-                          本助成を通じて組織として強化された事項や新たに認識した課題、今後の対応/あればよいと思う支援や改善を求めたい事項など
-                        </Th>
-                        <Td>
-                          <div
-                            dangerouslySetInnerHTML={{
-                              __html:
-                                strapiCompleteReport.etc.data.childMarkdownRemark.html.replace(
-                                  /\n/g,
-                                  "<br />"
-                                ),
-                            }}
-                          />
-                        </Td>
-                      </tbody>
-                    </table>
-                  </div>
-                </DetailItemWrapper>
-              </div>
+              {strapiCompleteReport.etc.data.childMarkdownRemark.html && (
+                <div id="eighthItem">
+                  <DetailItemWrapper itemName="その他">
+                    <div>
+                      <table tw="lg:([&_th]:(block w-full) [&_td]:(block w-full))">
+                        <tbody>
+                          <Th tw="w-1/4">
+                            本助成を通じて組織として強化された事項や新たに認識した課題、今後の対応/あればよいと思う支援や改善を求めたい事項など
+                          </Th>
+                          <Td>
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html:
+                                  strapiCompleteReport.etc.data.childMarkdownRemark.html.replace(
+                                    /\n/g,
+                                    "<br />"
+                                  ),
+                              }}
+                            />
+                          </Td>
+                        </tbody>
+                      </table>
+                    </div>
+                  </DetailItemWrapper>
+                </div>
+              )}
               {attachedFileData.length > 0 && (
                 <div id="tenthItem">
                   <DetailItemWrapper itemName="添付欄">

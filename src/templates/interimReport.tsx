@@ -327,10 +327,10 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
                   </div>
                 </DetailItemWrapper>
               </div>
-              <div>
-                <DetailItemWrapper itemName="短期アウトカムにつながりそうな、活動直後にみられた受益者、対象者、関係団体等の変化（言動）があれば記載してください。 ">
-                  {strapiMidReport.oc_related_change.data.childMarkdownRemark
-                    .html && (
+              {strapiMidReport.oc_related_change.data.childMarkdownRemark
+                .html && (
+                <div>
+                  <DetailItemWrapper itemName="短期アウトカムにつながりそうな、活動直後にみられた受益者、対象者、関係団体等の変化（言動）があれば記載してください。 ">
                     <div>
                       <div
                         dangerouslySetInnerHTML={{
@@ -343,9 +343,9 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
                         tw="py-3 px-3.5 border-gray-border border text-start break-all lg:(py-2 px-2)"
                       />
                     </div>
-                  )}
-                </DetailItemWrapper>
-              </div>
+                  </DetailItemWrapper>
+                </div>
+              )}
               <div>
                 <DetailItemWrapper itemName="短期アウトカムの進捗状況">
                   <div tw="lg:overflow-x-scroll">

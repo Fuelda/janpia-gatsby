@@ -413,7 +413,7 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                         {currentItem.node.riekiihan_etc.data.childMarkdownRemark
                           .html && (
                           <tr>
-                            <Th tw="w-1/4">
+                            <Th tw="w-1/2">
                               （利益相反の防止）その他に実行団体との利益相反の防止に関して実施したことがあれば記載してください。
                             </Th>
                             <Td>
@@ -430,7 +430,7 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                           </tr>
                         )}
                         <tr>
-                          <Th>
+                          <Th tw="w-1/2">
                             審査の過程で第三者の意見聴取等、専門的な意見をどのように取り入れましたか。
                           </Th>
                           <Td>

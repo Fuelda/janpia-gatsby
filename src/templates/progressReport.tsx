@@ -32,7 +32,7 @@ export const LshapeTableRow: React.FC<{
 }> = ({ heading, status, contentName = "内容", content }) => {
   return (
     <>
-      <tr>
+      <tr css={!content && tw`border-gray-border border`}>
         <Th tw="w-1/4 border-b-0" colSpan={2}>
           {heading}
         </Th>
@@ -41,7 +41,7 @@ export const LshapeTableRow: React.FC<{
       {content && (
         <tr>
           <Th tw="w-[12.5%] border-t-0"></Th>
-          <Th>{contentName}</Th>
+          <Th tw="px-0 text-center">{contentName}</Th>
           <Td>
             {content && (
               <div
@@ -88,16 +88,19 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
     allStrapiProgressReportSub.edges.length !== 0 &&
     allStrapiProgressReportSub.edges
       .filter((prs: any) => prs.node.info_type === "10")
+      .filter((prs: any) => prs.node.target_term === currentTab)
       .sort((a: any, b: any) => a.node.row_no - b.node.row_no);
   const performanceOutput =
     allStrapiProgressReportSub.edges.length !== 0 &&
     allStrapiProgressReportSub.edges
       .filter((prs: any) => prs.node.info_type === "20")
+      .filter((prs: any) => prs.node.target_term === currentTab)
       .sort((a: any, b: any) => a.node.row_no - b.node.row_no);
   const performanceActviity =
     allStrapiProgressReportSub.edges.length !== 0 &&
     allStrapiProgressReportSub.edges
       .filter((prs: any) => prs.node.info_type === "21")
+      .filter((prs: any) => prs.node.target_term === currentTab)
       .sort((a: any, b: any) => a.node.row_no - b.node.row_no);
 
   // 手入力データに対する処理
@@ -198,7 +201,7 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
             )}
             {currentItem.node.kitei_koukai_joukyou && (
               <DetailAnchor
-                title="規定類の整備に関する報告"
+                title="規程類の整備に関する報告"
                 anchor={`/result/${slug}/progress-report/#eighthItem`}
               />
             )}
@@ -835,7 +838,7 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
 
             {currentItem.node.kitei_koukai_joukyou && (
               <div id="eighthItem">
-                <DetailItemWrapper itemName="規定類の整備に関する報告">
+                <DetailItemWrapper itemName="規程類の整備に関する報告">
                   <div tw="overflow-x-scroll">
                     <ScrollTable>
                       <tbody>
@@ -922,7 +925,10 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
                             </p>
                             <p>
                               {currentItem.node.etc_1_etc === "1" &&
-                                "その他：" + currentItem.node.etc_1_1}
+                                `その他：${
+                                  currentItem.node.etc_1_1 &&
+                                  currentItem.node.etc_1_1
+                                }`}
                             </p>
                           </Td>
                         </tr>
@@ -1229,6 +1235,7 @@ export const pageQuery = graphql`
               }
             }
           }
+          sikintekisien
           output_etc_index {
             data {
               childMarkdownRemark {
