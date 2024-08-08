@@ -8,7 +8,6 @@ import DetailWrapper from "../components/lauout/DetailWrapper";
 import { detailBody, detailFlex } from "../styles/detailPage";
 import { useDetailContext } from "../context/detailContext";
 import Seo from "../components/lauout/Seo";
-import useStrapiPdf from "../hooks/useStrapiPdf";
 
 const InterimReport: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
@@ -54,7 +53,11 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
 
   const strapiMidReportManual =
     strapiMidReportManualFDO || strapiMidReportManualADO;
-  const { pdfUrl, isPdfLoading } = useStrapiPdf(slug, "mid-report-manuals");
+
+  const pdfUrl =
+    strapiMidReportManual &&
+    strapiMidReportManual.data &&
+    `https://docs.google.com/viewer?url=${strapiMidReportManual.data.url}&embedded=true`;
 
   useEffect(() => {
     setWithFinance(
@@ -100,11 +103,7 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
           <div css={detailBody}>
             {strapiMidReportManual && pdfUrl ? (
               <div>
-                {isPdfLoading ? (
-                  <p>Loading...</p>
-                ) : (
-                  <iframe width="100%" height="500px" src={pdfUrl}></iframe>
-                )}
+                <iframe width="100%" height="500px" src={pdfUrl}></iframe>
               </div>
             ) : (
               <p>データはありません</p>
@@ -128,6 +127,9 @@ export const pageQuery = graphql`
       biz_cd_executive
       biz_cd_fund_distr
       business_org_type
+      data {
+        url
+      }
     }
     strapiMidReportManualADO: strapiMidReportManual(
       biz_cd_executive: { eq: $slug }
@@ -137,6 +139,9 @@ export const pageQuery = graphql`
       biz_cd_executive
       biz_cd_fund_distr
       business_org_type
+      data {
+        url
+      }
     }
 
     # サイドバーチェック用

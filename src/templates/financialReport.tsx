@@ -12,7 +12,6 @@ import DetailItemWrapper from "../components/lauout/DetailItemWrapper";
 import { tableWide, td8col, th8col, thead8col } from "../styles/table";
 import Seo from "../components/lauout/Seo";
 import { useDetailContext } from "../context/detailContext";
-import useStrapiPdf from "../hooks/useStrapiPdf";
 
 const thStandard = tw`bg-blue-base py-3 px-3 text-start border-gray-border border`;
 const thNoBorder = tw`bg-blue-base py-3 px-3 text-start `;
@@ -62,7 +61,11 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
   const settleReport = strapiSettleReportFDO || strapiSettleReportADO;
   const settleReportManual =
     strapiSettleReportManualFDO || strapiSettleReportManualADO;
-  const { pdfUrl, isPdfLoading } = useStrapiPdf(slug, "settle-report-manuals");
+
+  const pdfUrl =
+    settleReportManual &&
+    settleReportManual.data &&
+    `https://docs.google.com/viewer?url=${settleReportManual.data.url}&embedded=true`;
 
   useEffect(() => {
     settleReport && setUpdatedAt(settleReport.updatedAt);
@@ -112,11 +115,7 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
         >
           {settleReportManual && pdfUrl && (
             <div>
-              {isPdfLoading ? (
-                <p>Loading...</p>
-              ) : (
-                <iframe width="100%" height="500px" src={pdfUrl}></iframe>
-              )}
+              <iframe width="100%" height="500px" src={pdfUrl}></iframe>
             </div>
           )}
           {settleReport && (
@@ -1255,12 +1254,18 @@ export const pageQuery = graphql`
       biz_cd_fund_distr: { eq: $slug }
       business_org_type: { eq: "F" }
     ) {
+      data {
+        url
+      }
       updatedAt(formatString: "YYYY/MM/DD")
     }
     strapiSettleReportManualADO: strapiSettleReportManual(
       biz_cd_executive: { eq: $slug }
       business_org_type: { eq: "A" }
     ) {
+      data {
+        url
+      }
       updatedAt(formatString: "YYYY/MM/DD")
     }
     # サイドバーチェック用

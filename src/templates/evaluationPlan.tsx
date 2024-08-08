@@ -29,7 +29,6 @@ import EvaluationShortOutcome from "../components/organisms/EvaluationShortOutco
 import { useDetailContext } from "../context/detailContext";
 import Seo from "../components/lauout/Seo";
 import tw from "twin.macro";
-import useStrapiPdf from "../hooks/useStrapiPdf";
 
 const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
   const {
@@ -80,10 +79,11 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
   const evaluationPlanManual =
     evaluationPlanManualFDO || evaluationPlanManualADO;
-  const { pdfUrl, isPdfLoading } = useStrapiPdf(
-    slug,
-    "evaluation-plan-manuals"
-  );
+
+  const pdfUrl =
+    evaluationPlanManual &&
+    evaluationPlanManual.data &&
+    `https://docs.google.com/viewer?url=${evaluationPlanManual.data.url}&embedded=true`;
 
   const evaluationFile = allStrapiAttachedFile.edges.filter(
     (af: any) => af.node.item_id === "attach_fileupload_item2"
@@ -164,11 +164,7 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
         <DetailWrapper category="評価計画" slug={slug} updatedAt={updatedAt}>
           {evaluationPlanManual && pdfUrl && (
             <div>
-              {isPdfLoading ? (
-                <p>Loading...</p>
-              ) : (
-                <iframe width="100%" height="500px" src={pdfUrl}></iframe>
-              )}
+              <iframe width="100%" height="500px" src={pdfUrl}></iframe>
             </div>
           )}
           {strapiEvaluationPlan && (
@@ -915,12 +911,18 @@ export const pageQuery = graphql`
       biz_cd_fund_distr: { eq: $slug }
       business_org_type: { eq: "F" }
     ) {
+      data {
+        url
+      }
       updatedAt(formatString: "YYYY/MM/DD")
     }
     evaluationPlanManualADO: strapiEvaluationPlanManual(
       biz_cd_executive: { eq: $slug }
       business_org_type: { eq: "A" }
     ) {
+      data {
+        url
+      }
       updatedAt(formatString: "YYYY/MM/DD")
     }
     allStrapiAttachedFile(filter: { insert_id: { in: $insert_id } }) {
