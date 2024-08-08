@@ -14,7 +14,6 @@ import {
 } from "../styles/detailPage";
 import { useDetailContext } from "../context/detailContext";
 import Seo from "../components/lauout/Seo";
-import useStrapiSelectedReportPdf from "../hooks/useStrapiSelectedReportPdf";
 
 type ormType = {
   node: {
@@ -74,22 +73,16 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
     ? allStrapiOfferingReportManual.edges.map((orm: ormType) => orm.node.round)
     : [];
 
-  const { pdfUrlArray, isPdfLoading } = useStrapiSelectedReportPdf(
-    slug,
-    "offering-report-manuals"
-  );
-
-  const currentItem =
-    pdfUrlArray &&
-    pdfUrlArray.length > 0 &&
-    pdfUrlArray.find((item) => item.round === currentTab);
   const currentQueryItem =
     allStrapiOfferingReportManual &&
     allStrapiOfferingReportManual.edges.find(
       (orm: ormType) => orm.node.round === currentTab
     );
-  const currentPdfUrl = currentItem && currentItem.url;
-  const googleDocsViewerUrl = `https://docs.google.com/viewer?url=${currentPdfUrl}&embedded=true`;
+
+  const googleDocsViewerUrl =
+    currentQueryItem &&
+    currentQueryItem.node.data &&
+    `https://docs.google.com/viewer?url=${currentQueryItem.node.data.url}&embedded=true`;
 
   useEffect(() => {
     setWithFinance(
@@ -148,7 +141,7 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
               ))}
           </div>
           <div css={detailBody}>
-            {currentItem ? (
+            {currentQueryItem ? (
               <div>
                 <iframe
                   width="100%"
@@ -178,6 +171,9 @@ export const pageQuery = graphql`
     ) {
       edges {
         node {
+          data {
+            url
+          }
           updatedAt(formatString: "YYYY/MM/DD")
           biz_cd_fund_distr
           business_org_type

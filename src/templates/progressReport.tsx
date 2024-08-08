@@ -14,7 +14,6 @@ import {
 } from "../styles/detailPage";
 import { useDetailContext } from "../context/detailContext";
 import Seo from "../components/lauout/Seo";
-import useStrapiProgressReportPdf from "../hooks/useStrapiProgressReportPdf";
 
 const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
@@ -85,14 +84,6 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
     setCurrentTab(minRouond);
   }, [minRouond]);
 
-  const { pdfUrlArray, isPdfLoading } = useStrapiProgressReportPdf(
-    slug,
-    "progress-report-manuals"
-  );
-  const currentItem =
-    pdfUrlArray &&
-    pdfUrlArray.length > 0 &&
-    pdfUrlArray.find((item) => item.round === currentTab);
   const currentQueryItem =
     allStrapiProgressReportManual &&
     allStrapiProgressReportManual.find(
@@ -100,8 +91,10 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
         prm.node.progress_round && prm.node.progress_round.code === currentTab
     );
 
-  const currentPdfUrl = currentItem && currentItem.url;
-  const googleDocsViewerUrl = `https://docs.google.com/viewer?url=${currentPdfUrl}&embedded=true`;
+  const googleDocsViewerUrl =
+    currentQueryItem &&
+    currentQueryItem.node.data &&
+    `https://docs.google.com/viewer?url=${currentQueryItem.node.data.url}&embedded=true`;
 
   useEffect(() => {
     setWithFinance(
@@ -166,7 +159,7 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
               )}
           </div>
           <div css={detailBody}>
-            {currentItem ? (
+            {currentQueryItem ? (
               <div>
                 <iframe
                   width="100%"
@@ -197,6 +190,9 @@ export const pageQuery = graphql`
     ) {
       edges {
         node {
+          data {
+            url
+          }
           updatedAt(formatString: "YYYY/MM/DD")
           progress_round {
             code
@@ -213,6 +209,9 @@ export const pageQuery = graphql`
     ) {
       edges {
         node {
+          data {
+            url
+          }
           updatedAt(formatString: "YYYY/MM/DD")
           progress_round {
             code

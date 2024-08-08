@@ -10,7 +10,6 @@ import DetailAnchor from "../components/atoms/DetailAnchor";
 import { detailAnchor, detailBody, detailFlex } from "../styles/detailPage";
 import { useDetailContext } from "../context/detailContext";
 import Seo from "../components/lauout/Seo";
-import useStrapiPdf from "../hooks/useStrapiPdf";
 
 const ExanteEvaluationReport: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
@@ -55,7 +54,11 @@ const ExanteEvaluationReport: React.FC<any> = ({ data, pageContext }) => {
 
   const strapiPreReportManual =
     strapiPreReportManualFDO || strapiPreReportManualADO;
-  const { pdfUrl, isPdfLoading } = useStrapiPdf(slug, "pre-report-manuals");
+
+  const pdfUrl =
+    strapiPreReportManual &&
+    strapiPreReportManual.data &&
+    `https://docs.google.com/viewer?url=${strapiPreReportManual.data.url}&embedded=true`;
 
   useEffect(() => {
     setWithFinance(
@@ -101,11 +104,7 @@ const ExanteEvaluationReport: React.FC<any> = ({ data, pageContext }) => {
           <div css={detailBody}>
             {strapiPreReportManual && pdfUrl ? (
               <div>
-                {isPdfLoading ? (
-                  <p>Loading...</p>
-                ) : (
-                  <iframe width="100%" height="500px" src={pdfUrl}></iframe>
-                )}
+                <iframe width="100%" height="500px" src={pdfUrl}></iframe>
               </div>
             ) : (
               <p>データはありません</p>
@@ -125,12 +124,18 @@ export const pageQuery = graphql`
       biz_cd_fund_distr: { eq: $slug }
       business_org_type: { eq: "F" }
     ) {
+      data {
+        url
+      }
       updatedAt(formatString: "YYYY/MM/DD")
     }
     strapiPreReportManualADO: strapiPreReportManual(
       biz_cd_executive: { eq: $slug }
       business_org_type: { eq: "A" }
     ) {
+      data {
+        url
+      }
       updatedAt(formatString: "YYYY/MM/DD")
     }
     # サイドバーチェック用

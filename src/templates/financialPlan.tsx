@@ -30,7 +30,6 @@ import {
 } from "../styles/table";
 import { useDetailContext } from "../context/detailContext";
 import Seo from "../components/lauout/Seo";
-import useStrapiPdf from "../hooks/useStrapiPdf";
 
 const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
@@ -84,7 +83,11 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
   const financePlan = financePlanFDO || financePlanADO;
   const financePlanFormer = financePlanFormerFDO || financePlanFormerADO;
   const financePlanManual = financePlanManualFDO || financePlanManualADO;
-  const { pdfUrl, isPdfLoading } = useStrapiPdf(slug, "finance-plan-manuals");
+
+  const pdfUrl =
+    financePlanManual &&
+    financePlanManual.data &&
+    `https://docs.google.com/viewer?url=${financePlanManual.data.url}&embedded=true`;
 
   useEffect(() => {
     financePlan && setUpdatedAt(financePlan.updatedAt);
@@ -131,11 +134,7 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
         <DetailWrapper category="資金計画" slug={slug} updatedAt={updatedAt}>
           {financePlanManual && pdfUrl && (
             <div>
-              {isPdfLoading ? (
-                <p>Loading...</p>
-              ) : (
-                <iframe width="100%" height="500px" src={pdfUrl}></iframe>
-              )}
+              <iframe width="100%" height="500px" src={pdfUrl}></iframe>
             </div>
           )}
           {financePlan && (
@@ -1403,12 +1402,18 @@ export const pageQuery = graphql`
       biz_cd_fund_distr: { eq: $slug }
       business_org_type: { eq: "F" }
     ) {
+      data {
+        url
+      }
       updatedAt(formatString: "YYYY/MM/DD")
     }
     financePlanManualADO: strapiFinancePlanManual(
       biz_cd_executive: { eq: $slug }
       business_org_type: { eq: "A" }
     ) {
+      data {
+        url
+      }
       updatedAt(formatString: "YYYY/MM/DD")
     }
     # サイドバーチェック用
