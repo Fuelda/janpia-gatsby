@@ -15,7 +15,6 @@ import Seo from "../components/lauout/Seo";
 import DetailItemWrapper from "../components/lauout/DetailItemWrapper";
 import tw from "twin.macro";
 import DetailAnchor from "../components/atoms/DetailAnchor";
-import useStrapiProgressReportPdf from "../hooks/useStrapiProgressReportPdf";
 import { formatAndConvertNextDate } from "../util/formatDate";
 import { useAttachedFile } from "../hooks/useAttachedFile";
 import AttachedFileLink from "../components/atoms/AttachedFileLink";
@@ -122,7 +121,7 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
     setCurrentTabManual(minRouond);
   }, [minRouond]);
 
-  const currentQueryItem =
+  const currentItemManual =
     allStrapiProgressReportManual &&
     allStrapiProgressReportManual.find(
       (prm: any) =>
@@ -131,9 +130,9 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
     );
 
   const googleDocsViewerUrl =
-    currentQueryItem &&
-    currentQueryItem.node.data &&
-    `https://docs.google.com/viewer?url=${currentQueryItem.node.data.url}&embedded=true`;
+    currentItemManual &&
+    currentItemManual.node.data &&
+    `https://docs.google.com/viewer?url=${currentItemManual.node.data.url}&embedded=true`;
 
   return (
     <Layout>
@@ -144,7 +143,7 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
         slug={slug}
         updatedAt={
           (currentItem && currentItem.node.updatedAt) ||
-          (currentQueryItem && currentQueryItem.node.updatedAt)
+          (currentItemManual && currentItemManual.node.updatedAt)
         }
       >
         {currentItem && currentItem.node && (
@@ -247,7 +246,7 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
               </button>
             ))}
         </div>
-        {currentQueryItem && (
+        {currentItemManual && (
           <div>
             <iframe
               width="100%"
