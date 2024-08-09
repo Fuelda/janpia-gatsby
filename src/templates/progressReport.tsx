@@ -122,14 +122,6 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
     setCurrentTabManual(minRouond);
   }, [minRouond]);
 
-  const { pdfUrlArray } = useStrapiProgressReportPdf(
-    slug,
-    "progress-report-manuals"
-  );
-  const currentItemManual =
-    pdfUrlArray &&
-    pdfUrlArray.length > 0 &&
-    pdfUrlArray.find((item) => item.round === currentTabManual);
   const currentQueryItem =
     allStrapiProgressReportManual &&
     allStrapiProgressReportManual.find(
@@ -138,8 +130,10 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
         prm.node.progress_round.code === currentTabManual
     );
 
-  const currentPdfUrl = currentItemManual && currentItemManual.url;
-  const googleDocsViewerUrl = `https://docs.google.com/viewer?url=${currentPdfUrl}&embedded=true`;
+  const googleDocsViewerUrl =
+    currentQueryItem &&
+    currentQueryItem.node.data &&
+    `https://docs.google.com/viewer?url=${currentQueryItem.node.data.url}&embedded=true`;
 
   return (
     <Layout>
@@ -253,7 +247,7 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
               </button>
             ))}
         </div>
-        {currentItemManual && (
+        {currentQueryItem && (
           <div>
             <iframe
               width="100%"
@@ -1266,6 +1260,9 @@ export const pageQuery = graphql`
     ) {
       edges {
         node {
+          data {
+            url
+          }
           updatedAt(formatString: "YYYY/MM/DD")
           progress_round {
             code
@@ -1282,6 +1279,9 @@ export const pageQuery = graphql`
     ) {
       edges {
         node {
+          data {
+            url
+          }
           updatedAt(formatString: "YYYY/MM/DD")
           progress_round {
             code

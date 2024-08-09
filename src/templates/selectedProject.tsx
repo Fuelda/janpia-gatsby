@@ -42,29 +42,19 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
       ? allStrapiOfferingReport.edges.map((or: any) => or.node.koubo_nm)
       : [];
 
-  const { pdfUrlArray } = useStrapiSelectedReportPdf(
-    slug,
-    "offering-report-manuals"
+  const currentItem = allStrapiOfferingReport.edges.find(
+    (or: any) => or.node.koubo_nm === currentTab
   );
-
-  const currentItem =
-    allStrapiOfferingReportManual.edges.length > 0
-      ? pdfUrlArray &&
-        pdfUrlArray.length > 0 &&
-        pdfUrlArray.find((item) => item.round === currentTab)
-      : allStrapiOfferingReport.edges.find(
-          (or: any) => or.node.koubo_nm === currentTab
-        );
-  const currentQueryItem =
+  const currentItemManual =
     allStrapiOfferingReportManual &&
     allStrapiOfferingReportManual.edges.find(
       (orm: ormType) => orm.node.round === currentTab
     );
-  const currentPdfUrl =
-    allStrapiOfferingReportManual.edges.length > 0 &&
-    currentItem &&
-    currentItem.url;
-  const googleDocsViewerUrl = `https://docs.google.com/viewer?url=${currentPdfUrl}&embedded=true`;
+
+  const googleDocsViewerUrl =
+    currentItemManual &&
+    currentItemManual.node.data &&
+    `https://docs.google.com/viewer?url=${currentItemManual.node.data.url}&embedded=true`;
 
   return (
     <Layout>
@@ -74,8 +64,8 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
         category="公募結果報告"
         slug={slug}
         updatedAt={
-          currentQueryItem
-            ? currentQueryItem.node.updatedAt
+          currentItemManual
+            ? currentItemManual.node.updatedAt
             : currentItem && currentItem.node.updatedAt
         }
       >
@@ -134,7 +124,7 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
         </div>
         <div css={detailBody}>
           {allStrapiOfferingReportManualFDO.edges.length > 0 &&
-            (currentItem ? (
+            (currentItemManual ? (
               <div>
                 <iframe
                   width="100%"
@@ -955,6 +945,9 @@ export const pageQuery = graphql`
     ) {
       edges {
         node {
+          data {
+            url
+          }
           updatedAt(formatString: "YYYY/MM/DD")
           biz_cd_fund_distr
           business_org_type

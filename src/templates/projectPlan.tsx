@@ -31,7 +31,6 @@ import { sdgsGoalArray } from "../features/search/store/filterContents";
 import { formatDate } from "../util/formatDate";
 import "twin.macro";
 import Seo from "../components/lauout/Seo";
-import useStrapiPdf from "../hooks/useStrapiPdf";
 
 const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
@@ -44,7 +43,11 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
   const [updatedAt, setUpdatedAt] = useState("");
 
   const bizPlanManual = strapiBizPlanManualFDO || strapiBizPlanManualADO;
-  const { pdfUrl, isPdfLoading } = useStrapiPdf(slug, "biz-plan-manuals");
+
+  const pdfUrl =
+    bizPlanManual &&
+    bizPlanManual.data &&
+    `https://docs.google.com/viewer?url=${bizPlanManual.data.url}&embedded=true`;
 
   const bizPlanSubSdgs =
     allStrapiBizPlanSub.edges.length !== 0 &&
@@ -4956,11 +4959,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
         )}
         {bizPlanManual && pdfUrl && (
           <div>
-            {isPdfLoading ? (
-              <p>Loading...</p>
-            ) : (
-              <iframe width="100%" height="500px" src={pdfUrl}></iframe>
-            )}
+            <iframe width="100%" height="500px" src={pdfUrl}></iframe>
           </div>
         )}
       </DetailWrapper>
@@ -4976,12 +4975,18 @@ export const pageQuery = graphql`
       biz_cd_fund_distr: { eq: $slug }
       business_org_type: { eq: "F" }
     ) {
+      data {
+        url
+      }
       updatedAt(formatString: "YYYY/MM/DD")
     }
     strapiBizPlanManualADO: strapiBizPlanManual(
       biz_cd_executive: { eq: $slug }
       business_org_type: { eq: "A" }
     ) {
+      data {
+        url
+      }
       updatedAt(formatString: "YYYY/MM/DD")
     }
     strapiBizPlan(business_cd: { eq: $slug }) {

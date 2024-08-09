@@ -6,7 +6,6 @@ import "twin.macro";
 import DetailWrapper from "../components/lauout/DetailWrapper";
 import { detailBody } from "../styles/detailPage";
 import Seo from "../components/lauout/Seo";
-import useStrapiPdf from "../hooks/useStrapiPdf";
 
 const ExportEvaluationReport: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
@@ -14,7 +13,11 @@ const ExportEvaluationReport: React.FC<any> = ({ data, pageContext }) => {
 
   const strapiPostReportManual =
     strapiPostReportManualFDO || strapiPostReportManualADO;
-  const { pdfUrl, isPdfLoading } = useStrapiPdf(slug, "post-report-manuals");
+
+  const pdfUrl =
+    strapiPostReportManual &&
+    strapiPostReportManual.data &&
+    `https://docs.google.com/viewer?url=${strapiPostReportManual.data.url}&embedded=true`;
 
   return (
     <Layout>
@@ -28,11 +31,7 @@ const ExportEvaluationReport: React.FC<any> = ({ data, pageContext }) => {
         <div css={detailBody}>
           {strapiPostReportManual && pdfUrl ? (
             <div>
-              {isPdfLoading ? (
-                <p>Loading...</p>
-              ) : (
-                <iframe width="100%" height="500px" src={pdfUrl}></iframe>
-              )}
+              <iframe width="100%" height="500px" src={pdfUrl}></iframe>
             </div>
           ) : (
             <p>データはありません</p>
@@ -51,12 +50,18 @@ export const pageQuery = graphql`
       biz_cd_fund_distr: { eq: $slug }
       business_org_type: { eq: "F" }
     ) {
+      data {
+        url
+      }
       updatedAt(formatString: "YYYY/MM/DD")
     }
     strapiPostReportManualADO: strapiPostReportManual(
       biz_cd_executive: { eq: $slug }
       business_org_type: { eq: "A" }
     ) {
+      data {
+        url
+      }
       updatedAt(formatString: "YYYY/MM/DD")
     }
   }

@@ -11,7 +11,6 @@ import { LshapeTableRow, ScrollTable, Td, Th } from "./progressReport";
 import DetailAnchor from "../components/atoms/DetailAnchor";
 import { useAttachedFile } from "../hooks/useAttachedFile";
 import AttachedFileLink from "../components/atoms/AttachedFileLink";
-import useStrapiPdf from "../hooks/useStrapiPdf";
 import tw from "twin.macro";
 
 const InterimReport: React.FC<any> = ({ data, pageContext }) => {
@@ -43,7 +42,11 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
 
   const strapiMidReportManual =
     strapiMidReportManualFDO || strapiMidReportManualADO;
-  const { pdfUrl, isPdfLoading } = useStrapiPdf(slug, "mid-report-manuals");
+
+  const pdfUrl =
+    strapiMidReportManual &&
+    strapiMidReportManual.data &&
+    `https://docs.google.com/viewer?url=${strapiMidReportManual.data.url}&embedded=true`;
 
   return (
     <Layout>
@@ -86,11 +89,7 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
         <div css={detailBody}>
           {strapiMidReportManual && pdfUrl && (
             <div>
-              {isPdfLoading ? (
-                <p>Loading...</p>
-              ) : (
-                <iframe width="100%" height="500px" src={pdfUrl}></iframe>
-              )}
+              <iframe width="100%" height="500px" src={pdfUrl}></iframe>
             </div>
           )}
           {strapiMidReport && (
@@ -891,6 +890,9 @@ export const pageQuery = graphql`
       biz_cd_executive
       biz_cd_fund_distr
       business_org_type
+      data {
+        url
+      }
     }
     strapiMidReportManualADO: strapiMidReportManual(
       biz_cd_executive: { eq: $slug }
@@ -900,6 +902,9 @@ export const pageQuery = graphql`
       biz_cd_executive
       biz_cd_fund_distr
       business_org_type
+      data {
+        url
+      }
     }
   }
 `;

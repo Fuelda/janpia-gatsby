@@ -11,7 +11,6 @@ import { LshapeTableRow, ScrollTable, Td, Th } from "./progressReport";
 import DetailAnchor from "../components/atoms/DetailAnchor";
 import { useAttachedFile } from "../hooks/useAttachedFile";
 import AttachedFileLink from "../components/atoms/AttachedFileLink";
-import useStrapiPdf from "../hooks/useStrapiPdf";
 import { formatAndConvertNextDate } from "../util/formatDate";
 
 const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
@@ -53,10 +52,11 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
 
   const strapiCompleteReportManual =
     strapiCompleteReportManualFDO || strapiCompleteReportManualADO;
-  const { pdfUrl, isPdfLoading } = useStrapiPdf(
-    slug,
-    "complete-report-manuals"
-  );
+
+  const pdfUrl =
+    strapiCompleteReportManual &&
+    strapiCompleteReportManual.data &&
+    `https://docs.google.com/viewer?url=${strapiCompleteReportManual.data.url}&embedded=true`;
 
   return (
     <Layout>
@@ -144,11 +144,7 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
         <div css={detailBody}>
           {strapiCompleteReportManual && pdfUrl && (
             <div>
-              {isPdfLoading ? (
-                <p>Loading...</p>
-              ) : (
-                <iframe width="100%" height="500px" src={pdfUrl}></iframe>
-              )}
+              <iframe width="100%" height="500px" src={pdfUrl}></iframe>
             </div>
           )}
           {strapiCompleteReport && (
@@ -975,12 +971,18 @@ export const pageQuery = graphql`
       biz_cd_fund_distr: { eq: $slug }
       business_org_type: { eq: "F" }
     ) {
+      data {
+        url
+      }
       updatedAt(formatString: "YYYY/MM/DD")
     }
     strapiCompleteReportManualADO: strapiCompleteReportManual(
       biz_cd_executive: { eq: $slug }
       business_org_type: { eq: "A" }
     ) {
+      data {
+        url
+      }
       updatedAt(formatString: "YYYY/MM/DD")
     }
   }
