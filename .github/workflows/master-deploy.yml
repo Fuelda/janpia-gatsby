@@ -44,11 +44,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Clear Gatsby cache
-        run: |
-          npm cache clean --force
-          npx gatsby clean
-
       - name: Build Gatsby site
         run: npm run build
 
