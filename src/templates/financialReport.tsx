@@ -63,7 +63,11 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
   const settleReport = strapiSettleReportFDO || strapiSettleReportADO;
   const settleReportManual =
     strapiSettleReportManualFDO || strapiSettleReportManualADO;
-  const { pdfUrl, isPdfLoading } = useStrapiPdf(slug, "settle-report-manuals");
+
+  const pdfUrl =
+    settleReportManual &&
+    settleReportManual.data &&
+    `https://docs.google.com/viewer?url=${settleReportManual.data.url}&embedded=true`;
 
   const extractedBusinessTypeNameYearNum = businessTypeNameYear.match(/\d+/);
   const businessTypeNameYearNum =
@@ -121,11 +125,7 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
         >
           {settleReportManual && pdfUrl && (
             <div>
-              {isPdfLoading ? (
-                <p>Loading...</p>
-              ) : (
-                <iframe width="100%" height="500px" src={pdfUrl}></iframe>
-              )}
+              <iframe width="100%" height="500px" src={pdfUrl}></iframe>
             </div>
           )}
           {settleReport && (
@@ -1282,12 +1282,18 @@ export const pageQuery = graphql`
       biz_cd_fund_distr: { eq: $slug }
       business_org_type: { eq: "F" }
     ) {
+      data {
+        url
+      }
       updatedAt(formatString: "YYYY/MM/DD")
     }
     strapiSettleReportManualADO: strapiSettleReportManual(
       biz_cd_executive: { eq: $slug }
       business_org_type: { eq: "A" }
     ) {
+      data {
+        url
+      }
       updatedAt(formatString: "YYYY/MM/DD")
     }
     # サイドバーチェック用
