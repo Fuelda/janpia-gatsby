@@ -56,9 +56,11 @@ export const LshapeTableRow: React.FC<{
   );
 };
 
+type TargetTermArrayType = { value: 0 | 1 | 2 | 3 | 4; label: string };
+
 const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
-  const [currentTab, setCurrentTab] = useState(1);
+  const [currentTab, setCurrentTab] = useState<0 | 1 | 2 | 3 | 4>();
   const [currentTabManual, setCurrentTabManual] = useState(1);
   const [loaded, setLoaded] = useState(false);
   const {
@@ -73,12 +75,25 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
     ...allStrapiProgressReportManualADO.edges,
   ];
 
-  const targetTermArray = allStrapiProgressReport.edges.map(
-    (report: any) => report.node.target_term
-  );
+  const targetTermArray: TargetTermArrayType[] = allStrapiProgressReport.edges
+    .map((report: any) => ({
+      label: report.node.target_term,
+      value: Number(report.node.target_term_cd),
+    }))
+    .sort(
+      (a: TargetTermArrayType, b: TargetTermArrayType) => a.value - b.value
+    );
+
   const currentItem = allStrapiProgressReport.edges.find(
-    (report: any) => report.node.target_term === currentTab
+    (report: any) => Number(report.node.target_term_cd) === currentTab
   );
+
+  useEffect(() => {
+    const minTargetTermValue = Math.min(
+      ...targetTermArray.map((term) => term.value)
+    ) as 0 | 1 | 2 | 3 | 4;
+    setCurrentTab(minTargetTermValue);
+  }, []);
 
   const insertId = currentItem && currentItem.node.insert_id;
   const { attachedFileData } = useAttachedFile(insertId);
@@ -233,16 +248,16 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
         </div>
         <div css={detailTab}>
           {targetTermArray.length > 0 &&
-            targetTermArray.map((term: any, index: number) => (
+            targetTermArray.map((term: TargetTermArrayType, index: number) => (
               <button
                 key={index}
                 css={[
                   detailRoundTabBtn,
-                  currentTab === term && detailTabBtnSelected,
+                  currentTab === term.value && detailTabBtnSelected,
                 ]}
-                onClick={() => setCurrentTab(term)}
+                onClick={() => setCurrentTab(term.value)}
               >
-                {term}
+                {term.label}
               </button>
             ))}
         </div>
@@ -1147,6 +1162,7 @@ export const pageQuery = graphql`
           }
           taisyoutiiki
           target_term
+          target_term_cd
           updatedAt(formatString: "YYYY/MM/DD")
         }
       }

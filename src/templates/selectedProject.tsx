@@ -15,7 +15,6 @@ import Seo from "../components/lauout/Seo";
 import DetailItemWrapper from "../components/lauout/DetailItemWrapper";
 import { LshapeTableRow, ScrollTable, Td, Th } from "./progressReport";
 import DetailAnchor from "../components/atoms/DetailAnchor";
-import useStrapiSelectedReportPdf from "../hooks/useStrapiSelectedReportPdf";
 
 type ormType = {
   node: {
@@ -24,6 +23,11 @@ type ormType = {
     data: { url: string };
     round: number;
   };
+};
+
+const extractRoundNumber = (str: string) => {
+  const match = str.match(/第(\d+)回/);
+  return match ? parseInt(match[1]) : null;
 };
 
 const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
@@ -39,11 +43,13 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
           (orm: ormType) => orm.node.round
         )
       : allStrapiOfferingReport.edges.length > 0
-      ? allStrapiOfferingReport.edges.map((or: any) => or.node.koubo_nm)
+      ? allStrapiOfferingReport.edges.map((or: any) =>
+          extractRoundNumber(or.node.koubo_nm)
+        )
       : [];
 
   const currentItem = allStrapiOfferingReport.edges.find(
-    (or: any) => or.node.koubo_nm === currentTab
+    (or: any) => extractRoundNumber(or.node.koubo_nm) === currentTab
   );
   const currentItemManual =
     allStrapiOfferingReportManual &&
@@ -116,9 +122,7 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                 ]}
                 onClick={() => setCurrentTab(round)}
               >
-                {allStrapiOfferingReportManualFDO.edges.length > 0
-                  ? `第${round}回`
-                  : `${round}`}
+                {`第${round}回`}
               </button>
             ))}
         </div>
