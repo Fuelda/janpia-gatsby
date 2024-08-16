@@ -12,7 +12,6 @@ import DetailItemWrapper from "../components/lauout/DetailItemWrapper";
 import { tableWide, td8col, th8col, thead8col } from "../styles/table";
 import Seo from "../components/lauout/Seo";
 import { useDetailContext } from "../context/detailContext";
-import useStrapiPdf from "../hooks/useStrapiPdf";
 
 const thStandard = tw`bg-blue-base py-3 px-3 text-start border-gray-border border`;
 const thNoBorder = tw`bg-blue-base py-3 px-3 text-start `;
