@@ -1,6 +1,6 @@
 import { Link } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
-import React from "react";
+import React, { Dispatch, useEffect } from "react";
 import "twin.macro";
 import tw from "twin.macro";
 import { hCenter, pankuzu } from "../../styles/base";
@@ -12,7 +12,10 @@ import { linkCollectionTypesManual } from "../../util/linkCollectionTypesManual"
 
 const resultCardTip = tw`text-xs py-1 px-1.5 border border-gray-base text-gray-base`;
 
-const DetailHeader = (props: { business_cd: string }) => {
+const DetailHeader = (props: {
+  business_cd: string;
+  setBusinessTypeNameYear?: Dispatch<React.SetStateAction<string>>;
+}) => {
   const linkedBizPlan = linkCollectionTypes();
   const linkedBizPlanManual = linkCollectionTypesManual();
   const linkedAllBizPlan = [...linkedBizPlan, ...linkedBizPlanManual];
@@ -100,6 +103,12 @@ const DetailHeader = (props: { business_cd: string }) => {
       splitBusinessTypeName.length >= 2 &&
       (splitBusinessTypeName[2] === "コロナ枠" || "緊急枠") &&
       "緊急支援枠");
+
+  useEffect(() => {
+    props.setBusinessTypeNameYear &&
+      businessTypeNameYear &&
+      props.setBusinessTypeNameYear(businessTypeNameYear);
+  }, [businessTypeNameYear]);
 
   return (
     <div>

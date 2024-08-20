@@ -23,6 +23,7 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
     strapiSettleReportManualADO,
   } = data;
   const [updatedAt, setUpdatedAt] = useState("");
+  const [businessTypeNameYear, setBusinessTypeNameYear] = useState("");
 
   const settleReport = strapiSettleReportFDO || strapiSettleReportADO;
   const settleReportManual =
@@ -33,6 +34,11 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
     settleReportManual.data &&
     `https://docs.google.com/viewer?url=${settleReportManual.data.url}&embedded=true`;
 
+  const extractedBusinessTypeNameYearNum = businessTypeNameYear.match(/\d+/);
+  const businessTypeNameYearNum =
+    extractedBusinessTypeNameYearNum &&
+    parseInt(extractedBusinessTypeNameYearNum[0]);
+
   useEffect(() => {
     settleReport && setUpdatedAt(settleReport.updatedAt);
     settleReportManual && setUpdatedAt(settleReportManual.updatedAt);
@@ -40,7 +46,10 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
   return (
     <Layout>
       <Seo title="事業完了時精算報告 | 休眠預金活用事業 情報公開サイト" />
-      <DetailHeader business_cd={slug} />
+      <DetailHeader
+        business_cd={slug}
+        setBusinessTypeNameYear={setBusinessTypeNameYear}
+      />
       <DetailWrapper
         category="事業完了時精算報告"
         slug={slug}
@@ -354,7 +363,10 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                             実績額
                           </th>
                           <th tw="w-32" css={thStandard}>
-                            2021年度
+                            {businessTypeNameYearNum
+                              ? businessTypeNameYearNum + 0
+                              : 2021}
+                            年度
                           </th>
                           <td tw="text-end">
                             {settleReport.ado_josei_ado1 &&
@@ -411,7 +423,12 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                       )}
                       {settleReport.business_type_name.includes("通常枠") && (
                         <tr>
-                          <th css={thStandard}>2022年度</th>
+                          <th css={thStandard}>
+                            {businessTypeNameYearNum
+                              ? businessTypeNameYearNum + 1
+                              : 2022}
+                            年度
+                          </th>
                           <td tw="text-end">
                             {settleReport.ado_josei_ado2 &&
                               parseInt(
@@ -467,7 +484,12 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                       )}
                       {settleReport.business_type_name.includes("通常枠") && (
                         <tr>
-                          <th css={thStandard}>2023年度</th>
+                          <th css={thStandard}>
+                            {businessTypeNameYearNum
+                              ? businessTypeNameYearNum + 2
+                              : 2023}
+                            年度
+                          </th>
                           <td tw="text-end">
                             {settleReport.ado_josei_ado3 &&
                               parseInt(
@@ -523,7 +545,12 @@ const FinancialReport: React.FC<any> = ({ data, pageContext }) => {
                       )}
                       {settleReport.business_type_name.includes("通常枠") && (
                         <tr>
-                          <th css={thStandard}>2024年度</th>
+                          <th css={thStandard}>
+                            {businessTypeNameYearNum
+                              ? businessTypeNameYearNum + 3
+                              : 2024}
+                            年度
+                          </th>
                           <td tw="text-end">
                             {settleReport.ado_josei_ado4 &&
                               parseInt(
