@@ -98,23 +98,38 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
   const insertId = currentItem && currentItem.node.insert_id;
   const { attachedFileData } = useAttachedFile(insertId);
 
+  const translateTargetTermValueToLabel = (value: 0 | 1 | 2 | 3 | 4) => {
+    return targetTermArray.find((term) => term.value === value)?.label;
+  };
   const actualValue =
     allStrapiProgressReportSub.edges.length !== 0 &&
     allStrapiProgressReportSub.edges
       .filter((prs: any) => prs.node.info_type === "10")
-      .filter((prs: any) => prs.node.target_term === currentTab)
+      .filter(
+        (prs: any) =>
+          prs.node.target_term ===
+          translateTargetTermValueToLabel(currentTab || 0)
+      )
       .sort((a: any, b: any) => a.node.row_no - b.node.row_no);
   const performanceOutput =
     allStrapiProgressReportSub.edges.length !== 0 &&
     allStrapiProgressReportSub.edges
       .filter((prs: any) => prs.node.info_type === "20")
-      .filter((prs: any) => prs.node.target_term === currentTab)
+      .filter(
+        (prs: any) =>
+          prs.node.target_term ===
+          translateTargetTermValueToLabel(currentTab || 0)
+      )
       .sort((a: any, b: any) => a.node.row_no - b.node.row_no);
   const performanceActviity =
     allStrapiProgressReportSub.edges.length !== 0 &&
     allStrapiProgressReportSub.edges
       .filter((prs: any) => prs.node.info_type === "21")
-      .filter((prs: any) => prs.node.target_term === currentTab)
+      .filter(
+        (prs: any) =>
+          prs.node.target_term ===
+          translateTargetTermValueToLabel(currentTab || 0)
+      )
       .sort((a: any, b: any) => a.node.row_no - b.node.row_no);
 
   // 手入力データに対する処理
@@ -173,10 +188,13 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
                 anchor={`/result/${slug}/progress-report/#ninthItem`}
               />
             )}
-            <DetailAnchor
-              title="活動実績"
-              anchor={`/result/${slug}/progress-report/#secondItem`}
-            />
+            {(performanceOutput.length > 0 ||
+              performanceActviity.length > 0) && (
+              <DetailAnchor
+                title="活動実績"
+                anchor={`/result/${slug}/progress-report/#secondItem`}
+              />
+            )}
             {(currentItem.node.rep_1 ||
               currentItem.node.rep_6.data.childMarkdownRemark.html) && (
               <DetailAnchor
@@ -213,10 +231,16 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
                 anchor={`/result/${slug}/progress-report/#eighthItem`}
               />
             )}
-            <DetailAnchor
-              title="シンボルマークの活用状況"
-              anchor={`/result/${slug}/progress-report/#tenthItem`}
-            />
+            {(currentItem.node.etc_1_web === "1" ||
+              currentItem.node.etc_1_kouhou === "1" ||
+              currentItem.node.etc_1_houkoku === "1" ||
+              currentItem.node.etc_1_event === "1" ||
+              currentItem.node.etc_1_etc === "1") && (
+              <DetailAnchor
+                title="シンボルマークの活用状況"
+                anchor={`/result/${slug}/progress-report/#tenthItem`}
+              />
+            )}
             {attachedFileData.length > 0 && (
               <DetailAnchor
                 title="添付欄"
@@ -374,11 +398,7 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
                         </tr>
                         {item.node.sikintekisien && (
                           <tr>
-                            <Th>
-                              資金支援
-                              <br />
-                              非資金的支援
-                            </Th>
+                            <Th>資金支援 / 非資金的支援</Th>
                             <Td>{item.node.sikintekisien}</Td>
                           </tr>
                         )}
