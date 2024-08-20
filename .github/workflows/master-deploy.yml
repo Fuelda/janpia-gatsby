@@ -11,6 +11,19 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Check initial disk space
+        run: df -h
+
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+          sudo rm -rf "/usr/local/share/boost"
+          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+
+      - name: Check disk space after cleanup
+        run: df -h
+
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
