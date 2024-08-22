@@ -32,14 +32,9 @@ jobs:
       - name: Cache dependencies
         uses: actions/cache@v3
         with:
-          path: |
-            ~/.npm
-            .cache
-            public
-          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}-gatsby-${{ hashFiles('src/**') }}
+          path: ~/.npm
+          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}-gatsby-
-            ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}-
             ${{ runner.OS }}-node-
 
       - name: Install dependencies
@@ -57,5 +52,5 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         with:
-          args: deploy --dir=public --prod --cache
+          args: deploy --dir=public --prod
           secrets: '["NETLIFY_AUTH_TOKEN", "NETLIFY_SITE_ID"]'
