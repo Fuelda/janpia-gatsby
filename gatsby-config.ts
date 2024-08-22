@@ -212,6 +212,7 @@ const config: GatsbyConfig = {
       },
     },
     `gatsby-plugin-react-helmet`,
+    "gatsby-plugin-netlify",
   ],
 };
 
