@@ -8,6 +8,7 @@ require("dotenv").config({
 const strapiConfig = {
   apiURL: process.env.STRAPI_API_URL,
   accessToken: process.env.STRAPI_TOKEN,
+  queryLimit: 2000,
   collectionTypes: [
     "attached-file",
     "attached-file-text",
@@ -18,6 +19,8 @@ const strapiConfig = {
     "biz-plan-sub",
     "business-category",
     "business-type-name",
+    "complete-report",
+    "complete-report-sub",
     "complete-report-manual",
     "evaluation-plan",
     "evaluation-plan-manual",
@@ -26,10 +29,15 @@ const strapiConfig = {
     "finance-plan-former",
     "finance-plan-manual",
     "group",
+    "mid-report",
+    "mid-report-sub",
     "mid-report-manual",
+    "offering-report",
     "offering-report-manual",
     "post-report-manual",
     "pre-report-manual",
+    "progress-report",
+    "progress-report-sub",
     "progress-report-manual",
     "progress-round",
     "sdgs-goal",
@@ -112,18 +120,18 @@ const config: GatsbyConfig = {
         apiKey: process.env.ALGOLIA_ADMIN_KEY,
         indexName: "janpia-johokokai",
         queries: [
-          {
-            query: algoliaQuery.attachedFileText,
-            transformer: ({ data }: any) =>
-              data.allStrapiAttachedFileText.edges.map(({ node }: any) => {
-                return {
-                  id: node.id,
-                  insert_id: node.insert_id,
-                  content: node.content.data.content.slice(0, 3000),
-                  internal: { contentDigest: node.internal.contentDigest },
-                };
-              }),
-          },
+          // {
+          //   query: algoliaQuery.attachedFileText,
+          //   transformer: ({ data }: any) =>
+          //     data.allStrapiAttachedFileText.edges.map(({ node }: any) => {
+          //       return {
+          //         id: node.id,
+          //         insert_id: node.insert_id,
+          //         content: node.content.data.content.slice(0, 3000),
+          //         internal: { contentDigest: node.internal.contentDigest },
+          //       };
+          //     }),
+          // },
           {
             query: algoliaQuery.bizPlan,
             transformer: ({ data }: any) =>

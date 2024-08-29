@@ -32,7 +32,7 @@ const Header = (props: { path: string }) => {
               情報公開サイト
             </h1>
           </Link>
-          <nav css={hCenter} tw="gap-6 lg:(hidden)">
+          <nav css={[hCenter, tw`gap-6 lg:hidden`]}>
             <Link to="/" tw="p-[7px]" css={path === "/" && currentPath}>
               ホーム
             </Link>
