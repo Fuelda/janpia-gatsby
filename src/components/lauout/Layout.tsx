@@ -6,6 +6,7 @@ import Footer from "./Footer";
 import tw, { GlobalStyles } from "twin.macro";
 import "twin.macro";
 import { wrapper } from "../../styles/base";
+import { useFilteredStrapiContext } from "../../context/filteredStrapiContext";
 import ToPageTopButton from "../atoms/ToPageTopButton";
 import Modal from "react-modal";
 import { useModalContext } from "../../context/modalContext";

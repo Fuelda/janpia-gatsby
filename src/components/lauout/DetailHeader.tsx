@@ -7,6 +7,7 @@ import { hCenter, pankuzu } from "../../styles/base";
 import { businessCategoryArray } from "../../features/search/store/filterContents";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import DetailSelector from "../organisms/DetailSelector";
 import { linkCollectionTypes } from "../../util/linkCollectionTypes";
 import { linkCollectionTypesManual } from "../../util/linkCollectionTypesManual";
 
@@ -101,7 +102,7 @@ const DetailHeader = (props: {
       "通常枠") ||
     (splitBusinessTypeName &&
       splitBusinessTypeName.length >= 2 &&
-      (splitBusinessTypeName[2] === "コロナ枠" || "緊急枠") &&
+      splitBusinessTypeName[2] === "コロナ枠" &&
       "緊急支援枠");
 
   useEffect(() => {
@@ -203,6 +204,9 @@ const DetailHeader = (props: {
             <p>{businessCategoryLabel}</p>
           </div>
         )}
+      </div>
+      <div>
+        <DetailSelector slug={props.business_cd} />
       </div>
     </div>
   );

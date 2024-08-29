@@ -7,6 +7,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const groupQuery = await graphql(nodeQuery.group);
   const bizPlanQuery = await graphql(nodeQuery.bizPlan);
   const bizPlanGroupQuery = await graphql(nodeQuery.bizPlanGroup);
+  const evaluationPlanQuery = await graphql(nodeQuery.evaluationPlan);
   const bizPlanManualQuery = await graphql(nodeQuery.bizPlanManual);
   const bizPlanGroupManualQuery = await graphql(nodeQuery.bizPlanGroupManual);
   const newsQuery = await graphql(nodeQuery.news);
@@ -14,6 +15,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const group = groupQuery.data.allStrapiGroup.edges;
   const bizPlan = bizPlanQuery.data.allStrapiBizPlan.edges;
   const bizPlanGroup = bizPlanGroupQuery.data.allStrapiBizPlanGroup.edges;
+  const evaluationPlan = evaluationPlanQuery.data.allStrapiEvaluationPlan.edges;
   const bizPlanManual = bizPlanManualQuery.data.allStrapiBizPlanManual.edges;
   const bizPlanGroupManual =
     bizPlanGroupManualQuery.data.allStrapiBizPlanGroupManual.edges;
@@ -49,6 +51,12 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       );
       return groupItem ? groupItem.node.insert_id : "";
     });
+    const evaluationPlanItem = evaluationPlan.find(
+      (item) => item.node.business_cd === business_cd
+    );
+    const insert_id_evaluationPlan = evaluationPlanItem
+      ? evaluationPlanItem.node.insert_id
+      : "";
 
     createPage({
       path: `/result/${business_cd}/`,
@@ -83,6 +91,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       component: path.resolve("./src/templates/evaluationPlan.tsx"),
       context: {
         slug: business_cd,
+        insert_id: insert_id_evaluationPlan,
       },
     });
     createPage({
@@ -184,7 +193,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     createPage({
       path: `/result/${business_cd}/evaluation-plan`,
       component: path.resolve("./src/templates/evaluationPlan.tsx"),
-      context: { slug: business_cd },
+      context: { slug: business_cd, insert_id: "" },
     });
     createPage({
       path: `/result/${business_cd}/financial-plan`,

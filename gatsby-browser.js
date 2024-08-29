@@ -4,6 +4,7 @@ import SearchProvider from "./src/context/searchContext";
 import FilteredStrapiProvider from "./src/context/filteredStrapiContext";
 import AlgoliaStrapiProvider from "./src/context/algoliaStrapiContext";
 import ModalProvider from "./src/context/modalContext";
+import DetailProvider from "./src/context/detailContext";
 import ConsortiumProvider from "./src/context/consortiumContext";
 import "./src/styles/modal.scss";
 import "./src/styles/news.scss";
@@ -18,7 +19,9 @@ export const wrapRootElement = ({ element }) => (
       <AlgoliaStrapiProvider>
         <FilteredStrapiProvider>
           <ModalProvider>
-            <ConsortiumProvider>{element}</ConsortiumProvider>
+            <DetailProvider>
+              <ConsortiumProvider>{element}</ConsortiumProvider>
+            </DetailProvider>
           </ModalProvider>
         </FilteredStrapiProvider>
       </AlgoliaStrapiProvider>
