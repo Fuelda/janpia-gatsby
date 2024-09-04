@@ -154,7 +154,7 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                   <div>
                     <table>
                       <tr>
-                        <Th tw="w-[25%]">実施時期</Th>
+                        <Th tw="w-[25%]">事業期間</Th>
                         <Td>
                           開始日{" "}
                           {formatAndConvertNextDate(
@@ -288,11 +288,11 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                                 </tr>
                               )}
                               <tr>
-                                <Th>アウトカム結果</Th>
+                                <Th>アウトカム：結果</Th>
                                 <Td>{item.node.oc_result}</Td>
                               </tr>
                               <tr>
-                                <Th>アウトカム考察</Th>
+                                <Th>アウトカム：考察</Th>
                                 <Td>{item.node.oc_consider}</Td>
                               </tr>
                             </>
@@ -308,40 +308,46 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                   <DetailItemWrapper itemName="アウトプット">
                     <div tw="lg:overflow-x-scroll">
                       <ScrollTable>
-                        <tbody>
-                          {output.map((item: any, index: number) => (
-                            <>
+                        {output.map((item: any, index: number) => (
+                          <tbody>
+                            <tr>
+                              <Th rowSpan={6} key={index} tw="w-[6%]">
+                                {index + 1}
+                              </Th>
+                              <Td colSpan={2}>{item.node.op_output}</Td>
+                            </tr>
+                            {item.node.op_sikinteki && (
                               <tr>
-                                <Th rowSpan={6} key={index} tw="w-[6%]">
-                                  {index + 1}
-                                </Th>
-                                <Td colSpan={2}>{item.node.op_output}</Td>
+                                <Th tw="w-1/4">資金支援/非資金的支援</Th>
+                                <Td>{item.node.op_sikinteki}</Td>
                               </tr>
-                              {item.node.op_sikinteki && (
-                                <tr>
-                                  <Th tw="w-1/4">資金支援/非資金的支援</Th>
-                                  <Td>{item.node.op_sikinteki}</Td>
-                                </tr>
-                              )}
+                            )}
+                            {item.node.op_index && (
                               <tr>
                                 <Th tw="w-1/4">指標</Th>
                                 <Td>{item.node.op_index}</Td>
                               </tr>
+                            )}
+                            {item.node.op_goal && (
                               <tr>
                                 <Th>目標値・目標状態</Th>
                                 <Td>{item.node.op_goal}</Td>
                               </tr>
+                            )}
+                            {item.node.op_result && (
                               <tr>
-                                <Th>アウトプット結果</Th>
+                                <Th>アウトカム：結果</Th>
                                 <Td>{item.node.op_result}</Td>
                               </tr>
+                            )}
+                            {item.node.op_consider && (
                               <tr>
-                                <Th>アウトプット考察</Th>
+                                <Th>アウトカム：考察</Th>
                                 <Td>{item.node.op_consider}</Td>
                               </tr>
-                            </>
-                          ))}
-                        </tbody>
+                            )}
+                          </tbody>
+                        ))}
                       </ScrollTable>
                     </div>
                   </DetailItemWrapper>
@@ -352,32 +358,34 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                   <DetailItemWrapper itemName="活動">
                     <div tw="lg:overflow-x-scroll">
                       <ScrollTable>
-                        <tbody>
-                          {activity.map((item: any, index: number) => (
-                            <>
+                        {activity.map((item: any, index: number) => (
+                          <tbody>
+                            <tr>
+                              <Th rowSpan={4} key={index} tw="w-[6%]">
+                                {index + 1}
+                              </Th>
+                              <Td colSpan={2}>{item.node.act_activity}</Td>
+                            </tr>
+                            {item.node.act_sikinteki && (
                               <tr>
-                                <Th rowSpan={4} key={index} tw="w-[6%]">
-                                  {index + 1}
-                                </Th>
-                                <Td colSpan={2}>{item.node.act_activity}</Td>
+                                <Th tw="w-1/4">資金支援/非資金的支援</Th>
+                                <Td>{item.node.act_sikinteki}</Td>
                               </tr>
-                              {item.node.act_sikinteki && (
-                                <tr>
-                                  <Th tw="w-1/4">資金支援/非資金的支援</Th>
-                                  <Td>{item.node.act_sikinteki}</Td>
-                                </tr>
-                              )}
+                            )}
+                            {item.node.act_sintyoku && (
                               <tr>
                                 <Th tw="w-1/4">活動結果</Th>
                                 <Td>{item.node.act_sintyoku}</Td>
                               </tr>
+                            )}
+                            {item.node.act_gaiyou && (
                               <tr>
                                 <Th>概要</Th>
                                 <Td>{item.node.act_gaiyou}</Td>
                               </tr>
-                            </>
-                          ))}
-                        </tbody>
+                            )}
+                          </tbody>
+                        ))}
                       </ScrollTable>
                     </div>
                   </DetailItemWrapper>
@@ -388,31 +396,35 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                   <DetailItemWrapper itemName="資金分配団体としての非資金的支援の取り組み総括">
                     <div tw="lg:overflow-x-scroll">
                       <ScrollTable>
-                        <tbody>
-                          {work.map((item: any, index: number) => (
-                            <>
-                              <tr>
-                                <Th rowSpan={4} key={index} tw="w-[6%]">
-                                  {index + 1}
-                                </Th>
-                                <Th tw="w-1/4">取り組み</Th>
-                                <Td>{item.node.work_attempt}</Td>
-                              </tr>
+                        {work.map((item: any, index: number) => (
+                          <tbody>
+                            <tr>
+                              <Th rowSpan={4} key={index} tw="w-[6%]">
+                                {index + 1}
+                              </Th>
+                              <Th tw="w-1/4">取り組み</Th>
+                              <Td>{item.node.work_attempt}</Td>
+                            </tr>
+                            {item.node.work_class && (
                               <tr>
                                 <Th tw="w-1/4">取り組み分類</Th>
                                 <Td>{item.node.work_class}</Td>
                               </tr>
+                            )}
+                            {item.node.work_degree && (
                               <tr>
                                 <Th>到達度</Th>
                                 <Td>{item.node.work_degree}</Td>
                               </tr>
+                            )}
+                            {item.node.work_overview && (
                               <tr>
                                 <Th>概要および考察</Th>
                                 <Td>{item.node.work_overview}</Td>
                               </tr>
-                            </>
-                          ))}
-                        </tbody>
+                            )}
+                          </tbody>
+                        ))}
                       </ScrollTable>
                     </div>
                   </DetailItemWrapper>
@@ -431,7 +443,7 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                               "<br />"
                             ),
                         }}
-                        tw="py-3 px-3.5 border-gray-border border text-start break-all lg:(py-2 px-2)"
+                        tw="py-3 px-3.5 border-gray-border border text-start break-all [&_h1]:(text-base font-normal) [&_h2]:(text-base font-normal) lg:(py-2 px-2)"
                       />
                     </div>
                   </DetailItemWrapper>
@@ -563,7 +575,7 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                     <ScrollTable>
                       <tbody>
                         <LshapeTableRow
-                          heading="事業期間に整備が求められている規程類の整備は完了しましたか。									"
+                          heading="事業期間に整備が求められている規程類の整備は完了しましたか"
                           status={strapiCompleteReport.joukyou_10_1_1}
                           content={
                             strapiCompleteReport.naiyou_10_1_1.data
@@ -571,7 +583,7 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                           }
                         />
                         <LshapeTableRow
-                          heading="整備が完了した規程類を自団体のwebサイト上で広く一般公開していますか。"
+                          heading="整備が完了した規程類を自団体のwebサイト上で広く一般公開していますか"
                           status={strapiCompleteReport.joukyou_10_1_2}
                           content={
                             strapiCompleteReport.naiyou_10_1_2.data
@@ -579,7 +591,7 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                           }
                         />
                         <LshapeTableRow
-                          heading="変更があった規程類に関して報告しましたか。"
+                          heading="変更があった規程類に関して報告しましたか"
                           status={strapiCompleteReport.joukyou_10_1_3}
                           content={
                             strapiCompleteReport.naiyou_10_1_3.data
@@ -597,7 +609,7 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                     <ScrollTable>
                       <tbody>
                         <LshapeTableRow
-                          heading="社員総会、評議会、株主総会、理事会、取締役会などは定款の定める通りに開催されていますか。"
+                          heading="社員総会、評議会、株主総会、理事会、取締役会などは定款の定める通りに開催されていますか"
                           status={strapiCompleteReport.joukyou_10_2_1}
                           content={
                             strapiCompleteReport.naiyou_10_2_1.data
@@ -605,15 +617,23 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                           }
                         />
                         <LshapeTableRow
-                          heading="内部通報制度は整備されていますか。"
+                          heading="内部通報制度は整備されていますか"
                           status={strapiCompleteReport.joukyou_10_2_2}
                           content={
                             strapiCompleteReport.naiyou_10_2_2.data
                               .childMarkdownRemark.html
                           }
                         />
+                        {/* {strapiCompleteReport.gov_riyou_joukyou && (
+                          <tr>
+                            <Th colSpan={2}>
+                              上記設問で「はい」の場合、利用はありましたか。
+                            </Th>
+                            <Td>{strapiCompleteReport.gov_riyou_joukyou}</Td>
+                          </tr>
+                        )} */}
                         <LshapeTableRow
-                          heading="利益相反防止のための自己申告を定期的に行っていますか。"
+                          heading="利益相反防止のための自己申告を定期的に行っていますか"
                           status={strapiCompleteReport.joukyou_10_2_4}
                           content={
                             strapiCompleteReport.naiyou_10_2_4.data
@@ -621,7 +641,7 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                           }
                         />
                         <LshapeTableRow
-                          heading="コンプライアンス委員会またはコンプライアンス責任者を設置していましたか。"
+                          heading="コンプライアンス委員会またはコンプライアンス責任者を設置していましたか"
                           status={strapiCompleteReport.joukyou_10_2_5}
                           content={
                             strapiCompleteReport.naiyou_10_2_5.data
@@ -629,7 +649,7 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                           }
                         />
                         <LshapeTableRow
-                          heading="ガバナンス・コンプライアンスの整備や強化施策を検討・実施しましたか。"
+                          heading="ガバナンス・コンプライアンスの整備や強化施策を検討・実施しましたか"
                           status={strapiCompleteReport.joukyou_10_2_6}
                           content={
                             strapiCompleteReport.naiyou_10_2_6.data
@@ -638,7 +658,7 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                         />
                         {strapiCompleteReport.joukyou_10_2_7_saisyuu && (
                           <LshapeTableRow
-                            heading="団体の決算書類に対する会計監査はどのように実施しましたか。本事業の最終年度の状況を選択してください。（実施予定の場合含む）"
+                            heading="団体の決算書類に対する会計監査はどのように実施しましたか。本事業の最終年度の状況を選択してください（実施予定の場合含む）"
                             status={strapiCompleteReport.joukyou_10_2_7_saisyuu}
                             content={
                               strapiCompleteReport.naiyou_10_2_7_saisyuu.data
@@ -648,7 +668,7 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                         )}
                         {strapiCompleteReport.joukyou_10_2_7_houkoku && (
                           <LshapeTableRow
-                            heading="報告年度の会計監査はどのように実施しましたか。（実施予定の場合含む）"
+                            heading="報告年度の会計監査はどのように実施しましたか（実施予定の場合含む）"
                             status={strapiCompleteReport.joukyou_10_2_7_houkoku}
                             content={
                               strapiCompleteReport.naiyou_10_2_7_houkoku.data
@@ -658,7 +678,7 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                         )}
                         {strapiCompleteReport.joukyou_10_2_8 && (
                           <LshapeTableRow
-                            heading="事業完了した実行団体へ事業完了時監査を行いましたか。"
+                            heading="事業完了した実行団体へ事業完了時監査を行いましたか"
                             status={strapiCompleteReport.joukyou_10_2_8}
                             content={
                               strapiCompleteReport.naiyou_10_2_8.data
@@ -668,7 +688,7 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                         )}
                         <tr>
                           <Th colSpan={2}>
-                            本事業に対して、国や地方公共団体からの補助金・助成金等を申請、または受領していますか。
+                            本事業に対して、国や地方公共団体からの補助金・助成金等を申請、または受領していますか
                           </Th>
                           <Td>{strapiCompleteReport.joukyou_10_2_9}</Td>
                         </tr>

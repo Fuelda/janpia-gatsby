@@ -204,7 +204,7 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                           .html && (
                           <tr>
                             <Th>
-                              上記設問で「その他」を選んだ場合、その実施者を記載してください。
+                              上記設問で「その他」を選んだ場合、その実施者を記載してください
                             </Th>
                             <Td>
                               <div
@@ -221,7 +221,7 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                         )}
                         <tr>
                           <Th>
-                            説明会・個別相談会で工夫したこと、よかったことを記載してください。
+                            説明会・個別相談会で工夫したこと、よかったことを記載してください
                           </Th>
                           <Td>
                             <div
@@ -236,7 +236,7 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                           </Td>
                         </tr>
                         <tr>
-                          <Th>説明会・個別相談会の課題を記載してください。</Th>
+                          <Th>説明会・個別相談会の課題を記載してください</Th>
                           <Td>
                             <div
                               dangerouslySetInnerHTML={{
@@ -396,7 +396,7 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                           <Th tw="w-1/2">
                             （利益相反の防止）資金分配団体と申請団体との間で、
                             (1) 役員の兼職関係がないこと、および (2)
-                            過去に兼職関係があった場合は退任後６ヶ月間以上経過していることを確認しましたか。
+                            過去に兼職関係があった場合は退任後６ヶ月間以上経過していることを確認しましたか
                           </Th>
                           <Td>{currentItem.node.riekiihan_kakunin}</Td>
                         </tr>
@@ -408,7 +408,7 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                           .html && (
                           <tr>
                             <Th tw="w-1/2">
-                              （利益相反の防止）その他に実行団体との利益相反の防止に関して実施したことがあれば記載してください。
+                              （利益相反の防止）その他に実行団体との利益相反の防止に関して実施したことがあれば記載してください
                             </Th>
                             <Td>
                               <div
@@ -425,7 +425,7 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                         )}
                         <tr>
                           <Th tw="w-1/2">
-                            審査の過程で第三者の意見聴取等、専門的な意見をどのように取り入れましたか。
+                            審査の過程で第三者の意見聴取等、専門的な意見をどのように取り入れましたか
                           </Th>
                           <Td>
                             <div
@@ -441,7 +441,7 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                         </tr>
                         <tr>
                           <Th>
-                            審査を行う者の利益相反の防止措置はどのように行いましたか。
+                            審査を行う者の利益相反の防止措置はどのように行いましたか
                           </Th>
                           <Td>
                             <div
@@ -457,7 +457,7 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                         </tr>
                         <tr>
                           <Th>
-                            申請団体のコンプライアンス/ガバナンス体制の確認をどのように行いましたか。
+                            申請団体のコンプライアンス/ガバナンス体制の確認をどのように行いましたか
                           </Th>
                           <Td>
                             <div
@@ -473,7 +473,7 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                         </tr>
                         <tr>
                           <Th>
-                            申請団体との面談(必要に応じて現地調査)はどのように実施しましたか。
+                            申請団体との面談(必要に応じて現地調査)はどのように実施しましたか
                           </Th>
                           <Td>
                             <div
@@ -488,7 +488,7 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                           </Td>
                         </tr>
                         <tr>
-                          <Th>申請団体の審査で工夫したこと、よかったこと。</Th>
+                          <Th>申請団体の審査で工夫したこと、よかったこと</Th>
                           <Td>
                             <div
                               dangerouslySetInnerHTML={{
@@ -502,7 +502,7 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                           </Td>
                         </tr>
                         <tr>
-                          <Th>申請団体の審査で感じた課題。</Th>
+                          <Th>申請団体の審査で感じた課題</Th>
                           <Td>
                             <div
                               dangerouslySetInnerHTML={{
@@ -522,11 +522,11 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
               </div>
               <div id="fifthItem">
                 <DetailItemWrapper itemName="公募の設計/申請団体数・実行団体の事業内容">
-                  <div tw="overflow-x-scroll">
+                  <div tw="lg:overflow-x-scroll">
                     <ScrollTable>
                       <tbody>
                         <LshapeTableRow
-                          heading="（申請団体数）実行団体選定予定件数に対して申請団体数は想定通りでしたか。"
+                          heading="（申請団体数）実行団体選定予定件数に対して申請団体数は想定通りでしたか"
                           status={currentItem.node.sinseidantai_select}
                           contentName="要因"
                           content={
@@ -535,7 +535,7 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                           }
                         />
                         <LshapeTableRow
-                          heading="（申請団体の事業内容）設定した社会課題の解決に対して、選定した実行団体の事業内容（目標、対象者、地域、活動、金額、規模等）は想定通りでしたか。"
+                          heading="（申請団体の事業内容）設定した社会課題の解決に対して、選定した実行団体の事業内容（目標、対象者、地域、活動、金額、規模等）は想定通りでしたか"
                           status={currentItem.node.jigyounaiyou_select}
                           contentName="要因"
                           content={
@@ -550,17 +550,17 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
               </div>
               <div id="sixthItem">
                 <DetailItemWrapper itemName="選定結果の通知及び公開の状況">
-                  <div tw="overflow-x-scroll">
+                  <div tw="lg:overflow-x-scroll">
                     <ScrollTable>
                       <tbody>
                         <LshapeTableRow
-                          heading="（選定結果の通知）実行団体に選定しなかった申請団体に対し、その理由と改善すべき点を示しましたか。"
+                          heading="（選定結果の通知）実行団体に選定しなかった申請団体に対し、その理由と改善すべき点を示しましたか"
                           status={currentItem.node.s_tuuti_select}
                           contentName="通知予定日"
                           content={currentItem.node.s_tuuti_text}
                         />
                         <LshapeTableRow
-                          heading="（選定結果の公開）選定結果について、webサイト上で広く一般に公開しましたか。"
+                          heading="（選定結果の公開）選定結果について、webサイト上で広く一般に公開しましたか"
                           status={currentItem.node.s_koukai_select}
                           contentName={
                             currentItem.node.s_koukai_select === "はい"
@@ -570,7 +570,7 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                           content={currentItem.node.s_koukai_text}
                         />
                         <LshapeTableRow
-                          heading="（規程類の公開）ガバナンス・コンプライアンス体制に関する規程類を、 web サイト上で広く一般に公開しましたか。"
+                          heading="（規程類の公開）ガバナンス・コンプライアンス体制に関する規程類を、 web サイト上で広く一般に公開しましたか"
                           status={currentItem.node.k_koukai_select}
                           contentName={
                             currentItem.node.k_koukai_select === "はい"
@@ -580,7 +580,7 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                           content={currentItem.node.k_koukai_text}
                         />
                         <LshapeTableRow
-                          heading="（人件費水準の公開）経費に人件費が含まれる場合、当該人件費の水準をweb サイト上で広く一般に公開しましたか。"
+                          heading="（人件費水準の公開）経費に人件費が含まれる場合、当該人件費の水準をweb サイト上で広く一般に公開しましたか"
                           status={currentItem.node.j_koukai_select}
                           contentName={
                             currentItem.node.j_koukai_select === "はい"
@@ -596,7 +596,7 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
               </div>
               <div id="seventhItem">
                 <DetailItemWrapper itemName="広報実績（公募関連以外） ">
-                  <div tw="overflow-x-scroll">
+                  <div tw="lg:overflow-x-scroll">
                     <ScrollTable>
                       <tbody>
                         <LshapeTableRow
@@ -630,11 +630,11 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
               </div>
               <div id="eighthItem">
                 <DetailItemWrapper itemName="ガバナンス・コンプライアンス体制等の確認">
-                  <div tw="overflow-x-scroll">
+                  <div tw="lg:overflow-x-scroll">
                     <ScrollTable>
                       <tbody>
                         <LshapeTableRow
-                          heading="社員総会、理事会、評議会は定款の定める通りに開催されていますか。"
+                          heading="社員総会、理事会、評議会は定款の定める通りに開催されていますか"
                           status={currentItem.node.syainsoukai_select}
                           contentName="理由"
                           content={
@@ -643,7 +643,7 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                           }
                         />
                         <LshapeTableRow
-                          heading="内部通報制度は整備されていますか。"
+                          heading="内部通報制度は整備されていますか"
                           status={currentItem.node.naibutuuhou_select}
                           contentName="理由"
                           content={
@@ -660,7 +660,7 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                           </tr>
                         )}
                         <LshapeTableRow
-                          heading="利益相反防止のための自己申告を定期的に行っていますか。"
+                          heading="利益相反防止のための自己申告を定期的に行っていますか"
                           status={currentItem.node.riekisouhan_select}
                           contentName="理由"
                           content={
@@ -669,7 +669,7 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                           }
                         />
                         <LshapeTableRow
-                          heading="関連する規程の定めどおり情報公開を行っていますか。"
+                          heading="関連する規程の定めどおり情報公開を行っていますか"
                           status={currentItem.node.johoukoukai_select}
                           contentName="理由"
                           content={
@@ -678,7 +678,7 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                           }
                         />
                         <LshapeTableRow
-                          heading="コンプライアンス委員会は定期的に開催されていますか。"
+                          heading="コンプライアンス委員会は定期的に開催されていますか"
                           status={currentItem.node.cpiin_select}
                           contentName="理由"
                           content={
@@ -691,7 +691,7 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                           <Td>{currentItem.node.hokokunendo_hoho}</Td>
                         </tr>
                         <LshapeTableRow
-                          heading="実行団体に規程類の整備について説明をしましたか。"
+                          heading="実行団体に規程類の整備について説明をしましたか"
                           status={currentItem.node.kiteirui_select}
                           contentName="理由"
                           content={
