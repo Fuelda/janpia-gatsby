@@ -8,7 +8,7 @@ require("dotenv").config({
 const strapiConfig = {
   apiURL: process.env.STRAPI_API_URL,
   accessToken: process.env.STRAPI_TOKEN,
-  queryLimit: 2000,
+  queryLimit: 5000,
   collectionTypes: [
     "attached-file",
     "attached-file-text",

@@ -283,45 +283,43 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
                 <DetailItemWrapper itemName="アウトプットの実績">
                   <div tw="lg:overflow-x-scroll">
                     <ScrollTable>
-                      <tbody>
-                        {output.map((item: any, index: number) => (
-                          <>
+                      {output.map((item: any, index: number) => (
+                        <tbody>
+                          <tr>
+                            <Th rowSpan={7} key={index} tw="w-[6%]">
+                              {index + 1}
+                            </Th>
+                            <Th tw="w-1/4">アウトプット</Th>
+                            <Td>{item.node.op_output}</Td>
+                          </tr>
+                          {item.node.op_sikinteki && (
                             <tr>
-                              <Th rowSpan={7} key={index} tw="w-[6%]">
-                                {index + 1}
-                              </Th>
-                              <Th tw="w-1/4">アウトプット</Th>
-                              <Td>{item.node.op_output}</Td>
+                              <Th>資金支援/非資金的支援</Th>
+                              <Td>{item.node.op_sikinteki}</Td>
                             </tr>
-                            {item.node.op_sikinteki && (
-                              <tr>
-                                <Th tw="w-1/4">資金支援/非資金的支援</Th>
-                                <Td>{item.node.op_sikinteki}</Td>
-                              </tr>
-                            )}
-                            <tr>
-                              <Th>指標</Th>
-                              <Td>{item.node.op_index}</Td>
-                            </tr>
-                            <tr>
-                              <Th>中間評価時の値・状態</Th>
-                              <Td>{item.node.op_goal_mid}</Td>
-                            </tr>
-                            <tr>
-                              <Th>事後評価時の値・状態</Th>
-                              <Td>{item.node.op_goal_aft}</Td>
-                            </tr>
-                            <tr>
-                              <Th>現在の指標の達成状況</Th>
-                              <Td>{item.node.op_achieve}</Td>
-                            </tr>
-                            <tr>
-                              <Th>進捗状況</Th>
-                              <Td>{item.node.op_progress}</Td>
-                            </tr>
-                          </>
-                        ))}
-                      </tbody>
+                          )}
+                          <tr>
+                            <Th>指標</Th>
+                            <Td>{item.node.op_index}</Td>
+                          </tr>
+                          <tr>
+                            <Th>中間評価時の値・状態</Th>
+                            <Td>{item.node.op_goal_mid}</Td>
+                          </tr>
+                          <tr>
+                            <Th>事後評価時の値・状態</Th>
+                            <Td>{item.node.op_goal_aft}</Td>
+                          </tr>
+                          <tr>
+                            <Th>現在の指標の達成状況</Th>
+                            <Td>{item.node.op_achieve}</Td>
+                          </tr>
+                          <tr>
+                            <Th>進捗状況</Th>
+                            <Td>{item.node.op_progress}</Td>
+                          </tr>
+                        </tbody>
+                      ))}
                     </ScrollTable>
                   </div>
                 </DetailItemWrapper>
