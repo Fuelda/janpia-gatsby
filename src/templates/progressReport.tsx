@@ -206,9 +206,10 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
               />
             )}
             {(performanceOutput.length > 0 ||
-              performanceActviity.length > 0) && (
+              performanceActviity.length > 0 ||
+              actualValue.length > 0) && (
               <DetailAnchor
-                title="活動実績"
+                title="実績値"
                 anchor={`/result/${slug}/progress-report/#secondItem`}
               />
             )}
@@ -396,153 +397,26 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
                 </DetailItemWrapper>
               </div>
             )}
-            {actualValue.length > 0 && (
-              <DetailItemWrapper itemName="実績値">
-                <div tw="lg:overflow-x-scroll">
-                  <ScrollTable>
-                    {actualValue.map((item: any, index: number) => (
-                      <tbody key={index}>
-                        <tr>
-                          <Th rowSpan={7} tw="w-[6%] text-center">
-                            {index + 1}
-                          </Th>
-                          <Th tw="w-1/4">アウトプット</Th>
-                          <Td>
-                            <div
-                              dangerouslySetInnerHTML={{
-                                __html:
-                                  item.node.output.data.childMarkdownRemark.html.replace(
-                                    /\n/g,
-                                    "<br />"
-                                  ),
-                              }}
-                            />
-                          </Td>
-                        </tr>
-                        {item.node.sikintekisien && (
-                          <tr>
-                            <Th>資金支援 / 非資金的支援</Th>
-                            <Td>{item.node.sikintekisien}</Td>
-                          </tr>
-                        )}
-                        {item.node.output_etc_index.data.childMarkdownRemark
-                          .html && (
-                          <tr>
-                            <Th>指標</Th>
-                            <Td>
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html:
-                                    item.node.output_etc_index.data.childMarkdownRemark.html.replace(
-                                      /\n/g,
-                                      "<br />"
-                                    ),
-                                }}
-                              />
-                            </Td>
-                          </tr>
-                        )}
-                        {item.node.mid_eval.data.childMarkdownRemark.html && (
-                          <tr>
-                            <Th>中間評価時の値・状態</Th>
-                            <Td>
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html:
-                                    item.node.mid_eval.data.childMarkdownRemark.html.replace(
-                                      /\n/g,
-                                      "<br />"
-                                    ),
-                                }}
-                              />
-                            </Td>
-                          </tr>
-                        )}
-                        {item.node.aft_eval.data.childMarkdownRemark.html && (
-                          <tr>
-                            <Th>事後評価時の値・状態</Th>
-                            <Td>
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html:
-                                    item.node.aft_eval.data.childMarkdownRemark.html.replace(
-                                      /\n/g,
-                                      "<br />"
-                                    ),
-                                }}
-                              />
-                            </Td>
-                          </tr>
-                        )}
-                        {item.node.sintyokujoukyou && (
-                          <tr>
-                            <Th>進捗状況</Th>
-                            <Td>{item.node.sintyokujoukyou}</Td>
-                          </tr>
-                        )}
-                        {item.node.tasseijoukyou.data.childMarkdownRemark
-                          .html && (
-                          <tr>
-                            <Th>現在の指標の達成状況</Th>
-                            <Td>
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html:
-                                    item.node.tasseijoukyou.data.childMarkdownRemark.html.replace(
-                                      /\n/g,
-                                      "<br />"
-                                    ),
-                                }}
-                              />
-                            </Td>
-                          </tr>
-                        )}
-                      </tbody>
-                    ))}
-                  </ScrollTable>
-                </div>
-              </DetailItemWrapper>
-            )}
             {(performanceOutput.length > 0 ||
-              performanceActviity.length > 0) && (
+              performanceActviity.length > 0 ||
+              actualValue.length > 0) && (
               <div id="secondItem">
-                <DetailItemWrapper itemName="活動実績">
+                <DetailItemWrapper itemName="実績値">
                   <div tw="space-y-4 lg:overflow-x-scroll">
-                    <ScrollTable>
-                      {performanceOutput.map((item: any, index: number) => (
-                        <tbody key={index}>
-                          <tr>
-                            <Th rowSpan={6} tw="w-[6%]">
-                              {index + 1}
-                            </Th>
-                            <Th tw="w-1/4">アウトプット</Th>
-                            <Td>
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html:
-                                    item.node.out_output.data.childMarkdownRemark.html.replace(
-                                      /\n/g,
-                                      "<br />"
-                                    ),
-                                }}
-                              />
-                            </Td>
-                          </tr>
-                          {item.node.out_sikintekisien && (
+                    {performanceOutput.length > 0 && (
+                      <ScrollTable>
+                        {performanceOutput.map((item: any, index: number) => (
+                          <tbody key={index}>
                             <tr>
-                              <Th>資金支援 / 非資金的支援</Th>
-                              <Td>{item.node.out_sikintekisien}</Td>
-                            </tr>
-                          )}
-                          {item.node.out_output_etc_index.data
-                            .childMarkdownRemark.html && (
-                            <tr>
-                              <Th tw="w-1/4">指標</Th>
+                              <Th rowSpan={6} tw="w-[6%]">
+                                {index + 1}
+                              </Th>
+                              <Th tw="w-1/4">アウトプット</Th>
                               <Td>
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
-                                      item.node.out_output_etc_index.data.childMarkdownRemark.html.replace(
+                                      item.node.out_output.data.childMarkdownRemark.html.replace(
                                         /\n/g,
                                         "<br />"
                                       ),
@@ -550,16 +424,87 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
                                 />
                               </Td>
                             </tr>
-                          )}
-                          {item.node.out_mokuhyou.data.childMarkdownRemark
-                            .html && (
+                            {item.node.out_sikintekisien && (
+                              <tr>
+                                <Th>資金支援 / 非資金的支援</Th>
+                                <Td>{item.node.out_sikintekisien}</Td>
+                              </tr>
+                            )}
+                            {item.node.out_output_etc_index.data
+                              .childMarkdownRemark.html && (
+                              <tr>
+                                <Th tw="w-1/4">指標</Th>
+                                <Td>
+                                  <div
+                                    dangerouslySetInnerHTML={{
+                                      __html:
+                                        item.node.out_output_etc_index.data.childMarkdownRemark.html.replace(
+                                          /\n/g,
+                                          "<br />"
+                                        ),
+                                    }}
+                                  />
+                                </Td>
+                              </tr>
+                            )}
+                            {item.node.out_mokuhyou.data.childMarkdownRemark
+                              .html && (
+                              <tr>
+                                <Th tw="w-1/4">目標値・目標状態</Th>
+                                <Td>
+                                  <div
+                                    dangerouslySetInnerHTML={{
+                                      __html:
+                                        item.node.out_mokuhyou.data.childMarkdownRemark.html.replace(
+                                          /\n/g,
+                                          "<br />"
+                                        ),
+                                    }}
+                                  />
+                                </Td>
+                              </tr>
+                            )}
+                            {item.node.out_sintyokujoukyou && (
+                              <tr>
+                                <Th tw="w-1/4">進捗状況</Th>
+                                <Td>{item.node.out_sintyokujoukyou}</Td>
+                              </tr>
+                            )}
+                            {item.node.out_gaiyou.data.childMarkdownRemark
+                              .html && (
+                              <tr>
+                                <Th tw="w-1/4">概要</Th>
+                                <Td>
+                                  <div
+                                    dangerouslySetInnerHTML={{
+                                      __html:
+                                        item.node.out_gaiyou.data.childMarkdownRemark.html.replace(
+                                          /\n/g,
+                                          "<br />"
+                                        ),
+                                    }}
+                                  />
+                                </Td>
+                              </tr>
+                            )}
+                          </tbody>
+                        ))}
+                      </ScrollTable>
+                    )}
+                    {performanceActviity.length > 0 && (
+                      <ScrollTable>
+                        {performanceActviity.map((item: any, index: number) => (
+                          <tbody key={index}>
                             <tr>
-                              <Th tw="w-1/4">目標値・目標状態</Th>
+                              <Th rowSpan={4} tw="w-[6%]">
+                                {index + 1}
+                              </Th>
+                              <Th tw="w-1/4">活動</Th>
                               <Td>
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
-                                      item.node.out_mokuhyou.data.childMarkdownRemark.html.replace(
+                                      item.node.act_katudou.data.childMarkdownRemark.html.replace(
                                         /\n/g,
                                         "<br />"
                                       ),
@@ -567,22 +512,53 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
                                 />
                               </Td>
                             </tr>
-                          )}
-                          {item.node.out_sintyokujoukyou && (
+                            {item.node.act_k_sikintekisien && (
+                              <tr>
+                                <Th>資金支援 / 非資金的支援</Th>
+                                <Td>{item.node.act_k_sikintekisien}</Td>
+                              </tr>
+                            )}
+                            {item.node.act_k_sintyoku && (
+                              <tr>
+                                <Th>進捗状況</Th>
+                                <Td>{item.node.act_k_sintyoku}</Td>
+                              </tr>
+                            )}
+                            {item.node.act_k_gaiyou.data.childMarkdownRemark
+                              .html && (
+                              <tr>
+                                <Th>概要</Th>
+                                <Td>
+                                  <div
+                                    dangerouslySetInnerHTML={{
+                                      __html:
+                                        item.node.act_k_gaiyou.data.childMarkdownRemark.html.replace(
+                                          /\n/g,
+                                          "<br />"
+                                        ),
+                                    }}
+                                  />
+                                </Td>
+                              </tr>
+                            )}
+                          </tbody>
+                        ))}
+                      </ScrollTable>
+                    )}
+                    {actualValue.length > 0 && (
+                      <ScrollTable>
+                        {actualValue.map((item: any, index: number) => (
+                          <tbody key={index}>
                             <tr>
-                              <Th tw="w-1/4">進捗状況</Th>
-                              <Td>{item.node.out_sintyokujoukyou}</Td>
-                            </tr>
-                          )}
-                          {item.node.out_gaiyou.data.childMarkdownRemark
-                            .html && (
-                            <tr>
-                              <Th tw="w-1/4">概要</Th>
+                              <Th rowSpan={7} tw="w-[6%] text-center">
+                                {index + 1}
+                              </Th>
+                              <Th tw="w-1/4">アウトプット</Th>
                               <Td>
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
-                                      item.node.out_gaiyou.data.childMarkdownRemark.html.replace(
+                                      item.node.output.data.childMarkdownRemark.html.replace(
                                         /\n/g,
                                         "<br />"
                                       ),
@@ -590,62 +566,90 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
                                 />
                               </Td>
                             </tr>
-                          )}
-                        </tbody>
-                      ))}
-                    </ScrollTable>
-                    <ScrollTable>
-                      {performanceActviity.map((item: any, index: number) => (
-                        <tbody key={index}>
-                          <tr>
-                            <Th rowSpan={4} tw="w-[6%]">
-                              {index + 1}
-                            </Th>
-                            <Th tw="w-1/4">活動</Th>
-                            <Td>
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html:
-                                    item.node.act_katudou.data.childMarkdownRemark.html.replace(
-                                      /\n/g,
-                                      "<br />"
-                                    ),
-                                }}
-                              />
-                            </Td>
-                          </tr>
-                          {item.node.act_k_sikintekisien && (
-                            <tr>
-                              <Th>資金支援 / 非資金的支援</Th>
-                              <Td>{item.node.act_k_sikintekisien}</Td>
-                            </tr>
-                          )}
-                          {item.node.act_k_sintyoku && (
-                            <tr>
-                              <Th>進捗状況</Th>
-                              <Td>{item.node.act_k_sintyoku}</Td>
-                            </tr>
-                          )}
-                          {item.node.act_k_gaiyou.data.childMarkdownRemark
-                            .html && (
-                            <tr>
-                              <Th>概要</Th>
-                              <Td>
-                                <div
-                                  dangerouslySetInnerHTML={{
-                                    __html:
-                                      item.node.act_k_gaiyou.data.childMarkdownRemark.html.replace(
-                                        /\n/g,
-                                        "<br />"
-                                      ),
-                                  }}
-                                />
-                              </Td>
-                            </tr>
-                          )}
-                        </tbody>
-                      ))}
-                    </ScrollTable>
+                            {item.node.sikintekisien && (
+                              <tr>
+                                <Th>資金支援 / 非資金的支援</Th>
+                                <Td>{item.node.sikintekisien}</Td>
+                              </tr>
+                            )}
+                            {item.node.output_etc_index.data.childMarkdownRemark
+                              .html && (
+                              <tr>
+                                <Th>指標</Th>
+                                <Td>
+                                  <div
+                                    dangerouslySetInnerHTML={{
+                                      __html:
+                                        item.node.output_etc_index.data.childMarkdownRemark.html.replace(
+                                          /\n/g,
+                                          "<br />"
+                                        ),
+                                    }}
+                                  />
+                                </Td>
+                              </tr>
+                            )}
+                            {item.node.mid_eval.data.childMarkdownRemark
+                              .html && (
+                              <tr>
+                                <Th>中間評価時の値・状態</Th>
+                                <Td>
+                                  <div
+                                    dangerouslySetInnerHTML={{
+                                      __html:
+                                        item.node.mid_eval.data.childMarkdownRemark.html.replace(
+                                          /\n/g,
+                                          "<br />"
+                                        ),
+                                    }}
+                                  />
+                                </Td>
+                              </tr>
+                            )}
+                            {item.node.aft_eval.data.childMarkdownRemark
+                              .html && (
+                              <tr>
+                                <Th>事後評価時の値・状態</Th>
+                                <Td>
+                                  <div
+                                    dangerouslySetInnerHTML={{
+                                      __html:
+                                        item.node.aft_eval.data.childMarkdownRemark.html.replace(
+                                          /\n/g,
+                                          "<br />"
+                                        ),
+                                    }}
+                                  />
+                                </Td>
+                              </tr>
+                            )}
+                            {item.node.sintyokujoukyou && (
+                              <tr>
+                                <Th>進捗状況</Th>
+                                <Td>{item.node.sintyokujoukyou}</Td>
+                              </tr>
+                            )}
+                            {item.node.tasseijoukyou.data.childMarkdownRemark
+                              .html && (
+                              <tr>
+                                <Th>現在の指標の達成状況</Th>
+                                <Td>
+                                  <div
+                                    dangerouslySetInnerHTML={{
+                                      __html:
+                                        item.node.tasseijoukyou.data.childMarkdownRemark.html.replace(
+                                          /\n/g,
+                                          "<br />"
+                                        ),
+                                    }}
+                                  />
+                                </Td>
+                              </tr>
+                            )}
+                          </tbody>
+                        ))}
+                      </ScrollTable>
+                    )}
                   </div>
                 </DetailItemWrapper>
               </div>
