@@ -859,7 +859,7 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
                     <ScrollTable>
                       <tbody>
                         <LshapeTableRow
-                          heading="社員総会、理事会、評議会は定款の定める通りに開催されていますか。"
+                          heading="社員総会、理事会、評議会は定款の定める通りに開催されていますか"
                           status={currentItem.node.gov_soukai_joukyou}
                           content={
                             currentItem.node.gov_soukai_naiyou.data
@@ -867,7 +867,7 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
                           }
                         />
                         <LshapeTableRow
-                          heading="内部通報制度は整備されていますか。"
+                          heading="内部通報制度は整備されていますか"
                           status={currentItem.node.gov_tuhou_joukyou}
                           content={
                             currentItem.node.gov_tuhou_naiyou.data
@@ -877,14 +877,14 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
                         {currentItem.node.gov_riyou_joukyou && (
                           <tr>
                             <Th colSpan={2}>
-                              上記設問で「はい」の場合、利用はありましたか。
+                              上記設問で「はい」の場合、利用はありましたか
                             </Th>
                             <Td>{currentItem.node.gov_riyou_joukyou}</Td>
                           </tr>
                         )}
                         {currentItem.node.gov_koukai_joukyou && (
                           <LshapeTableRow
-                            heading="関連する規程の定め通り情報公開を行っていますか。"
+                            heading="関連する規程の定め通り情報公開を行っていますか"
                             status={currentItem.node.gov_koukai_joukyou}
                             content={
                               currentItem.node.gov_koukai_naiyou.data
@@ -894,7 +894,7 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
                         )}
                         {currentItem.node.gov_kaisai_joukyou && (
                           <LshapeTableRow
-                            heading="コンプライアンス委員会は定期的に開催されていますか。"
+                            heading="コンプライアンス委員会は定期的に開催されていますか"
                             status={currentItem.node.gov_kaisai_joukyou}
                             content={
                               currentItem.node.gov_kaisai_naiyou.data
@@ -904,7 +904,7 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
                         )}
                         {currentItem.node.kansa_yotei_joukyou && (
                           <LshapeTableRow
-                            heading="報告年度の内部監査又は外部監査を実施予定ですか（実施済みの場合含む）。"
+                            heading="報告年度の内部監査又は外部監査を実施予定ですか（実施済みの場合含む）"
                             status={currentItem.node.kansa_yotei_joukyou}
                             content={
                               currentItem.node.kansa_yotei_naiyou.data
@@ -926,7 +926,7 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
                     <ScrollTable>
                       <tbody>
                         <LshapeTableRow
-                          heading="規程類をwebサイト上で広く一般公開していますか。"
+                          heading="規程類をwebサイト上で広く一般公開していますか"
                           status={currentItem.node.kitei_koukai_joukyou}
                           content={
                             currentItem.node.kitei_koukai_naiyou.data
@@ -935,7 +935,7 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
                         />
                         {currentItem.node.kitei_jhoukoku_joukyou && (
                           <LshapeTableRow
-                            heading="変更があった規程類に関してJANPIAに報告しましたか。"
+                            heading="変更があった規程類に関してJANPIAに報告しましたか"
                             status={currentItem.node.kitei_jhoukoku_joukyou}
                             content={
                               currentItem.node.kitei_jhoukoku_naiyou.data
@@ -945,7 +945,7 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
                         )}
                         {currentItem.node.kitei_fhoukoku_joukyou && (
                           <LshapeTableRow
-                            heading="変更があった規程類に関して資金分配団体に報告しましたか。"
+                            heading="変更があった規程類に関して資金分配団体に報告しましたか"
                             status={currentItem.node.kitei_fhoukoku_joukyou}
                             content={
                               currentItem.node.kitei_fhoukoku_naiyou.data
@@ -954,7 +954,7 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
                           />
                         )}
                         <LshapeTableRow
-                          heading="関連する規程の定めどおり情報公開を行っていますか。"
+                          heading="関連する規程の定めどおり情報公開を行っていますか"
                           status={currentItem.node.koukai_joukyou}
                           content={
                             currentItem.node.koukai_naiyou.data
@@ -963,7 +963,7 @@ const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
                         />
                         {currentItem.node.jigyounaiyou_select && (
                           <LshapeTableRow
-                            heading="報告年度の監査が未実施（実施予定なし）の実行団体はありますか。"
+                            heading="報告年度の監査が未実施（実施予定なし）の実行団体はありますか"
                             status={currentItem.node.jigyounaiyou_select}
                             content={
                               currentItem.node.jigyounaiyou_text.data
