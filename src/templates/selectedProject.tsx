@@ -654,7 +654,7 @@ const SelectedProject: React.FC<any> = ({ data, pageContext }) => {
                         {currentItem.node.riyouumu && (
                           <tr>
                             <Th colSpan={2}>
-                              「はい」の場合、利用はありましたか。
+                              「はい」の場合、利用はありましたか
                             </Th>
                             <Td>{currentItem.node.riyouumu}</Td>
                           </tr>
