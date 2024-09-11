@@ -65,10 +65,10 @@ const regularTargetTermSet: TargetTermArrayType[] = [
   },
   {
     value: 1,
-    label: "進捗報告 (1年度目下期)",
+    label: "年度末報告 (1年度目下期)",
   },
   { value: 2, label: "進捗報告 (2年度目上期)" },
-  { value: 3, label: "進捗報告 (2年度目下期)" },
+  { value: 3, label: "年度末報告 (2年度目下期)" },
   { value: 4, label: "進捗報告 (3年度目上期)" },
 ];
 
