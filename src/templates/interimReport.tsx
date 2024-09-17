@@ -347,52 +347,50 @@ const InterimReport: React.FC<any> = ({ data, pageContext }) => {
                 <DetailItemWrapper itemName="短期アウトカムの進捗状況">
                   <div tw="lg:overflow-x-scroll">
                     <ScrollTable>
-                      <tbody>
-                        {outcome.map((item: any, index: number) => (
-                          <>
+                      {outcome.map((item: any, index: number) => (
+                        <tbody>
+                          <tr>
+                            <Th rowSpan={6} key={index} tw="w-[6%]">
+                              {index + 1}
+                            </Th>
+                            <Th tw="w-1/4">アウトカムで捉える変化の主体</Th>
+                            <Td
+                              css={
+                                item.node.oc_sikinteki === "非資金的支援" &&
+                                tw`bg-gray-pale text-gray-black`
+                              }
+                            >
+                              {item.node.oc_sikinteki === "非資金的支援"
+                                ? ""
+                                : item.node.oc_actor}
+                            </Td>
+                          </tr>
+                          {item.node.oc_sikinteki && (
                             <tr>
-                              <Th rowSpan={6} key={index} tw="w-[6%]">
-                                {index + 1}
-                              </Th>
-                              <Th tw="w-1/4">アウトカムで捉える変化の主体</Th>
-                              <Td
-                                css={
-                                  item.node.oc_sikinteki === "非資金的支援" &&
-                                  tw`bg-gray-pale text-gray-black`
-                                }
-                              >
-                                {item.node.oc_sikinteki === "非資金的支援"
-                                  ? ""
-                                  : item.node.oc_actor}
-                              </Td>
+                              <Th>資金支援/非資金的支援</Th>
+                              <Td>{item.node.oc_sikinteki}</Td>
                             </tr>
-                            {item.node.oc_sikinteki && (
-                              <tr>
-                                <Th>資金支援/非資金的支援</Th>
-                                <Td>{item.node.oc_sikinteki}</Td>
-                              </tr>
-                            )}
-                            <tr>
-                              <Th>指標</Th>
-                              <Td>{item.node.oc_index}</Td>
-                            </tr>
-                            <tr>
-                              <Th>中間評価時の値・状態</Th>
-                              <Td>{item.node.oc_goal_mid}</Td>
-                            </tr>
-                            <tr>
-                              <Th>事後評価時の値・状態</Th>
-                              <Td>{item.node.oc_goal_aft}</Td>
-                            </tr>
-                            <tr>
-                              <Th>
-                                これまでの活動をとおして把握している変化・改善状況
-                              </Th>
-                              <Td>{item.node.oc_status}</Td>
-                            </tr>
-                          </>
-                        ))}
-                      </tbody>
+                          )}
+                          <tr>
+                            <Th>指標</Th>
+                            <Td>{item.node.oc_index}</Td>
+                          </tr>
+                          <tr>
+                            <Th>中間評価時の値・状態</Th>
+                            <Td>{item.node.oc_goal_mid}</Td>
+                          </tr>
+                          <tr>
+                            <Th>事後評価時の値・状態</Th>
+                            <Td>{item.node.oc_goal_aft}</Td>
+                          </tr>
+                          <tr>
+                            <Th>
+                              これまでの活動をとおして把握している変化・改善状況
+                            </Th>
+                            <Td>{item.node.oc_status}</Td>
+                          </tr>
+                        </tbody>
+                      ))}
                     </ScrollTable>
                   </div>
                 </DetailItemWrapper>
