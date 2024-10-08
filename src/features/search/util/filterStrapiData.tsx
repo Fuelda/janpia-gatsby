@@ -122,7 +122,10 @@ export const filterStrapiData = () => {
         searchState.btnCategory.some(
           (btnc) =>
             item.bizPlan.business_type_name &&
-            item.bizPlan.business_type_name?.includes(btnc)
+            (btnc === "コロナ枠"
+              ? item.bizPlan.business_type_name.includes("コロナ枠") ||
+                item.bizPlan.business_type_name.includes("緊急枠")
+              : item.bizPlan.business_type_name?.includes(btnc))
         )) &&
       //事業分類
       (searchState.business_category.length === 0 ||
