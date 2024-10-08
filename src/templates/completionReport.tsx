@@ -627,7 +627,7 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                         {/* {strapiCompleteReport.gov_riyou_joukyou && (
                           <tr>
                             <Th colSpan={2}>
-                              上記設問で「はい」の場合、利用はありましたか
+                              上記設問で「はい」の場合、利用はありましたか。
                             </Th>
                             <Td>{strapiCompleteReport.gov_riyou_joukyou}</Td>
                           </tr>
