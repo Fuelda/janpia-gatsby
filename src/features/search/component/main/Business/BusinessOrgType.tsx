@@ -1,29 +1,36 @@
 import * as Checkbox from "@radix-ui/react-checkbox";
-import { CheckIcon } from "@radix-ui/react-icons";
-import React from "react";
+import React, { useState } from "react";
 import { useSearchContext } from "../../../../../context/searchContext";
 import { OrganizationTypeCdArray } from "../../../store/filterContents";
 import "twin.macro";
-import {
-  checkBox,
-  checkBoxList,
-  checkBoxSet,
-  checkMark,
-} from "../../../../../styles/form";
+import { checkBox, checkBoxSet, checkMark } from "../../../../../styles/form";
 import { h3, hCenter } from "../../../../../styles/base";
 import tw from "twin.macro";
 
 const BusinessOrgType = (props: { path: string }) => {
   const { searchState, searchSetState } = useSearchContext();
-  const { business_org_type } = searchState;
-  const { setBusinessOrgType } = searchSetState;
-  const checkboxArray = OrganizationTypeCdArray;
+  const { orgTypeSelections } = searchState;
+  const { setOrgTypeSelections } = searchSetState;
 
-  const handleCheckbox = (code: string) => {
-    if (business_org_type.includes(code)) {
-      setBusinessOrgType(business_org_type.filter((bot) => bot !== code));
+  const handleCheckbox = ({
+    code,
+    activitySupport,
+  }: {
+    code: string;
+    activitySupport: boolean;
+  }) => {
+    if (
+      orgTypeSelections.some(
+        (ot) => ot.code === code && ot.activitySupport === activitySupport
+      )
+    ) {
+      setOrgTypeSelections(
+        orgTypeSelections.filter(
+          (ot) => ot.code !== code || ot.activitySupport !== activitySupport
+        )
+      );
     } else {
-      setBusinessOrgType([...business_org_type, code]);
+      setOrgTypeSelections([...orgTypeSelections, { code, activitySupport }]);
     }
   };
 
@@ -34,13 +41,25 @@ const BusinessOrgType = (props: { path: string }) => {
         tw="flex gap-y-2.5 flex-wrap px-3.5 py-2.5"
         css={props.path.includes("search") ? tw`gap-x-14` : tw`gap-x-3`}
       >
-        {checkboxArray.map((checkbox) => (
-          <div key={checkbox.code} css={[hCenter, checkBoxSet]}>
+        {OrganizationTypeCdArray.map((checkbox, index) => (
+          <div
+            key={checkbox.code + index.toString()}
+            css={[hCenter, checkBoxSet]}
+          >
             <Checkbox.Root
               id={checkbox.label}
-              onCheckedChange={() => handleCheckbox(checkbox.code)}
+              onCheckedChange={() =>
+                handleCheckbox({
+                  code: checkbox.code,
+                  activitySupport: checkbox.activitySupport,
+                })
+              }
               css={checkBox}
-              checked={business_org_type.includes(checkbox.code)}
+              checked={orgTypeSelections.some(
+                (ot) =>
+                  ot.code === checkbox.code &&
+                  ot.activitySupport === checkbox.activitySupport
+              )}
             >
               <Checkbox.Indicator tw="flex justify-center">
                 <svg

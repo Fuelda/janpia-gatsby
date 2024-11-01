@@ -1,4 +1,3 @@
-import React, { FC, ReactNode, createContext, useContext } from "react";
 import { useStrapiContext } from "../context/strapiContext";
 
 export const linkCollectionTypesManual = () => {

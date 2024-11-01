@@ -1,8 +1,8 @@
-import { useSearchContext } from "../../../context/searchContext";
-
 export const OrganizationTypeCdArray = [
-  { code: "F", label: "資金分配団体" },
-  { code: "A", label: "実行団体" },
+  { code: "F", label: "資金分配団体", activitySupport: false },
+  { code: "A", label: "実行団体", activitySupport: false },
+  { code: "F", label: "活動支援団体", activitySupport: true },
+  { code: "A", label: "支援対象団体", activitySupport: true },
 ];
 
 export const prefecturesArray = {

@@ -6,7 +6,6 @@ import React, {
   useContext,
   useState,
 } from "react";
-import { useAlgoliaStrapiContext } from "./algoliaStrapiContext";
 
 type businessCategoryType = {
   code: number;
@@ -18,7 +17,7 @@ type searchStateType = {
   prefectures: string[];
   legal_personality: number[];
 
-  business_org_type: string[];
+  orgTypeSelections: { code: string; activitySupport: boolean }[];
   btnYear: string[];
   btnCategory: string[];
   business_category: businessCategoryType[] | [];
@@ -49,7 +48,7 @@ type searchSetStateType = {
   setPrefectures: Dispatch<string[]>;
   setLegalPersonality: Dispatch<number[]>;
 
-  setBusinessOrgType: Dispatch<string[]>;
+  setOrgTypeSelections: Dispatch<{ code: string; activitySupport: boolean }[]>;
   setBtnYear: Dispatch<string[]>;
   setBtnCategory: Dispatch<string[]>;
   setBusinessCategory: Dispatch<businessCategoryType[]>;
@@ -89,7 +88,7 @@ const SearchContext = createContext<searchType>({
     prefectures: [],
     legal_personality: [],
 
-    business_org_type: [],
+    orgTypeSelections: [],
     btnYear: [],
     btnCategory: [],
     business_category: [],
@@ -121,7 +120,7 @@ const SearchContext = createContext<searchType>({
     setPrefectures: () => {},
     setLegalPersonality: () => {},
 
-    setBusinessOrgType: () => {},
+    setOrgTypeSelections: () => {},
     setBtnYear: () => {},
     setBtnCategory: () => {},
     setBusinessCategory: () => {},
@@ -154,7 +153,9 @@ const SearchProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [organization_type_cd, setOrganizationTypeCd] = useState<string[]>([]);
   const [prefectures, setPrefectures] = useState<string[]>([]);
   const [legal_personality, setLegalPersonality] = useState<number[]>([]);
-  const [business_org_type, setBusinessOrgType] = useState<string[]>([]);
+  const [orgTypeSelections, setOrgTypeSelections] = useState<
+    { code: string; activitySupport: boolean }[]
+  >([]);
   const [btnYear, setBtnYear] = useState<string[]>([]);
   const [btnCategory, setBtnCategory] = useState<string[]>([]);
   const [business_category, setBusinessCategory] = useState<
@@ -187,7 +188,7 @@ const SearchProvider: FC<{ children: ReactNode }> = ({ children }) => {
     setPrefectures([]);
     setLegalPersonality([]);
 
-    setBusinessOrgType([]);
+    setOrgTypeSelections([]);
     setBtnYear([]);
     setBtnCategory([]);
     setBusinessCategory([]);
@@ -220,7 +221,7 @@ const SearchProvider: FC<{ children: ReactNode }> = ({ children }) => {
       prefectures,
       legal_personality,
 
-      business_org_type,
+      orgTypeSelections,
       btnYear,
       btnCategory,
       business_category,
@@ -252,7 +253,7 @@ const SearchProvider: FC<{ children: ReactNode }> = ({ children }) => {
       setPrefectures,
       setLegalPersonality,
 
-      setBusinessOrgType,
+      setOrgTypeSelections,
       setBtnYear,
       setBtnCategory,
       setBusinessCategory,

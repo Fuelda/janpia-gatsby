@@ -34,8 +34,11 @@ const OrganizationTypeCd = (props: { path: string }) => {
         tw="flex gap-y-2.5 flex-wrap px-3.5 py-2.5"
         css={props.path.includes("search") ? tw`gap-x-14` : tw`gap-x-3`}
       >
-        {checkboxArray.map((checkbox) => (
-          <div key={checkbox.code} css={[hCenter, checkBoxSet]}>
+        {checkboxArray.map((checkbox, index) => (
+          <div
+            key={checkbox.code + index.toString()}
+            css={[hCenter, checkBoxSet]}
+          >
             <Checkbox.Root
               id={checkbox.code}
               onCheckedChange={() => handleCheckbox(checkbox.code)}

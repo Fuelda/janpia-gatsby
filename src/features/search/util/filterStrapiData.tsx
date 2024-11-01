@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useAlgoliaStrapiContext } from "../../../context/algoliaStrapiContext";
 import { useSearchContext } from "../../../context/searchContext";
 import { linkCollectionTypes } from "../../../util/linkCollectionTypes";
+import { isActivitySupportGroup } from "../../../lib/businessTypeNameChecker";
 
 export const filterStrapiData = () => {
   const { searchState } = useSearchContext();
@@ -105,11 +106,14 @@ export const filterStrapiData = () => {
             parseInt(item.mainGroup?.node.legal_personality)
           ))) &&
       //事業種別
-      (searchState.business_org_type.length === 0 ||
-        (item.bizPlan.business_org_type &&
-          searchState.business_org_type.includes(
-            item.bizPlan.business_org_type
-          ))) &&
+      (searchState.orgTypeSelections.length === 0 ||
+        searchState.orgTypeSelections.some(
+          (ots) =>
+            item.bizPlan.business_type_name &&
+            isActivitySupportGroup(item.bizPlan.business_type_name) ===
+              ots.activitySupport &&
+            item.bizPlan.business_org_type === ots.code
+        )) &&
       //事業年度
       (searchState.btnYear.length === 0 ||
         searchState.btnYear.some(
