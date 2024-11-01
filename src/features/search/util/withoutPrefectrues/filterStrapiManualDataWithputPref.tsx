@@ -1,5 +1,6 @@
 import { useAlgoliaStrapiContext } from "../../../../context/algoliaStrapiContext";
 import { useSearchContext } from "../../../../context/searchContext";
+import { isActivitySupportGroup } from "../../../../lib/businessTypeNameChecker";
 import { linkCollectionTypesManual } from "../../../../util/linkCollectionTypesManual";
 
 export const filterStrapiManualDataWithoutPref = () => {
@@ -85,11 +86,14 @@ export const filterStrapiManualDataWithoutPref = () => {
             )
         )) &&
       //事業種別
-      (searchState.business_org_type.length === 0 ||
-        (item.bizPlan.business_org_type &&
-          searchState.business_org_type.includes(
-            item.bizPlan.business_org_type
-          ))) &&
+      (searchState.orgTypeSelections.length === 0 ||
+        searchState.orgTypeSelections.some(
+          (ots) =>
+            item.bizPlan.business_type_name?.label &&
+            isActivitySupportGroup(item.bizPlan.business_type_name.label) ===
+              ots.activitySupport &&
+            item.bizPlan.business_org_type === ots.code
+        )) &&
       //事業年度/事業枠
       // (searchState.business_type_name === "" ||
       //   (item.bizPlan.business_type_name &&
