@@ -25,6 +25,7 @@ const DetailFooter = ({
           <Link
             to={link.path}
             css={[hCenter, linkBox, path === link.path && currentSidebar]}
+            key={link.path}
           >
             <p tw="inline-block">{link.title}</p>
             <FontAwesomeIcon icon={faAngleRight} tw="text-gray-black" />

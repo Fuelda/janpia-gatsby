@@ -9,6 +9,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { linkCollectionTypes } from "../../util/linkCollectionTypes";
 import { linkCollectionTypesManual } from "../../util/linkCollectionTypesManual";
+import { BusinessOrgTypeThumbnail } from "../atoms/BusinessOrgTypeThumbnail";
+import { convertBusinessTypeNameLabel } from "../../lib/businessTypeNameChecker";
 
 const resultCardTip = tw`text-xs py-1 px-1.5 border border-gray-base text-gray-base`;
 
@@ -97,12 +99,18 @@ const DetailHeader = (props: {
   const businessTypeNameCategory =
     (splitBusinessTypeName &&
       splitBusinessTypeName.length >= 2 &&
-      splitBusinessTypeName[2] === "通常枠" &&
+      splitBusinessTypeName[2].includes("通常枠") &&
       "通常枠") ||
     (splitBusinessTypeName &&
       splitBusinessTypeName.length >= 2 &&
-      (splitBusinessTypeName[2] === "コロナ枠" || "緊急枠") &&
-      "緊急支援枠");
+      convertBusinessTypeNameLabel(splitBusinessTypeName[2]).includes(
+        "緊急支援枠"
+      ) &&
+      "緊急支援枠") ||
+    (splitBusinessTypeName &&
+      splitBusinessTypeName.length >= 2 &&
+      splitBusinessTypeName[2].includes("活動支援枠") &&
+      "活動支援枠");
 
   useEffect(() => {
     props.setBusinessTypeNameYear &&
@@ -125,19 +133,14 @@ const DetailHeader = (props: {
       </div>
       <div tw="w-full p-2.5 flex gap-2 mt-3.5 lg:(py-0)">
         <div tw="w-[100px] h-[100px] shrink-0 lg:(w-[23%] h-auto)">
-          {business_org_type && business_org_type === "F" ? (
-            <StaticImage
-              src="../../images/thumbnail_shikinbunpai.png"
-              alt="サムネイル"
-              tw="w-full"
-            />
-          ) : (
-            <StaticImage
-              src="../../images/thumbnail_jikkou.png"
-              alt="サムネイル"
-              tw="w-full"
-            />
-          )}
+          <BusinessOrgTypeThumbnail
+            business_org_type={business_org_type || ""}
+            business_type_name={
+              typeof business_type_name === "string"
+                ? business_type_name
+                : business_type_name?.label || ""
+            }
+          />
         </div>
         <div tw="">
           <div tw="flex gap-[5px]">

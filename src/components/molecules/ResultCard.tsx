@@ -6,6 +6,7 @@ import tw from "twin.macro";
 import { hCenter } from "../../styles/base";
 import { businessCategoryArray } from "../../features/search/store/filterContents";
 import { convertBusinessTypeNameLabel } from "../../lib/businessTypeNameChecker";
+import { BusinessOrgTypeThumbnail } from "../atoms/BusinessOrgTypeThumbnail";
 
 const resultCardTip = tw`text-xs py-1 px-1.5 border border-gray-border`;
 
@@ -95,19 +96,10 @@ const ResultCard = (props: any) => {
     >
       <div tw="flex gap-2 ">
         <div tw="w-[100px] h-[100px] shrink-0 lg:(w-[24%] h-auto)">
-          {business_org_type === "F" ? (
-            <StaticImage
-              src="../../images/thumbnail_shikinbunpai.png"
-              alt="サムネイル"
-              tw="w-full"
-            />
-          ) : (
-            <StaticImage
-              src="../../images/thumbnail_jikkou.png"
-              alt="サムネイル"
-              tw="w-full"
-            />
-          )}
+          <BusinessOrgTypeThumbnail
+            business_org_type={business_org_type}
+            business_type_name={business_type_name.label || business_type_name}
+          />
         </div>
         <div tw="">
           <div tw="flex gap-[5px]">

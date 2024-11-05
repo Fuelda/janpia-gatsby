@@ -82,6 +82,7 @@ const DetailSelector = ({
           ) : (
             detailPageLink.map((link) => (
               <Link
+                key={link.path}
                 css={[detailSidebarBlock, path === link.path && currentSidebar]}
                 to={link.path}
               >

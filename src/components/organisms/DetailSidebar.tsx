@@ -29,6 +29,7 @@ const DetailSidebar = ({
           <Link
             css={[detailSidebarBlock, path === link.path && currentSidebar]}
             to={link.path}
+            key={link.path}
           >
             {link.title}
           </Link>
