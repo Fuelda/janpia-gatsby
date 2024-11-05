@@ -47,7 +47,9 @@ const SearchCategoryCard = (props: { category: string }) => {
           tw="transition-[height] duration-300 ease-in"
         >
           <OrganizationName path={path} />
-          <OrganizationTypeCd path={path} />
+          {/* 事業計画と同じにする。活動支援が団体には必要ない場合は復活させる */}
+          {/* <OrganizationTypeCd path={path} /> */}
+          <BusinessOrgType path={path} />
           <SidebarPrefectures category="prefectures" />
           <PrefecturesSp category="prefectures" />
           <LegalPersonality path={path} />

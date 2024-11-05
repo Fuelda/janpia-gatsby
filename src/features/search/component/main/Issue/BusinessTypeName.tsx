@@ -1,45 +1,16 @@
 import * as Checkbox from "@radix-ui/react-checkbox";
-import { CheckIcon } from "@radix-ui/react-icons";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useSearchContext } from "../../../../../context/searchContext";
-import { useStrapiContext } from "../../../../../context/strapiContext";
 import { h3, hCenter } from "../../../../../styles/base";
-import {
-  checkBox,
-  checkBoxList,
-  checkBoxSet,
-  checkMark,
-} from "../../../../../styles/form";
+import { checkBox, checkBoxSet, checkMark } from "../../../../../styles/form";
 import "twin.macro";
 import tw from "twin.macro";
+import { convertBusinessTypeNameLabel } from "../../../../../lib/businessTypeNameChecker";
 
 const BusinessTypeName = (props: { path: string }) => {
   const { searchState, searchSetState } = useSearchContext();
-  const { allStrapiBizPlan, allStrapiBizPlanManual } = useStrapiContext();
-  const { btnYear, btnCategory } = searchState;
-  const { setBtnYear, setBtnCategory } = searchSetState;
-
-  const businessTypeNameYear = allStrapiBizPlan.edges.map(
-    (item) => item.node.business_type_name || ""
-  );
-  const businessTypeNameYearManual = allStrapiBizPlanManual.edges.map(
-    (item) => item.node.business_type_name?.label || ""
-  );
-  const businessTypeNameYearSum = [
-    ...businessTypeNameYear,
-    ...businessTypeNameYearManual,
-  ];
-  const uniqueBusinessTypeNameYear = [...new Set(businessTypeNameYearSum)];
-  const regexPattern = /\d{4}年度/g;
-  const yearBusinessTypeNameYear = uniqueBusinessTypeNameYear.map((item) => {
-    const matches = item?.match(regexPattern);
-    return matches ? matches[0] : item;
-  });
-  const uniqueYearBusinessTypeNameYear = [
-    ...new Set(yearBusinessTypeNameYear),
-  ].sort((a, b) => {
-    return b.localeCompare(a);
-  });
+  const { btnCategory } = searchState;
+  const { setBtnCategory } = searchSetState;
 
   const businessTypeNameCategory = ["通常枠", "コロナ枠"];
 
@@ -84,8 +55,7 @@ const BusinessTypeName = (props: { path: string }) => {
                 </Checkbox.Indicator>
               </Checkbox.Root>
               <label htmlFor={checkbox}>
-                {(checkbox === "通常枠" && "通常枠") ||
-                  (checkbox === "コロナ枠" && "緊急支援枠")}
+                {convertBusinessTypeNameLabel(checkbox)}
               </label>
             </div>
           ))}

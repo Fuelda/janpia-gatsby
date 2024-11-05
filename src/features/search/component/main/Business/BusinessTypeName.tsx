@@ -6,6 +6,7 @@ import { h3, hCenter } from "../../../../../styles/base";
 import { checkBox, checkBoxSet, checkMark } from "../../../../../styles/form";
 import "twin.macro";
 import tw from "twin.macro";
+import { convertBusinessTypeNameLabel } from "../../../../../lib/businessTypeNameChecker";
 
 const BusinessTypeName = (props: { path: string }) => {
   const { searchState, searchSetState } = useSearchContext();
@@ -35,7 +36,7 @@ const BusinessTypeName = (props: { path: string }) => {
     return b.localeCompare(a);
   });
 
-  const businessTypeNameCategory = ["通常枠", "コロナ枠"];
+  const businessTypeNameCategory = ["通常枠", "コロナ枠", "活動支援枠"];
 
   const handleYearCheckbox = (label: string) => {
     if (btnYear.includes(label)) {
@@ -120,8 +121,7 @@ const BusinessTypeName = (props: { path: string }) => {
                 </Checkbox.Indicator>
               </Checkbox.Root>
               <label htmlFor={checkbox}>
-                {(checkbox === "通常枠" && "通常枠") ||
-                  (checkbox === "コロナ枠" && "緊急支援枠")}
+                {convertBusinessTypeNameLabel(checkbox)}
               </label>
             </div>
           ))}

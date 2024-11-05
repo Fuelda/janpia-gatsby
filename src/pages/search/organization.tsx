@@ -39,7 +39,7 @@ const Organization = () => {
         <div css={vCenter} tw="relative">
           <div>
             <OrganizationName path={path} />
-            {/* 事業計画と同じにする。活動支援が団体には必要ない場合はふっかつさせる */}
+            {/* 事業計画と同じにする。活動支援が団体には必要ない場合は復活させる */}
             {/* <OrganizationTypeCd path={path} /> */}
             <BusinessOrgType path={path} />
 

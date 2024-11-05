@@ -56,6 +56,8 @@ export const filterStrapiData = () => {
     ? algoliaFilteredBizPlan
     : linkedBizPlan;
 
+  console.log(searchState.btnCategory);
+
   const filteredBizPlan = sourceBizPlan.filter((item) => {
     return (
       //団体名

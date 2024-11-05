@@ -1,5 +1,5 @@
 import * as Checkbox from "@radix-ui/react-checkbox";
-import React, { useState } from "react";
+import React from "react";
 import { useSearchContext } from "../../../../../context/searchContext";
 import { OrganizationTypeCdArray } from "../../../store/filterContents";
 import "twin.macro";
