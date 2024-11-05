@@ -112,9 +112,11 @@ const Index: React.FC<any> = ({ data }) => {
           </div>
         </div>
         <div css={[vCenter, wrapperSp]} tw="mt-10">
-          <div tw="flex gap-7 lg:(gap-2.5 w-full)">
-            <IndexProjectCard isFdo={true} />
-            <IndexProjectCard isFdo={false} />
+          <div tw="grid grid-cols-2 gap-7 lg:(gap-2.5 w-full)">
+            <IndexProjectCard isFdo={true} isActivitySupport={false} />
+            <IndexProjectCard isFdo={false} isActivitySupport={false} />
+            <IndexProjectCard isFdo={true} isActivitySupport={true} />
+            <IndexProjectCard isFdo={false} isActivitySupport={true} />
           </div>
         </div>
         <div tw="mt-14" css={wrapperSp}>
@@ -140,7 +142,11 @@ const Index: React.FC<any> = ({ data }) => {
           <h2 tw="text-center">関連情報</h2>
           <div tw="mt-7 flex flex-wrap gap-5 lg:(grid grid-cols-2 gap-2.5)">
             {linkEdges.map((link: { node: { label: string; url: string } }) => (
-              <IndexLink label={link.node.label} url={link.node.url} />
+              <IndexLink
+                key={link.node.url}
+                label={link.node.label}
+                url={link.node.url}
+              />
             ))}
           </div>
         </div>
