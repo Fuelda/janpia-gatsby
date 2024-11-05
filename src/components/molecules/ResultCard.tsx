@@ -1,10 +1,11 @@
 import { Link } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
-import React, { useState } from "react";
+import React from "react";
 import "twin.macro";
 import tw from "twin.macro";
 import { hCenter } from "../../styles/base";
 import { businessCategoryArray } from "../../features/search/store/filterContents";
+import { convertBusinessTypeNameLabel } from "../../lib/businessTypeNameChecker";
 
 const resultCardTip = tw`text-xs py-1 px-1.5 border border-gray-border`;
 
@@ -74,12 +75,18 @@ const ResultCard = (props: any) => {
   const businessTypeNameCategory =
     (splitBusinessTypeName &&
       splitBusinessTypeName.length >= 2 &&
-      splitBusinessTypeName[2] === "通常枠" &&
+      splitBusinessTypeName[2].includes("通常枠") &&
       "通常枠") ||
     (splitBusinessTypeName &&
       splitBusinessTypeName.length >= 2 &&
-      splitBusinessTypeName[2] === "コロナ枠" &&
-      "緊急支援枠");
+      convertBusinessTypeNameLabel(splitBusinessTypeName[2]).includes(
+        "緊急支援枠"
+      ) &&
+      "緊急支援枠") ||
+    (splitBusinessTypeName &&
+      splitBusinessTypeName.length >= 2 &&
+      splitBusinessTypeName[2].includes("活動支援枠") &&
+      "活動支援枠");
 
   return (
     <Link
