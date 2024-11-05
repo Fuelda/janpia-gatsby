@@ -100,9 +100,13 @@ const BusinessTypeName = (props: { path: string }) => {
             <div key={checkbox} css={[hCenter, checkBoxSet]} tw="gap-2">
               <Checkbox.Root
                 id={checkbox}
-                onClick={() => handleCategoryCheckbox(checkbox)}
+                onClick={() =>
+                  handleCategoryCheckbox(convertBusinessTypeNameLabel(checkbox))
+                }
                 css={checkBox}
-                checked={btnCategory.includes(checkbox)}
+                checked={btnCategory.includes(
+                  convertBusinessTypeNameLabel(checkbox)
+                )}
               >
                 <Checkbox.Indicator tw="flex justify-center">
                   <svg

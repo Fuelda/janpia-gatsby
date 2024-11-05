@@ -12,7 +12,7 @@ const BusinessTypeName = (props: { path: string }) => {
   const { btnCategory } = searchState;
   const { setBtnCategory } = searchSetState;
 
-  const businessTypeNameCategory = ["通常枠", "コロナ枠"];
+  const businessTypeNameCategory = ["通常枠", "コロナ枠", "活動支援枠"];
 
   const handleCategoryCheckbox = (label: string) => {
     if (btnCategory.includes(label)) {
@@ -34,9 +34,13 @@ const BusinessTypeName = (props: { path: string }) => {
             <div key={checkbox} css={[hCenter, checkBoxSet]}>
               <Checkbox.Root
                 id={checkbox}
-                onClick={() => handleCategoryCheckbox(checkbox)}
+                onClick={() =>
+                  handleCategoryCheckbox(convertBusinessTypeNameLabel(checkbox))
+                }
                 css={checkBox}
-                checked={btnCategory.includes(checkbox)}
+                checked={btnCategory.includes(
+                  convertBusinessTypeNameLabel(checkbox)
+                )}
               >
                 <Checkbox.Indicator tw="flex justify-center">
                   <svg

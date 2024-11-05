@@ -1,6 +1,9 @@
 import { useAlgoliaStrapiContext } from "../../../context/algoliaStrapiContext";
 import { useSearchContext } from "../../../context/searchContext";
-import { isActivitySupportGroup } from "../../../lib/businessTypeNameChecker";
+import {
+  convertBusinessTypeNameLabel,
+  isActivitySupportGroup,
+} from "../../../lib/businessTypeNameChecker";
 import { linkCollectionTypesManual } from "../../../util/linkCollectionTypesManual";
 
 export const filterStrapiManualData = () => {
@@ -123,7 +126,9 @@ export const filterStrapiManualData = () => {
         searchState.btnCategory.some(
           (btnc) =>
             item.bizPlan.business_type_name &&
-            item.bizPlan.business_type_name.label?.includes(btnc)
+            convertBusinessTypeNameLabel(
+              item.bizPlan.business_type_name.label || ""
+            )?.includes(btnc)
         )) &&
       //事業分類
       (searchState.business_category.length === 0 ||

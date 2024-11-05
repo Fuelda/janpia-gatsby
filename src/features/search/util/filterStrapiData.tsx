@@ -2,7 +2,10 @@ import { useEffect } from "react";
 import { useAlgoliaStrapiContext } from "../../../context/algoliaStrapiContext";
 import { useSearchContext } from "../../../context/searchContext";
 import { linkCollectionTypes } from "../../../util/linkCollectionTypes";
-import { isActivitySupportGroup } from "../../../lib/businessTypeNameChecker";
+import {
+  convertBusinessTypeNameLabel,
+  isActivitySupportGroup,
+} from "../../../lib/businessTypeNameChecker";
 
 export const filterStrapiData = () => {
   const { searchState } = useSearchContext();
@@ -128,10 +131,9 @@ export const filterStrapiData = () => {
         searchState.btnCategory.some(
           (btnc) =>
             item.bizPlan.business_type_name &&
-            (btnc === "コロナ枠"
-              ? item.bizPlan.business_type_name.includes("コロナ枠") ||
-                item.bizPlan.business_type_name.includes("緊急枠")
-              : item.bizPlan.business_type_name?.includes(btnc))
+            convertBusinessTypeNameLabel(
+              item.bizPlan.business_type_name
+            )?.includes(btnc)
         )) &&
       //事業分類
       (searchState.business_category.length === 0 ||
