@@ -5,7 +5,9 @@ export const isActivitySupportGroup = (business_type_name: string): boolean => {
 export const isEmergencySupportGroup = (
   business_type_name: string
 ): boolean => {
-  return business_type_name.includes("緊急支援枠");
+  return convertBusinessTypeNameLabel(business_type_name).includes(
+    "緊急支援枠"
+  );
 };
 
 export const convertBusinessTypeNameLabel = (label: string) => {
