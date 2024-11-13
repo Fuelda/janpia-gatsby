@@ -1,9 +1,7 @@
 import * as Checkbox from "@radix-ui/react-checkbox";
-import { CheckIcon } from "@radix-ui/react-icons";
 import React from "react";
 import { useSearchContext } from "../../../../../context/searchContext";
-import { businessCategoryArray } from "../../../store/filterContents";
-import { checkBox, checkBoxList, checkMark } from "../../../../../styles/form";
+import { checkBox, checkMark } from "../../../../../styles/form";
 import "twin.macro";
 import { h3, hCenter } from "../../../../../styles/base";
 import tw from "twin.macro";
@@ -23,8 +21,6 @@ const BusinessCategory = (props: { path: string }) => {
   const { searchState, searchSetState } = useSearchContext();
   const { business_category } = searchState;
   const { setBusinessCategory } = searchSetState;
-
-  const checkboxArray = businessCategoryArray;
 
   const handleCheckbox = (code: number, subCode: number) => {
     if (

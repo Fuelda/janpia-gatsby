@@ -10,9 +10,9 @@ import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { linkCollectionTypes } from "../../util/linkCollectionTypes";
 import { linkCollectionTypesManual } from "../../util/linkCollectionTypesManual";
 import { BusinessOrgTypeThumbnail } from "../atoms/BusinessOrgTypeThumbnail";
-import { convertBusinessTypeNameLabel } from "../../lib/businessTypeNameChecker";
+import { BusinessTypeNameCategoryIcon } from "../atoms/BusinessTypeNameCategoryIcon";
 
-const resultCardTip = tw`text-xs py-1 px-1.5 border border-gray-base text-gray-base`;
+export const resultCardTip = tw`text-xs py-1 px-1.5 border border-gray-base text-gray-base`;
 
 const DetailHeader = (props: {
   business_cd: string;
@@ -96,21 +96,6 @@ const DetailHeader = (props: {
   const splitBusinessTypeName = businessTypeNameLabel.match(/(\d+年度)(.+)/);
   const businessTypeNameYear =
     splitBusinessTypeName && splitBusinessTypeName[1];
-  const businessTypeNameCategory =
-    (splitBusinessTypeName &&
-      splitBusinessTypeName.length >= 2 &&
-      splitBusinessTypeName[2].includes("通常枠") &&
-      "通常枠") ||
-    (splitBusinessTypeName &&
-      splitBusinessTypeName.length >= 2 &&
-      convertBusinessTypeNameLabel(splitBusinessTypeName[2]).includes(
-        "緊急支援枠"
-      ) &&
-      "緊急支援枠") ||
-    (splitBusinessTypeName &&
-      splitBusinessTypeName.length >= 2 &&
-      splitBusinessTypeName[2].includes("活動支援枠") &&
-      "活動支援枠");
 
   useEffect(() => {
     props.setBusinessTypeNameYear &&
@@ -144,16 +129,11 @@ const DetailHeader = (props: {
         </div>
         <div tw="">
           <div tw="flex gap-[5px]">
-            <p
-              css={[
-                resultCardTip,
-                businessTypeNameCategory === "通常枠"
-                  ? tw`border-blue-button text-blue-button bg-blue-base`
-                  : tw`border-red-base text-red-base bg-red-pale`,
-              ]}
-            >
-              {businessTypeNameCategory}
-            </p>
+            {splitBusinessTypeName && (
+              <BusinessTypeNameCategoryIcon
+                businessTypeName={splitBusinessTypeName}
+              />
+            )}
             <p css={resultCardTip}>{businessTypeNameYear}</p>
             <p css={resultCardTip}>{businessStatusText}</p>
             {mainGroupPrefecture && (

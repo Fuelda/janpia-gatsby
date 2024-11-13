@@ -2,6 +2,12 @@ export const isActivitySupportGroup = (business_type_name: string): boolean => {
   return business_type_name.includes("活動支援");
 };
 
+export const isEmergencySupportGroup = (
+  business_type_name: string
+): boolean => {
+  return business_type_name.includes("緊急支援枠");
+};
+
 export const convertBusinessTypeNameLabel = (label: string) => {
   if (label.includes("コロナ枠")) {
     return label.replace("コロナ枠", "緊急支援枠"); // コロナ枠は緊急支援枠に変換
