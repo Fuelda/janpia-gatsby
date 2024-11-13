@@ -19,6 +19,7 @@ import { useLocation } from "@reach/router";
 import PrefecturesSp from "../../features/search/component/main/Organization/PrefecturesSp";
 import AlgoliaIndex from "../../features/search/api/AlgoliaIndex";
 import Seo from "../../components/lauout/Seo";
+import { BusinessCategoryActivitySupport } from "../../features/search/component/main/Business/BusinessCategoryActivitySupport";
 
 const Project = () => {
   const { resetSearchStatus, searchState } = useSearchContext();
@@ -45,6 +46,9 @@ const Project = () => {
             <BusinessOrgType path={path} />
             <BusinessTypeName path={path} />
             {btnCategory.includes("通常枠") && <BusinessCategory path={path} />}
+            {btnCategory.includes("活動支援枠") && (
+              <BusinessCategoryActivitySupport path={path} />
+            )}
             <BusinessStatus path={path} />
 
             <h3 css={h3} tw="lg:(hidden)">
@@ -59,7 +63,6 @@ const Project = () => {
 
             <SubsidyAmount path={path} />
             <TopicKeyword path={path} />
-            {/* <AlgoliaIndex path="search" /> */}
           </div>
           <div css={vCenter} tw="gap-6">
             <ToResultButton />

@@ -21,6 +21,7 @@ type searchStateType = {
   btnYear: string[];
   btnCategory: string[];
   business_category: businessCategoryType[] | [];
+  business_category_activitySupport: businessCategoryType[] | [];
   business_status: number | null;
   target_area: string[];
   subsidy_amount: { min: number; max: number }[];
@@ -52,6 +53,7 @@ type searchSetStateType = {
   setBtnYear: Dispatch<string[]>;
   setBtnCategory: Dispatch<string[]>;
   setBusinessCategory: Dispatch<businessCategoryType[]>;
+  setBusinessCategoryActivitySupport: Dispatch<businessCategoryType[]>;
   setBusinessStatus: Dispatch<number | null>;
   setTargetArea: Dispatch<string[]>;
   setSubsidyAmount: React.Dispatch<
@@ -92,6 +94,7 @@ const SearchContext = createContext<searchType>({
     btnYear: [],
     btnCategory: [],
     business_category: [],
+    business_category_activitySupport: [],
     business_status: null,
     target_area: [],
     subsidy_amount: [],
@@ -124,6 +127,7 @@ const SearchContext = createContext<searchType>({
     setBtnYear: () => {},
     setBtnCategory: () => {},
     setBusinessCategory: () => {},
+    setBusinessCategoryActivitySupport: () => {},
     setBusinessStatus: () => {},
     setTargetArea: () => {},
     setSubsidyAmount: () => {},
@@ -161,6 +165,10 @@ const SearchProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [business_category, setBusinessCategory] = useState<
     businessCategoryType[]
   >([]);
+  const [
+    business_category_activitySupport,
+    setBusinessCategoryActivitySupport,
+  ] = useState<businessCategoryType[]>([]);
   const [business_status, setBusinessStatus] = useState<number | null>(null);
   const [target_area, setTargetArea] = useState<string[]>([]);
   const [subsidy_amount, setSubsidyAmount] = useState<
@@ -192,6 +200,7 @@ const SearchProvider: FC<{ children: ReactNode }> = ({ children }) => {
     setBtnYear([]);
     setBtnCategory([]);
     setBusinessCategory([]);
+    setBusinessCategoryActivitySupport([]);
     setBusinessStatus(null);
     setTargetArea([]);
     setSubsidyAmount([]);
@@ -225,6 +234,7 @@ const SearchProvider: FC<{ children: ReactNode }> = ({ children }) => {
       btnYear,
       btnCategory,
       business_category,
+      business_category_activitySupport,
       business_status,
       target_area,
       subsidy_amount,
@@ -257,6 +267,7 @@ const SearchProvider: FC<{ children: ReactNode }> = ({ children }) => {
       setBtnYear,
       setBtnCategory,
       setBusinessCategory,
+      setBusinessCategoryActivitySupport,
       setBusinessStatus,
       setTargetArea,
       setSubsidyAmount,

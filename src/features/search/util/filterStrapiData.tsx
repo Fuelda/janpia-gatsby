@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useAlgoliaStrapiContext } from "../../../context/algoliaStrapiContext";
 import { useSearchContext } from "../../../context/searchContext";
 import { linkCollectionTypes } from "../../../util/linkCollectionTypes";
@@ -137,11 +136,9 @@ export const filterStrapiData = () => {
       (searchState.business_category.length === 0 ||
         searchState.business_category.some(
           (bc) =>
+            item.bizPlan.business_type_name &&
+            !isActivitySupportGroup(item.bizPlan.business_type_name) && // 活動支援枠でないことをチェック
             item.bizPlan.business_category.code &&
-            // (item.bizPlan.business_category.code === 1
-            //   ? bc.code === item.bizPlan.business_category.code &&
-            //     bc.subCode === item.bizPlan.business_category.subCode
-            //   : bc.code === item.bizPlan.business_category.code)
             bc.code === item.bizPlan.business_category.code
         )) &&
       //事業ステータス

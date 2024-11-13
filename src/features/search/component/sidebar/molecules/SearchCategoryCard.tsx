@@ -16,6 +16,7 @@ import SidebarPrefectures from "../Organization/SidebarPrefectures";
 import BusinessTypeName from "../../main/Business/BusinessTypeName";
 import { useLocation } from "@reach/router";
 import PrefecturesSp from "../../main/Organization/PrefecturesSp";
+import { BusinessCategoryActivitySupport } from "../../main/Business/BusinessCategoryActivitySupport";
 
 const SearchCategoryCard = (props: { category: string }) => {
   const [isOpen, setIsOpen] = useState(true);
@@ -63,6 +64,7 @@ const SearchCategoryCard = (props: { category: string }) => {
           <BusinessTypeName path={path} />
           <BusinessOrgType path={path} />
           <BusinessCategory path={path} />
+          <BusinessCategoryActivitySupport path={path} />
           <SubsidyAmount path={path} />
           <BusinessStatus path={path} />
           <SidebarPrefectures category="targetArea" />
