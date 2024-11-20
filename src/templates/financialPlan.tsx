@@ -109,7 +109,7 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                     {financePlan.bis_b && financePlan.bis_b.toLocaleString()}
                   </td>
                 </tr>
-                {financePlan && financePlan.bis_ado && (
+                {financePlan && financePlan.bis_ado ? (
                   <tr>
                     <th className="table__financialPlan--tbody-sub"></th>
                     <th className="table__financialPlan--tbody-02">
@@ -128,8 +128,10 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                         financePlan.bis_b_ado_sum.toLocaleString()}
                     </td>
                   </tr>
+                ) : (
+                  <></>
                 )}
-                {financePlan && financePlan.bis_ado_direct && (
+                {financePlan && financePlan.bis_ado_direct ? (
                   <tr>
                     <th className="table__financialPlan--tbody-sub"></th>
                     <th className="table__financialPlan--tbody-02">
@@ -148,6 +150,8 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                         financePlan.bis_b_ado_sum_direct.toLocaleString()}
                     </td>
                   </tr>
+                ) : (
+                  <></>
                 )}
                 <tr>
                   <th></th>
