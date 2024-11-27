@@ -41,7 +41,7 @@ const ResultCard = (props: any) => {
   let mainGroupName = "";
   if (mainGroup) {
     mainGroupName = mainGroup.node.organization_name;
-  } else if (mainGroupIndirect) {
+  } else if (mainGroupIndirect && mainGroupIndirect.groupData) {
     mainGroupName = mainGroupIndirect.groupData.organization_name;
   } else {
     mainGroupName = "";
@@ -50,7 +50,7 @@ const ResultCard = (props: any) => {
   let mainGroupPrefecture = "";
   if (mainGroup) {
     mainGroupPrefecture = mainGroup.node.prefectures;
-  } else if (mainGroupIndirect) {
+  } else if (mainGroupIndirect && mainGroupIndirect.groupData) {
     mainGroupPrefecture = mainGroupIndirect.groupData.prefectures;
   } else {
     mainGroupPrefecture = "";

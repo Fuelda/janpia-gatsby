@@ -21,7 +21,7 @@ export const BusinessTypeNameCategoryIcon = ({
       "緊急支援枠") ||
     (businessTypeName &&
       businessTypeName.length >= 2 &&
-      businessTypeName[2].includes("活動支援枠") &&
+      businessTypeName[2].includes("活動支援") &&
       "活動支援");
 
   const businessTypeNameCategoryColor =

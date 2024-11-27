@@ -12,7 +12,7 @@ const BusinessTypeName = (props: { path: string }) => {
   const { btnCategory } = searchState;
   const { setBtnCategory } = searchSetState;
 
-  const businessTypeNameCategory = ["通常枠", "コロナ枠", "活動支援枠"];
+  const businessTypeNameCategory = ["通常枠", "コロナ枠", "活動支援"];
 
   const handleCategoryCheckbox = (label: string) => {
     if (btnCategory.includes(label)) {

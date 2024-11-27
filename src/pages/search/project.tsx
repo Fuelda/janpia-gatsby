@@ -46,7 +46,7 @@ const Project = () => {
             <BusinessOrgType path={path} />
             <BusinessTypeName path={path} />
             {btnCategory.includes("通常枠") && <BusinessCategory path={path} />}
-            {btnCategory.includes("活動支援枠") && (
+            {btnCategory.includes("活動支援") && (
               <BusinessCategoryActivitySupport path={path} />
             )}
             <BusinessStatus path={path} />

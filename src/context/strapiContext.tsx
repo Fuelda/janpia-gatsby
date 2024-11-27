@@ -37,6 +37,7 @@ const contextQuery = graphql`
               business_overview
             }
           }
+          support_category
         }
       }
     }

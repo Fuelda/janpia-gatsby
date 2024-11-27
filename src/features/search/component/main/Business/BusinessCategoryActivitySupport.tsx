@@ -7,14 +7,12 @@ import { h3, hCenter } from "../../../../../styles/base";
 import tw from "twin.macro";
 
 const businessCategoryLabel = [
-  { label: "テスト1", code: 1, subCode: 0 },
+  { label: "資金支援の担い手育成", code: 1, subCode: 0 },
   {
-    label: "テスト2",
+    label: "民間公益活動の担い手育成",
     code: 2,
-    subCode: -1,
+    subCode: 0,
   },
-  { label: "テスト3", code: 3, subCode: -2 },
-  { label: "テスト4", code: 4, subCode: -3 },
 ];
 
 export const BusinessCategoryActivitySupport = (props: { path: string }) => {
@@ -57,7 +55,7 @@ export const BusinessCategoryActivitySupport = (props: { path: string }) => {
               }
               css={checkBox}
               checked={business_category_activitySupport.some(
-                (bc) => bc.subCode === checkbox.subCode
+                (bc) => bc.code === checkbox.code
               )}
             >
               <Checkbox.Indicator tw="flex justify-center">

@@ -141,6 +141,15 @@ export const filterStrapiData = () => {
             item.bizPlan.business_category.code &&
             bc.code === item.bizPlan.business_category.code
         )) &&
+      //支援対象区分
+      (searchState.business_category_activitySupport.length === 0 ||
+        searchState.business_category_activitySupport.some(
+          (bc) =>
+            item.bizPlan.business_type_name &&
+            isActivitySupportGroup(item.bizPlan.business_type_name) && // 活動支援枠であることをチェック
+            item.bizPlan.support_category &&
+            bc.code === parseInt(item.bizPlan.support_category)
+        )) &&
       //事業ステータス
       (searchState.business_status === null ||
         item.bizPlan.business_status === searchState.business_status) &&

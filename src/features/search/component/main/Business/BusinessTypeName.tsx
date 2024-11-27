@@ -36,7 +36,7 @@ const BusinessTypeName = (props: { path: string }) => {
     return b.localeCompare(a);
   });
 
-  const businessTypeNameCategory = ["通常枠", "コロナ枠", "活動支援枠"];
+  const businessTypeNameCategory = ["通常枠", "コロナ枠", "活動支援"];
 
   const handleYearCheckbox = (label: string) => {
     if (btnYear.includes(label)) {
