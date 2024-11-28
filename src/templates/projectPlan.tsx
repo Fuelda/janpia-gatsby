@@ -1195,6 +1195,183 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                   </table>
                 </DetailItemWrapper>
               </div>
+              {strapiBizPlan.org_num && (
+                <div id="">
+                  <DetailItemWrapper itemName="活動支援プログラムの内容">
+                    <div tw="hidden lg:block">
+                      {strapiBizPlan.org_num && (
+                        <div>
+                          <p css={th}>支援対象団体数</p>
+                          <p css={td}>{strapiBizPlan.org_num}</p>
+                        </div>
+                      )}
+                      {strapiBizPlan.org_area && (
+                        <div>
+                          <p css={th}>支援対象団体の活動地域・分野・内容</p>
+                          <p css={td}>{strapiBizPlan.org_area}</p>
+                        </div>
+                      )}
+                      {strapiBizPlan.org_scale && (
+                        <div>
+                          <p css={th}>支援対象団体の組織形態・規模</p>
+                          <p css={td}>{strapiBizPlan.org_scale}</p>
+                        </div>
+                      )}
+                      {strapiBizPlan.org_impact && (
+                        <div>
+                          <p css={th}>
+                            活動支援プログラムによって支援を受けた団体が社会にもたらす変化/インパクト（中長期アウトカム）
+                          </p>
+                          <p css={td}>{strapiBizPlan.org_impact}</p>
+                        </div>
+                      )}
+                    </div>
+                    <table css={table} tw="lg:hidden">
+                      <tbody>
+                        {strapiBizPlan.org_num && (
+                          <tr css={tr}>
+                            <th css={th}>支援対象団体数</th>
+                            <td css={td}>{strapiBizPlan.org_num}</td>
+                          </tr>
+                        )}
+                        {strapiBizPlan.org_area && (
+                          <tr css={tr}>
+                            <th css={th}>支援対象団体の活動地域・分野・内容</th>
+                            <td css={td}>{strapiBizPlan.org_area}</td>
+                          </tr>
+                        )}
+                        {strapiBizPlan.org_scale && (
+                          <tr css={tr}>
+                            <th css={th}>支援対象団体の組織形態・規模</th>
+                            <td css={td}>{strapiBizPlan.org_scale}</td>
+                          </tr>
+                        )}
+                        {strapiBizPlan.org_impact && (
+                          <tr css={tr}>
+                            <th css={th}>
+                              活動支援プログラムによって支援を受けた団体が社会にもたらす変化/インパクト（中長期アウトカム）
+                            </th>
+                            <td css={td}>{strapiBizPlan.org_impact}</td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </DetailItemWrapper>
+                </div>
+              )}
+              {strapiBizPlan.recruit_ingenuity && (
+                <div id="">
+                  <DetailItemWrapper itemName="支援対象団体の募集/選定">
+                    <div tw="hidden lg:block">
+                      {strapiBizPlan.recruit_ingenuity && (
+                        <div>
+                          <p css={th}>募集方法や案件発掘の工夫</p>
+                          <p css={td}>{strapiBizPlan.recruit_ingenuity}</p>
+                        </div>
+                      )}
+                      {strapiBizPlan.issue_consideration && (
+                        <div>
+                          <p css={th}>
+                            支援対象団体が抱える課題の検証方法（組織診断方法等）
+                          </p>
+                          <p css={td}>{strapiBizPlan.issue_consideration}</p>
+                        </div>
+                      )}
+                      {strapiBizPlan.transparency && (
+                        <div>
+                          <p css={th}>
+                            休眠預金等活用事業に係る既存関係先との透明性確保
+                          </p>
+                          <p css={td}>{strapiBizPlan.transparency}</p>
+                        </div>
+                      )}
+                    </div>
+                    <table css={table} tw="lg:hidden">
+                      <tbody>
+                        {strapiBizPlan.recruit_ingenuity && (
+                          <tr css={tr}>
+                            <th css={th}>募集方法や案件発掘の工夫</th>
+                            <td css={td}>{strapiBizPlan.recruit_ingenuity}</td>
+                          </tr>
+                        )}
+                        {strapiBizPlan.issue_consideration && (
+                          <tr css={tr}>
+                            <th css={th}>
+                              支援対象団体が抱える課題の検証方法（組織診断方法等）
+                            </th>
+                            <td css={td}>
+                              {strapiBizPlan.issue_consideration}
+                            </td>
+                          </tr>
+                        )}
+                        {strapiBizPlan.transparency && (
+                          <tr css={tr}>
+                            <th css={th}>
+                              休眠預金等活用事業に係る既存関係先との透明性確保
+                            </th>
+                            <td css={td}>{strapiBizPlan.transparency}</td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </DetailItemWrapper>
+                </div>
+              )}
+              {strapiBizPlan.expertise && (
+                <div id="">
+                  <DetailItemWrapper itemName="主な実績と実施体制">
+                    <div tw="hidden lg:block">
+                      {strapiBizPlan.expertise && (
+                        <div>
+                          <p css={th}>専門性・強み</p>
+                          <p css={td}>{strapiBizPlan.expertise}</p>
+                        </div>
+                      )}
+                    </div>
+                    <table css={table} tw="lg:hidden">
+                      <tbody>
+                        {strapiBizPlan.expertise && (
+                          <tr css={tr}>
+                            <th css={th}>専門性・強み</th>
+                            <td css={td}>{strapiBizPlan.expertise}</td>
+                          </tr>
+                        )}
+                        {strapiBizPlan.achievements && (
+                          <tr css={tr}>
+                            <th css={th}>支援実績と成果</th>
+                            <td css={td}>{strapiBizPlan.achievements}</td>
+                          </tr>
+                        )}
+                        {strapiBizPlan.knowhow && (
+                          <tr css={tr}>
+                            <th css={th}>支援ノウハウ</th>
+                            <td css={td}>{strapiBizPlan.knowhow}</td>
+                          </tr>
+                        )}
+                        {strapiBizPlan.exec_structure && (
+                          <tr css={tr}>
+                            <th css={th}>実施体制</th>
+                            <td css={td}>{strapiBizPlan.exec_structure}</td>
+                          </tr>
+                        )}
+                        {strapiBizPlan.conso_exist && (
+                          <tr css={tr}>
+                            <th css={th}>コンソーシアム利用有無</th>
+                            <td css={td}>{strapiBizPlan.conso_exist}</td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </DetailItemWrapper>
+                </div>
+              )}
+              {strapiBizPlan.governance_structure && (
+                <div id="">
+                  <DetailItemWrapper itemName="ガバナンス・コンプライアンス体制">
+                    <p css={td}>{strapiBizPlan.governance_structure}</p>
+                  </DetailItemWrapper>
+                </div>
+              )}
               <div id="sixthItem">
                 <DetailItemWrapper itemName="事業設計">
                   <div css={detailAnchor}>
@@ -5517,6 +5694,20 @@ export const pageQuery = graphql`
       insert_id
       org_role_ado
       org_role_fdo
+      support_category
+      org_num
+      org_area
+      org_scale
+      org_impact
+      recruit_ingenuity
+      issue_consideration
+      transparency
+      expertise
+      achievements
+      knowhow
+      exec_structure
+      conso_exist
+      governance_structure
     }
     allStrapiBizPlanSub(filter: { business_cd: { eq: $slug } }) {
       edges {
