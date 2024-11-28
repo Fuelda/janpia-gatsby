@@ -1,4 +1,3 @@
-import React, { FC, ReactNode, createContext, useContext } from "react";
 import { useStrapiContext } from "../context/strapiContext";
 
 export const linkCollectionTypes = () => {
@@ -56,10 +55,14 @@ export const linkCollectionTypes = () => {
             ? parseInt(bp.node.business_category2)
             : null,
         };
+
     return {
       group: linkingBizPlanGroup,
       mainGroup: mainGroup,
-      bizPlan: { ...bp.node, business_category: linkingBusinessCategory },
+      bizPlan: {
+        ...bp.node,
+        business_category: linkingBusinessCategory,
+      },
       bizPlanSub: linkingBizPlanSub,
       financePlan: linkingFinancePlan?.node,
       financePlanFormer: linkingFinancePlanFormer?.node,

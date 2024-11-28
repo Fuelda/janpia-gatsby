@@ -75,6 +75,15 @@ export const businessCategoryArray = [
   { label: "災害支援事業", code: 4, subCode: -3 },
 ];
 
+export const supportCategoryArray = [
+  { label: "資金支援の担い手育成", code: 1, subCode: 0 },
+  {
+    label: "民間公益活動の担い手育成",
+    code: 2,
+    subCode: 0,
+  },
+];
+
 export const businessStatusArray = [
   { code: 0, label: "実施中" },
   { code: 1, label: "終了" },

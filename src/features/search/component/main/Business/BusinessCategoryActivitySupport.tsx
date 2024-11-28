@@ -6,7 +6,7 @@ import "twin.macro";
 import { h3, hCenter } from "../../../../../styles/base";
 import tw from "twin.macro";
 
-const businessCategoryLabel = [
+const supportCategoryLabel = [
   { label: "資金支援の担い手育成", code: 1, subCode: 0 },
   {
     label: "民間公益活動の担い手育成",
@@ -46,7 +46,7 @@ export const BusinessCategoryActivitySupport = (props: { path: string }) => {
         tw="flex gap-y-2.5 flex-wrap px-3.5 py-2.5"
         css={props.path.includes("search") ? tw`gap-x-14` : tw`gap-x-3`}
       >
-        {businessCategoryLabel.map((checkbox) => (
+        {supportCategoryLabel.map((checkbox) => (
           <div key={checkbox.label} css={hCenter} tw="w-[252px] gap-2">
             <Checkbox.Root
               id={checkbox.label}

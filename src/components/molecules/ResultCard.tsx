@@ -4,7 +4,10 @@ import React from "react";
 import "twin.macro";
 import tw from "twin.macro";
 import { hCenter } from "../../styles/base";
-import { businessCategoryArray } from "../../features/search/store/filterContents";
+import {
+  businessCategoryArray,
+  supportCategoryArray,
+} from "../../features/search/store/filterContents";
 import { BusinessOrgTypeThumbnail } from "../atoms/BusinessOrgTypeThumbnail";
 import { BusinessTypeNameCategoryIcon } from "../atoms/BusinessTypeNameCategoryIcon";
 
@@ -20,8 +23,8 @@ const ResultCard = (props: any) => {
     business_status,
     business_category,
     business_type_name,
+    support_category,
   } = bizPlan;
-  const businessCategoryProperty = businessCategoryArray;
 
   let businessStatusText = "";
   if (typeof business_status === "number" && business_status === 0) {
@@ -59,15 +62,20 @@ const ResultCard = (props: any) => {
   let businessCategoryLabel: string | undefined = "";
   if (business_category && business_category.code === 1) {
     businessCategoryLabel = business_category.subCode
-      ? businessCategoryProperty.find(
+      ? businessCategoryArray.find(
           (bcp) => business_category.subCode === bcp.subCode
         )?.label
       : "草の根活動支援事業";
   } else {
-    businessCategoryLabel = businessCategoryProperty.find(
+    businessCategoryLabel = businessCategoryArray.find(
       (bcp) => business_category && business_category.code === bcp.code
     )?.label;
   }
+
+  let supportCategoryLabel: string | undefined = "";
+  supportCategoryLabel = supportCategoryArray.find(
+    (scp) => support_category && support_category === scp.code.toString()
+  )?.label;
 
   const businessTypeNameLabel = business_type_name.label || business_type_name;
   const splitBusinessTypeName = businessTypeNameLabel.match(/(\d+年度)(.+)/);
@@ -119,6 +127,16 @@ const ResultCard = (props: any) => {
                 <p>{businessCategoryLabel}</p>
               </div>
             )}
+            {supportCategoryLabel && (
+              <div css={hCenter} tw="gap-1.5 text-sm">
+                <StaticImage
+                  src="../../images/note.svg"
+                  alt="ノートアイコン"
+                  tw="w-4 h-4"
+                />
+                <p>{supportCategoryLabel}</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -141,6 +159,16 @@ const ResultCard = (props: any) => {
               tw="w-4 h-4"
             />
             <p>{businessCategoryLabel}</p>
+          </div>
+        )}
+        {supportCategoryLabel && (
+          <div css={hCenter} tw="gap-1.5 text-sm">
+            <StaticImage
+              src="../../images/note.svg"
+              alt="ノートアイコン"
+              tw="w-4 h-4"
+            />
+            <p>{supportCategoryLabel}</p>
           </div>
         )}
       </div>

@@ -4,7 +4,10 @@ import React, { Dispatch, useEffect } from "react";
 import "twin.macro";
 import tw from "twin.macro";
 import { hCenter, pankuzu } from "../../styles/base";
-import { businessCategoryArray } from "../../features/search/store/filterContents";
+import {
+  businessCategoryArray,
+  supportCategoryArray,
+} from "../../features/search/store/filterContents";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { linkCollectionTypes } from "../../util/linkCollectionTypes";
@@ -30,6 +33,8 @@ const DetailHeader = (props: {
   const business_name = bizPlan?.business_name;
   const business_status = bizPlan?.business_status;
   const business_category = bizPlan?.business_category;
+  const support_category =
+    bizPlan && "support_category" in bizPlan ? bizPlan?.support_category : null;
   const business_type_name = bizPlan?.business_type_name;
   const mainGroup = headerBizPlan?.mainGroup;
 
@@ -78,6 +83,11 @@ const DetailHeader = (props: {
   } else {
     businessCategoryLabel = "";
   }
+
+  let supportCategoryLabel: string | undefined = "";
+  supportCategoryLabel = supportCategoryArray.find(
+    (scp) => support_category && support_category === scp.code.toString()
+  )?.label;
 
   let businessTypeNameLabel = "";
   if (business_type_name) {
@@ -162,6 +172,16 @@ const DetailHeader = (props: {
                 <p>{businessCategoryLabel}</p>
               </div>
             )}
+            {supportCategoryLabel && (
+              <div css={hCenter} tw="gap-1.5">
+                <StaticImage
+                  src="../../images/note.svg"
+                  alt="ノートアイコン"
+                  tw="w-4 h-4"
+                />
+                <p>{supportCategoryLabel}</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -184,6 +204,16 @@ const DetailHeader = (props: {
               tw="w-4 h-4"
             />
             <p>{businessCategoryLabel}</p>
+          </div>
+        )}
+        {supportCategoryLabel && (
+          <div css={hCenter} tw="gap-1.5">
+            <StaticImage
+              src="../../images/note.svg"
+              alt="ノートアイコン"
+              tw="w-4 h-4"
+            />
+            <p>{supportCategoryLabel}</p>
           </div>
         )}
       </div>
