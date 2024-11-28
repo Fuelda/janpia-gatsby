@@ -146,7 +146,15 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                             strapiEvaluationPlan.after_rethink_season) && (
                             <tr css={tr}>
                               <th css={thScroll}>評価計画の見直し時期</th>
-                              <td css={tdScroll} tw="bg-gray-300"></td>
+                              <td
+                                css={[
+                                  tdScroll,
+                                  !strapiEvaluationPlan.prior_rethink_season &&
+                                    tw`bg-gray-300`,
+                                ]}
+                              >
+                                {strapiEvaluationPlan.prior_rethink_season}
+                              </td>
                               <td css={tdScroll}>
                                 {strapiEvaluationPlan &&
                                   strapiEvaluationPlan.mid_rethink_season}
@@ -342,7 +350,15 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                             strapiEvaluationPlan.after_expenses_usage) && (
                             <tr css={tr}>
                               <th css={thScroll}>評価関連経費の使用方法</th>
-                              <td tw="bg-gray-300"></td>
+                              <td
+                                css={[
+                                  tdScroll,
+                                  !strapiEvaluationPlan.prior_expenses_usage &&
+                                    tw`bg-gray-300`,
+                                ]}
+                              >
+                                {strapiEvaluationPlan.prior_expenses_usage}
+                              </td>
                               <td
                                 css={[
                                   tdScroll,
@@ -366,7 +382,15 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                               <th css={thScroll}>
                                 評価関連経費を使用することで、どのように評価の質を上げることを目指しますか
                               </th>
-                              <td tw="bg-gray-300"></td>
+                              <td
+                                css={[
+                                  tdScroll,
+                                  !strapiEvaluationPlan.prior_improving_mh &&
+                                    tw`bg-gray-300`,
+                                ]}
+                              >
+                                {strapiEvaluationPlan.prior_improving_mh}
+                              </td>
                               <td css={tdScroll}>
                                 {strapiEvaluationPlan &&
                                   strapiEvaluationPlan.mid_improving_mh}
@@ -797,6 +821,9 @@ export const pageQuery = graphql`
       biz_design_chk_list3
       biz_design_chk_list4
       biz_design_chk_list5
+      prior_rethink_season
+      prior_expenses_usage
+      prior_improving_mh
       create_date(formatString: "yyyy/mm/dd")
     }
     allStrapiEvaluationPlanSub(filter: { business_cd: { eq: $slug } }) {

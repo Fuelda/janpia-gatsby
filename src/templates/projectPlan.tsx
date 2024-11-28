@@ -5898,6 +5898,11 @@ export const pageQuery = graphql`
           }
           create_date(formatString: "yyyy/mm/dd")
           insert_id
+          purpose
+          purpose_index
+          purpose_initial
+          purpose_mid_eval
+          purpose_aft_eval
         }
       }
     }
