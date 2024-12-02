@@ -1,5 +1,5 @@
 import React from "react";
-import { convertBusinessTypeNameLabel } from "../../lib/businessTypeNameChecker";
+import { convertBusinessTypeNameLabel } from "../../util/businessTypeNameChecker";
 import tw from "twin.macro";
 import { resultCardTip } from "../lauout/DetailHeader";
 

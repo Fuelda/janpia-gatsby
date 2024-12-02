@@ -3,7 +3,7 @@ import { StaticImage } from "gatsby-plugin-image";
 import {
   isActivitySupportGroup,
   isEmergencySupportGroup,
-} from "../../lib/businessTypeNameChecker";
+} from "../../util/businessTypeNameChecker";
 
 export const BusinessOrgTypeThumbnail = ({
   business_org_type,

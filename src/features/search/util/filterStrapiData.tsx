@@ -4,7 +4,7 @@ import { linkCollectionTypes } from "../../../util/linkCollectionTypes";
 import {
   convertBusinessTypeNameLabel,
   isActivitySupportGroup,
-} from "../../../lib/businessTypeNameChecker";
+} from "../../../util/businessTypeNameChecker";
 
 export const filterStrapiData = () => {
   const { searchState } = useSearchContext();

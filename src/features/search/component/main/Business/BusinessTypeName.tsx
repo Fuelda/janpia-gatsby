@@ -6,7 +6,7 @@ import { h3, hCenter } from "../../../../../styles/base";
 import { checkBox, checkBoxSet, checkMark } from "../../../../../styles/form";
 import "twin.macro";
 import tw from "twin.macro";
-import { convertBusinessTypeNameLabel } from "../../../../../lib/businessTypeNameChecker";
+import { convertBusinessTypeNameLabel } from "../../../../../util/businessTypeNameChecker";
 
 const BusinessTypeName = (props: { path: string }) => {
   const { searchState, searchSetState } = useSearchContext();

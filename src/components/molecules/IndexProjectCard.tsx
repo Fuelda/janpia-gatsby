@@ -3,7 +3,7 @@ import "twin.macro";
 import tw from "twin.macro";
 import { hCenter, vCenter } from "../../styles/base";
 import { useStrapiContext } from "../../context/strapiContext";
-import { isActivitySupportGroup } from "../../lib/businessTypeNameChecker";
+import { isActivitySupportGroup } from "../../util/businessTypeNameChecker";
 import { BusinessOrgTypeIcon } from "../atoms/BusinessOrgTypeIcon";
 
 type IndexProjectCardType = {

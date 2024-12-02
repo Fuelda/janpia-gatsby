@@ -3,7 +3,7 @@ import { useSearchContext } from "../../../context/searchContext";
 import {
   convertBusinessTypeNameLabel,
   isActivitySupportGroup,
-} from "../../../lib/businessTypeNameChecker";
+} from "../../../util/businessTypeNameChecker";
 import { linkCollectionTypesManual } from "../../../util/linkCollectionTypesManual";
 
 export const filterStrapiManualData = () => {
