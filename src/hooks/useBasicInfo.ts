@@ -11,6 +11,19 @@ export type BusinessCategory =
       readonly subCode: number | null;
     };
 
+export type MainGroup =
+  | {
+      readonly node: {
+        readonly organization_cd: string | null;
+        readonly legal_personality: string | null;
+        readonly organization_type_cd: string | null;
+        readonly organization_name: string | null;
+        readonly prefectures: string | null;
+        readonly insert_id: string | null;
+      };
+    }
+  | undefined;
+
 export type BasicInfo = {
   business_type_name: string | null;
   business_name: string | null;
@@ -18,6 +31,7 @@ export type BasicInfo = {
   business_status: string | null;
   business_category: BusinessCategory | null;
   support_category: string | null;
+  mainGroup: MainGroup | null;
 };
 
 export const useBasicInfo = (business_cd: string): BasicInfo => {
@@ -40,6 +54,7 @@ export const useBasicInfo = (business_cd: string): BasicInfo => {
   const business_category = bizPlan?.business_category;
   const support_category =
     bizPlan && "support_category" in bizPlan ? bizPlan?.support_category : null;
+  const mainGroup = headerBizPlan?.mainGroup;
 
   const businessStatusText =
     (typeof business_status === "number" && business_status === 0) ||
@@ -54,5 +69,6 @@ export const useBasicInfo = (business_cd: string): BasicInfo => {
     business_status: businessStatusText,
     business_category: business_category || null,
     support_category: support_category || null,
+    mainGroup: mainGroup || null,
   };
 };

@@ -31,6 +31,8 @@ import { sdgsGoalArray } from "../features/search/store/filterContents";
 import { formatDate } from "../util/formatDate";
 import "twin.macro";
 import Seo from "../components/lauout/Seo";
+import { useBasicInfo } from "../hooks/useBasicInfo";
+import { isActivitySupportGroup } from "../util/businessTypeNameChecker";
 
 const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
@@ -41,6 +43,12 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
     strapiBizPlanManualADO,
   } = data;
   const [updatedAt, setUpdatedAt] = useState("");
+  const { business_type_name, business_org_type } = useBasicInfo(slug);
+  const projectPlanLabel =
+    isActivitySupportGroup(business_type_name || "") &&
+    business_org_type === "A"
+      ? "支援対象活動計画書"
+      : "事業計画";
 
   const bizPlanManual = strapiBizPlanManualFDO || strapiBizPlanManualADO;
 
@@ -161,9 +169,13 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
 
   return (
     <Layout>
-      <Seo title="事業計画 | 休眠預金活用事業 情報公開サイト" />
+      <Seo title={`${projectPlanLabel} | 休眠預金活用事業 情報公開サイト`} />
       <DetailHeader business_cd={slug} />
-      <DetailWrapper category="事業計画" slug={slug} updatedAt={updatedAt}>
+      <DetailWrapper
+        category={projectPlanLabel}
+        slug={slug}
+        updatedAt={updatedAt}
+      >
         {strapiBizPlan && (
           <div>
             <div css={detailAnchor}>

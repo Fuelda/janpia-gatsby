@@ -10,8 +10,6 @@ import {
 } from "../../features/search/store/filterContents";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
-import { linkCollectionTypes } from "../../util/linkCollectionTypes";
-import { linkCollectionTypesManual } from "../../util/linkCollectionTypesManual";
 import { BusinessOrgTypeThumbnail } from "../atoms/BusinessOrgTypeThumbnail";
 import { BusinessTypeNameCategoryIcon } from "../atoms/BusinessTypeNameCategoryIcon";
 import { useBasicInfo } from "../../hooks/useBasicInfo";
@@ -29,15 +27,8 @@ const DetailHeader = (props: {
     business_category,
     support_category,
     business_type_name,
+    mainGroup,
   } = useBasicInfo(props.business_cd);
-  const linkedBizPlan = linkCollectionTypes();
-  const linkedBizPlanManual = linkCollectionTypesManual();
-  const linkedAllBizPlan = [...linkedBizPlan, ...linkedBizPlanManual];
-  const headerBizPlan = linkedAllBizPlan.find(
-    (item) => item.bizPlan.business_cd === props.business_cd
-  );
-
-  const mainGroup = headerBizPlan?.mainGroup;
 
   const businessCategoryProperty = businessCategoryArray;
 
