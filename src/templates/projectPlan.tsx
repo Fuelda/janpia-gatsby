@@ -158,6 +158,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
     strapiBizPlan && setUpdatedAt(strapiBizPlan.updatedAt);
     bizPlanManual && setUpdatedAt(bizPlanManual.updatedAt);
   }, [strapiBizPlan, bizPlanManual]);
+
   return (
     <Layout>
       <Seo title="事業計画 | 休眠預金活用事業 情報公開サイト" />

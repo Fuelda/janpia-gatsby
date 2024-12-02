@@ -14,6 +14,7 @@ import { linkCollectionTypes } from "../../util/linkCollectionTypes";
 import { linkCollectionTypesManual } from "../../util/linkCollectionTypesManual";
 import { BusinessOrgTypeThumbnail } from "../atoms/BusinessOrgTypeThumbnail";
 import { BusinessTypeNameCategoryIcon } from "../atoms/BusinessTypeNameCategoryIcon";
+import { useBasicInfo } from "../../hooks/useBasicInfo";
 
 export const resultCardTip = tw`text-xs py-1 px-1.5 border border-gray-base text-gray-base`;
 
@@ -21,6 +22,14 @@ const DetailHeader = (props: {
   business_cd: string;
   setBusinessTypeNameYear?: Dispatch<React.SetStateAction<string>>;
 }) => {
+  const {
+    business_org_type,
+    business_name,
+    business_status,
+    business_category,
+    support_category,
+    business_type_name,
+  } = useBasicInfo(props.business_cd);
   const linkedBizPlan = linkCollectionTypes();
   const linkedBizPlanManual = linkCollectionTypesManual();
   const linkedAllBizPlan = [...linkedBizPlan, ...linkedBizPlanManual];
@@ -28,14 +37,6 @@ const DetailHeader = (props: {
     (item) => item.bizPlan.business_cd === props.business_cd
   );
 
-  const bizPlan = headerBizPlan?.bizPlan;
-  const business_org_type = bizPlan?.business_org_type;
-  const business_name = bizPlan?.business_name;
-  const business_status = bizPlan?.business_status;
-  const business_category = bizPlan?.business_category;
-  const support_category =
-    bizPlan && "support_category" in bizPlan ? bizPlan?.support_category : null;
-  const business_type_name = bizPlan?.business_type_name;
   const mainGroup = headerBizPlan?.mainGroup;
 
   const businessCategoryProperty = businessCategoryArray;
@@ -89,21 +90,8 @@ const DetailHeader = (props: {
     (scp) => support_category && support_category === scp.code.toString()
   )?.label;
 
-  let businessTypeNameLabel = "";
-  if (business_type_name) {
-    if (typeof business_type_name === "string") {
-      businessTypeNameLabel = business_type_name;
-    } else if (
-      typeof business_type_name === "object" &&
-      business_type_name.label
-    ) {
-      businessTypeNameLabel = business_type_name.label;
-    }
-  } else {
-    businessTypeNameLabel = "";
-  }
-
-  const splitBusinessTypeName = businessTypeNameLabel.match(/(\d+年度)(.+)/);
+  const splitBusinessTypeName =
+    business_type_name && business_type_name.match(/(\d+年度)(.+)/);
   const businessTypeNameYear =
     splitBusinessTypeName && splitBusinessTypeName[1];
 
@@ -116,11 +104,11 @@ const DetailHeader = (props: {
   return (
     <div>
       <div css={pankuzu}>
-        <Link to="/" tw="break-keep">
+        <Link to="/" tw="whitespace-nowrap">
           ホーム
         </Link>
         <FontAwesomeIcon icon={faAngleRight} />
-        <Link to="/result" tw="break-keep">
+        <Link to="/result" tw="whitespace-nowrap">
           検索結果
         </Link>
         <FontAwesomeIcon icon={faAngleRight} />
@@ -130,11 +118,7 @@ const DetailHeader = (props: {
         <div tw="w-[100px] h-[100px] shrink-0 lg:(w-[23%] h-auto)">
           <BusinessOrgTypeThumbnail
             business_org_type={business_org_type || ""}
-            business_type_name={
-              typeof business_type_name === "string"
-                ? business_type_name
-                : business_type_name?.label || ""
-            }
+            business_type_name={business_type_name || ""}
           />
         </div>
         <div tw="">
