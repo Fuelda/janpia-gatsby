@@ -1301,10 +1301,20 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
               <div id="sixthItem">
                 <DetailItemWrapper itemName="事業設計">
                   <div css={detailAnchor}>
-                    <DetailAnchor
-                      title="中長期アウトカム"
-                      anchor={`/result/${slug}/project-plan/#six-firstItem`}
-                    />
+                    {strapiBizPlan.midterm_biz_goals &&
+                      strapiBizPlan.midterm_biz_goals.data.childMarkdownRemark
+                        .html !== "" && (
+                        <DetailAnchor
+                          title="中長期アウトカム"
+                          anchor={`/result/${slug}/project-plan/#six-firstItem`}
+                        />
+                      )}
+                    {activitySupportPurpose.length !== 0 && (
+                      <DetailAnchor
+                        title="活動支援プログラムの目的"
+                        anchor={`/result/${slug}/project-plan/#six-fourthItem`}
+                      />
+                    )}
                     <DetailAnchor
                       title="短期アウトカム"
                       anchor={`/result/${slug}/project-plan/#six-secondItem`}
@@ -1316,11 +1326,11 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                   </div>
                 </DetailItemWrapper>
                 <div css={detailBody}>
-                  <div id="six-firstItem">
-                    <DetailItemWrapper itemName="中期アウトカム">
-                      {strapiBizPlan.midterm_biz_goals &&
-                        strapiBizPlan.midterm_biz_goals.data.childMarkdownRemark
-                          .html !== "" && (
+                  {strapiBizPlan.midterm_biz_goals &&
+                    strapiBizPlan.midterm_biz_goals.data.childMarkdownRemark
+                      .html !== "" && (
+                      <div id="six-firstItem">
+                        <DetailItemWrapper itemName="中長期アウトカム">
                           <div css={td}>
                             <div
                               dangerouslySetInnerHTML={{
@@ -1332,139 +1342,123 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               }}
                             />
                           </div>
-                        )}
-                    </DetailItemWrapper>
-                  </div>
-                  <div css={detailBody}>
-                    <div id="">
-                      {activitySupportPurpose.length !== 0 && (
-                        <DetailItemWrapper itemName="活動支援プログラムの目的（活動支援団体用）">
-                          <table css={table}>
-                            {activitySupportPurpose.map(
-                              (item: any, i: number) => (
-                                <tbody key={"activitySupportPurpose" + i}>
-                                  <tr>
-                                    <th css={th2Sub} rowSpan={5}>
-                                      {i + 1}
-                                    </th>
-                                    <td css={td} colSpan={2}>
-                                      {item.node.purpose}
-                                    </td>
-                                  </tr>
-                                  <div css={tr} tw="hidden lg:block">
-                                    <p css={th}>指標</p>
-                                    <p css={td}>{item.node.purpose_index}</p>
-                                  </div>
-                                  <div css={tr} tw="hidden lg:block">
-                                    <p css={th}>初期値/初期状態</p>
-                                    <p css={td}>{item.node.purpose_initial}</p>
-                                  </div>
-                                  <div css={tr} tw="hidden lg:block">
-                                    <p css={th}>中間評価時の値/状態</p>
-                                    <p css={td}>{item.node.purpose_mid_eval}</p>
-                                  </div>
-                                  <div css={tr} tw="hidden lg:block">
-                                    <p css={th}>
-                                      目標値/目標状態（目標達成時期）
-                                    </p>
-                                    <p css={td}>{item.node.purpose_aft_eval}</p>
-                                  </div>
-
-                                  <tr css={tr} tw="lg:hidden">
-                                    <th css={th}>指標</th>
-                                    <td css={td}>{item.node.purpose_index}</td>
-                                  </tr>
-                                  <tr css={tr} tw="lg:hidden">
-                                    <th css={th}>初期値/初期状態</th>
-                                    <td css={td}>
-                                      {item.node.purpose_initial}
-                                    </td>
-                                  </tr>
-                                  <tr css={tr} tw="lg:hidden">
-                                    <th css={th}>中間評価時の値/状態</th>
-                                    <td css={td}>
-                                      {item.node.purpose_mid_eval}
-                                    </td>
-                                  </tr>
-                                  <tr css={tr} tw="lg:hidden">
-                                    <th css={th}>
-                                      目標値/目標状態（目標達成時期）
-                                    </th>
-                                    <td css={td}>
-                                      {item.node.purpose_aft_eval}
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              )
-                            )}
-                          </table>
                         </DetailItemWrapper>
-                      )}
-                    </div>
-                  </div>
-                  <div css={detailBody}>
-                    <div id="six-secondItem">
-                      {shortOutcomeFinance.length !== 0 && (
-                        <ShortOutcome
-                          shortOutcome={shortOutcomeFinance}
-                          name="短期アウトカム (資金支援)"
-                        />
-                      )}
-                      {shortOutcomeNonFinance.length !== 0 && (
-                        <ShortOutcome
-                          shortOutcome={shortOutcomeNonFinance}
-                          name="短期アウトカム (非資金支援)"
-                        />
-                      )}
-                      {shortOutcomeAdo.length !== 0 && (
-                        <ShortOutcome
-                          shortOutcome={shortOutcomeAdo}
-                          name="短期アウトカム (ADO)"
-                        />
-                      )}
-                      {shortOutcomeCovid.length !== 0 && (
-                        <ShortOutcome
-                          shortOutcome={shortOutcomeCovid}
-                          name="短期アウトカム (緊急支援枠)"
-                        />
-                      )}
-                      {shortOutcomeActivitySupport.length !== 0 && (
-                        <ShortOutcome
-                          shortOutcome={shortOutcomeActivitySupport}
-                          name="短期アウトカム (活動支援)"
-                        />
-                      )}
-                    </div>
-                    <div id="six-thirdItem">
-                      {outputFinance.length !== 0 && (
-                        <Output
-                          output={outputFinance}
-                          name="アウトプット (資金支援)"
-                        />
-                      )}
-                      {outputNonFinance.length !== 0 && (
-                        <Output
-                          output={outputNonFinance}
-                          name="アウトプット (非資金支援)"
-                        />
-                      )}
-                      {outputAdo.length !== 0 && (
-                        <Output output={outputAdo} name="アウトプット (ADO)" />
-                      )}
-                      {outputActivitySupport.length !== 0 && (
-                        <Output
-                          output={outputActivitySupport}
-                          name="アウトプット（活動支援）"
-                        />
-                      )}
-                    </div>
-                  </div>
+                      </div>
+                    )}
+                  {activitySupportPurpose.length !== 0 && (
+                    <div id="six-fourthItem">
+                      <DetailItemWrapper itemName="活動支援プログラムの目的">
+                        <table css={table}>
+                          {activitySupportPurpose.map(
+                            (item: any, i: number) => (
+                              <tbody key={"activitySupportPurpose" + i}>
+                                <tr>
+                                  <th css={th2Sub} rowSpan={5}>
+                                    {i + 1}
+                                  </th>
+                                  <td css={td} colSpan={2}>
+                                    {item.node.purpose}
+                                  </td>
+                                </tr>
+                                <div css={tr} tw="hidden lg:block">
+                                  <p css={th}>指標</p>
+                                  <p css={td}>{item.node.purpose_index}</p>
+                                </div>
+                                <div css={tr} tw="hidden lg:block">
+                                  <p css={th}>初期値/初期状態</p>
+                                  <p css={td}>{item.node.purpose_initial}</p>
+                                </div>
+                                <div css={tr} tw="hidden lg:block">
+                                  <p css={th}>中間評価時の値/状態</p>
+                                  <p css={td}>{item.node.purpose_mid_eval}</p>
+                                </div>
+                                <div css={tr} tw="hidden lg:block">
+                                  <p css={th}>
+                                    目標値/目標状態（目標達成時期）
+                                  </p>
+                                  <p css={td}>{item.node.purpose_aft_eval}</p>
+                                </div>
 
-                  {strapiBizPlan.business_org_type === "A" && (
-                    <div css={detailBody}>
-                      <div id="six-thirdItem" css={detailBody}></div>
+                                <tr css={tr} tw="lg:hidden">
+                                  <th css={th}>指標</th>
+                                  <td css={td}>{item.node.purpose_index}</td>
+                                </tr>
+                                <tr css={tr} tw="lg:hidden">
+                                  <th css={th}>初期値/初期状態</th>
+                                  <td css={td}>{item.node.purpose_initial}</td>
+                                </tr>
+                                <tr css={tr} tw="lg:hidden">
+                                  <th css={th}>中間評価時の値/状態</th>
+                                  <td css={td}>{item.node.purpose_mid_eval}</td>
+                                </tr>
+                                <tr css={tr} tw="lg:hidden">
+                                  <th css={th}>
+                                    目標値/目標状態（目標達成時期）
+                                  </th>
+                                  <td css={td}>{item.node.purpose_aft_eval}</td>
+                                </tr>
+                              </tbody>
+                            )
+                          )}
+                        </table>
+                      </DetailItemWrapper>
                     </div>
                   )}
+                  <div id="six-secondItem">
+                    {shortOutcomeFinance.length !== 0 && (
+                      <ShortOutcome
+                        shortOutcome={shortOutcomeFinance}
+                        name="短期アウトカム (資金支援)"
+                      />
+                    )}
+                    {shortOutcomeNonFinance.length !== 0 && (
+                      <ShortOutcome
+                        shortOutcome={shortOutcomeNonFinance}
+                        name="短期アウトカム (非資金支援)"
+                      />
+                    )}
+                    {shortOutcomeAdo.length !== 0 && (
+                      <ShortOutcome
+                        shortOutcome={shortOutcomeAdo}
+                        name="短期アウトカム (ADO)"
+                      />
+                    )}
+                    {shortOutcomeCovid.length !== 0 && (
+                      <ShortOutcome
+                        shortOutcome={shortOutcomeCovid}
+                        name="短期アウトカム (緊急支援枠)"
+                      />
+                    )}
+                    {shortOutcomeActivitySupport.length !== 0 && (
+                      <ShortOutcome
+                        shortOutcome={shortOutcomeActivitySupport}
+                        name="短期アウトカム (活動支援)"
+                      />
+                    )}
+                  </div>
+                  <div id="six-thirdItem">
+                    {outputFinance.length !== 0 && (
+                      <Output
+                        output={outputFinance}
+                        name="アウトプット (資金支援)"
+                      />
+                    )}
+                    {outputNonFinance.length !== 0 && (
+                      <Output
+                        output={outputNonFinance}
+                        name="アウトプット (非資金支援)"
+                      />
+                    )}
+                    {outputAdo.length !== 0 && (
+                      <Output output={outputAdo} name="アウトプット (ADO)" />
+                    )}
+                    {outputActivitySupport.length !== 0 && (
+                      <Output
+                        output={outputActivitySupport}
+                        name="アウトプット（活動支援）"
+                      />
+                    )}
+                  </div>
                 </div>
               </div>
               <div id="seventhItem">
