@@ -26,11 +26,11 @@ export const BusinessTypeNameCategoryIcon = ({
 
   const businessTypeNameCategoryColor =
     (businessTypeNameCategory === "通常枠" &&
-      tw`border-blue-button text-blue-button bg-blue-base`) ||
+      tw`border-blue-businessType text-blue-businessType bg-blue-base`) ||
     (businessTypeNameCategory === "緊急支援枠" &&
-      tw`border-red-base text-red-base bg-red-pale`) ||
+      tw`border-red-businessType text-red-businessType bg-red-pale`) ||
     (businessTypeNameCategory === "活動支援" &&
-      tw`border-emerald-500 text-emerald-500 bg-green-50`);
+      tw`border-green-businessType text-green-businessType bg-green-50`);
 
   return (
     <p css={[resultCardTip, businessTypeNameCategoryColor]}>
