@@ -5537,9 +5537,7 @@ export const pageQuery = graphql`
           }
           goals_monitoring {
             data {
-              childMarkdownRemark {
-                html
-              }
+              goals_monitoring
             }
           }
           goals_index {
@@ -5607,9 +5605,7 @@ export const pageQuery = graphql`
           }
           output_monitor {
             data {
-              childMarkdownRemark {
-                html
-              }
+              output_monitor
             }
           }
           output_index {
