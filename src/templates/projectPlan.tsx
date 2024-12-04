@@ -4041,15 +4041,14 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                   </div>
                   <table css={table} tw="lg:hidden">
                     <tbody>
-                      {strapiBizPlan.total_business_cost && (
-                        <tr css={tr}>
-                          <th css={th}>総事業費</th>
-                          <td css={td}>
-                            {strapiBizPlan.total_business_cost.toLocaleString()}
-                            円
-                          </td>
-                        </tr>
-                      )}
+                      <tr css={tr}>
+                        <th css={th}>総事業費</th>
+                        <td css={td}>
+                          {strapiBizPlan.total_business_cost == null
+                            ? ""
+                            : `${strapiBizPlan.total_business_cost.toLocaleString()}円`}
+                        </td>
+                      </tr>
                       {strapiBizPlan.human_resources &&
                         strapiBizPlan.human_resources.data.childMarkdownRemark
                           .html !== "" && (
