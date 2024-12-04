@@ -1260,7 +1260,9 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                   <p css={th}>モニタリング</p>
                                   <p css={td}>
                                     {item.node.goals_monitoring.data
-                                      .goals_monitoring === "true"
+                                      .goals_monitoring === "true" ||
+                                    item.node.goals_monitoring.data
+                                      .goals_monitoring === "1"
                                       ? "はい"
                                       : "いいえ"}
                                   </p>
@@ -1354,7 +1356,9 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                   <th css={th}>モニタリング</th>
                                   <td css={td}>
                                     {item.node.goals_monitoring.data
-                                      .goals_monitoring === "true"
+                                      .goals_monitoring === "true" ||
+                                    item.node.goals_monitoring.data
+                                      .goals_monitoring === "1"
                                       ? "はい"
                                       : "いいえ"}
                                   </td>
@@ -1475,7 +1479,9 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                     <p css={th}>モニタリング</p>
                                     <p css={td}>
                                       {item.node.goals_monitoring.data
-                                        .goals_monitoring === "true"
+                                        .goals_monitoring === "true" ||
+                                      item.node.goals_monitoring.data
+                                        .goals_monitoring === "1"
                                         ? "はい"
                                         : "いいえ"}
                                     </p>
@@ -1569,7 +1575,9 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                     <th css={th}>モニタリング</th>
                                     <td css={td}>
                                       {item.node.goals_monitoring.data
-                                        .goals_monitoring === "true"
+                                        .goals_monitoring === "true" ||
+                                      item.node.goals_monitoring.data
+                                        .goals_monitoring === "1"
                                         ? "はい"
                                         : "いいえ"}
                                     </td>
@@ -1690,7 +1698,9 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                   <p css={th}>モニタリング</p>
                                   <p css={td}>
                                     {item.node.goals_monitoring.data
-                                      .goals_monitoring === "true"
+                                      .goals_monitoring === "true" ||
+                                    item.node.goals_monitoring.data
+                                      .goals_monitoring === "1"
                                       ? "はい"
                                       : "いいえ"}
                                   </p>
@@ -1784,7 +1794,9 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                   <th css={th}>モニタリング</th>
                                   <td css={td}>
                                     {item.node.goals_monitoring.data
-                                      .goals_monitoring === "true"
+                                      .goals_monitoring === "true" ||
+                                    item.node.goals_monitoring.data
+                                      .goals_monitoring === "1"
                                       ? "はい"
                                       : "いいえ"}
                                   </td>
@@ -1904,7 +1916,9 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                   <p css={th}>モニタリング</p>
                                   <p css={td}>
                                     {item.node.goals_monitoring.data
-                                      .goals_monitoring === "true"
+                                      .goals_monitoring === "true" ||
+                                    item.node.goals_monitoring.data
+                                      .goals_monitoring === "1"
                                       ? "はい"
                                       : "いいえ"}
                                   </p>
@@ -1970,7 +1984,9 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                   <th css={th}>モニタリング</th>
                                   <td css={td}>
                                     {item.node.goals_monitoring.data
-                                      .goals_monitoring === "true"
+                                      .goals_monitoring === "true" ||
+                                    item.node.goals_monitoring.data
+                                      .goals_monitoring === "1"
                                       ? "はい"
                                       : "いいえ"}
                                   </td>
@@ -2096,7 +2112,9 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                   <p css={th}>モニタリング</p>
                                   <p css={td}>
                                     {item.node.output_monitor.data
-                                      .output_monitor === "true"
+                                      .output_monitor === "true" ||
+                                    item.node.output_monitor.data
+                                      .output_monitor === "1"
                                       ? "はい"
                                       : "いいえ"}
                                   </p>
@@ -2246,7 +2264,9 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                   <th css={th}>モニタリング</th>
                                   <td css={td}>
                                     {item.node.output_monitor.data
-                                      .output_monitor === "true"
+                                      .output_monitor === "true" ||
+                                    item.node.output_monitor.data
+                                      .output_monitor === "1"
                                       ? "はい"
                                       : "いいえ"}
                                   </td>
@@ -2425,7 +2445,9 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                     <p css={th}>モニタリング</p>
                                     <p css={td}>
                                       {item.node.output_monitor.data
-                                        .output_monitor === "true"
+                                        .output_monitor === "true" ||
+                                      item.node.output_monitor.data
+                                        .output_monitor === "1"
                                         ? "はい"
                                         : "いいえ"}
                                     </p>
@@ -2577,7 +2599,9 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                     <th css={th}>モニタリング</th>
                                     <td css={td}>
                                       {item.node.output_monitor.data
-                                        .output_monitor === "true"
+                                        .output_monitor === "true" ||
+                                      item.node.output_monitor.data
+                                        .output_monitor === "1"
                                         ? "はい"
                                         : "いいえ"}
                                     </td>
@@ -2756,7 +2780,9 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                   <p css={th}>モニタリング</p>
                                   <p css={td}>
                                     {item.node.output_monitor.data
-                                      .output_monitor === "true"
+                                      .output_monitor === "true" ||
+                                    item.node.output_monitor.data
+                                      .output_monitor === "1"
                                       ? "はい"
                                       : "いいえ"}
                                   </p>
@@ -2906,7 +2932,9 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                   <th css={th}>モニタリング</th>
                                   <td css={td}>
                                     {item.node.output_monitor.data
-                                      .output_monitor === "true"
+                                      .output_monitor === "true" ||
+                                    item.node.output_monitor.data
+                                      .output_monitor === "1"
                                       ? "はい"
                                       : "いいえ"}
                                   </td>
@@ -5537,9 +5565,7 @@ export const pageQuery = graphql`
           }
           goals_monitoring {
             data {
-              childMarkdownRemark {
-                html
-              }
+              goals_monitoring
             }
           }
           goals_index {
@@ -5607,9 +5633,7 @@ export const pageQuery = graphql`
           }
           output_monitor {
             data {
-              childMarkdownRemark {
-                html
-              }
+              output_monitor
             }
           }
           output_index {
