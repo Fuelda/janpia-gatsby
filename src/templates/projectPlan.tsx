@@ -4041,15 +4041,14 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                   </div>
                   <table css={table} tw="lg:hidden">
                     <tbody>
-                      {strapiBizPlan.total_business_cost && (
-                        <tr css={tr}>
-                          <th css={th}>総事業費</th>
-                          <td css={td}>
-                            {strapiBizPlan.total_business_cost.toLocaleString()}
-                            円
-                          </td>
-                        </tr>
-                      )}
+                      <tr css={tr}>
+                        <th css={th}>総事業費</th>
+                        <td css={td}>
+                          {strapiBizPlan.total_business_cost == null
+                            ? ""
+                            : `${strapiBizPlan.total_business_cost.toLocaleString()}円`}
+                        </td>
+                      </tr>
                       {strapiBizPlan.human_resources &&
                         strapiBizPlan.human_resources.data.childMarkdownRemark
                           .html !== "" && (
@@ -4229,6 +4228,42 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                           </p>
                         </div>
                       )}
+                    {strapiBizPlan.exit_strategy_fdo &&
+                      strapiBizPlan.exit_strategy_fdo.data.childMarkdownRemark
+                        .html !== "" && (
+                        <div>
+                          <p css={th}>資金分配団体</p>
+                          <p css={td}>
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html:
+                                  strapiBizPlan.exit_strategy_fdo.data.childMarkdownRemark.html.replace(
+                                    /\n/g,
+                                    "<br />"
+                                  ),
+                              }}
+                            />
+                          </p>
+                        </div>
+                      )}
+                    {strapiBizPlan.exit_strategy_ado &&
+                      strapiBizPlan.exit_strategy_ado.data.childMarkdownRemark
+                        .html !== "" && (
+                        <div>
+                          <p css={th}>実行団体</p>
+                          <p css={td}>
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html:
+                                  strapiBizPlan.exit_strategy_ado.data.childMarkdownRemark.html.replace(
+                                    /\n/g,
+                                    "<br />"
+                                  ),
+                              }}
+                            />
+                          </p>
+                        </div>
+                      )}
                   </div>
                   <table css={table} tw="lg:hidden">
                     <tbody>
@@ -4260,6 +4295,42 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                 dangerouslySetInnerHTML={{
                                   __html:
                                     strapiBizPlan.sustainability2.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
+                                }}
+                              />
+                            </td>
+                          </tr>
+                        )}
+                      {strapiBizPlan.exit_strategy_fdo &&
+                        strapiBizPlan.exit_strategy_fdo.data.childMarkdownRemark
+                          .html !== "" && (
+                          <tr css={tr}>
+                            <th css={th}>資金分配団体</th>
+                            <td css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.exit_strategy_fdo.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
+                                }}
+                              />
+                            </td>
+                          </tr>
+                        )}
+                      {strapiBizPlan.exit_strategy_ado &&
+                        strapiBizPlan.exit_strategy_ado.data.childMarkdownRemark
+                          .html !== "" && (
+                          <tr css={tr}>
+                            <th css={th}>実行団体</th>
+                            <td css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.exit_strategy_ado.data.childMarkdownRemark.html.replace(
                                       /\n/g,
                                       "<br />"
                                     ),
@@ -4570,9 +4641,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                       strapiBizPlan.subsidy_actual.data.childMarkdownRemark
                         .html !== "" && (
                         <div>
-                          <p css={th}>
-                            事業対象者（助成で見込む最終受益者）・内容
-                          </p>
+                          <p css={th}>助成事業の実績と成果</p>
                           <p css={td}>
                             <div
                               dangerouslySetInnerHTML={{
@@ -4778,9 +4847,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                         strapiBizPlan.subsidy_actual.data.childMarkdownRemark
                           .html !== "" && (
                           <tr css={tr}>
-                            <th css={th}>
-                              事業対象者（助成で見込む最終受益者）・内容
-                            </th>
+                            <th css={th}>助成事業の実績と成果</th>
                             <td css={td}>
                               <div
                                 dangerouslySetInnerHTML={{
