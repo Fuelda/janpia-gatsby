@@ -4229,6 +4229,42 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                           </p>
                         </div>
                       )}
+                    {strapiBizPlan.exit_strategy_fdo &&
+                      strapiBizPlan.exit_strategy_fdo.data.childMarkdownRemark
+                        .html !== "" && (
+                        <div>
+                          <p css={th}>資金分配団体</p>
+                          <p css={td}>
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html:
+                                  strapiBizPlan.exit_strategy_fdo.data.childMarkdownRemark.html.replace(
+                                    /\n/g,
+                                    "<br />"
+                                  ),
+                              }}
+                            />
+                          </p>
+                        </div>
+                      )}
+                    {strapiBizPlan.exit_strategy_ado &&
+                      strapiBizPlan.exit_strategy_ado.data.childMarkdownRemark
+                        .html !== "" && (
+                        <div>
+                          <p css={th}>実行団体</p>
+                          <p css={td}>
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html:
+                                  strapiBizPlan.exit_strategy_ado.data.childMarkdownRemark.html.replace(
+                                    /\n/g,
+                                    "<br />"
+                                  ),
+                              }}
+                            />
+                          </p>
+                        </div>
+                      )}
                   </div>
                   <table css={table} tw="lg:hidden">
                     <tbody>
@@ -4260,6 +4296,42 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                 dangerouslySetInnerHTML={{
                                   __html:
                                     strapiBizPlan.sustainability2.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
+                                }}
+                              />
+                            </td>
+                          </tr>
+                        )}
+                      {strapiBizPlan.exit_strategy_fdo &&
+                        strapiBizPlan.exit_strategy_fdo.data.childMarkdownRemark
+                          .html !== "" && (
+                          <tr css={tr}>
+                            <th css={th}>資金分配団体</th>
+                            <td css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.exit_strategy_fdo.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
+                                }}
+                              />
+                            </td>
+                          </tr>
+                        )}
+                      {strapiBizPlan.exit_strategy_ado &&
+                        strapiBizPlan.exit_strategy_ado.data.childMarkdownRemark
+                          .html !== "" && (
+                          <tr css={tr}>
+                            <th css={th}>実行団体</th>
+                            <td css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.exit_strategy_ado.data.childMarkdownRemark.html.replace(
                                       /\n/g,
                                       "<br />"
                                     ),
