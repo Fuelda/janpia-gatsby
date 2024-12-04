@@ -4641,9 +4641,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                       strapiBizPlan.subsidy_actual.data.childMarkdownRemark
                         .html !== "" && (
                         <div>
-                          <p css={th}>
-                            事業対象者（助成で見込む最終受益者）・内容
-                          </p>
+                          <p css={th}>助成事業の実績と成果</p>
                           <p css={td}>
                             <div
                               dangerouslySetInnerHTML={{
@@ -4849,9 +4847,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                         strapiBizPlan.subsidy_actual.data.childMarkdownRemark
                           .html !== "" && (
                           <tr css={tr}>
-                            <th css={th}>
-                              事業対象者（助成で見込む最終受益者）・内容
-                            </th>
+                            <th css={th}>助成事業の実績と成果</th>
                             <td css={td}>
                               <div
                                 dangerouslySetInnerHTML={{
