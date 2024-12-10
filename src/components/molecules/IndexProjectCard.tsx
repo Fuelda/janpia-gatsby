@@ -18,32 +18,40 @@ const IndexProjectCard = ({
   const { allStrapiBizPlan, allStrapiBizPlanManual } = useStrapiContext();
 
   const project = allStrapiBizPlan.edges.filter((item) => {
-    if (isActivitySupport) {
-      return (
-        isActivitySupportGroup(item.node.business_type_name || "") &&
-        (isFdo
-          ? item.node.business_org_type === "F"
-          : item.node.business_org_type === "A")
-      );
-    } else {
-      return isFdo
-        ? item.node.business_org_type === "F"
-        : item.node.business_org_type === "A";
-    }
+    return isFdo
+      ? item.node.business_org_type === "F"
+      : item.node.business_org_type === "A";
+    // TODO: 活動支援枠の区分をするようになったらコメントアウトを解除する（そのころは出資も加わるかも）
+    // if (isActivitySupport) {
+    //   return (
+    //     isActivitySupportGroup(item.node.business_type_name || "") &&
+    //     (isFdo
+    //       ? item.node.business_org_type === "F"
+    //       : item.node.business_org_type === "A")
+    //   );
+    // } else {
+    //   return isFdo
+    //     ? item.node.business_org_type === "F"
+    //     : item.node.business_org_type === "A";
+    // }
   });
   const projectManual = allStrapiBizPlanManual.edges.filter((item) => {
-    if (isActivitySupport) {
-      return (
-        isActivitySupportGroup(item.node.business_type_name?.label || "") &&
-        (isFdo
-          ? item.node.business_org_type === "F"
-          : item.node.business_org_type === "A")
-      );
-    } else {
-      return isFdo
-        ? item.node.business_org_type === "F"
-        : item.node.business_org_type === "A";
-    }
+    return isFdo
+      ? item.node.business_org_type === "F"
+      : item.node.business_org_type === "A";
+    // TODO: 活動支援枠の区分をするようになったらコメントアウトを解除する（そのころは出資も加わるかも）
+    // if (isActivitySupport) {
+    //   return (
+    //     isActivitySupportGroup(item.node.business_type_name?.label || "") &&
+    //     (isFdo
+    //       ? item.node.business_org_type === "F"
+    //       : item.node.business_org_type === "A")
+    //   );
+    // } else {
+    //   return isFdo
+    //     ? item.node.business_org_type === "F"
+    //     : item.node.business_org_type === "A";
+    // }
   });
   const onGoingProject = project.filter(
     (item) => item.node.business_status == 0

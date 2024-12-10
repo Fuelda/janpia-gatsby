@@ -115,8 +115,8 @@ const Index: React.FC<any> = ({ data }) => {
           <div tw="grid grid-cols-2 gap-7 lg:(gap-2.5 w-full)">
             <IndexProjectCard isFdo={true} isActivitySupport={false} />
             <IndexProjectCard isFdo={false} isActivitySupport={false} />
-            <IndexProjectCard isFdo={true} isActivitySupport={true} />
-            <IndexProjectCard isFdo={false} isActivitySupport={true} />
+            {/* <IndexProjectCard isFdo={true} isActivitySupport={true} />
+            <IndexProjectCard isFdo={false} isActivitySupport={true} /> */}
           </div>
         </div>
         <div tw="mt-14" css={wrapperSp}>
