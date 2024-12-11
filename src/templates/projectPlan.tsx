@@ -3896,7 +3896,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                   </DetailItemWrapper>
                 )}
                 {activityAdo.length !== 0 && (
-                  <DetailItemWrapper itemName="活動 (ADO)">
+                  <DetailItemWrapper itemName="活動">
                     <table css={table}>
                       {activityAdo.map((item: any, i: number) => (
                         <tbody key={"activityFinance" + i}>
