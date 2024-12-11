@@ -1673,7 +1673,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                         </DetailItemWrapper>
                       )}
                       {shortOutcomeAdo.length !== 0 && (
-                        <DetailItemWrapper itemName="短期アウトカム (ADO)">
+                        <DetailItemWrapper itemName="短期アウトカム">
                           <table css={table}>
                             {shortOutcomeAdo.map((item: any, i: number) => (
                               <tbody key={"shortOutcomeAdo" + i}>
@@ -2755,7 +2755,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                         </DetailItemWrapper>
                       )}
                       {outputAdo.length !== 0 && (
-                        <DetailItemWrapper itemName="アウトプット (ADO)">
+                        <DetailItemWrapper itemName="アウトプット">
                           <table css={table}>
                             {outputAdo.map((item: any, i: number) => (
                               <tbody key={"outputAdo" + i}>
@@ -3896,7 +3896,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                   </DetailItemWrapper>
                 )}
                 {activityAdo.length !== 0 && (
-                  <DetailItemWrapper itemName="活動 (ADO)">
+                  <DetailItemWrapper itemName="活動">
                     <table css={table}>
                       {activityAdo.map((item: any, i: number) => (
                         <tbody key={"activityFinance" + i}>

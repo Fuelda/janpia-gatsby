@@ -646,7 +646,7 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
               </div>
               <div id="">
                 {outputAdo.length !== 0 && (
-                  <DetailItemWrapper itemName="アウトプット (ADO)">
+                  <DetailItemWrapper itemName="アウトプット">
                     <div>
                       <EvaluationShortOutcome data={outputAdo} />
                     </div>
