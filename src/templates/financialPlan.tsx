@@ -659,55 +659,57 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                                   ).toLocaleString()}
                               </td>
                             </tr>
-                            <tr css={tr}>
-                              <th css={th2Sub5col}></th>
-                              <th css={th26col}>資金分配団体 (円)</th>
-                              <td css={td6col}>
-                                {financePlanFormer.eval_fdo_percent &&
-                                  financePlanFormer.eval_fdo_percent + "%"}
-                              </td>
-                              {financePlanFormer.eval_fdo_2020 && (
-                                <td>
-                                  {parseInt(
-                                    financePlanFormer.eval_fdo_2020
-                                  ).toLocaleString()}
+                            {financePlanFormer.business_org_type !== "A" && (
+                              <tr css={tr}>
+                                <th css={th2Sub5col}></th>
+                                <th css={th26col}>資金分配団体 (円)</th>
+                                <td css={td6col}>
+                                  {financePlanFormer.eval_fdo_percent &&
+                                    financePlanFormer.eval_fdo_percent + "%"}
                                 </td>
-                              )}
-                              {financePlanFormer.eval_fdo_2021 && (
+                                {financePlanFormer.eval_fdo_2020 && (
+                                  <td>
+                                    {parseInt(
+                                      financePlanFormer.eval_fdo_2020
+                                    ).toLocaleString()}
+                                  </td>
+                                )}
+                                {financePlanFormer.eval_fdo_2021 && (
+                                  <td>
+                                    {parseInt(
+                                      financePlanFormer.eval_fdo_2021
+                                    ).toLocaleString()}
+                                  </td>
+                                )}
+                                {financePlanFormer.eval_fdo_2022 && (
+                                  <td>
+                                    {parseInt(
+                                      financePlanFormer.eval_fdo_2022
+                                    ).toLocaleString()}
+                                  </td>
+                                )}
+                                {financePlanFormer.eval_fdo_2023 && (
+                                  <td>
+                                    {parseInt(
+                                      financePlanFormer.eval_fdo_2023
+                                    ).toLocaleString()}
+                                  </td>
+                                )}
+                                {financePlanFormer.eval_fdo_2024 && (
+                                  <td>
+                                    {parseInt(
+                                      financePlanFormer.eval_fdo_2024
+                                    ).toLocaleString()}
+                                  </td>
+                                )}
                                 <td>
-                                  {parseInt(
-                                    financePlanFormer.eval_fdo_2021
-                                  ).toLocaleString()}
+                                  {financePlanFormer.eval_fdo_ttl &&
+                                    parseInt(
+                                      financePlanFormer.eval_fdo_ttl
+                                    ).toLocaleString()}
                                 </td>
-                              )}
-                              {financePlanFormer.eval_fdo_2022 && (
-                                <td>
-                                  {parseInt(
-                                    financePlanFormer.eval_fdo_2022
-                                  ).toLocaleString()}
-                                </td>
-                              )}
-                              {financePlanFormer.eval_fdo_2023 && (
-                                <td>
-                                  {parseInt(
-                                    financePlanFormer.eval_fdo_2023
-                                  ).toLocaleString()}
-                                </td>
-                              )}
-                              {financePlanFormer.eval_fdo_2024 && (
-                                <td>
-                                  {parseInt(
-                                    financePlanFormer.eval_fdo_2024
-                                  ).toLocaleString()}
-                                </td>
-                              )}
-                              <td>
-                                {financePlanFormer.eval_fdo_ttl &&
-                                  parseInt(
-                                    financePlanFormer.eval_fdo_ttl
-                                  ).toLocaleString()}
-                              </td>
-                            </tr>
+                              </tr>
+                            )}
                             <tr css={tr}>
                               <th css={th2Sub5col}></th>
                               <th css={th26col}>実行団体 (円)</th>
