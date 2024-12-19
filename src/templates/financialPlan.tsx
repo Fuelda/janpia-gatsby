@@ -112,7 +112,7 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                     </td>
                   </tr>
                 )}
-                {financePlan && financePlan.bis_ado_direct && (
+                {financePlan && financePlan.bis_ado_direct ? (
                   <tr>
                     <th className="table__financialPlan--tbody-sub"></th>
                     <th className="table__financialPlan--tbody-02">
@@ -123,6 +123,8 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                         financePlan.bis_ado_direct.toLocaleString()}
                     </td>
                   </tr>
+                ) : (
+                  <></>
                 )}
                 <tr>
                   <th></th>
