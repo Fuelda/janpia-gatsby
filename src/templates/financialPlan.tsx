@@ -56,6 +56,9 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
     financePlanManual && setUpdatedAt(financePlanManual.updatedAt);
   }, [financePlan, financePlanFormer, financePlanManual]);
 
+  const isOnlySum =
+    financePlan && !financePlan.sum_subidy && !financePlan.sum_own_funds;
+
   return (
     <Layout>
       <Seo title="資金計画 | 休眠預金活用事業 情報公開サイト" />
@@ -66,7 +69,131 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
             <iframe width="100%" height="500px" src={pdfUrl}></iframe>
           </div>
         )}
-        {financePlan && (
+
+        {financePlan && isOnlySum && (
+          <div tw="lg:overflow-scroll">
+            <table
+              css={table}
+              className="table__financialPlan"
+              // tw="lg:w-[780px]"
+            >
+              <thead css={thead}>
+                <tr>
+                  <th
+                    rowSpan={2}
+                    colSpan={2}
+                    className="table__financialPlan--thead-th"
+                    tw="w-1/6!"
+                  ></th>
+                  <td rowSpan={2} className="table__financialPlan--thead-01">
+                    助成金
+                  </td>
+                </tr>
+              </thead>
+              <tbody className="table__financialPlan--tbody">
+                <tr>
+                  <th colSpan={2} className="table__financialPlan--tbody-01">
+                    事業費 (円)
+                  </th>
+                  <td>
+                    {financePlan.bis_sum &&
+                      financePlan.bis_sum.toLocaleString()}
+                  </td>
+                </tr>
+                {financePlan && financePlan.bis_ado && (
+                  <tr>
+                    <th className="table__financialPlan--tbody-sub"></th>
+                    <th className="table__financialPlan--tbody-02">
+                      実行団体への助成 (円)
+                    </th>
+                    <td>
+                      {financePlan.bis_ado &&
+                        financePlan.bis_ado.toLocaleString()}
+                    </td>
+                  </tr>
+                )}
+                {financePlan && financePlan.bis_ado_direct && (
+                  <tr>
+                    <th className="table__financialPlan--tbody-sub"></th>
+                    <th className="table__financialPlan--tbody-02">
+                      直接事業費 (円)
+                    </th>
+                    <td>
+                      {financePlan.bis_ado_direct &&
+                        financePlan.bis_ado_direct.toLocaleString()}
+                    </td>
+                  </tr>
+                )}
+                <tr>
+                  <th></th>
+                  <th className="table__financialPlan--tbody-02">
+                    管理的経費 (円)
+                  </th>
+                  <td>
+                    {financePlan.bis_manage_sum &&
+                      financePlan.bis_manage_sum.toLocaleString()}
+                  </td>
+                </tr>
+                {financePlan && financePlan.po_sum_sum && (
+                  <tr>
+                    <th colSpan={2} className="table__financialPlan--tbody-02">
+                      プログラムオフィサー関連経費 (円)
+                    </th>
+                    <td>
+                      {financePlan.po_sum_sum &&
+                        financePlan.po_sum_sum.toLocaleString()}
+                    </td>
+                  </tr>
+                )}
+                <tr>
+                  <th colSpan={2} className="table__financialPlan--tbody-01">
+                    評価関連経費 (円)
+                  </th>
+                  <td>
+                    {financePlan.eval_sum_sum &&
+                      financePlan.eval_sum_sum.toLocaleString()}
+                  </td>
+                </tr>
+                {financePlan && financePlan.eval_fdo_sum_sum !== null ? (
+                  <tr>
+                    <th className="table__financialPlan--tbody-sub"></th>
+                    <th className="table__financialPlan--tbody-02">
+                      資金分配団体 (円)
+                    </th>
+                    <td>
+                      {financePlan &&
+                        financePlan.eval_fdo_sum_sum &&
+                        financePlan.eval_fdo_sum_sum.toLocaleString()}
+                    </td>
+                  </tr>
+                ) : (
+                  <tr />
+                )}
+                <tr>
+                  <th></th>
+                  <th className="table__financialPlan--tbody-02">
+                    実行団体用 (円)
+                  </th>
+                  <td>
+                    {financePlan.eval_ado_sum_sum &&
+                      financePlan.eval_ado_sum_sum.toLocaleString()}
+                  </td>
+                </tr>
+                <tr>
+                  <th colSpan={2} className="table__financialPlan--tbody-02">
+                    合計 (円)
+                  </th>
+                  <td>
+                    {financePlan.sum_sum &&
+                      financePlan.sum_sum.toLocaleString()}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        {financePlan && !isOnlySum && (
           <div tw="lg:overflow-scroll">
             <table
               css={table}
@@ -228,7 +355,6 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                 ) : (
                   <tr />
                 )}
-
                 <tr>
                   <th></th>
                   <th className="table__financialPlan--tbody-02">
