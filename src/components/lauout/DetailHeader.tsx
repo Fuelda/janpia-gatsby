@@ -32,15 +32,6 @@ const DetailHeader = (props: {
 
   const businessCategoryProperty = businessCategoryArray;
 
-  let businessStatusText = "";
-  if (typeof business_status === "number" && business_status === 0) {
-    businessStatusText = "実施中";
-  } else if (typeof business_status === "boolean" && business_status) {
-    businessStatusText = "実施中";
-  } else {
-    businessStatusText = "終了";
-  }
-
   let mainGroupName = "";
   if (mainGroup) {
     mainGroupName = mainGroup.node.organization_name
@@ -120,7 +111,7 @@ const DetailHeader = (props: {
               />
             )}
             <p css={resultCardTip}>{businessTypeNameYear}</p>
-            <p css={resultCardTip}>{businessStatusText}</p>
+            <p css={resultCardTip}>{business_status}</p>
             {mainGroupPrefecture && (
               <p css={resultCardTip}>{mainGroupPrefecture}</p>
             )}
