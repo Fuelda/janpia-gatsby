@@ -44,9 +44,8 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
   } = data;
   const [updatedAt, setUpdatedAt] = useState("");
   const { business_type_name, business_org_type } = useBasicInfo(slug);
-  const isSupportTarget =
-    isActivitySupportGroup(business_type_name || "") &&
-    business_org_type === "A";
+  const isActivitySupport = isActivitySupportGroup(business_type_name || "");
+  const isSupportTarget = isActivitySupport && business_org_type === "A";
   const projectPlanLabel = isSupportTarget ? "支援対象活動計画書" : "事業計画";
 
   const bizPlanManual = strapiBizPlanManualFDO || strapiBizPlanManualADO;
@@ -189,7 +188,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                 />
               )}
               <DetailAnchor
-                title="団体の社会的役割"
+                title={isActivitySupport ? "団体概要" : "団体の社会的役割"}
                 anchor={`/result/${slug}/project-plan/#thirdItem`}
               />
               <DetailAnchor
@@ -206,14 +205,20 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                     title="事業設計"
                     anchor={`/result/${slug}/project-plan/#sixthItem`}
                   />
-                  <DetailAnchor
-                    title="事業活動"
-                    anchor={`/result/${slug}/project-plan/#seventhItem`}
-                  />
+                  {!isActivitySupport && (
+                    <DetailAnchor
+                      title="事業活動"
+                      anchor={`/result/${slug}/project-plan/#seventhItem`}
+                    />
+                  )}
                   <DetailAnchor
                     title="インプット"
                     anchor={`/result/${slug}/project-plan/#eighthItem`}
                   />
+                </>
+              )}
+              {!isActivitySupport && (
+                <>
                   <DetailAnchor
                     title="広報戦略および連携・対話戦略"
                     anchor={`/result/${slug}/project-plan/#ninthItem`}
@@ -222,12 +227,12 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                     title="出口戦略・持続可能性について"
                     anchor={`/result/${slug}/project-plan/#tenthItem`}
                   />
+                  <DetailAnchor
+                    title="関連する主な実績"
+                    anchor={`/result/${slug}/project-plan/#eleventhItem`}
+                  />
                 </>
               )}
-              <DetailAnchor
-                title="関連する主な実績"
-                anchor={`/result/${slug}/project-plan/#eleventhItem`}
-              />
             </div>
             <div css={detailBody}>
               <div id="firstItem">
@@ -390,13 +395,19 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                 </div>
               )}
               <div id="thirdItem">
-                <DetailItemWrapper itemName="団体の社会的役割">
+                <DetailItemWrapper
+                  itemName={isActivitySupport ? "団体概要" : "団体の社会的役割"}
+                >
                   <div tw="hidden lg:block">
                     {strapiBizPlan.vision &&
                       strapiBizPlan.vision.data.childMarkdownRemark.html !==
                         "" && (
                         <div>
-                          <p css={th}>団体の目的</p>
+                          <p css={th}>
+                            {isActivitySupport
+                              ? "設立目的・理念"
+                              : "団体の目的"}
+                          </p>
                           <p css={td}>
                             <div
                               dangerouslySetInnerHTML={{
@@ -414,7 +425,11 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                       strapiBizPlan.mission.data.childMarkdownRemark.html !==
                         "" && (
                         <div>
-                          <p css={th}>団体の概要・活動・業務</p>
+                          <p css={th}>
+                            {isActivitySupport
+                              ? "団体の主な活動"
+                              : "団体の概要・活動・業務"}
+                          </p>
                           <p css={td}>
                             <div
                               dangerouslySetInnerHTML={{
@@ -435,7 +450,11 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                         strapiBizPlan.vision.data.childMarkdownRemark.html !==
                           "" && (
                           <tr css={tr}>
-                            <th css={th}>団体の目的</th>
+                            <th css={th}>
+                              {isActivitySupport
+                                ? "設立目的・理念"
+                                : "団体の目的"}
+                            </th>
                             <td css={td}>
                               <div
                                 dangerouslySetInnerHTML={{
@@ -453,7 +472,11 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                         strapiBizPlan.mission.data.childMarkdownRemark.html !==
                           "" && (
                           <tr css={tr}>
-                            <th css={th}>団体の概要・活動・業務</th>
+                            <th css={th}>
+                              {isActivitySupport
+                                ? "団体の主な活動"
+                                : "団体の概要・活動・業務"}
+                            </th>
                             <td css={td}>
                               <div
                                 dangerouslySetInnerHTML={{
@@ -494,7 +517,11 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                       )}
                     {strapiBizPlan.funding_conclusion_d && (
                       <div>
-                        <p css={th}>資金提供契約締結日</p>
+                        <p css={th}>
+                          {isActivitySupport
+                            ? "契約締結日"
+                            : "資金提供契約締結日"}
+                        </p>
                         <p css={td}>
                           {formatDate(strapiBizPlan.funding_conclusion_d)}
                         </p>
@@ -550,7 +577,11 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                         )}
                       {strapiBizPlan.funding_conclusion_d && (
                         <tr css={tr}>
-                          <th css={th}>資金提供契約締結日</th>
+                          <th css={th}>
+                            {isActivitySupport
+                              ? "契約締結日"
+                              : "資金提供契約締結日"}
+                          </th>
                           <td colSpan={2} css={td}>
                             {formatDate(strapiBizPlan.funding_conclusion_d)}
                           </td>
@@ -1014,7 +1045,11 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                         strapiBizPlan.social_issues.data.childMarkdownRemark
                           .html !== "" && (
                           <div>
-                            <p css={th}>社会課題</p>
+                            <p css={th}>
+                              {isActivitySupport
+                                ? "支援対象団体が抱える事業実施上、組織上の課題とその背景"
+                                : "社会課題"}
+                            </p>
                             <p css={td}>
                               <div
                                 dangerouslySetInnerHTML={{
@@ -1033,7 +1068,9 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                           .childMarkdownRemark.html !== "" && (
                           <div>
                             <p css={th}>
-                              課題に対する行政等による既存の取組み状況
+                              {isActivitySupport
+                                ? "課題に対する暁星や中間支援団体等による既存の取組み状況"
+                                : "課題に対する行政等による既存の取組み状況"}
                             </p>
                             <p css={td}>
                               <div
@@ -1133,7 +1170,11 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                           strapiBizPlan.social_issues.data.childMarkdownRemark
                             .html !== "" && (
                             <tr css={tr}>
-                              <th css={th}>社会課題</th>
+                              <th css={th}>
+                                {isActivitySupport
+                                  ? "支援対象団体が抱える事業実施上、組織上の課題とその背景"
+                                  : "社会課題"}
+                              </th>
                               <td css={td}>
                                 <div
                                   dangerouslySetInnerHTML={{
@@ -1152,7 +1193,9 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                             .childMarkdownRemark.html !== "" && (
                             <tr css={tr}>
                               <th css={th}>
-                                課題に対する行政等による既存の取組み状況
+                                {isActivitySupport
+                                  ? "課題に対する暁星や中間支援団体等による既存の取組み状況"
+                                  : "課題に対する行政等による既存の取組み状況"}
                               </th>
                               <td css={td}>
                                 <div
@@ -1500,338 +1543,24 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
               )}
               {!isSupportTarget && (
                 <div id="seventhItem">
-                  <DetailItemWrapper itemName="事業活動">
-                    <div tw="hidden lg:block">
-                      {strapiBizPlan.activity_0 &&
-                        strapiBizPlan.activity_0.data.childMarkdownRemark
-                          .html !== "" && (
-                          <div>
-                            <p css={table} tw="bg-blue-base px-2">
-                              資金支援
-                            </p>
-                          </div>
-                        )}
-                      {strapiBizPlan.activity_0 &&
-                        strapiBizPlan.activity_0.data.childMarkdownRemark
-                          .html !== "" && (
-                          <div>
-                            <p css={th1_2}>0年目</p>
-                            <p css={td}>
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html:
-                                    strapiBizPlan.activity_0.data.childMarkdownRemark.html.replace(
-                                      /\n/g,
-                                      "<br />"
-                                    ),
-                                }}
-                              />
-                            </p>
-                          </div>
-                        )}
-                      {strapiBizPlan.activity_season_0 &&
-                        strapiBizPlan.activity_season_0.data.childMarkdownRemark
-                          .html !== "" && (
-                          <div tw="flex">
-                            <p css={th2_2}>活動時期</p>
-                            <p css={td}>
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html:
-                                    strapiBizPlan.activity_season_0.data.childMarkdownRemark.html.replace(
-                                      /\n/g,
-                                      "<br />"
-                                    ),
-                                }}
-                              />
-                            </p>
-                          </div>
-                        )}
-                      {strapiBizPlan.activity_1 &&
-                        strapiBizPlan.activity_1.data.childMarkdownRemark
-                          .html !== "" && (
-                          <div>
-                            <p css={th1_2}>1年目</p>
-                            <p css={td}>
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html:
-                                    strapiBizPlan.activity_1.data.childMarkdownRemark.html.replace(
-                                      /\n/g,
-                                      "<br />"
-                                    ),
-                                }}
-                              />
-                            </p>
-                          </div>
-                        )}
-                      {strapiBizPlan.activity_season_1 &&
-                        strapiBizPlan.activity_season_1.data.childMarkdownRemark
-                          .html !== "" && (
-                          <div tw="flex">
-                            <p css={th2_2}>活動時期</p>
-                            <p css={td}>
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html:
-                                    strapiBizPlan.activity_season_1.data.childMarkdownRemark.html.replace(
-                                      /\n/g,
-                                      "<br />"
-                                    ),
-                                }}
-                              />
-                            </p>
-                          </div>
-                        )}
-                      {strapiBizPlan.activity_2 &&
-                        strapiBizPlan.activity_2.data.childMarkdownRemark
-                          .html !== "" && (
-                          <div>
-                            <p css={th1_2}>2年目</p>
-                            <p css={td}>
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html:
-                                    strapiBizPlan.activity_2.data.childMarkdownRemark.html.replace(
-                                      /\n/g,
-                                      "<br />"
-                                    ),
-                                }}
-                              />
-                            </p>
-                          </div>
-                        )}
-                      {strapiBizPlan.activity_season_2 &&
-                        strapiBizPlan.activity_season_2.data.childMarkdownRemark
-                          .html !== "" && (
-                          <div tw="flex">
-                            <p css={th2_2}>活動時期</p>
-                            <p css={td}>
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html:
-                                    strapiBizPlan.activity_season_2.data.childMarkdownRemark.html.replace(
-                                      /\n/g,
-                                      "<br />"
-                                    ),
-                                }}
-                              />
-                            </p>
-                          </div>
-                        )}
-                      {strapiBizPlan.activity_3 &&
-                        strapiBizPlan.activity_3.data.childMarkdownRemark
-                          .html !== "" && (
-                          <div>
-                            <p css={th1_2}>3年目</p>
-                            <p css={td}>
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html:
-                                    strapiBizPlan.activity_3.data.childMarkdownRemark.html.replace(
-                                      /\n/g,
-                                      "<br />"
-                                    ),
-                                }}
-                              />
-                            </p>
-                          </div>
-                        )}
-                      {strapiBizPlan.activity_season_3 &&
-                        strapiBizPlan.activity_season_3.data.childMarkdownRemark
-                          .html !== "" && (
-                          <div tw="flex">
-                            <p css={th2_2}>活動時期</p>
-                            <p css={td}>
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html:
-                                    strapiBizPlan.activity_season_3.data.childMarkdownRemark.html.replace(
-                                      /\n/g,
-                                      "<br />"
-                                    ),
-                                }}
-                              />
-                            </p>
-                          </div>
-                        )}
-                      {strapiBizPlan.activity_non_0 &&
-                        strapiBizPlan.activity_non_0.data.childMarkdownRemark
-                          .html !== "" && (
-                          <div>
-                            <p css={table} tw="bg-blue-base px-2">
-                              組織基盤強化・環境整備 (非資金的支援)
-                            </p>
-                          </div>
-                        )}
-                      {strapiBizPlan.activity_non_0 &&
-                        strapiBizPlan.activity_non_0.data.childMarkdownRemark
-                          .html !== "" && (
-                          <div>
-                            <p css={th1_2}>0年目</p>
-                            <p css={td}>
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html:
-                                    strapiBizPlan.activity_non_0.data.childMarkdownRemark.html.replace(
-                                      /\n/g,
-                                      "<br />"
-                                    ),
-                                }}
-                              />
-                            </p>
-                          </div>
-                        )}
-                      {strapiBizPlan.activity_season_n_0 &&
-                        strapiBizPlan.activity_season_n_0.data
-                          .childMarkdownRemark.html !== "" && (
-                          <div tw="flex">
-                            <p css={th2_2}>活動時期</p>
-                            <p css={td}>
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html:
-                                    strapiBizPlan.activity_season_n_0.data.childMarkdownRemark.html.replace(
-                                      /\n/g,
-                                      "<br />"
-                                    ),
-                                }}
-                              />
-                            </p>
-                          </div>
-                        )}
-                      {strapiBizPlan.activity_non_1 &&
-                        strapiBizPlan.activity_non_1.data.childMarkdownRemark
-                          .html !== "" && (
-                          <div>
-                            <p css={th1_2}>1年目</p>
-                            <p css={td}>
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html:
-                                    strapiBizPlan.activity_non_1.data.childMarkdownRemark.html.replace(
-                                      /\n/g,
-                                      "<br />"
-                                    ),
-                                }}
-                              />
-                            </p>
-                          </div>
-                        )}
-                      {strapiBizPlan.activity_season_n_1 &&
-                        strapiBizPlan.activity_season_n_1.data
-                          .childMarkdownRemark.html !== "" && (
-                          <div tw="flex">
-                            <p css={th2_2}>活動時期</p>
-                            <p css={td}>
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html:
-                                    strapiBizPlan.activity_season_n_1.data.childMarkdownRemark.html.replace(
-                                      /\n/g,
-                                      "<br />"
-                                    ),
-                                }}
-                              />
-                            </p>
-                          </div>
-                        )}
-                      {strapiBizPlan.activity_non_2 &&
-                        strapiBizPlan.activity_non_2.data.childMarkdownRemark
-                          .html !== "" && (
-                          <div>
-                            <p css={th1_2}>2年目</p>
-                            <p css={td}>
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html:
-                                    strapiBizPlan.activity_non_2.data.childMarkdownRemark.html.replace(
-                                      /\n/g,
-                                      "<br />"
-                                    ),
-                                }}
-                              />
-                            </p>
-                          </div>
-                        )}
-                      {strapiBizPlan.activity_season_n_2 &&
-                        strapiBizPlan.activity_season_n_2.data
-                          .childMarkdownRemark.html !== "" && (
-                          <div tw="flex">
-                            <p css={th2_2}>活動時期</p>
-                            <p css={td}>
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html:
-                                    strapiBizPlan.activity_season_n_2.data.childMarkdownRemark.html.replace(
-                                      /\n/g,
-                                      "<br />"
-                                    ),
-                                }}
-                              />
-                            </p>
-                          </div>
-                        )}
-                      {strapiBizPlan.activity_non_3 &&
-                        strapiBizPlan.activity_non_3.data.childMarkdownRemark
-                          .html !== "" && (
-                          <div>
-                            <p css={th1_2}>3年目</p>
-                            <p css={td}>
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html:
-                                    strapiBizPlan.activity_non_3.data.childMarkdownRemark.html.replace(
-                                      /\n/g,
-                                      "<br />"
-                                    ),
-                                }}
-                              />
-                            </p>
-                          </div>
-                        )}
-                      {strapiBizPlan.activity_season_n_3 &&
-                        strapiBizPlan.activity_season_n_3.data
-                          .childMarkdownRemark.html !== "" && (
-                          <div tw="flex">
-                            <p css={th2_2}>活動時期</p>
-                            <p css={td}>
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html:
-                                    strapiBizPlan.activity_season_n_3.data.childMarkdownRemark.html.replace(
-                                      /\n/g,
-                                      "<br />"
-                                    ),
-                                }}
-                              />
-                            </p>
-                          </div>
-                        )}
-                    </div>
-                    <table css={table} tw="lg:hidden">
-                      <tbody>
+                  {!isActivitySupport && (
+                    <DetailItemWrapper itemName="事業活動">
+                      <div tw="hidden lg:block">
                         {strapiBizPlan.activity_0 &&
                           strapiBizPlan.activity_0.data.childMarkdownRemark
                             .html !== "" && (
-                            <tr>
-                              <th
-                                css={table}
-                                tw="bg-blue-base px-2"
-                                colSpan={3}
-                              >
+                            <div>
+                              <p css={table} tw="bg-blue-base px-2">
                                 資金支援
-                              </th>
-                            </tr>
+                              </p>
+                            </div>
                           )}
                         {strapiBizPlan.activity_0 &&
                           strapiBizPlan.activity_0.data.childMarkdownRemark
                             .html !== "" && (
-                            <tr css={tr}>
-                              <th css={th1_2} colSpan={2}>
-                                0年目
-                              </th>
-                              <td css={td}>
+                            <div>
+                              <p css={th1_2}>0年目</p>
+                              <p css={td}>
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
@@ -1841,16 +1570,15 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                       ),
                                   }}
                                 />
-                              </td>
-                            </tr>
+                              </p>
+                            </div>
                           )}
                         {strapiBizPlan.activity_season_0 &&
                           strapiBizPlan.activity_season_0.data
                             .childMarkdownRemark.html !== "" && (
-                            <tr css={tr}>
-                              <th css={th2Sub_2} rowSpan={1}></th>
-                              <th css={th2_2}>活動時期</th>
-                              <td css={td}>
+                            <div tw="flex">
+                              <p css={th2_2}>活動時期</p>
+                              <p css={td}>
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
@@ -1860,17 +1588,15 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                       ),
                                   }}
                                 />
-                              </td>
-                            </tr>
+                              </p>
+                            </div>
                           )}
                         {strapiBizPlan.activity_1 &&
                           strapiBizPlan.activity_1.data.childMarkdownRemark
                             .html !== "" && (
-                            <tr css={tr}>
-                              <th css={th1_2} colSpan={2}>
-                                1年目
-                              </th>
-                              <td css={td}>
+                            <div>
+                              <p css={th1_2}>1年目</p>
+                              <p css={td}>
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
@@ -1880,16 +1606,15 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                       ),
                                   }}
                                 />
-                              </td>
-                            </tr>
+                              </p>
+                            </div>
                           )}
                         {strapiBizPlan.activity_season_1 &&
                           strapiBizPlan.activity_season_1.data
                             .childMarkdownRemark.html !== "" && (
-                            <tr css={tr}>
-                              <th css={th2Sub_2} rowSpan={1}></th>
-                              <th css={th2_2}>活動時期</th>
-                              <td css={td}>
+                            <div tw="flex">
+                              <p css={th2_2}>活動時期</p>
+                              <p css={td}>
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
@@ -1899,17 +1624,15 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                       ),
                                   }}
                                 />
-                              </td>
-                            </tr>
+                              </p>
+                            </div>
                           )}
                         {strapiBizPlan.activity_2 &&
                           strapiBizPlan.activity_2.data.childMarkdownRemark
                             .html !== "" && (
-                            <tr css={tr}>
-                              <th css={th1_2} colSpan={2}>
-                                2年目
-                              </th>
-                              <td css={td}>
+                            <div>
+                              <p css={th1_2}>2年目</p>
+                              <p css={td}>
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
@@ -1919,16 +1642,15 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                       ),
                                   }}
                                 />
-                              </td>
-                            </tr>
+                              </p>
+                            </div>
                           )}
                         {strapiBizPlan.activity_season_2 &&
                           strapiBizPlan.activity_season_2.data
                             .childMarkdownRemark.html !== "" && (
-                            <tr css={tr}>
-                              <th css={th2Sub_2} rowSpan={1}></th>
-                              <th css={th2_2}>活動時期</th>
-                              <td css={td}>
+                            <div tw="flex">
+                              <p css={th2_2}>活動時期</p>
+                              <p css={td}>
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
@@ -1938,17 +1660,15 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                       ),
                                   }}
                                 />
-                              </td>
-                            </tr>
+                              </p>
+                            </div>
                           )}
                         {strapiBizPlan.activity_3 &&
                           strapiBizPlan.activity_3.data.childMarkdownRemark
                             .html !== "" && (
-                            <tr css={tr}>
-                              <th css={th1_2} colSpan={2}>
-                                3年目
-                              </th>
-                              <td css={td}>
+                            <div>
+                              <p css={th1_2}>3年目</p>
+                              <p css={td}>
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
@@ -1958,16 +1678,15 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                       ),
                                   }}
                                 />
-                              </td>
-                            </tr>
+                              </p>
+                            </div>
                           )}
                         {strapiBizPlan.activity_season_3 &&
                           strapiBizPlan.activity_season_3.data
                             .childMarkdownRemark.html !== "" && (
-                            <tr css={tr}>
-                              <th css={th2Sub_2} rowSpan={1}></th>
-                              <th css={th2_2}>活動時期</th>
-                              <td css={td}>
+                            <div tw="flex">
+                              <p css={th2_2}>活動時期</p>
+                              <p css={td}>
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
@@ -1977,30 +1696,24 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                       ),
                                   }}
                                 />
-                              </td>
-                            </tr>
+                              </p>
+                            </div>
                           )}
                         {strapiBizPlan.activity_non_0 &&
                           strapiBizPlan.activity_non_0.data.childMarkdownRemark
                             .html !== "" && (
-                            <tr>
-                              <th
-                                css={table}
-                                tw="bg-blue-base px-2"
-                                colSpan={3}
-                              >
+                            <div>
+                              <p css={table} tw="bg-blue-base px-2">
                                 組織基盤強化・環境整備 (非資金的支援)
-                              </th>
-                            </tr>
+                              </p>
+                            </div>
                           )}
                         {strapiBizPlan.activity_non_0 &&
                           strapiBizPlan.activity_non_0.data.childMarkdownRemark
                             .html !== "" && (
-                            <tr css={tr}>
-                              <th css={th1_2} colSpan={2}>
-                                0年目
-                              </th>
-                              <td css={td}>
+                            <div>
+                              <p css={th1_2}>0年目</p>
+                              <p css={td}>
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
@@ -2010,16 +1723,15 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                       ),
                                   }}
                                 />
-                              </td>
-                            </tr>
+                              </p>
+                            </div>
                           )}
                         {strapiBizPlan.activity_season_n_0 &&
                           strapiBizPlan.activity_season_n_0.data
                             .childMarkdownRemark.html !== "" && (
-                            <tr css={tr}>
-                              <th css={th2Sub_2} rowSpan={1}></th>
-                              <th css={th2_2}>活動時期</th>
-                              <td css={td}>
+                            <div tw="flex">
+                              <p css={th2_2}>活動時期</p>
+                              <p css={td}>
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
@@ -2029,17 +1741,15 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                       ),
                                   }}
                                 />
-                              </td>
-                            </tr>
+                              </p>
+                            </div>
                           )}
                         {strapiBizPlan.activity_non_1 &&
                           strapiBizPlan.activity_non_1.data.childMarkdownRemark
                             .html !== "" && (
-                            <tr css={tr}>
-                              <th css={th1_2} colSpan={2}>
-                                1年目
-                              </th>
-                              <td css={td}>
+                            <div>
+                              <p css={th1_2}>1年目</p>
+                              <p css={td}>
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
@@ -2049,16 +1759,15 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                       ),
                                   }}
                                 />
-                              </td>
-                            </tr>
+                              </p>
+                            </div>
                           )}
                         {strapiBizPlan.activity_season_n_1 &&
                           strapiBizPlan.activity_season_n_1.data
                             .childMarkdownRemark.html !== "" && (
-                            <tr css={tr}>
-                              <th css={th2Sub_2} rowSpan={1}></th>
-                              <th css={th2_2}>活動時期</th>
-                              <td css={td}>
+                            <div tw="flex">
+                              <p css={th2_2}>活動時期</p>
+                              <p css={td}>
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
@@ -2068,17 +1777,15 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                       ),
                                   }}
                                 />
-                              </td>
-                            </tr>
+                              </p>
+                            </div>
                           )}
                         {strapiBizPlan.activity_non_2 &&
                           strapiBizPlan.activity_non_2.data.childMarkdownRemark
                             .html !== "" && (
-                            <tr css={tr}>
-                              <th css={th1_2} colSpan={2}>
-                                2年目
-                              </th>
-                              <td css={td}>
+                            <div>
+                              <p css={th1_2}>2年目</p>
+                              <p css={td}>
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
@@ -2088,16 +1795,15 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                       ),
                                   }}
                                 />
-                              </td>
-                            </tr>
+                              </p>
+                            </div>
                           )}
                         {strapiBizPlan.activity_season_n_2 &&
                           strapiBizPlan.activity_season_n_2.data
                             .childMarkdownRemark.html !== "" && (
-                            <tr css={tr}>
-                              <th css={th2Sub_2} rowSpan={1}></th>
-                              <th css={th2_2}>活動時期</th>
-                              <td css={td}>
+                            <div tw="flex">
+                              <p css={th2_2}>活動時期</p>
+                              <p css={td}>
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
@@ -2107,17 +1813,15 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                       ),
                                   }}
                                 />
-                              </td>
-                            </tr>
+                              </p>
+                            </div>
                           )}
                         {strapiBizPlan.activity_non_3 &&
                           strapiBizPlan.activity_non_3.data.childMarkdownRemark
                             .html !== "" && (
-                            <tr css={tr}>
-                              <th css={th1_2} colSpan={2}>
-                                3年目
-                              </th>
-                              <td css={td}>
+                            <div>
+                              <p css={th1_2}>3年目</p>
+                              <p css={td}>
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
@@ -2127,16 +1831,15 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                       ),
                                   }}
                                 />
-                              </td>
-                            </tr>
+                              </p>
+                            </div>
                           )}
                         {strapiBizPlan.activity_season_n_3 &&
                           strapiBizPlan.activity_season_n_3.data
                             .childMarkdownRemark.html !== "" && (
-                            <tr css={tr}>
-                              <th css={th2Sub_2} rowSpan={1}></th>
-                              <th css={th2_2}>活動時期</th>
-                              <td css={td}>
+                            <div tw="flex">
+                              <p css={th2_2}>活動時期</p>
+                              <p css={td}>
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html:
@@ -2146,12 +1849,354 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                       ),
                                   }}
                                 />
-                              </td>
-                            </tr>
+                              </p>
+                            </div>
                           )}
-                      </tbody>
-                    </table>
-                  </DetailItemWrapper>
+                      </div>
+                      <table css={table} tw="lg:hidden">
+                        <tbody>
+                          {strapiBizPlan.activity_0 &&
+                            strapiBizPlan.activity_0.data.childMarkdownRemark
+                              .html !== "" && (
+                              <tr>
+                                <th
+                                  css={table}
+                                  tw="bg-blue-base px-2"
+                                  colSpan={3}
+                                >
+                                  資金支援
+                                </th>
+                              </tr>
+                            )}
+                          {strapiBizPlan.activity_0 &&
+                            strapiBizPlan.activity_0.data.childMarkdownRemark
+                              .html !== "" && (
+                              <tr css={tr}>
+                                <th css={th1_2} colSpan={2}>
+                                  0年目
+                                </th>
+                                <td css={td}>
+                                  <div
+                                    dangerouslySetInnerHTML={{
+                                      __html:
+                                        strapiBizPlan.activity_0.data.childMarkdownRemark.html.replace(
+                                          /\n/g,
+                                          "<br />"
+                                        ),
+                                    }}
+                                  />
+                                </td>
+                              </tr>
+                            )}
+                          {strapiBizPlan.activity_season_0 &&
+                            strapiBizPlan.activity_season_0.data
+                              .childMarkdownRemark.html !== "" && (
+                              <tr css={tr}>
+                                <th css={th2Sub_2} rowSpan={1}></th>
+                                <th css={th2_2}>活動時期</th>
+                                <td css={td}>
+                                  <div
+                                    dangerouslySetInnerHTML={{
+                                      __html:
+                                        strapiBizPlan.activity_season_0.data.childMarkdownRemark.html.replace(
+                                          /\n/g,
+                                          "<br />"
+                                        ),
+                                    }}
+                                  />
+                                </td>
+                              </tr>
+                            )}
+                          {strapiBizPlan.activity_1 &&
+                            strapiBizPlan.activity_1.data.childMarkdownRemark
+                              .html !== "" && (
+                              <tr css={tr}>
+                                <th css={th1_2} colSpan={2}>
+                                  1年目
+                                </th>
+                                <td css={td}>
+                                  <div
+                                    dangerouslySetInnerHTML={{
+                                      __html:
+                                        strapiBizPlan.activity_1.data.childMarkdownRemark.html.replace(
+                                          /\n/g,
+                                          "<br />"
+                                        ),
+                                    }}
+                                  />
+                                </td>
+                              </tr>
+                            )}
+                          {strapiBizPlan.activity_season_1 &&
+                            strapiBizPlan.activity_season_1.data
+                              .childMarkdownRemark.html !== "" && (
+                              <tr css={tr}>
+                                <th css={th2Sub_2} rowSpan={1}></th>
+                                <th css={th2_2}>活動時期</th>
+                                <td css={td}>
+                                  <div
+                                    dangerouslySetInnerHTML={{
+                                      __html:
+                                        strapiBizPlan.activity_season_1.data.childMarkdownRemark.html.replace(
+                                          /\n/g,
+                                          "<br />"
+                                        ),
+                                    }}
+                                  />
+                                </td>
+                              </tr>
+                            )}
+                          {strapiBizPlan.activity_2 &&
+                            strapiBizPlan.activity_2.data.childMarkdownRemark
+                              .html !== "" && (
+                              <tr css={tr}>
+                                <th css={th1_2} colSpan={2}>
+                                  2年目
+                                </th>
+                                <td css={td}>
+                                  <div
+                                    dangerouslySetInnerHTML={{
+                                      __html:
+                                        strapiBizPlan.activity_2.data.childMarkdownRemark.html.replace(
+                                          /\n/g,
+                                          "<br />"
+                                        ),
+                                    }}
+                                  />
+                                </td>
+                              </tr>
+                            )}
+                          {strapiBizPlan.activity_season_2 &&
+                            strapiBizPlan.activity_season_2.data
+                              .childMarkdownRemark.html !== "" && (
+                              <tr css={tr}>
+                                <th css={th2Sub_2} rowSpan={1}></th>
+                                <th css={th2_2}>活動時期</th>
+                                <td css={td}>
+                                  <div
+                                    dangerouslySetInnerHTML={{
+                                      __html:
+                                        strapiBizPlan.activity_season_2.data.childMarkdownRemark.html.replace(
+                                          /\n/g,
+                                          "<br />"
+                                        ),
+                                    }}
+                                  />
+                                </td>
+                              </tr>
+                            )}
+                          {strapiBizPlan.activity_3 &&
+                            strapiBizPlan.activity_3.data.childMarkdownRemark
+                              .html !== "" && (
+                              <tr css={tr}>
+                                <th css={th1_2} colSpan={2}>
+                                  3年目
+                                </th>
+                                <td css={td}>
+                                  <div
+                                    dangerouslySetInnerHTML={{
+                                      __html:
+                                        strapiBizPlan.activity_3.data.childMarkdownRemark.html.replace(
+                                          /\n/g,
+                                          "<br />"
+                                        ),
+                                    }}
+                                  />
+                                </td>
+                              </tr>
+                            )}
+                          {strapiBizPlan.activity_season_3 &&
+                            strapiBizPlan.activity_season_3.data
+                              .childMarkdownRemark.html !== "" && (
+                              <tr css={tr}>
+                                <th css={th2Sub_2} rowSpan={1}></th>
+                                <th css={th2_2}>活動時期</th>
+                                <td css={td}>
+                                  <div
+                                    dangerouslySetInnerHTML={{
+                                      __html:
+                                        strapiBizPlan.activity_season_3.data.childMarkdownRemark.html.replace(
+                                          /\n/g,
+                                          "<br />"
+                                        ),
+                                    }}
+                                  />
+                                </td>
+                              </tr>
+                            )}
+                          {strapiBizPlan.activity_non_0 &&
+                            strapiBizPlan.activity_non_0.data
+                              .childMarkdownRemark.html !== "" && (
+                              <tr>
+                                <th
+                                  css={table}
+                                  tw="bg-blue-base px-2"
+                                  colSpan={3}
+                                >
+                                  組織基盤強化・環境整備 (非資金的支援)
+                                </th>
+                              </tr>
+                            )}
+                          {strapiBizPlan.activity_non_0 &&
+                            strapiBizPlan.activity_non_0.data
+                              .childMarkdownRemark.html !== "" && (
+                              <tr css={tr}>
+                                <th css={th1_2} colSpan={2}>
+                                  0年目
+                                </th>
+                                <td css={td}>
+                                  <div
+                                    dangerouslySetInnerHTML={{
+                                      __html:
+                                        strapiBizPlan.activity_non_0.data.childMarkdownRemark.html.replace(
+                                          /\n/g,
+                                          "<br />"
+                                        ),
+                                    }}
+                                  />
+                                </td>
+                              </tr>
+                            )}
+                          {strapiBizPlan.activity_season_n_0 &&
+                            strapiBizPlan.activity_season_n_0.data
+                              .childMarkdownRemark.html !== "" && (
+                              <tr css={tr}>
+                                <th css={th2Sub_2} rowSpan={1}></th>
+                                <th css={th2_2}>活動時期</th>
+                                <td css={td}>
+                                  <div
+                                    dangerouslySetInnerHTML={{
+                                      __html:
+                                        strapiBizPlan.activity_season_n_0.data.childMarkdownRemark.html.replace(
+                                          /\n/g,
+                                          "<br />"
+                                        ),
+                                    }}
+                                  />
+                                </td>
+                              </tr>
+                            )}
+                          {strapiBizPlan.activity_non_1 &&
+                            strapiBizPlan.activity_non_1.data
+                              .childMarkdownRemark.html !== "" && (
+                              <tr css={tr}>
+                                <th css={th1_2} colSpan={2}>
+                                  1年目
+                                </th>
+                                <td css={td}>
+                                  <div
+                                    dangerouslySetInnerHTML={{
+                                      __html:
+                                        strapiBizPlan.activity_non_1.data.childMarkdownRemark.html.replace(
+                                          /\n/g,
+                                          "<br />"
+                                        ),
+                                    }}
+                                  />
+                                </td>
+                              </tr>
+                            )}
+                          {strapiBizPlan.activity_season_n_1 &&
+                            strapiBizPlan.activity_season_n_1.data
+                              .childMarkdownRemark.html !== "" && (
+                              <tr css={tr}>
+                                <th css={th2Sub_2} rowSpan={1}></th>
+                                <th css={th2_2}>活動時期</th>
+                                <td css={td}>
+                                  <div
+                                    dangerouslySetInnerHTML={{
+                                      __html:
+                                        strapiBizPlan.activity_season_n_1.data.childMarkdownRemark.html.replace(
+                                          /\n/g,
+                                          "<br />"
+                                        ),
+                                    }}
+                                  />
+                                </td>
+                              </tr>
+                            )}
+                          {strapiBizPlan.activity_non_2 &&
+                            strapiBizPlan.activity_non_2.data
+                              .childMarkdownRemark.html !== "" && (
+                              <tr css={tr}>
+                                <th css={th1_2} colSpan={2}>
+                                  2年目
+                                </th>
+                                <td css={td}>
+                                  <div
+                                    dangerouslySetInnerHTML={{
+                                      __html:
+                                        strapiBizPlan.activity_non_2.data.childMarkdownRemark.html.replace(
+                                          /\n/g,
+                                          "<br />"
+                                        ),
+                                    }}
+                                  />
+                                </td>
+                              </tr>
+                            )}
+                          {strapiBizPlan.activity_season_n_2 &&
+                            strapiBizPlan.activity_season_n_2.data
+                              .childMarkdownRemark.html !== "" && (
+                              <tr css={tr}>
+                                <th css={th2Sub_2} rowSpan={1}></th>
+                                <th css={th2_2}>活動時期</th>
+                                <td css={td}>
+                                  <div
+                                    dangerouslySetInnerHTML={{
+                                      __html:
+                                        strapiBizPlan.activity_season_n_2.data.childMarkdownRemark.html.replace(
+                                          /\n/g,
+                                          "<br />"
+                                        ),
+                                    }}
+                                  />
+                                </td>
+                              </tr>
+                            )}
+                          {strapiBizPlan.activity_non_3 &&
+                            strapiBizPlan.activity_non_3.data
+                              .childMarkdownRemark.html !== "" && (
+                              <tr css={tr}>
+                                <th css={th1_2} colSpan={2}>
+                                  3年目
+                                </th>
+                                <td css={td}>
+                                  <div
+                                    dangerouslySetInnerHTML={{
+                                      __html:
+                                        strapiBizPlan.activity_non_3.data.childMarkdownRemark.html.replace(
+                                          /\n/g,
+                                          "<br />"
+                                        ),
+                                    }}
+                                  />
+                                </td>
+                              </tr>
+                            )}
+                          {strapiBizPlan.activity_season_n_3 &&
+                            strapiBizPlan.activity_season_n_3.data
+                              .childMarkdownRemark.html !== "" && (
+                              <tr css={tr}>
+                                <th css={th2Sub_2} rowSpan={1}></th>
+                                <th css={th2_2}>活動時期</th>
+                                <td css={td}>
+                                  <div
+                                    dangerouslySetInnerHTML={{
+                                      __html:
+                                        strapiBizPlan.activity_season_n_3.data.childMarkdownRemark.html.replace(
+                                          /\n/g,
+                                          "<br />"
+                                        ),
+                                    }}
+                                  />
+                                </td>
+                              </tr>
+                            )}
+                        </tbody>
+                      </table>
+                    </DetailItemWrapper>
+                  )}
                   {activityFinance.length !== 0 && (
                     <Activity
                       activity={activityFinance}
@@ -2168,10 +2213,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                     <Activity activity={activityAdo} name="活動 (ADO)" />
                   )}
                   {activityActivitySupport.length !== 0 && (
-                    <Activity
-                      activity={activityActivitySupport}
-                      name="活動 (活動支援)"
-                    />
+                    <Activity activity={activityActivitySupport} name="活動" />
                   )}
                 </div>
               )}
@@ -2313,7 +2355,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                   </DetailItemWrapper>
                 </div>
               )}
-              {!isSupportTarget && (
+              {!isActivitySupport && (
                 <div id="ninthItem">
                   <DetailItemWrapper itemName="広報戦略および連携・対話戦略">
                     <div tw="hidden lg:block">
@@ -2397,7 +2439,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                   </DetailItemWrapper>
                 </div>
               )}
-              {!isSupportTarget && (
+              {!isActivitySupport && (
                 <div id="tenthItem">
                   <DetailItemWrapper itemName="出口戦略・持続可能性について">
                     <div tw="hidden lg:block">
@@ -2772,225 +2814,18 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                   </div>
                 )}
 
-              <div id="eleventhItem">
-                <DetailItemWrapper itemName="関連する主な実績">
-                  <div tw="hidden lg:block">
-                    {strapiBizPlan.subsidy_actual &&
-                      strapiBizPlan.subsidy_actual.data.childMarkdownRemark
-                        .html !== "" && (
-                        <div>
-                          <p css={th}>
-                            事業対象者（助成で見込む最終受益者）・内容
-                          </p>
-                          <p css={td}>
-                            <div
-                              dangerouslySetInnerHTML={{
-                                __html:
-                                  strapiBizPlan.subsidy_actual.data.childMarkdownRemark.html.replace(
-                                    /\n/g,
-                                    "<br />"
-                                  ),
-                              }}
-                            />
-                          </p>
-                        </div>
-                      )}
-                    {strapiBizPlan.org_strength &&
-                      strapiBizPlan.org_strength.data.childMarkdownRemark
-                        .html !== "" && (
-                        <div>
-                          <p css={th}>
-                            申請事業に関連する調査研究、連携、マッチング、伴走支援の実績、事業事例等
-                          </p>
-                          <p css={td}>
-                            <div
-                              dangerouslySetInnerHTML={{
-                                __html:
-                                  strapiBizPlan.org_strength.data.childMarkdownRemark.html.replace(
-                                    /\n/g,
-                                    "<br />"
-                                  ),
-                              }}
-                            />
-                          </p>
-                        </div>
-                      )}
-                    {strapiBizPlan.is_subsidy_distr && (
-                      <div>
-                        <p css={th}>
-                          本事業について、コロナウイルス感染症に係る助成金や寄付等を受け助成金等を分配している(予定も含む）
-                        </p>
-                        <p css={td}>
-                          {strapiBizPlan.is_subsidy_distr === "true"
-                            ? "あり"
-                            : "なし"}
-                        </p>
-                      </div>
-                    )}
-                    {strapiBizPlan.subsidy_distr_dtl &&
-                      strapiBizPlan.subsidy_distr_dtl.data.childMarkdownRemark
-                        .html !== "" && (
-                        <div>
-                          <p css={th}>内容</p>
-                          <p css={td}>
-                            <div
-                              dangerouslySetInnerHTML={{
-                                __html:
-                                  strapiBizPlan.subsidy_distr_dtl.data.childMarkdownRemark.html.replace(
-                                    /\n/g,
-                                    "<br />"
-                                  ),
-                              }}
-                            />
-                          </p>
-                        </div>
-                      )}
-                    {strapiBizPlan.is_etc_subsidy_recv && (
-                      <div>
-                        <p css={th}>
-                          本事業について、国又は地方公共団体から補助金又は貸付金（ふるさと納税を財源とする資金提供を含む）を受けていない。
-                        </p>
-                        <p css={td}>
-                          {strapiBizPlan.is_etc_subsidy_recv === "true"
-                            ? "あり"
-                            : "なし"}
-                        </p>
-                      </div>
-                    )}
-                    {strapiBizPlan.is_etc_biz_distr && (
-                      <div>
-                        <p css={th}>
-                          本事業以外の事業について、コロナウイルス感染症に係る助成金や寄付等を受け助成金等を分配している(予定も含む)
-                        </p>
-                        <p css={td}>
-                          {strapiBizPlan.is_etc_biz_distr === "true"
-                            ? "あり"
-                            : "なし"}
-                        </p>
-                      </div>
-                    )}
-                    {strapiBizPlan.etc_biz_distr_dtl &&
-                      strapiBizPlan.etc_biz_distr_dtl.data.childMarkdownRemark
-                        .html !== "" && (
-                        <div>
-                          <p css={th}>内容</p>
-                          <p css={td}>
-                            <div
-                              dangerouslySetInnerHTML={{
-                                __html:
-                                  strapiBizPlan.etc_biz_distr_dtl.data.childMarkdownRemark.html.replace(
-                                    /\n/g,
-                                    "<br />"
-                                  ),
-                              }}
-                            />
-                          </p>
-                        </div>
-                      )}
-                    {strapiBizPlan.other_subsidy_actual &&
-                      strapiBizPlan.other_subsidy_actual.data
-                        .childMarkdownRemark.html !== "" && (
-                        <div>
-                          <p css={th}>その他、助成金等の分配の実績</p>
-                          <p css={td}>
-                            <div
-                              dangerouslySetInnerHTML={{
-                                __html:
-                                  strapiBizPlan.other_subsidy_actual.data.childMarkdownRemark.html.replace(
-                                    /\n/g,
-                                    "<br />"
-                                  ),
-                              }}
-                            />
-                          </p>
-                        </div>
-                      )}
-                    {strapiBizPlan.last_year_org_cnt &&
-                      strapiBizPlan.last_year_org_cnt.data.childMarkdownRemark
-                        .html !== "" && (
-                        <div>
-                          <p css={th}>前年度に助成した団体数</p>
-                          <p css={td}>
-                            <div
-                              dangerouslySetInnerHTML={{
-                                __html:
-                                  strapiBizPlan.last_year_org_cnt.data.childMarkdownRemark.html.replace(
-                                    /\n/g,
-                                    "<br />"
-                                  ),
-                              }}
-                            />
-                          </p>
-                        </div>
-                      )}
-                    {strapiBizPlan.last_year_subsidy &&
-                      strapiBizPlan.last_year_subsidy.data.childMarkdownRemark
-                        .html !== "" && (
-                        <div>
-                          <p css={th}>前年度の助成総額</p>
-                          <p css={td}>
-                            <div
-                              dangerouslySetInnerHTML={{
-                                __html:
-                                  strapiBizPlan.last_year_subsidy.data.childMarkdownRemark.html.replace(
-                                    /\n/g,
-                                    "<br />"
-                                  ),
-                              }}
-                            />
-                          </p>
-                        </div>
-                      )}
-                    {strapiBizPlan.org_strength_fdo &&
-                      strapiBizPlan.org_strength_fdo.data.childMarkdownRemark
-                        .html !== "" && (
-                        <div>
-                          <p css={th}>
-                            事業に関連する調査研究、連携、マッチング、伴走支援の実績、事業事例等
-                          </p>
-                          <p css={td}>
-                            <div
-                              dangerouslySetInnerHTML={{
-                                __html:
-                                  strapiBizPlan.org_strength_fdo.data.childMarkdownRemark.html.replace(
-                                    /\n/g,
-                                    "<br />"
-                                  ),
-                              }}
-                            />
-                          </p>
-                        </div>
-                      )}
-                    {strapiBizPlan.org_strength_ado &&
-                      strapiBizPlan.org_strength_ado.data.childMarkdownRemark
-                        .html !== "" && (
-                        <div>
-                          <p css={th}>事業に関連する調査研究、連携の実績</p>
-                          <p css={td}>
-                            <div
-                              dangerouslySetInnerHTML={{
-                                __html:
-                                  strapiBizPlan.org_strength_ado.data.childMarkdownRemark.html.replace(
-                                    /\n/g,
-                                    "<br />"
-                                  ),
-                              }}
-                            />
-                          </p>
-                        </div>
-                      )}
-                  </div>
-
-                  <table css={table} tw="lg:hidden">
-                    <tbody>
+              {!isActivitySupport && (
+                <div id="eleventhItem">
+                  <DetailItemWrapper itemName="関連する主な実績">
+                    <div tw="hidden lg:block">
                       {strapiBizPlan.subsidy_actual &&
                         strapiBizPlan.subsidy_actual.data.childMarkdownRemark
                           .html !== "" && (
-                          <tr css={tr}>
-                            <th css={th}>
+                          <div>
+                            <p css={th}>
                               事業対象者（助成で見込む最終受益者）・内容
-                            </th>
-                            <td css={td}>
+                            </p>
+                            <p css={td}>
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
@@ -3000,17 +2835,17 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                     ),
                                 }}
                               />
-                            </td>
-                          </tr>
+                            </p>
+                          </div>
                         )}
                       {strapiBizPlan.org_strength &&
                         strapiBizPlan.org_strength.data.childMarkdownRemark
                           .html !== "" && (
-                          <tr css={tr}>
-                            <th css={th}>
+                          <div>
+                            <p css={th}>
                               申請事業に関連する調査研究、連携、マッチング、伴走支援の実績、事業事例等
-                            </th>
-                            <td css={td}>
+                            </p>
+                            <p css={td}>
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
@@ -3020,27 +2855,27 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                     ),
                                 }}
                               />
-                            </td>
-                          </tr>
+                            </p>
+                          </div>
                         )}
                       {strapiBizPlan.is_subsidy_distr && (
-                        <tr css={tr}>
-                          <th css={th}>
+                        <div>
+                          <p css={th}>
                             本事業について、コロナウイルス感染症に係る助成金や寄付等を受け助成金等を分配している(予定も含む）
-                          </th>
-                          <td css={td}>
+                          </p>
+                          <p css={td}>
                             {strapiBizPlan.is_subsidy_distr === "true"
                               ? "あり"
                               : "なし"}
-                          </td>
-                        </tr>
+                          </p>
+                        </div>
                       )}
                       {strapiBizPlan.subsidy_distr_dtl &&
                         strapiBizPlan.subsidy_distr_dtl.data.childMarkdownRemark
                           .html !== "" && (
-                          <tr css={tr}>
-                            <th css={th}>内容</th>
-                            <td css={td}>
+                          <div>
+                            <p css={th}>内容</p>
+                            <p css={td}>
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
@@ -3050,39 +2885,39 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                     ),
                                 }}
                               />
-                            </td>
-                          </tr>
+                            </p>
+                          </div>
                         )}
                       {strapiBizPlan.is_etc_subsidy_recv && (
-                        <tr css={tr}>
-                          <th css={th}>
+                        <div>
+                          <p css={th}>
                             本事業について、国又は地方公共団体から補助金又は貸付金（ふるさと納税を財源とする資金提供を含む）を受けていない。
-                          </th>
-                          <td css={td}>
+                          </p>
+                          <p css={td}>
                             {strapiBizPlan.is_etc_subsidy_recv === "true"
                               ? "あり"
                               : "なし"}
-                          </td>
-                        </tr>
+                          </p>
+                        </div>
                       )}
                       {strapiBizPlan.is_etc_biz_distr && (
-                        <tr css={tr}>
-                          <th css={th}>
+                        <div>
+                          <p css={th}>
                             本事業以外の事業について、コロナウイルス感染症に係る助成金や寄付等を受け助成金等を分配している(予定も含む)
-                          </th>
-                          <td css={td}>
+                          </p>
+                          <p css={td}>
                             {strapiBizPlan.is_etc_biz_distr === "true"
                               ? "あり"
                               : "なし"}
-                          </td>
-                        </tr>
+                          </p>
+                        </div>
                       )}
                       {strapiBizPlan.etc_biz_distr_dtl &&
                         strapiBizPlan.etc_biz_distr_dtl.data.childMarkdownRemark
                           .html !== "" && (
-                          <tr css={tr}>
-                            <th css={th}>内容</th>
-                            <td css={td}>
+                          <div>
+                            <p css={th}>内容</p>
+                            <p css={td}>
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
@@ -3092,15 +2927,15 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                     ),
                                 }}
                               />
-                            </td>
-                          </tr>
+                            </p>
+                          </div>
                         )}
                       {strapiBizPlan.other_subsidy_actual &&
                         strapiBizPlan.other_subsidy_actual.data
                           .childMarkdownRemark.html !== "" && (
-                          <tr css={tr}>
-                            <th css={th}>その他、助成金等の分配の実績</th>
-                            <td css={td}>
+                          <div>
+                            <p css={th}>その他、助成金等の分配の実績</p>
+                            <p css={td}>
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
@@ -3110,15 +2945,15 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                     ),
                                 }}
                               />
-                            </td>
-                          </tr>
+                            </p>
+                          </div>
                         )}
                       {strapiBizPlan.last_year_org_cnt &&
                         strapiBizPlan.last_year_org_cnt.data.childMarkdownRemark
                           .html !== "" && (
-                          <tr css={tr}>
-                            <th css={th}>前年度に助成した団体数</th>
-                            <td css={td}>
+                          <div>
+                            <p css={th}>前年度に助成した団体数</p>
+                            <p css={td}>
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
@@ -3128,15 +2963,15 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                     ),
                                 }}
                               />
-                            </td>
-                          </tr>
+                            </p>
+                          </div>
                         )}
                       {strapiBizPlan.last_year_subsidy &&
                         strapiBizPlan.last_year_subsidy.data.childMarkdownRemark
                           .html !== "" && (
-                          <tr css={tr}>
-                            <th css={th}>前年度の助成総額</th>
-                            <td css={td}>
+                          <div>
+                            <p css={th}>前年度の助成総額</p>
+                            <p css={td}>
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
@@ -3146,17 +2981,17 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                     ),
                                 }}
                               />
-                            </td>
-                          </tr>
+                            </p>
+                          </div>
                         )}
                       {strapiBizPlan.org_strength_fdo &&
                         strapiBizPlan.org_strength_fdo.data.childMarkdownRemark
                           .html !== "" && (
-                          <tr css={tr}>
-                            <th css={th}>
+                          <div>
+                            <p css={th}>
                               事業に関連する調査研究、連携、マッチング、伴走支援の実績、事業事例等
-                            </th>
-                            <td css={td}>
+                            </p>
+                            <p css={td}>
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
@@ -3166,15 +3001,15 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                     ),
                                 }}
                               />
-                            </td>
-                          </tr>
+                            </p>
+                          </div>
                         )}
                       {strapiBizPlan.org_strength_ado &&
                         strapiBizPlan.org_strength_ado.data.childMarkdownRemark
                           .html !== "" && (
-                          <tr css={tr}>
-                            <th css={th}>事業に関連する調査研究、連携の実績</th>
-                            <td css={td}>
+                          <div>
+                            <p css={th}>事業に関連する調査研究、連携の実績</p>
+                            <p css={td}>
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
@@ -3184,13 +3019,224 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                     ),
                                 }}
                               />
+                            </p>
+                          </div>
+                        )}
+                    </div>
+
+                    <table css={table} tw="lg:hidden">
+                      <tbody>
+                        {strapiBizPlan.subsidy_actual &&
+                          strapiBizPlan.subsidy_actual.data.childMarkdownRemark
+                            .html !== "" && (
+                            <tr css={tr}>
+                              <th css={th}>
+                                事業対象者（助成で見込む最終受益者）・内容
+                              </th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.subsidy_actual.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                        {strapiBizPlan.org_strength &&
+                          strapiBizPlan.org_strength.data.childMarkdownRemark
+                            .html !== "" && (
+                            <tr css={tr}>
+                              <th css={th}>
+                                申請事業に関連する調査研究、連携、マッチング、伴走支援の実績、事業事例等
+                              </th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.org_strength.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                        {strapiBizPlan.is_subsidy_distr && (
+                          <tr css={tr}>
+                            <th css={th}>
+                              本事業について、コロナウイルス感染症に係る助成金や寄付等を受け助成金等を分配している(予定も含む）
+                            </th>
+                            <td css={td}>
+                              {strapiBizPlan.is_subsidy_distr === "true"
+                                ? "あり"
+                                : "なし"}
                             </td>
                           </tr>
                         )}
-                    </tbody>
-                  </table>
-                </DetailItemWrapper>
-              </div>
+                        {strapiBizPlan.subsidy_distr_dtl &&
+                          strapiBizPlan.subsidy_distr_dtl.data
+                            .childMarkdownRemark.html !== "" && (
+                            <tr css={tr}>
+                              <th css={th}>内容</th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.subsidy_distr_dtl.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                        {strapiBizPlan.is_etc_subsidy_recv && (
+                          <tr css={tr}>
+                            <th css={th}>
+                              本事業について、国又は地方公共団体から補助金又は貸付金（ふるさと納税を財源とする資金提供を含む）を受けていない。
+                            </th>
+                            <td css={td}>
+                              {strapiBizPlan.is_etc_subsidy_recv === "true"
+                                ? "あり"
+                                : "なし"}
+                            </td>
+                          </tr>
+                        )}
+                        {strapiBizPlan.is_etc_biz_distr && (
+                          <tr css={tr}>
+                            <th css={th}>
+                              本事業以外の事業について、コロナウイルス感染症に係る助成金や寄付等を受け助成金等を分配している(予定も含む)
+                            </th>
+                            <td css={td}>
+                              {strapiBizPlan.is_etc_biz_distr === "true"
+                                ? "あり"
+                                : "なし"}
+                            </td>
+                          </tr>
+                        )}
+                        {strapiBizPlan.etc_biz_distr_dtl &&
+                          strapiBizPlan.etc_biz_distr_dtl.data
+                            .childMarkdownRemark.html !== "" && (
+                            <tr css={tr}>
+                              <th css={th}>内容</th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.etc_biz_distr_dtl.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                        {strapiBizPlan.other_subsidy_actual &&
+                          strapiBizPlan.other_subsidy_actual.data
+                            .childMarkdownRemark.html !== "" && (
+                            <tr css={tr}>
+                              <th css={th}>その他、助成金等の分配の実績</th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.other_subsidy_actual.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                        {strapiBizPlan.last_year_org_cnt &&
+                          strapiBizPlan.last_year_org_cnt.data
+                            .childMarkdownRemark.html !== "" && (
+                            <tr css={tr}>
+                              <th css={th}>前年度に助成した団体数</th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.last_year_org_cnt.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                        {strapiBizPlan.last_year_subsidy &&
+                          strapiBizPlan.last_year_subsidy.data
+                            .childMarkdownRemark.html !== "" && (
+                            <tr css={tr}>
+                              <th css={th}>前年度の助成総額</th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.last_year_subsidy.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                        {strapiBizPlan.org_strength_fdo &&
+                          strapiBizPlan.org_strength_fdo.data
+                            .childMarkdownRemark.html !== "" && (
+                            <tr css={tr}>
+                              <th css={th}>
+                                事業に関連する調査研究、連携、マッチング、伴走支援の実績、事業事例等
+                              </th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.org_strength_fdo.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                        {strapiBizPlan.org_strength_ado &&
+                          strapiBizPlan.org_strength_ado.data
+                            .childMarkdownRemark.html !== "" && (
+                            <tr css={tr}>
+                              <th css={th}>
+                                事業に関連する調査研究、連携の実績
+                              </th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.org_strength_ado.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                      </tbody>
+                    </table>
+                  </DetailItemWrapper>
+                </div>
+              )}
               {strapiBizPlan.recruit_ingenuity && (
                 <div id="">
                   <DetailItemWrapper itemName="支援対象団体の募集/選定">
@@ -3289,7 +3335,11 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                         {strapiBizPlan.conso_exist && (
                           <tr css={tr}>
                             <th css={th}>コンソーシアム利用有無</th>
-                            <td css={td}>{strapiBizPlan.conso_exist}</td>
+                            <td css={td}>
+                              {strapiBizPlan.conso_exist === "1"
+                                ? "あり"
+                                : "なし"}
+                            </td>
                           </tr>
                         )}
                       </tbody>
