@@ -1499,7 +1499,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                       {shortOutcomeAdo.length !== 0 && (
                         <ShortOutcome
                           shortOutcome={shortOutcomeAdo}
-                          name="短期アウトカム (ADO)"
+                          name="短期アウトカム"
                         />
                       )}
                       {shortOutcomeCovid.length !== 0 && (
@@ -2225,8 +2225,9 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                         <div>
                           <p css={th}>総事業費</p>
                           <p css={td}>
-                            {strapiBizPlan.total_business_cost.toLocaleString()}
-                            円
+                            {strapiBizPlan.total_business_cost == null
+                              ? ""
+                              : `${strapiBizPlan.total_business_cost.toLocaleString()}円`}
                           </p>
                         </div>
                       )}
@@ -2291,8 +2292,9 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                           <tr css={tr}>
                             <th css={th}>総事業費</th>
                             <td css={td}>
-                              {strapiBizPlan.total_business_cost.toLocaleString()}
-                              円
+                              {strapiBizPlan.total_business_cost == null
+                                ? ""
+                                : `${strapiBizPlan.total_business_cost.toLocaleString()}円`}
                             </td>
                           </tr>
                         )}
@@ -2479,6 +2481,42 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                             </p>
                           </div>
                         )}
+                      {strapiBizPlan.exit_strategy_fdo &&
+                        strapiBizPlan.exit_strategy_fdo.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div>
+                            <p css={th}>資金分配団体</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.exit_strategy_fdo.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.exit_strategy_ado &&
+                        strapiBizPlan.exit_strategy_ado.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div>
+                            <p css={th}>実行団体</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.exit_strategy_ado.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
                     </div>
                     <table css={table} tw="lg:hidden">
                       <tbody>
@@ -2510,6 +2548,42 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                   dangerouslySetInnerHTML={{
                                     __html:
                                       strapiBizPlan.sustainability2.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                        {strapiBizPlan.exit_strategy_fdo &&
+                          strapiBizPlan.exit_strategy_fdo.data
+                            .childMarkdownRemark.html !== "" && (
+                            <tr css={tr}>
+                              <th css={th}>資金分配団体</th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.exit_strategy_fdo.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                        {strapiBizPlan.exit_strategy_ado &&
+                          strapiBizPlan.exit_strategy_ado.data
+                            .childMarkdownRemark.html !== "" && (
+                            <tr css={tr}>
+                              <th css={th}>実行団体</th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.exit_strategy_ado.data.childMarkdownRemark.html.replace(
                                         /\n/g,
                                         "<br />"
                                       ),
@@ -2822,9 +2896,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                         strapiBizPlan.subsidy_actual.data.childMarkdownRemark
                           .html !== "" && (
                           <div>
-                            <p css={th}>
-                              事業対象者（助成で見込む最終受益者）・内容
-                            </p>
+                            <p css={th}>助成事業の実績と成果</p>
                             <p css={td}>
                               <div
                                 dangerouslySetInnerHTML={{
@@ -3030,9 +3102,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                           strapiBizPlan.subsidy_actual.data.childMarkdownRemark
                             .html !== "" && (
                             <tr css={tr}>
-                              <th css={th}>
-                                事業対象者（助成で見込む最終受益者）・内容
-                              </th>
+                              <th css={th}>助成事業の実績と成果</th>
                               <td css={td}>
                                 <div
                                   dangerouslySetInnerHTML={{
@@ -3401,7 +3471,8 @@ const ShortOutcome = ({
             <div css={tr} tw="hidden lg:block">
               <p css={th}>モニタリング</p>
               <p css={td}>
-                {item.node.goals_monitoring.data.goals_monitoring === "true"
+                {item.node.goals_monitoring.data.goals_monitoring === "true" ||
+                item.node.goals_monitoring.data.goals_monitoring === "1"
                   ? "はい"
                   : "いいえ"}
               </p>
@@ -3540,7 +3611,8 @@ const ShortOutcome = ({
             <tr css={tr} tw="lg:hidden">
               <th css={th}>モニタリング</th>
               <td css={td}>
-                {item.node.goals_monitoring.data.goals_monitoring === "true"
+                {item.node.goals_monitoring.data.goals_monitoring === "true" ||
+                item.node.goals_monitoring.data.goals_monitoring === "1"
                   ? "はい"
                   : "いいえ"}
               </td>
@@ -3708,7 +3780,8 @@ const Output = ({ output, name }: { output: any; name: string }) => {
             <div css={tr} tw="hidden lg:block">
               <p css={th}>モニタリング</p>
               <p css={td}>
-                {item.node.output_monitor.data.output_monitor === "true"
+                {item.node.output_monitor.data.output_monitor === "true" ||
+                item.node.output_monitor.data.output_monitor === "1"
                   ? "はい"
                   : "いいえ"}
               </p>
@@ -3879,7 +3952,8 @@ const Output = ({ output, name }: { output: any; name: string }) => {
             <tr css={tr} tw="lg:hidden">
               <th css={th}>モニタリング</th>
               <td css={td}>
-                {item.node.output_monitor.data.output_monitor === "true"
+                {item.node.output_monitor.data.output_monitor === "true" ||
+                item.node.output_monitor.data.output_monitor === "1"
                   ? "はい"
                   : "いいえ"}
               </td>
@@ -4719,9 +4793,7 @@ export const pageQuery = graphql`
           }
           goals_monitoring {
             data {
-              childMarkdownRemark {
-                html
-              }
+              goals_monitoring
             }
           }
           goals_index {
@@ -4789,9 +4861,7 @@ export const pageQuery = graphql`
           }
           output_monitor {
             data {
-              childMarkdownRemark {
-                html
-              }
+              output_monitor
             }
           }
           output_index {
