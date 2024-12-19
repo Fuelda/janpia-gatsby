@@ -233,25 +233,27 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                   <tr />
                 )}
 
-                <tr>
-                  <th></th>
-                  <th className="table__financialPlan--tbody-02">
-                    実行団体用 (円)
-                  </th>
-                  <td>
-                    {financePlan.eval_ado_sum_sum &&
-                      financePlan.eval_ado_sum_sum.toLocaleString()}
-                  </td>
-                  <td>
-                    {financePlan.eval_ado_sum &&
-                      financePlan.eval_ado_sum.toLocaleString()}
-                  </td>
-                  <td>
-                    {financePlan.eval_ado
-                      ? financePlan.eval_ado.toLocaleString()
-                      : 0}
-                  </td>
-                </tr>
+                {financePlan.eval_ado_sum_sum !== null && (
+                  <tr>
+                    <th></th>
+                    <th className="table__financialPlan--tbody-02">
+                      実行団体用 (円)
+                    </th>
+                    <td>
+                      {financePlan.eval_ado_sum_sum &&
+                        financePlan.eval_ado_sum_sum.toLocaleString()}
+                    </td>
+                    <td>
+                      {financePlan.eval_ado_sum &&
+                        financePlan.eval_ado_sum.toLocaleString()}
+                    </td>
+                    <td>
+                      {financePlan.eval_ado
+                        ? financePlan.eval_ado.toLocaleString()
+                        : 0}
+                    </td>
+                  </tr>
+                )}
                 <tr>
                   <th colSpan={2} className="table__financialPlan--tbody-02">
                     合計 (円)
