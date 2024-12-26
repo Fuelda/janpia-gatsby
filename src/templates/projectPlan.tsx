@@ -1511,7 +1511,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                       {shortOutcomeActivitySupport.length !== 0 && (
                         <ShortOutcome
                           shortOutcome={shortOutcomeActivitySupport}
-                          name="短期アウトカム (活動支援)"
+                          name="短期アウトカム"
                         />
                       )}
                     </div>
@@ -1534,7 +1534,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                       {outputActivitySupport.length !== 0 && (
                         <Output
                           output={outputActivitySupport}
-                          name="アウトプット（活動支援）"
+                          name="アウトプット"
                         />
                       )}
                     </div>
