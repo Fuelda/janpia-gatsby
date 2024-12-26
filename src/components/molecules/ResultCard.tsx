@@ -71,14 +71,15 @@ const ResultCard = (props: any) => {
   const splitBusinessTypeName = businessTypeNameLabel.match(/(\d+年度)(.+)/);
   const businessTypeNameYear =
     splitBusinessTypeName && splitBusinessTypeName[1];
+
   const businessTypeNameCategory =
     (splitBusinessTypeName &&
       splitBusinessTypeName.length >= 2 &&
-      splitBusinessTypeName[2] === "通常枠" &&
+      splitBusinessTypeName[2].includes("通常枠") &&
       "通常枠") ||
     (splitBusinessTypeName &&
       splitBusinessTypeName.length >= 2 &&
-      splitBusinessTypeName[2] === "コロナ枠" &&
+      splitBusinessTypeName[2].includes("コロナ枠") &&
       "緊急支援枠");
 
   return (
