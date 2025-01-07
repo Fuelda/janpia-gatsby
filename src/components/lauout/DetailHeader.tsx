@@ -10,7 +10,7 @@ import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { linkCollectionTypes } from "../../util/linkCollectionTypes";
 import { linkCollectionTypesManual } from "../../util/linkCollectionTypesManual";
 
-const resultCardTip = tw`text-xs py-1 px-1.5 border border-gray-base text-gray-base`;
+export const resultCardTip = tw`text-xs py-1 px-1.5 border border-gray-base text-gray-base`;
 
 const DetailHeader = (props: {
   business_cd: string;
