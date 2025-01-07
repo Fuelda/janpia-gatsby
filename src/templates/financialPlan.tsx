@@ -143,15 +143,19 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                     </td>
                   </tr>
                 )}
-                <tr>
-                  <th colSpan={2} className="table__financialPlan--tbody-01">
-                    評価関連経費 (円)
-                  </th>
-                  <td>
-                    {financePlan.eval_sum_sum &&
-                      financePlan.eval_sum_sum.toLocaleString()}
-                  </td>
-                </tr>
+                {financePlan && financePlan.eval_sum_sum !== null ? (
+                  <tr>
+                    <th colSpan={2} className="table__financialPlan--tbody-01">
+                      評価関連経費 (円)
+                    </th>
+                    <td>
+                      {financePlan.eval_sum_sum &&
+                        financePlan.eval_sum_sum.toLocaleString()}
+                    </td>
+                  </tr>
+                ) : (
+                  <tr />
+                )}
                 {financePlan && financePlan.eval_fdo_sum_sum !== null ? (
                   <tr>
                     <th className="table__financialPlan--tbody-sub"></th>
@@ -319,22 +323,26 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                     </td>
                   </tr>
                 )}
-                <tr>
-                  <th colSpan={2} className="table__financialPlan--tbody-01">
-                    評価関連経費 (円)
-                  </th>
-                  <td>
-                    {financePlan.eval_sum_sum &&
-                      financePlan.eval_sum_sum.toLocaleString()}
-                  </td>
-                  <td>
-                    {financePlan.eval_sum &&
-                      financePlan.eval_sum.toLocaleString()}
-                  </td>
-                  <td>
-                    {financePlan.eval ? financePlan.eval.toLocaleString() : 0}
-                  </td>
-                </tr>
+                {financePlan && financePlan.eval_sum_sum !== null ? (
+                  <tr>
+                    <th colSpan={2} className="table__financialPlan--tbody-01">
+                      評価関連経費 (円)
+                    </th>
+                    <td>
+                      {financePlan.eval_sum_sum &&
+                        financePlan.eval_sum_sum.toLocaleString()}
+                    </td>
+                    <td>
+                      {financePlan.eval_sum &&
+                        financePlan.eval_sum.toLocaleString()}
+                    </td>
+                    <td>
+                      {financePlan.eval ? financePlan.eval.toLocaleString() : 0}
+                    </td>
+                  </tr>
+                ) : (
+                  <tr />
+                )}
                 {financePlan && financePlan.eval_fdo_sum_sum !== null ? (
                   <tr>
                     <th className="table__financialPlan--tbody-sub"></th>
