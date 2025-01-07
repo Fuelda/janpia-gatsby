@@ -201,6 +201,9 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               社会的課題の解決を担う若者の能力開発支援
                             </p>
                           )}
+                          {strapiBizPlan.field1_4 === "1" && (
+                            <p css={tdLshape}>その他</p>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -226,6 +229,9 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                           {strapiBizPlan.field2_6 === "1" && (
                             <p css={tdLshape}>女性の経済的自立への支援</p>
                           )}
+                          {strapiBizPlan.field2_7 === "1" && (
+                            <p css={tdLshape}>その他</p>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -249,6 +255,9 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                             <p css={tdLshape}>
                               安心・安全に暮らせるコミュニティづくりへの支援
                             </p>
+                          )}
+                          {strapiBizPlan.field3_9 === "1" && (
+                            <p css={tdLshape}>その他</p>
                           )}
                         </div>
                       </div>
@@ -274,7 +283,8 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                       </div>
                     </div>
                   )}
-                  {strapiBizPlan.other_problem === "1" && (
+                  {strapiBizPlan.field_other_problem.data.childMarkdownRemark
+                    .html && (
                     <div css={table}>
                       <p css={thLshape}>その他の解決すべき社会の課題</p>
                       <div
