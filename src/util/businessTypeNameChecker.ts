@@ -19,3 +19,14 @@ export const convertBusinessTypeNameLabel = (label: string) => {
     return label;
   }
 };
+
+export const isSpecificBusinessTypeNameYear = (
+  business_type_name: string,
+  year: number
+) => {
+  const splitBusinessTypeName = business_type_name.match(/(\d+年度)(.+)/);
+  return (
+    splitBusinessTypeName &&
+    Number(splitBusinessTypeName[1].slice(0, 4)) >= year
+  );
+};
