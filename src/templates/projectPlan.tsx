@@ -31,6 +31,10 @@ import { sdgsGoalArray } from "../features/search/store/filterContents";
 import { formatDate } from "../util/formatDate";
 import "twin.macro";
 import Seo from "../components/lauout/Seo";
+import {
+  isEmergencySupportGroup,
+  isSpecificBusinessTypeNameYear,
+} from "../util/businessTypeNameChecker";
 
 const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
@@ -119,6 +123,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
     strapiBizPlan && setUpdatedAt(strapiBizPlan.updatedAt);
     bizPlanManual && setUpdatedAt(bizPlanManual.updatedAt);
   }, [strapiBizPlan, bizPlanManual]);
+
   return (
     <Layout>
       <Seo title="事業計画 | 休眠預金活用事業 情報公開サイト" />
@@ -1078,7 +1083,15 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                         .childMarkdownRemark.html !== "" && (
                         <div>
                           <p css={th}>
-                            新型コロナ及び原油価格・物価高騰対応支援枠の助成申請に至った理由
+                            {isSpecificBusinessTypeNameYear(
+                              strapiBizPlan.business_type_name,
+                              2024
+                            ) &&
+                            isEmergencySupportGroup(
+                              strapiBizPlan.business_type_name
+                            )
+                              ? "物価高騰及び子育て支援枠の助成申請に至った理由"
+                              : "新型コロナ及び原油価格・物価高騰対応支援枠の助成申請に至った理由"}
                           </p>
                           <p css={td}>
                             <div
@@ -1199,7 +1212,15 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                           .childMarkdownRemark.html !== "" && (
                           <tr css={tr}>
                             <th css={th}>
-                              新型コロナ及び原油価格・物価高騰対応支援枠の助成申請に至った理由
+                              {isSpecificBusinessTypeNameYear(
+                                strapiBizPlan.business_type_name,
+                                2024
+                              ) &&
+                              isEmergencySupportGroup(
+                                strapiBizPlan.business_type_name
+                              )
+                                ? "物価高騰及び子育て支援枠の助成申請に至った理由"
+                                : "新型コロナ及び原油価格・物価高騰対応支援枠の助成申請に至った理由"}
                             </th>
                             <td css={td}>
                               <div
@@ -4440,7 +4461,14 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                             strapiBizPlan.ingenuity.data.childMarkdownRemark
                               .html !== "" && (
                               <tr css={tr}>
-                                <th css={th}>申請数確保に向けた工夫</th>
+                                <th css={th}>
+                                  {isSpecificBusinessTypeNameYear(
+                                    strapiBizPlan.business_type_name,
+                                    2024
+                                  )
+                                    ? "案件発掘の工夫"
+                                    : "申請数確保に向けた工夫"}
+                                </th>
                                 <td css={td}>
                                   <div
                                     dangerouslySetInnerHTML={{
@@ -4519,7 +4547,14 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                             strapiBizPlan.ingenuity.data.childMarkdownRemark
                               .html !== "" && (
                               <div>
-                                <p css={th}>申請数確保に向けた工夫</p>
+                                <p css={th}>
+                                  {isSpecificBusinessTypeNameYear(
+                                    strapiBizPlan.business_type_name,
+                                    2024
+                                  )
+                                    ? "案件発掘の工夫"
+                                    : "申請数確保に向けた工夫"}
+                                </p>
                                 <p css={td}>
                                   <div
                                     dangerouslySetInnerHTML={{
@@ -4569,7 +4604,17 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                             strapiBizPlan.member_config_role.data
                               .childMarkdownRemark.html !== "" && (
                               <tr css={tr}>
-                                <th css={th}>メンバー構成と各メンバーの役割</th>
+                                <th css={th}>
+                                  {isSpecificBusinessTypeNameYear(
+                                    strapiBizPlan.business_type_name,
+                                    2024
+                                  ) &&
+                                  isEmergencySupportGroup(
+                                    strapiBizPlan.business_type_name
+                                  )
+                                    ? "事業実施体制、メンバー構成と各メンバーの役割"
+                                    : "メンバー構成と各メンバーの役割"}
+                                </th>
                                 <td css={td}>
                                   <div
                                     dangerouslySetInnerHTML={{
@@ -4605,7 +4650,17 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                             strapiBizPlan.risk_manage_system.data
                               .childMarkdownRemark.html !== "" && (
                               <tr css={tr}>
-                                <th css={th}>想定されるリスクと管理体制</th>
+                                <th css={th}>
+                                  {isSpecificBusinessTypeNameYear(
+                                    strapiBizPlan.business_type_name,
+                                    2024
+                                  ) &&
+                                  isEmergencySupportGroup(
+                                    strapiBizPlan.business_type_name
+                                  )
+                                    ? "ガバナンス・コンプライアンス体制"
+                                    : "想定されるリスクと管理体制"}
+                                </th>
                                 <td css={td}>
                                   <div
                                     dangerouslySetInnerHTML={{
@@ -4628,7 +4683,17 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                             strapiBizPlan.member_config_role.data
                               .childMarkdownRemark.html !== "" && (
                               <div>
-                                <p css={th}>メンバー構成と各メンバーの役割</p>
+                                <p css={th}>
+                                  {isSpecificBusinessTypeNameYear(
+                                    strapiBizPlan.business_type_name,
+                                    2024
+                                  ) &&
+                                  isEmergencySupportGroup(
+                                    strapiBizPlan.business_type_name
+                                  )
+                                    ? "事業実施体制、メンバー構成と各メンバーの役割"
+                                    : "メンバー構成と各メンバーの役割"}
+                                </p>
                                 <p css={td}>
                                   <div
                                     dangerouslySetInnerHTML={{
@@ -4664,7 +4729,17 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                             strapiBizPlan.risk_manage_system.data
                               .childMarkdownRemark.html !== "" && (
                               <div>
-                                <p css={th}>想定されるリスクと管理体制</p>
+                                <p css={th}>
+                                  {isSpecificBusinessTypeNameYear(
+                                    strapiBizPlan.business_type_name,
+                                    2024
+                                  ) &&
+                                  isEmergencySupportGroup(
+                                    strapiBizPlan.business_type_name
+                                  )
+                                    ? "ガバナンス・コンプライアンス体制"
+                                    : "想定されるリスクと管理体制"}
+                                </p>
                                 <p css={td}>
                                   <div
                                     dangerouslySetInnerHTML={{
@@ -4728,7 +4803,15 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                     {strapiBizPlan.is_subsidy_distr && (
                       <div>
                         <p css={th}>
-                          本事業について、コロナウイルス感染症に係る助成金や寄付等を受け助成金等を分配している(予定も含む）
+                          {isSpecificBusinessTypeNameYear(
+                            strapiBizPlan.business_type_name,
+                            2024
+                          ) &&
+                          isEmergencySupportGroup(
+                            strapiBizPlan.business_type_name
+                          )
+                            ? "本申請事業について、助成金や寄付等を受け助成金等を分配している(予定を含む)"
+                            : "本事業について、コロナウイルス感染症に係る助成金や寄付等を受け助成金等を分配している(予定も含む)"}
                         </p>
                         <p css={td}>
                           {strapiBizPlan.is_subsidy_distr === "true"
@@ -4770,7 +4853,15 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                     {strapiBizPlan.is_etc_biz_distr && (
                       <div>
                         <p css={th}>
-                          本事業以外の事業について、コロナウイルス感染症に係る助成金や寄付等を受け助成金等を分配している(予定も含む)
+                          {isSpecificBusinessTypeNameYear(
+                            strapiBizPlan.business_type_name,
+                            2024
+                          ) &&
+                          isEmergencySupportGroup(
+                            strapiBizPlan.business_type_name
+                          )
+                            ? "本申請事業以外の事業について、助成金や寄付等を受け助成金等を分配している(予定も含む)"
+                            : "本事業以外の事業について、コロナウイルス感染症に係る助成金や寄付等を受け助成金等を分配している(予定も含む)"}
                         </p>
                         <p css={td}>
                           {strapiBizPlan.is_etc_biz_distr === "true"
@@ -4934,7 +5025,15 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                       {strapiBizPlan.is_subsidy_distr && (
                         <tr css={tr}>
                           <th css={th}>
-                            本事業について、コロナウイルス感染症に係る助成金や寄付等を受け助成金等を分配している(予定も含む）
+                            {isSpecificBusinessTypeNameYear(
+                              strapiBizPlan.business_type_name,
+                              2024
+                            ) &&
+                            isEmergencySupportGroup(
+                              strapiBizPlan.business_type_name
+                            )
+                              ? "本申請事業について、助成金や寄付等を受け助成金等を分配している(予定を含む)"
+                              : "本事業について、コロナウイルス感染症に係る助成金や寄付等を受け助成金等を分配している(予定も含む)"}
                           </th>
                           <td css={td}>
                             {strapiBizPlan.is_subsidy_distr === "true"
@@ -4976,7 +5075,15 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                       {strapiBizPlan.is_etc_biz_distr && (
                         <tr css={tr}>
                           <th css={th}>
-                            本事業以外の事業について、コロナウイルス感染症に係る助成金や寄付等を受け助成金等を分配している(予定も含む)
+                            {isSpecificBusinessTypeNameYear(
+                              strapiBizPlan.business_type_name,
+                              2024
+                            ) &&
+                            isEmergencySupportGroup(
+                              strapiBizPlan.business_type_name
+                            )
+                              ? "本申請事業以外の事業について、助成金や寄付等を受け助成金等を分配している(予定も含む)"
+                              : "本事業以外の事業について、コロナウイルス感染症に係る助成金や寄付等を受け助成金等を分配している(予定も含む)"}
                           </th>
                           <td css={td}>
                             {strapiBizPlan.is_etc_biz_distr === "true"
