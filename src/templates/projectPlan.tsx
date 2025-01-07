@@ -1918,7 +1918,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                         </DetailItemWrapper>
                       )}
                       {shortOutcomeCovid.length !== 0 && (
-                        <DetailItemWrapper itemName="短期アウトカム (緊急支援枠)">
+                        <DetailItemWrapper itemName="短期アウトカム">
                           <table css={table}>
                             {shortOutcomeCovid.map((item: any, i: number) => (
                               <tbody key={"shortOutcomeCovid" + i}>
