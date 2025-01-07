@@ -157,18 +157,40 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                 title="事業活動"
                 anchor={`/result/${slug}/project-plan/#seventhItem`}
               />
-              <DetailAnchor
-                title="インプット"
-                anchor={`/result/${slug}/project-plan/#eighthItem`}
-              />
-              <DetailAnchor
-                title="広報戦略および連携・対話戦略"
-                anchor={`/result/${slug}/project-plan/#ninthItem`}
-              />
-              <DetailAnchor
-                title="出口戦略・持続可能性について"
-                anchor={`/result/${slug}/project-plan/#tenthItem`}
-              />
+              {strapiBizPlan.total_business_cost && (
+                <DetailAnchor
+                  title="インプット"
+                  anchor={`/result/${slug}/project-plan/#eighthItem`}
+                />
+              )}
+              {((strapiBizPlan.pr_strategy &&
+                strapiBizPlan.pr_strategy.data.childMarkdownRemark.html !==
+                  "") ||
+                (strapiBizPlan.dialogue_strategy &&
+                  strapiBizPlan.dialogue_strategy.data.childMarkdownRemark
+                    .html !== "")) && (
+                <DetailAnchor
+                  title="広報戦略および連携・対話戦略"
+                  anchor={`/result/${slug}/project-plan/#ninthItem`}
+                />
+              )}
+              {((strapiBizPlan.sustainability1 &&
+                strapiBizPlan.sustainability1.data.childMarkdownRemark.html !==
+                  "") ||
+                (strapiBizPlan.sustainability2 &&
+                  strapiBizPlan.sustainability2.data.childMarkdownRemark
+                    .html !== "") ||
+                (strapiBizPlan.exit_strategy_fdo &&
+                  strapiBizPlan.exit_strategy_fdo.data.childMarkdownRemark
+                    .html !== "") ||
+                (strapiBizPlan.exit_strategy_ado &&
+                  strapiBizPlan.exit_strategy_ado.data.childMarkdownRemark
+                    .html !== "")) && (
+                <DetailAnchor
+                  title="出口戦略・持続可能性について"
+                  anchor={`/result/${slug}/project-plan/#tenthItem`}
+                />
+              )}
               <DetailAnchor
                 title="関連する主な実績"
                 anchor={`/result/${slug}/project-plan/#eleventhItem`}
@@ -3978,88 +4000,25 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                   </DetailItemWrapper>
                 )}
               </div>
-              <div id="eighthItem">
-                <DetailItemWrapper itemName="インプット">
-                  <div tw="hidden lg:block">
-                    {strapiBizPlan.total_business_cost && (
-                      <div>
-                        <p css={th}>総事業費</p>
-                        <p css={td}>
-                          {strapiBizPlan.total_business_cost.toLocaleString()}円
-                        </p>
-                      </div>
-                    )}
-                    {strapiBizPlan.human_resources &&
-                      strapiBizPlan.human_resources.data.childMarkdownRemark
-                        .html !== "" && (
+              {strapiBizPlan.total_business_cost && (
+                <div id="eighthItem">
+                  <DetailItemWrapper itemName="インプット">
+                    <div tw="hidden lg:block">
+                      {strapiBizPlan.total_business_cost && (
                         <div>
-                          <p css={th}>人材</p>
+                          <p css={th}>総事業費</p>
                           <p css={td}>
-                            <div
-                              dangerouslySetInnerHTML={{
-                                __html:
-                                  strapiBizPlan.human_resources.data.childMarkdownRemark.html.replace(
-                                    /\n/g,
-                                    "<br />"
-                                  ),
-                              }}
-                            />
+                            {strapiBizPlan.total_business_cost.toLocaleString()}
+                            円
                           </p>
                         </div>
                       )}
-                    {strapiBizPlan.equipment &&
-                      strapiBizPlan.equipment.data.childMarkdownRemark.html !==
-                        "" && (
-                        <div>
-                          <p css={th}>資機材</p>
-                          <p css={td}>
-                            <div
-                              dangerouslySetInnerHTML={{
-                                __html:
-                                  strapiBizPlan.equipment.data.childMarkdownRemark.html.replace(
-                                    /\n/g,
-                                    "<br />"
-                                  ),
-                              }}
-                            />
-                          </p>
-                        </div>
-                      )}
-                    {strapiBizPlan.etc_resources &&
-                      strapiBizPlan.etc_resources.data.childMarkdownRemark
-                        .html !== "" && (
-                        <div>
-                          <p css={th}>その他</p>
-                          <p css={td}>
-                            <div
-                              dangerouslySetInnerHTML={{
-                                __html:
-                                  strapiBizPlan.etc_resources.data.childMarkdownRemark.html.replace(
-                                    /\n/g,
-                                    "<br />"
-                                  ),
-                              }}
-                            />
-                          </p>
-                        </div>
-                      )}
-                  </div>
-                  <table css={table} tw="lg:hidden">
-                    <tbody>
-                      <tr css={tr}>
-                        <th css={th}>総事業費</th>
-                        <td css={td}>
-                          {strapiBizPlan.total_business_cost == null
-                            ? ""
-                            : `${strapiBizPlan.total_business_cost.toLocaleString()}円`}
-                        </td>
-                      </tr>
                       {strapiBizPlan.human_resources &&
                         strapiBizPlan.human_resources.data.childMarkdownRemark
                           .html !== "" && (
-                          <tr css={tr}>
-                            <th css={th}>人材</th>
-                            <td css={td}>
+                          <div>
+                            <p css={th}>人材</p>
+                            <p css={td}>
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
@@ -4069,15 +4028,15 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                     ),
                                 }}
                               />
-                            </td>
-                          </tr>
+                            </p>
+                          </div>
                         )}
                       {strapiBizPlan.equipment &&
                         strapiBizPlan.equipment.data.childMarkdownRemark
                           .html !== "" && (
-                          <tr css={tr}>
-                            <th css={th}>資機材</th>
-                            <td css={td}>
+                          <div>
+                            <p css={th}>資機材</p>
+                            <p css={td}>
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
@@ -4087,15 +4046,15 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                     ),
                                 }}
                               />
-                            </td>
-                          </tr>
+                            </p>
+                          </div>
                         )}
                       {strapiBizPlan.etc_resources &&
                         strapiBizPlan.etc_resources.data.childMarkdownRemark
                           .html !== "" && (
-                          <tr css={tr}>
-                            <th css={th}>その他</th>
-                            <td css={td}>
+                          <div>
+                            <p css={th}>その他</p>
+                            <p css={td}>
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
@@ -4105,61 +4064,94 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                     ),
                                 }}
                               />
-                            </td>
-                          </tr>
+                            </p>
+                          </div>
                         )}
-                    </tbody>
-                  </table>
-                </DetailItemWrapper>
-              </div>
-              <div id="ninthItem">
-                <DetailItemWrapper itemName="広報戦略および連携・対話戦略">
-                  <div tw="hidden lg:block">
-                    {strapiBizPlan.pr_strategy &&
-                      strapiBizPlan.pr_strategy.data.childMarkdownRemark
-                        .html !== "" && (
-                        <div>
-                          <p css={th}>広報戦略</p>
-                          <p css={td}>
-                            <div
-                              dangerouslySetInnerHTML={{
-                                __html:
-                                  strapiBizPlan.pr_strategy.data.childMarkdownRemark.html.replace(
-                                    /\n/g,
-                                    "<br />"
-                                  ),
-                              }}
-                            />
-                          </p>
-                        </div>
-                      )}
-                    {strapiBizPlan.dialogue_strategy &&
-                      strapiBizPlan.dialogue_strategy.data.childMarkdownRemark
-                        .html !== "" && (
-                        <div>
-                          <p css={th}>連携・対話戦略</p>
-                          <p css={td}>
-                            <div
-                              dangerouslySetInnerHTML={{
-                                __html:
-                                  strapiBizPlan.dialogue_strategy.data.childMarkdownRemark.html.replace(
-                                    /\n/g,
-                                    "<br />"
-                                  ),
-                              }}
-                            />
-                          </p>
-                        </div>
-                      )}
-                  </div>
-                  <table css={table} tw="lg:hidden">
-                    <tbody>
+                    </div>
+                    <table css={table} tw="lg:hidden">
+                      <tbody>
+                        <tr css={tr}>
+                          <th css={th}>総事業費</th>
+                          <td css={td}>
+                            {strapiBizPlan.total_business_cost == null
+                              ? ""
+                              : `${strapiBizPlan.total_business_cost.toLocaleString()}円`}
+                          </td>
+                        </tr>
+                        {strapiBizPlan.human_resources &&
+                          strapiBizPlan.human_resources.data.childMarkdownRemark
+                            .html !== "" && (
+                            <tr css={tr}>
+                              <th css={th}>人材</th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.human_resources.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                        {strapiBizPlan.equipment &&
+                          strapiBizPlan.equipment.data.childMarkdownRemark
+                            .html !== "" && (
+                            <tr css={tr}>
+                              <th css={th}>資機材</th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.equipment.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                        {strapiBizPlan.etc_resources &&
+                          strapiBizPlan.etc_resources.data.childMarkdownRemark
+                            .html !== "" && (
+                            <tr css={tr}>
+                              <th css={th}>その他</th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.etc_resources.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                      </tbody>
+                    </table>
+                  </DetailItemWrapper>
+                </div>
+              )}
+              {((strapiBizPlan.pr_strategy &&
+                strapiBizPlan.pr_strategy.data.childMarkdownRemark.html !==
+                  "") ||
+                (strapiBizPlan.dialogue_strategy &&
+                  strapiBizPlan.dialogue_strategy.data.childMarkdownRemark
+                    .html !== "")) && (
+                <div id="ninthItem">
+                  <DetailItemWrapper itemName="広報戦略および連携・対話戦略">
+                    <div tw="hidden lg:block">
                       {strapiBizPlan.pr_strategy &&
                         strapiBizPlan.pr_strategy.data.childMarkdownRemark
                           .html !== "" && (
-                          <tr css={tr}>
-                            <th css={th}>広報戦略</th>
-                            <td css={td}>
+                          <div>
+                            <p css={th}>広報戦略</p>
+                            <p css={td}>
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
@@ -4169,15 +4161,15 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                     ),
                                 }}
                               />
-                            </td>
-                          </tr>
+                            </p>
+                          </div>
                         )}
                       {strapiBizPlan.dialogue_strategy &&
                         strapiBizPlan.dialogue_strategy.data.childMarkdownRemark
                           .html !== "" && (
-                          <tr css={tr}>
-                            <th css={th}>連携・対話戦略</th>
-                            <td css={td}>
+                          <div>
+                            <p css={th}>連携・対話戦略</p>
+                            <p css={td}>
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
@@ -4187,97 +4179,74 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                     ),
                                 }}
                               />
-                            </td>
-                          </tr>
+                            </p>
+                          </div>
                         )}
-                    </tbody>
-                  </table>
-                </DetailItemWrapper>
-              </div>
-              <div id="tenthItem">
-                <DetailItemWrapper itemName="出口戦略・持続可能性について">
-                  <div tw="hidden lg:block">
-                    {strapiBizPlan.sustainability1 &&
-                      strapiBizPlan.sustainability1.data.childMarkdownRemark
-                        .html !== "" && (
-                        <div>
-                          <p css={th}>持続可能性１</p>
-                          <p css={td}>
-                            <div
-                              dangerouslySetInnerHTML={{
-                                __html:
-                                  strapiBizPlan.sustainability1.data.childMarkdownRemark.html.replace(
-                                    /\n/g,
-                                    "<br />"
-                                  ),
-                              }}
-                            />
-                          </p>
-                        </div>
-                      )}
-                    {strapiBizPlan.sustainability2 &&
-                      strapiBizPlan.sustainability2.data.childMarkdownRemark
-                        .html !== "" && (
-                        <div>
-                          <p css={th}>持続可能性2</p>
-                          <p css={td}>
-                            <div
-                              dangerouslySetInnerHTML={{
-                                __html:
-                                  strapiBizPlan.sustainability2.data.childMarkdownRemark.html.replace(
-                                    /\n/g,
-                                    "<br />"
-                                  ),
-                              }}
-                            />
-                          </p>
-                        </div>
-                      )}
-                    {strapiBizPlan.exit_strategy_fdo &&
-                      strapiBizPlan.exit_strategy_fdo.data.childMarkdownRemark
-                        .html !== "" && (
-                        <div>
-                          <p css={th}>資金分配団体</p>
-                          <p css={td}>
-                            <div
-                              dangerouslySetInnerHTML={{
-                                __html:
-                                  strapiBizPlan.exit_strategy_fdo.data.childMarkdownRemark.html.replace(
-                                    /\n/g,
-                                    "<br />"
-                                  ),
-                              }}
-                            />
-                          </p>
-                        </div>
-                      )}
-                    {strapiBizPlan.exit_strategy_ado &&
-                      strapiBizPlan.exit_strategy_ado.data.childMarkdownRemark
-                        .html !== "" && (
-                        <div>
-                          <p css={th}>実行団体</p>
-                          <p css={td}>
-                            <div
-                              dangerouslySetInnerHTML={{
-                                __html:
-                                  strapiBizPlan.exit_strategy_ado.data.childMarkdownRemark.html.replace(
-                                    /\n/g,
-                                    "<br />"
-                                  ),
-                              }}
-                            />
-                          </p>
-                        </div>
-                      )}
-                  </div>
-                  <table css={table} tw="lg:hidden">
-                    <tbody>
+                    </div>
+                    <table css={table} tw="lg:hidden">
+                      <tbody>
+                        {strapiBizPlan.pr_strategy &&
+                          strapiBizPlan.pr_strategy.data.childMarkdownRemark
+                            .html !== "" && (
+                            <tr css={tr}>
+                              <th css={th}>広報戦略</th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.pr_strategy.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                        {strapiBizPlan.dialogue_strategy &&
+                          strapiBizPlan.dialogue_strategy.data
+                            .childMarkdownRemark.html !== "" && (
+                            <tr css={tr}>
+                              <th css={th}>連携・対話戦略</th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.dialogue_strategy.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                      </tbody>
+                    </table>
+                  </DetailItemWrapper>
+                </div>
+              )}
+              {((strapiBizPlan.sustainability1 &&
+                strapiBizPlan.sustainability1.data.childMarkdownRemark.html !==
+                  "") ||
+                (strapiBizPlan.sustainability2 &&
+                  strapiBizPlan.sustainability2.data.childMarkdownRemark
+                    .html !== "") ||
+                (strapiBizPlan.exit_strategy_fdo &&
+                  strapiBizPlan.exit_strategy_fdo.data.childMarkdownRemark
+                    .html !== "") ||
+                (strapiBizPlan.exit_strategy_ado &&
+                  strapiBizPlan.exit_strategy_ado.data.childMarkdownRemark
+                    .html !== "")) && (
+                <div id="tenthItem">
+                  <DetailItemWrapper itemName="出口戦略・持続可能性について">
+                    <div tw="hidden lg:block">
                       {strapiBizPlan.sustainability1 &&
                         strapiBizPlan.sustainability1.data.childMarkdownRemark
                           .html !== "" && (
-                          <tr css={tr}>
-                            <th css={th}>持続可能性１</th>
-                            <td css={td}>
+                          <div>
+                            <p css={th}>持続可能性１</p>
+                            <p css={td}>
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
@@ -4287,15 +4256,15 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                     ),
                                 }}
                               />
-                            </td>
-                          </tr>
+                            </p>
+                          </div>
                         )}
                       {strapiBizPlan.sustainability2 &&
                         strapiBizPlan.sustainability2.data.childMarkdownRemark
                           .html !== "" && (
-                          <tr css={tr}>
-                            <th css={th}>持続可能性2</th>
-                            <td css={td}>
+                          <div>
+                            <p css={th}>持続可能性2</p>
+                            <p css={td}>
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
@@ -4305,15 +4274,15 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                     ),
                                 }}
                               />
-                            </td>
-                          </tr>
+                            </p>
+                          </div>
                         )}
                       {strapiBizPlan.exit_strategy_fdo &&
                         strapiBizPlan.exit_strategy_fdo.data.childMarkdownRemark
                           .html !== "" && (
-                          <tr css={tr}>
-                            <th css={th}>資金分配団体</th>
-                            <td css={td}>
+                          <div>
+                            <p css={th}>資金分配団体</p>
+                            <p css={td}>
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
@@ -4323,15 +4292,15 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                     ),
                                 }}
                               />
-                            </td>
-                          </tr>
+                            </p>
+                          </div>
                         )}
                       {strapiBizPlan.exit_strategy_ado &&
                         strapiBizPlan.exit_strategy_ado.data.childMarkdownRemark
                           .html !== "" && (
-                          <tr css={tr}>
-                            <th css={th}>実行団体</th>
-                            <td css={td}>
+                          <div>
+                            <p css={th}>実行団体</p>
+                            <p css={td}>
                               <div
                                 dangerouslySetInnerHTML={{
                                   __html:
@@ -4341,13 +4310,89 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                     ),
                                 }}
                               />
-                            </td>
-                          </tr>
+                            </p>
+                          </div>
                         )}
-                    </tbody>
-                  </table>
-                </DetailItemWrapper>
-              </div>
+                    </div>
+                    <table css={table} tw="lg:hidden">
+                      <tbody>
+                        {strapiBizPlan.sustainability1 &&
+                          strapiBizPlan.sustainability1.data.childMarkdownRemark
+                            .html !== "" && (
+                            <tr css={tr}>
+                              <th css={th}>持続可能性１</th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.sustainability1.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                        {strapiBizPlan.sustainability2 &&
+                          strapiBizPlan.sustainability2.data.childMarkdownRemark
+                            .html !== "" && (
+                            <tr css={tr}>
+                              <th css={th}>持続可能性2</th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.sustainability2.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                        {strapiBizPlan.exit_strategy_fdo &&
+                          strapiBizPlan.exit_strategy_fdo.data
+                            .childMarkdownRemark.html !== "" && (
+                            <tr css={tr}>
+                              <th css={th}>資金分配団体</th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.exit_strategy_fdo.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                        {strapiBizPlan.exit_strategy_ado &&
+                          strapiBizPlan.exit_strategy_ado.data
+                            .childMarkdownRemark.html !== "" && (
+                            <tr css={tr}>
+                              <th css={th}>実行団体</th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.exit_strategy_ado.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                      </tbody>
+                    </table>
+                  </DetailItemWrapper>
+                </div>
+              )}
               {strapiBizPlan.executive_org_cnt &&
                 strapiBizPlan.executive_org_cnt.data.childMarkdownRemark
                   .html !== "" && (
