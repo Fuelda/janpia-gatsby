@@ -112,16 +112,18 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                     </td>
                   </tr>
                 )}
-                <tr>
-                  <th className="table__financialPlan--tbody-sub"></th>
-                  <th className="table__financialPlan--tbody-02">
-                    直接事業費 (円)
-                  </th>
-                  <td>
-                    {financePlan.bis_ado_direct &&
-                      financePlan.bis_ado_direct.toLocaleString()}
-                  </td>
-                </tr>
+                {financePlan && financePlan.bis_ado_direct && (
+                  <tr>
+                    <th className="table__financialPlan--tbody-sub"></th>
+                    <th className="table__financialPlan--tbody-02">
+                      直接事業費 (円)
+                    </th>
+                    <td>
+                      {financePlan.bis_ado_direct &&
+                        financePlan.bis_ado_direct.toLocaleString()}
+                    </td>
+                  </tr>
+                )}
                 <tr>
                   <th></th>
                   <th className="table__financialPlan--tbody-02">
