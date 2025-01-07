@@ -201,9 +201,6 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               社会的課題の解決を担う若者の能力開発支援
                             </p>
                           )}
-                          {strapiBizPlan.field1_4 === "1" && (
-                            <p css={tdLshape}>その他</p>
-                          )}
                         </div>
                       </div>
                     </div>
@@ -229,9 +226,6 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                           {strapiBizPlan.field2_6 === "1" && (
                             <p css={tdLshape}>女性の経済的自立への支援</p>
                           )}
-                          {strapiBizPlan.field2_7 === "1" && (
-                            <p css={tdLshape}>その他</p>
-                          )}
                         </div>
                       </div>
                     </div>
@@ -255,9 +249,6 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                             <p css={tdLshape}>
                               安心・安全に暮らせるコミュニティづくりへの支援
                             </p>
-                          )}
-                          {strapiBizPlan.field3_9 === "1" && (
-                            <p css={tdLshape}>その他</p>
                           )}
                         </div>
                       </div>
@@ -1208,10 +1199,14 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
               <div id="sixthItem">
                 <DetailItemWrapper itemName="事業設計">
                   <div css={detailAnchor}>
-                    <DetailAnchor
-                      title="中長期アウトカム"
-                      anchor={`/result/${slug}/project-plan/#six-firstItem`}
-                    />
+                    {strapiBizPlan.midterm_biz_goals &&
+                      strapiBizPlan.midterm_biz_goals.data.childMarkdownRemark
+                        .html !== "" && (
+                        <DetailAnchor
+                          title="中長期アウトカム"
+                          anchor={`/result/${slug}/project-plan/#six-firstItem`}
+                        />
+                      )}
                     <DetailAnchor
                       title="短期アウトカム"
                       anchor={`/result/${slug}/project-plan/#six-secondItem`}
@@ -1223,11 +1218,11 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                   </div>
                 </DetailItemWrapper>
                 <div css={detailBody}>
-                  <div id="six-firstItem">
-                    <DetailItemWrapper itemName="中期アウトカム">
-                      {strapiBizPlan.midterm_biz_goals &&
-                        strapiBizPlan.midterm_biz_goals.data.childMarkdownRemark
-                          .html !== "" && (
+                  {strapiBizPlan.midterm_biz_goals &&
+                    strapiBizPlan.midterm_biz_goals.data.childMarkdownRemark
+                      .html !== "" && (
+                      <div id="six-firstItem">
+                        <DetailItemWrapper itemName="中期アウトカム">
                           <div css={td}>
                             <div
                               dangerouslySetInnerHTML={{
@@ -1239,9 +1234,9 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                               }}
                             />
                           </div>
-                        )}
-                    </DetailItemWrapper>
-                  </div>
+                        </DetailItemWrapper>
+                      </div>
+                    )}
                   <div css={detailBody}>
                     <div id="six-secondItem">
                       {shortOutcomeFinance.length !== 0 && (
