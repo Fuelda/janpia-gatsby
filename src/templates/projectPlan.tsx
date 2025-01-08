@@ -2693,6 +2693,12 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                 </td>
                               </tr>
                             )}
+                          {strapiBizPlan.ado_image && (
+                            <tr css={tr}>
+                              <th css={th}>実行団体のイメージ</th>
+                              <td css={td}>{strapiBizPlan.ado_image}</td>
+                            </tr>
+                          )}
                           {strapiBizPlan.executive_org_amt &&
                             strapiBizPlan.executive_org_amt.data
                               .childMarkdownRemark.html !== "" && (
@@ -4930,6 +4936,8 @@ export const pageQuery = graphql`
       exec_structure
       conso_exist
       governance_structure
+      kokugaikatudou
+      ado_image
     }
     allStrapiBizPlanSub(filter: { business_cd: { eq: $slug } }) {
       edges {
