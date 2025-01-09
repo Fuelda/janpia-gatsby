@@ -142,7 +142,8 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                       </thead>
                       <tbody>
                         {strapiEvaluationPlan &&
-                          (strapiEvaluationPlan.mid_rethink_season ||
+                          (strapiEvaluationPlan.prior_rethink_season ||
+                            strapiEvaluationPlan.mid_rethink_season ||
                             strapiEvaluationPlan.after_rethink_season) && (
                             <tr css={tr}>
                               <th css={thScroll}>評価計画の見直し時期</th>
@@ -346,7 +347,8 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                             </tr>
                           )}
                         {strapiEvaluationPlan &&
-                          (strapiEvaluationPlan.mid_expenses_usage ||
+                          (strapiEvaluationPlan.prior_expenses_usage ||
+                            strapiEvaluationPlan.mid_expenses_usage ||
                             strapiEvaluationPlan.after_expenses_usage) && (
                             <tr css={tr}>
                               <th css={thScroll}>評価関連経費の使用方法</th>
@@ -376,7 +378,8 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                             </tr>
                           )}
                         {strapiEvaluationPlan &&
-                          (strapiEvaluationPlan.mid_improving_mh ||
+                          (strapiEvaluationPlan.prior_improving_mh ||
+                            strapiEvaluationPlan.mid_improving_mh ||
                             strapiEvaluationPlan.after_improving_mh) && (
                             <tr css={tr}>
                               <th css={thScroll}>

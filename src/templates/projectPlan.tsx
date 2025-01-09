@@ -1505,12 +1505,14 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                       {item.node.purpose_initial}
                                     </td>
                                   </tr>
-                                  <tr css={tr} tw="lg:hidden">
-                                    <th css={th}>中間評価時の値/状態</th>
-                                    <td css={td}>
-                                      {item.node.purpose_mid_eval}
-                                    </td>
-                                  </tr>
+                                  {item.node.purpose_mid_eval && (
+                                    <tr css={tr} tw="lg:hidden">
+                                      <th css={th}>中間評価時の値/状態</th>
+                                      <td css={td}>
+                                        {item.node.purpose_mid_eval}
+                                      </td>
+                                    </tr>
+                                  )}
                                   <tr css={tr} tw="lg:hidden">
                                     <th css={th}>
                                       目標値/目標状態（目標達成時期）
