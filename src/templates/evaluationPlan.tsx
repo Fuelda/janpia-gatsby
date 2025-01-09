@@ -154,7 +154,8 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                                     tw`bg-gray-300`,
                                 ]}
                               >
-                                {strapiEvaluationPlan.prior_rethink_season}
+                                {strapiEvaluationPlan.prior_rethink_season &&
+                                  strapiEvaluationPlan.prior_rethink_season}
                               </td>
                               <td css={tdScroll}>
                                 {strapiEvaluationPlan &&
@@ -359,7 +360,8 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                                     tw`bg-gray-300`,
                                 ]}
                               >
-                                {strapiEvaluationPlan.prior_expenses_usage}
+                                {strapiEvaluationPlan.prior_expenses_usage &&
+                                  strapiEvaluationPlan.prior_expenses_usage}
                               </td>
                               <td
                                 css={[
@@ -392,7 +394,8 @@ const EvaluationPlan: React.FC<any> = ({ data, pageContext }) => {
                                     tw`bg-gray-300`,
                                 ]}
                               >
-                                {strapiEvaluationPlan.prior_improving_mh}
+                                {strapiEvaluationPlan.prior_improving_mh &&
+                                  strapiEvaluationPlan.prior_improving_mh}
                               </td>
                               <td css={tdScroll}>
                                 {strapiEvaluationPlan &&
