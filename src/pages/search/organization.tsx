@@ -15,6 +15,7 @@ import { useSearchContext } from "../../context/searchContext";
 import { useLocation } from "@reach/router";
 import PrefecturesSp from "../../features/search/component/main/Organization/PrefecturesSp";
 import Seo from "../../components/lauout/Seo";
+import BusinessOrgType from "../../features/search/component/main/Business/BusinessOrgType";
 
 const Organization = () => {
   const { resetSearchStatus } = useSearchContext();
@@ -38,7 +39,9 @@ const Organization = () => {
         <div css={vCenter} tw="relative">
           <div>
             <OrganizationName path={path} />
-            <OrganizationTypeCd path={path} />
+            {/* 事業計画と同じにする。活動支援が団体には必要ない場合は復活させる */}
+            {/* <OrganizationTypeCd path={path} /> */}
+            <BusinessOrgType path={path} />
 
             <h3 css={h3} tw="lg:(hidden)">
               団体所在地

@@ -1,26 +1,58 @@
-import { StaticImage } from "gatsby-plugin-image";
 import React from "react";
 import "twin.macro";
 import tw from "twin.macro";
 import { hCenter, vCenter } from "../../styles/base";
 import { useStrapiContext } from "../../context/strapiContext";
+import { isActivitySupportGroup } from "../../util/businessTypeNameChecker";
+import { BusinessOrgTypeIcon } from "../atoms/BusinessOrgTypeIcon";
 
 type IndexProjectCardType = {
   isFdo: boolean;
+  isActivitySupport: boolean;
 };
 
-const IndexProjectCard = ({ isFdo }: IndexProjectCardType) => {
+const IndexProjectCard = ({
+  isFdo,
+  isActivitySupport,
+}: IndexProjectCardType) => {
   const { allStrapiBizPlan, allStrapiBizPlanManual } = useStrapiContext();
-  const project = allStrapiBizPlan.edges.filter((item) =>
-    isFdo
+
+  const project = allStrapiBizPlan.edges.filter((item) => {
+    return isFdo
       ? item.node.business_org_type === "F"
-      : item.node.business_org_type === "A"
-  );
-  const projectManual = allStrapiBizPlanManual.edges.filter((item) =>
-    isFdo
+      : item.node.business_org_type === "A";
+    // TODO: 活動支援枠の区分をするようになったらコメントアウトを解除する（そのころは出資も加わるかも）
+    // if (isActivitySupport) {
+    //   return (
+    //     isActivitySupportGroup(item.node.business_type_name || "") &&
+    //     (isFdo
+    //       ? item.node.business_org_type === "F"
+    //       : item.node.business_org_type === "A")
+    //   );
+    // } else {
+    //   return isFdo
+    //     ? item.node.business_org_type === "F"
+    //     : item.node.business_org_type === "A";
+    // }
+  });
+  const projectManual = allStrapiBizPlanManual.edges.filter((item) => {
+    return isFdo
       ? item.node.business_org_type === "F"
-      : item.node.business_org_type === "A"
-  );
+      : item.node.business_org_type === "A";
+    // TODO: 活動支援枠の区分をするようになったらコメントアウトを解除する（そのころは出資も加わるかも）
+    // if (isActivitySupport) {
+    //   return (
+    //     isActivitySupportGroup(item.node.business_type_name?.label || "") &&
+    //     (isFdo
+    //       ? item.node.business_org_type === "F"
+    //       : item.node.business_org_type === "A")
+    //   );
+    // } else {
+    //   return isFdo
+    //     ? item.node.business_org_type === "F"
+    //     : item.node.business_org_type === "A";
+    // }
+  });
   const onGoingProject = project.filter(
     (item) => item.node.business_status == 0
   );
@@ -28,38 +60,46 @@ const IndexProjectCard = ({ isFdo }: IndexProjectCardType) => {
     (item) => item.node.business_status
   );
 
+  const indexProjectCardLabel = isActivitySupport
+    ? isFdo
+      ? "活動支援団体"
+      : "支援対象団体"
+    : isFdo
+    ? "資金分配団体"
+    : "実行団体";
+
+  const indexProjectCardBorderColor = isActivitySupport
+    ? isFdo
+      ? tw`border-red-500` // TODO: 色はアイコン決定に合わせる
+      : tw`border-yellow-500` // TODO: 色はアイコン決定に合わせる
+    : isFdo
+    ? tw`border-blue-fdo`
+    : tw`border-green-ado`;
+  const indexProjectCardLabelColor = isActivitySupport
+    ? isFdo
+      ? tw`bg-red-500` // TODO: 色はアイコン決定に合わせる
+      : tw`bg-yellow-500` // TODO: 色はアイコン決定に合わせる
+    : isFdo
+    ? tw`bg-blue-fdo`
+    : tw`bg-green-ado`;
+
   return (
     <div
       tw="border-4 rounded-10 w-[450px] lg:(w-full)"
-      css={isFdo ? tw`border-blue-fdo` : tw`border-green-ado`}
+      css={indexProjectCardBorderColor}
     >
       <p
         tw="text-3xl text-white pt-4 pb-3.5 text-center lg:(text-2xl)"
-        css={isFdo ? tw`bg-blue-fdo` : tw`bg-green-ado`}
+        css={indexProjectCardLabelColor}
       >
-        {isFdo ? "資金分配団体" : "実行団体"}
+        {indexProjectCardLabel}
       </p>
       <div tw="flex pt-4 pb-5 px-5 gap-3.5 lg:(flex-col justify-between items-center)">
-        {isFdo ? (
-          <StaticImage
-            src="../../images/icon_shikinbunpai.png"
-            alt="団体アイコン"
-            tw="w-[105px] h-[105px]"
-          />
-        ) : (
-          <StaticImage
-            src="../../images/icon_jikkou.png"
-            alt="団体アイコン"
-            tw="w-[105px] h-[105px]"
-          />
-        )}
+        <BusinessOrgTypeIcon
+          isFdo={isFdo}
+          isActivitySupport={isActivitySupport}
+        />
         <div css={vCenter} tw="w-64 justify-around lg:(w-full)">
-          {/* <p tw="text-2xl font-bold text-center lg:(text-lg)">
-            登録事業数：
-            <span tw="text-5xl lg:(text-2xl)">
-              {project.length + projectManual.length}
-            </span>
-          </p> */}
           <div tw="text-2xl font-bold text-center lg:(text-lg)" css={hCenter}>
             <p>
               登録

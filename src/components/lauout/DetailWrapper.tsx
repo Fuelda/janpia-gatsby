@@ -4,6 +4,8 @@ import DetailFooter from "./DetailFooter";
 import DetailSidebar from "../organisms/DetailSidebar";
 import DetailSelector from "../organisms/DetailSelector";
 import { CircularProgress } from "@mui/material";
+import { useBasicInfo } from "../../hooks/useBasicInfo";
+import { isActivitySupportGroup } from "../../util/businessTypeNameChecker";
 
 export type detailPageLinkType = {
   title: string;
@@ -21,6 +23,7 @@ const DetailWrapper: React.FC<{
     []
   );
   const [isLoading, setIsLoading] = useState(false);
+  const { business_type_name, business_org_type } = useBasicInfo(slug);
   const strapiApiURL = process.env.STRAPI_API_URL;
 
   const detailPageCategoryInfo = [
@@ -31,7 +34,15 @@ const DetailWrapper: React.FC<{
       path: `/result/${slug}/selected-project/`,
       collectionTypes: ["offering-reports", "offering-report-manuals"],
     },
-    { title: "事業計画", path: `/result/${slug}/project-plan/` },
+    {
+      title: `${
+        isActivitySupportGroup(business_type_name || "") &&
+        business_org_type === "A"
+          ? "支援対象活動計画書"
+          : "事業計画"
+      }`,
+      path: `/result/${slug}/project-plan/`,
+    },
     {
       title: "評価計画",
       path: `/result/${slug}/evaluation-plan/`,

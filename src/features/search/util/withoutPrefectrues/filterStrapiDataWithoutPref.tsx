@@ -1,5 +1,9 @@
 import { useAlgoliaStrapiContext } from "../../../../context/algoliaStrapiContext";
 import { useSearchContext } from "../../../../context/searchContext";
+import {
+  convertBusinessTypeNameLabel,
+  isActivitySupportGroup,
+} from "../../../../util/businessTypeNameChecker";
 import { linkCollectionTypes } from "../../../../util/linkCollectionTypes";
 
 export const filterStrapiDataWithoutPref = () => {
@@ -91,11 +95,14 @@ export const filterStrapiDataWithoutPref = () => {
             )
         )) &&
       //事業種別
-      (searchState.business_org_type.length === 0 ||
-        (item.bizPlan.business_org_type &&
-          searchState.business_org_type.includes(
-            item.bizPlan.business_org_type
-          ))) &&
+      (searchState.orgTypeSelections.length === 0 ||
+        searchState.orgTypeSelections.some(
+          (ots) =>
+            item.bizPlan.business_type_name &&
+            isActivitySupportGroup(item.bizPlan.business_type_name) ===
+              ots.activitySupport &&
+            item.bizPlan.business_org_type === ots.code
+        )) &&
       //事業年度/事業枠
       // (searchState.business_type_name === "" ||
       //   item.bizPlan.business_type_name === searchState.business_type_name) &&
@@ -111,18 +118,27 @@ export const filterStrapiDataWithoutPref = () => {
         searchState.btnCategory.some(
           (btnc) =>
             item.bizPlan.business_type_name &&
-            item.bizPlan.business_type_name?.includes(btnc)
+            convertBusinessTypeNameLabel(
+              item.bizPlan.business_type_name
+            )?.includes(btnc)
         )) &&
       //事業分類
       (searchState.business_category.length === 0 ||
         searchState.business_category.some(
           (bc) =>
+            item.bizPlan.business_type_name &&
+            !isActivitySupportGroup(item.bizPlan.business_type_name) && // 活動支援枠でないことをチェック
             item.bizPlan.business_category.code &&
-            // (item.bizPlan.business_category.code === 1
-            //   ? bc.code === item.bizPlan.business_category.code &&
-            //     bc.subCode === item.bizPlan.business_category.subCode
-            //   : bc.code === item.bizPlan.business_category.code)
             bc.code === item.bizPlan.business_category.code
+        )) &&
+      //支援対象区分
+      (searchState.business_category_activitySupport.length === 0 ||
+        searchState.business_category_activitySupport.some(
+          (bc) =>
+            item.bizPlan.business_type_name &&
+            isActivitySupportGroup(item.bizPlan.business_type_name) && // 活動支援枠であることをチェック
+            item.bizPlan.support_category &&
+            bc.code === parseInt(item.bizPlan.support_category)
         )) &&
       //事業ステータス
       (searchState.business_status === null ||

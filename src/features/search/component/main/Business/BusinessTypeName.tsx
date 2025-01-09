@@ -6,6 +6,7 @@ import { h3, hCenter } from "../../../../../styles/base";
 import { checkBox, checkBoxSet, checkMark } from "../../../../../styles/form";
 import "twin.macro";
 import tw from "twin.macro";
+import { convertBusinessTypeNameLabel } from "../../../../../util/businessTypeNameChecker";
 
 const BusinessTypeName = (props: { path: string }) => {
   const { searchState, searchSetState } = useSearchContext();
@@ -35,7 +36,7 @@ const BusinessTypeName = (props: { path: string }) => {
     return b.localeCompare(a);
   });
 
-  const businessTypeNameCategory = ["通常枠", "コロナ枠"];
+  const businessTypeNameCategory = ["通常枠", "コロナ枠", "活動支援"];
 
   const handleYearCheckbox = (label: string) => {
     if (btnYear.includes(label)) {
@@ -99,9 +100,13 @@ const BusinessTypeName = (props: { path: string }) => {
             <div key={checkbox} css={[hCenter, checkBoxSet]} tw="gap-2">
               <Checkbox.Root
                 id={checkbox}
-                onClick={() => handleCategoryCheckbox(checkbox)}
+                onClick={() =>
+                  handleCategoryCheckbox(convertBusinessTypeNameLabel(checkbox))
+                }
                 css={checkBox}
-                checked={btnCategory.includes(checkbox)}
+                checked={btnCategory.includes(
+                  convertBusinessTypeNameLabel(checkbox)
+                )}
               >
                 <Checkbox.Indicator tw="flex justify-center">
                   <svg
@@ -120,8 +125,7 @@ const BusinessTypeName = (props: { path: string }) => {
                 </Checkbox.Indicator>
               </Checkbox.Root>
               <label htmlFor={checkbox}>
-                {(checkbox === "通常枠" && "通常枠") ||
-                  (checkbox === "コロナ枠" && "緊急支援枠")}
+                {convertBusinessTypeNameLabel(checkbox)}
               </label>
             </div>
           ))}

@@ -9,7 +9,7 @@ export const th = tw`w-1/4 bg-blue-base py-3 px-3.5 text-start border-gray-borde
 export const thScroll = tw`w-1/4 bg-blue-base py-3 px-3.5 text-start border-gray-border border lg:(text-[13px] py-0 px-2)`;
 export const thLong = tw`w-[40%] bg-blue-base py-3 px-3.5 text-start border-gray-border border lg:(text-[13px] w-full py-0 px-2)`;
 export const thForCircle = tw` bg-blue-base py-3 px-3.5 text-start border-gray-border border lg:(text-[13px] w-full py-0 px-2)`;
-export const td = tw`py-3 px-3.5 border-gray-border border text-start lg:(py-2 px-2 break-all w-full)`;
+export const td = tw`py-3 px-3.5 border-gray-border border text-start whitespace-pre-wrap lg:(py-2 px-2 break-all w-full)`;
 export const tdScroll = tw`py-3 px-3.5 border-gray-border border text-start lg:(py-2 px-2 break-all )`;
 
 export const th1 = tw`w-[40%] bg-blue-base py-3 px-3.5 text-start  lg:(text-[13px] w-full py-0 px-2 border border-gray-border)`;

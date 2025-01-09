@@ -6,6 +6,7 @@ const contextQuery = graphql`
     allStrapiBizPlan {
       edges {
         node {
+          support_category
           business_cd
           business_org_type
           fund_distr_grp_cd

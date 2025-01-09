@@ -5,7 +5,10 @@ import DetailHeader from "../components/lauout/DetailHeader";
 import "twin.macro";
 import DetailWrapper from "../components/lauout/DetailWrapper";
 import DetailItemWrapper from "../components/lauout/DetailItemWrapper";
-import { businessCategoryArray } from "../features/search/store/filterContents";
+import {
+  businessCategoryArray,
+  supportCategoryArray,
+} from "../features/search/store/filterContents";
 import DetailAnchor from "../components/atoms/DetailAnchor";
 import { td, th } from "../styles/table";
 import { detailAnchor, detailBody } from "../styles/detailPage";
@@ -30,6 +33,8 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
   const business_name = bizPlan?.business_name;
   const business_status = bizPlan?.business_status;
   const business_category = bizPlan?.business_category;
+  const support_category =
+    bizPlan && "support_category" in bizPlan ? bizPlan?.support_category : null;
   const business_type_name = bizPlan?.business_type_name;
   const target_area = bizPlan?.target_area;
   const mainGroup = headerBizPlan?.mainGroup;
@@ -92,6 +97,11 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
   } else {
     businessCategoryLabel = "";
   }
+
+  let supportCategoryLabel: string | undefined = "";
+  supportCategoryLabel = supportCategoryArray.find(
+    (scp) => support_category && support_category === scp.code.toString()
+  )?.label;
 
   let businessStatusText = "";
   if (typeof business_status === "number" && business_status === 0) {
@@ -178,6 +188,12 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
                     <p css={td}>{businessCategoryLabel}</p>
                   </div>
                 )}
+                {supportCategoryLabel && (
+                  <div>
+                    <p css={th}>支援対象区分</p>
+                    <p css={td}>{supportCategoryLabel}</p>
+                  </div>
+                )}
                 {target_area && (
                   <div>
                     <p css={th}>事業対象地域</p>
@@ -232,6 +248,12 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
                     <tr>
                       <th css={th}>事業分類</th>
                       <td css={td}>{businessCategoryLabel}</td>
+                    </tr>
+                  )}
+                  {supportCategoryLabel && (
+                    <tr>
+                      <th css={th}>支援対象区分</th>
+                      <td css={td}>{supportCategoryLabel}</td>
                     </tr>
                   )}
                   {target_area && (
@@ -413,6 +435,7 @@ export const pageQuery = graphql`
         }
       }
       business_name_sub
+      support_category
     }
     strapiBizPlanLinkADO: allStrapiBizPlan(
       filter: {

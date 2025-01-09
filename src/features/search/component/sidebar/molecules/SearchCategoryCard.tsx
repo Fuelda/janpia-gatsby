@@ -16,6 +16,7 @@ import SidebarPrefectures from "../Organization/SidebarPrefectures";
 import BusinessTypeName from "../../main/Business/BusinessTypeName";
 import { useLocation } from "@reach/router";
 import PrefecturesSp from "../../main/Organization/PrefecturesSp";
+import { BusinessCategoryActivitySupport } from "../../main/Business/BusinessCategoryActivitySupport";
 
 const SearchCategoryCard = (props: { category: string }) => {
   const [isOpen, setIsOpen] = useState(true);
@@ -47,7 +48,9 @@ const SearchCategoryCard = (props: { category: string }) => {
           tw="transition-[height] duration-300 ease-in"
         >
           <OrganizationName path={path} />
-          <OrganizationTypeCd path={path} />
+          {/* 事業計画と同じにする。活動支援が団体には必要ない場合は復活させる */}
+          {/* <OrganizationTypeCd path={path} /> */}
+          <BusinessOrgType path={path} />
           <SidebarPrefectures category="prefectures" />
           <PrefecturesSp category="prefectures" />
           <LegalPersonality path={path} />
@@ -61,6 +64,7 @@ const SearchCategoryCard = (props: { category: string }) => {
           <BusinessTypeName path={path} />
           <BusinessOrgType path={path} />
           <BusinessCategory path={path} />
+          <BusinessCategoryActivitySupport path={path} />
           <SubsidyAmount path={path} />
           <BusinessStatus path={path} />
           <SidebarPrefectures category="targetArea" />

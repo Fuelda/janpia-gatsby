@@ -1,5 +1,9 @@
 import { useAlgoliaStrapiContext } from "../../../context/algoliaStrapiContext";
 import { useSearchContext } from "../../../context/searchContext";
+import {
+  convertBusinessTypeNameLabel,
+  isActivitySupportGroup,
+} from "../../../util/businessTypeNameChecker";
 import { linkCollectionTypesManual } from "../../../util/linkCollectionTypesManual";
 
 export const filterStrapiManualData = () => {
@@ -97,11 +101,14 @@ export const filterStrapiManualData = () => {
             parseInt(item.mainGroup?.node.legal_personality)
           ))) &&
       //事業種別
-      (searchState.business_org_type.length === 0 ||
-        (item.bizPlan.business_org_type &&
-          searchState.business_org_type.includes(
-            item.bizPlan.business_org_type
-          ))) &&
+      (searchState.orgTypeSelections.length === 0 ||
+        searchState.orgTypeSelections.some(
+          (ots) =>
+            item.bizPlan.business_type_name?.label &&
+            isActivitySupportGroup(item.bizPlan.business_type_name.label) ===
+              ots.activitySupport &&
+            item.bizPlan.business_org_type === ots.code
+        )) &&
       //事業年度/事業枠
       // (searchState.business_type_name === "" ||
       //   (item.bizPlan.business_type_name &&
@@ -119,7 +126,9 @@ export const filterStrapiManualData = () => {
         searchState.btnCategory.some(
           (btnc) =>
             item.bizPlan.business_type_name &&
-            item.bizPlan.business_type_name.label?.includes(btnc)
+            convertBusinessTypeNameLabel(
+              item.bizPlan.business_type_name.label || ""
+            )?.includes(btnc)
         )) &&
       //事業分類
       (searchState.business_category.length === 0 ||

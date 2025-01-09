@@ -1,8 +1,8 @@
-import { useSearchContext } from "../../../context/searchContext";
-
 export const OrganizationTypeCdArray = [
-  { code: "F", label: "資金分配団体" },
-  { code: "A", label: "実行団体" },
+  { code: "F", label: "資金分配団体", activitySupport: false },
+  { code: "A", label: "実行団体", activitySupport: false },
+  { code: "F", label: "活動支援団体", activitySupport: true },
+  { code: "A", label: "支援対象団体", activitySupport: true },
 ];
 
 export const prefecturesArray = {
@@ -73,6 +73,15 @@ export const businessCategoryArray = [
   },
   { label: "イノベーション企画支援事業", code: 3, subCode: -2 },
   { label: "災害支援事業", code: 4, subCode: -3 },
+];
+
+export const supportCategoryArray = [
+  { label: "資金支援の担い手育成", code: 1, subCode: 0 },
+  {
+    label: "民間公益活動の担い手育成",
+    code: 2,
+    subCode: 0,
+  },
 ];
 
 export const businessStatusArray = [

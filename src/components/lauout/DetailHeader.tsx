@@ -4,11 +4,15 @@ import React, { Dispatch, useEffect } from "react";
 import "twin.macro";
 import tw from "twin.macro";
 import { hCenter, pankuzu } from "../../styles/base";
-import { businessCategoryArray } from "../../features/search/store/filterContents";
+import {
+  businessCategoryArray,
+  supportCategoryArray,
+} from "../../features/search/store/filterContents";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
-import { linkCollectionTypes } from "../../util/linkCollectionTypes";
-import { linkCollectionTypesManual } from "../../util/linkCollectionTypesManual";
+import { BusinessOrgTypeThumbnail } from "../atoms/BusinessOrgTypeThumbnail";
+import { BusinessTypeNameCategoryIcon } from "../atoms/BusinessTypeNameCategoryIcon";
+import { useBasicInfo } from "../../hooks/useBasicInfo";
 
 export const resultCardTip = tw`text-xs py-1 px-1.5 border border-gray-base text-gray-base`;
 
@@ -16,31 +20,17 @@ const DetailHeader = (props: {
   business_cd: string;
   setBusinessTypeNameYear?: Dispatch<React.SetStateAction<string>>;
 }) => {
-  const linkedBizPlan = linkCollectionTypes();
-  const linkedBizPlanManual = linkCollectionTypesManual();
-  const linkedAllBizPlan = [...linkedBizPlan, ...linkedBizPlanManual];
-  const headerBizPlan = linkedAllBizPlan.find(
-    (item) => item.bizPlan.business_cd === props.business_cd
-  );
-
-  const bizPlan = headerBizPlan?.bizPlan;
-  const business_org_type = bizPlan?.business_org_type;
-  const business_name = bizPlan?.business_name;
-  const business_status = bizPlan?.business_status;
-  const business_category = bizPlan?.business_category;
-  const business_type_name = bizPlan?.business_type_name;
-  const mainGroup = headerBizPlan?.mainGroup;
+  const {
+    business_org_type,
+    business_name,
+    business_status,
+    business_category,
+    support_category,
+    business_type_name,
+    mainGroup,
+  } = useBasicInfo(props.business_cd);
 
   const businessCategoryProperty = businessCategoryArray;
-
-  let businessStatusText = "";
-  if (typeof business_status === "number" && business_status === 0) {
-    businessStatusText = "実施中";
-  } else if (typeof business_status === "boolean" && business_status) {
-    businessStatusText = "実施中";
-  } else {
-    businessStatusText = "終了";
-  }
 
   let mainGroupName = "";
   if (mainGroup) {
@@ -77,33 +67,15 @@ const DetailHeader = (props: {
     businessCategoryLabel = "";
   }
 
-  let businessTypeNameLabel = "";
-  if (business_type_name) {
-    if (typeof business_type_name === "string") {
-      businessTypeNameLabel = business_type_name;
-    } else if (
-      typeof business_type_name === "object" &&
-      business_type_name.label
-    ) {
-      businessTypeNameLabel = business_type_name.label;
-    }
-  } else {
-    businessTypeNameLabel = "";
-  }
+  let supportCategoryLabel: string | undefined = "";
+  supportCategoryLabel = supportCategoryArray.find(
+    (scp) => support_category && support_category === scp.code.toString()
+  )?.label;
 
-  const splitBusinessTypeName = businessTypeNameLabel.match(/(\d+年度)(.+)/);
+  const splitBusinessTypeName =
+    business_type_name && business_type_name.match(/(\d+年度)(.+)/);
   const businessTypeNameYear =
     splitBusinessTypeName && splitBusinessTypeName[1];
-  const businessTypeNameCategory =
-    (splitBusinessTypeName &&
-      splitBusinessTypeName.length >= 2 &&
-      splitBusinessTypeName[2].includes("通常枠") &&
-      "通常枠") ||
-    (splitBusinessTypeName &&
-      splitBusinessTypeName.length >= 2 &&
-      (splitBusinessTypeName[2].includes("コロナ枠") ||
-        splitBusinessTypeName[2].includes("緊急枠")) &&
-      "緊急支援枠");
 
   useEffect(() => {
     props.setBusinessTypeNameYear &&
@@ -114,11 +86,11 @@ const DetailHeader = (props: {
   return (
     <div>
       <div css={pankuzu}>
-        <Link to="/" tw="break-keep">
+        <Link to="/" tw="whitespace-nowrap">
           ホーム
         </Link>
         <FontAwesomeIcon icon={faAngleRight} />
-        <Link to="/result" tw="break-keep">
+        <Link to="/result" tw="whitespace-nowrap">
           検索結果
         </Link>
         <FontAwesomeIcon icon={faAngleRight} />
@@ -126,34 +98,20 @@ const DetailHeader = (props: {
       </div>
       <div tw="w-full p-2.5 flex gap-2 mt-3.5 lg:(py-0)">
         <div tw="w-[100px] h-[100px] shrink-0 lg:(w-[23%] h-auto)">
-          {business_org_type && business_org_type === "F" ? (
-            <StaticImage
-              src="../../images/thumbnail_shikinbunpai.png"
-              alt="サムネイル"
-              tw="w-full"
-            />
-          ) : (
-            <StaticImage
-              src="../../images/thumbnail_jikkou.png"
-              alt="サムネイル"
-              tw="w-full"
-            />
-          )}
+          <BusinessOrgTypeThumbnail
+            business_org_type={business_org_type || ""}
+            business_type_name={business_type_name || ""}
+          />
         </div>
         <div tw="">
           <div tw="flex gap-[5px]">
-            <p
-              css={[
-                resultCardTip,
-                businessTypeNameCategory === "通常枠"
-                  ? tw`border-blue-button text-blue-button bg-blue-base`
-                  : tw`border-red-base text-red-base bg-red-pale`,
-              ]}
-            >
-              {businessTypeNameCategory}
-            </p>
+            {splitBusinessTypeName && (
+              <BusinessTypeNameCategoryIcon
+                businessTypeName={splitBusinessTypeName}
+              />
+            )}
             <p css={resultCardTip}>{businessTypeNameYear}</p>
-            <p css={resultCardTip}>{businessStatusText}</p>
+            <p css={resultCardTip}>{business_status}</p>
             {mainGroupPrefecture && (
               <p css={resultCardTip}>{mainGroupPrefecture}</p>
             )}
@@ -180,6 +138,16 @@ const DetailHeader = (props: {
                 <p>{businessCategoryLabel}</p>
               </div>
             )}
+            {supportCategoryLabel && (
+              <div css={hCenter} tw="gap-1.5">
+                <StaticImage
+                  src="../../images/note.svg"
+                  alt="ノートアイコン"
+                  tw="w-4 h-4"
+                />
+                <p>{supportCategoryLabel}</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -202,6 +170,16 @@ const DetailHeader = (props: {
               tw="w-4 h-4"
             />
             <p>{businessCategoryLabel}</p>
+          </div>
+        )}
+        {supportCategoryLabel && (
+          <div css={hCenter} tw="gap-1.5">
+            <StaticImage
+              src="../../images/note.svg"
+              alt="ノートアイコン"
+              tw="w-4 h-4"
+            />
+            <p>{supportCategoryLabel}</p>
           </div>
         )}
       </div>

@@ -1,64 +1,61 @@
 import * as Checkbox from "@radix-ui/react-checkbox";
 import React from "react";
 import { useSearchContext } from "../../../../../context/searchContext";
-import { OrganizationTypeCdArray } from "../../../store/filterContents";
+import { checkBox, checkMark } from "../../../../../styles/form";
 import "twin.macro";
-import { checkBox, checkBoxSet, checkMark } from "../../../../../styles/form";
 import { h3, hCenter } from "../../../../../styles/base";
 import tw from "twin.macro";
 
-const BusinessOrgType = (props: { path: string }) => {
-  const { searchState, searchSetState } = useSearchContext();
-  const { orgTypeSelections } = searchState;
-  const { setOrgTypeSelections } = searchSetState;
+const supportCategoryLabel = [
+  { label: "資金支援の担い手育成", code: 1, subCode: 0 },
+  {
+    label: "民間公益活動の担い手育成",
+    code: 2,
+    subCode: 0,
+  },
+];
 
-  const handleCheckbox = ({
-    code,
-    activitySupport,
-  }: {
-    code: string;
-    activitySupport: boolean;
-  }) => {
+export const BusinessCategoryActivitySupport = (props: { path: string }) => {
+  const { searchState, searchSetState } = useSearchContext();
+  const { business_category_activitySupport } = searchState;
+  const { setBusinessCategoryActivitySupport } = searchSetState;
+
+  const handleCheckbox = (code: number, subCode: number) => {
     if (
-      orgTypeSelections.some(
-        (ot) => ot.code === code && ot.activitySupport === activitySupport
+      business_category_activitySupport.some(
+        (bc) => bc.code === code && bc.subCode === subCode
       )
     ) {
-      setOrgTypeSelections(
-        orgTypeSelections.filter(
-          (ot) => ot.code !== code || ot.activitySupport !== activitySupport
+      setBusinessCategoryActivitySupport(
+        business_category_activitySupport.filter(
+          (bc) => bc.code !== code || bc.subCode !== subCode
         )
       );
     } else {
-      setOrgTypeSelections([...orgTypeSelections, { code, activitySupport }]);
+      setBusinessCategoryActivitySupport([
+        ...business_category_activitySupport,
+        { code: code, subCode: subCode },
+      ]);
     }
   };
 
   return (
     <div>
-      <h3 css={h3}>団体種別</h3>
+      <h3 css={h3}>支援対象区分</h3>
       <div
         tw="flex gap-y-2.5 flex-wrap px-3.5 py-2.5"
         css={props.path.includes("search") ? tw`gap-x-14` : tw`gap-x-3`}
       >
-        {OrganizationTypeCdArray.map((checkbox, index) => (
-          <div
-            key={checkbox.code + index.toString()}
-            css={[hCenter, checkBoxSet]}
-          >
+        {supportCategoryLabel.map((checkbox) => (
+          <div key={checkbox.label} css={hCenter} tw="w-[252px] gap-2">
             <Checkbox.Root
               id={checkbox.label}
               onCheckedChange={() =>
-                handleCheckbox({
-                  code: checkbox.code,
-                  activitySupport: checkbox.activitySupport,
-                })
+                handleCheckbox(checkbox.code, checkbox.subCode)
               }
               css={checkBox}
-              checked={orgTypeSelections.some(
-                (ot) =>
-                  ot.code === checkbox.code &&
-                  ot.activitySupport === checkbox.activitySupport
+              checked={business_category_activitySupport.some(
+                (bc) => bc.code === checkbox.code
               )}
             >
               <Checkbox.Indicator tw="flex justify-center">
@@ -84,5 +81,3 @@ const BusinessOrgType = (props: { path: string }) => {
     </div>
   );
 };
-
-export default BusinessOrgType;

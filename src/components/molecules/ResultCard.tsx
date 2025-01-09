@@ -1,10 +1,14 @@
 import { Link } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
-import React, { useState } from "react";
+import React from "react";
 import "twin.macro";
 import tw from "twin.macro";
 import { hCenter } from "../../styles/base";
-import { businessCategoryArray } from "../../features/search/store/filterContents";
+import {
+  businessCategoryArray,
+  supportCategoryArray,
+} from "../../features/search/store/filterContents";
+import { BusinessOrgTypeThumbnail } from "../atoms/BusinessOrgTypeThumbnail";
 import { BusinessTypeNameCategoryIcon } from "../atoms/BusinessTypeNameCategoryIcon";
 
 const resultCardTip = tw`text-xs py-1 px-1.5 border border-gray-border`;
@@ -19,8 +23,8 @@ const ResultCard = (props: any) => {
     business_status,
     business_category,
     business_type_name,
+    support_category,
   } = bizPlan;
-  const businessCategoryProperty = businessCategoryArray;
 
   let businessStatusText = "";
   if (typeof business_status === "number" && business_status === 0) {
@@ -40,7 +44,7 @@ const ResultCard = (props: any) => {
   let mainGroupName = "";
   if (mainGroup) {
     mainGroupName = mainGroup.node.organization_name;
-  } else if (mainGroupIndirect) {
+  } else if (mainGroupIndirect && mainGroupIndirect.groupData) {
     mainGroupName = mainGroupIndirect.groupData.organization_name;
   } else {
     mainGroupName = "";
@@ -49,7 +53,7 @@ const ResultCard = (props: any) => {
   let mainGroupPrefecture = "";
   if (mainGroup) {
     mainGroupPrefecture = mainGroup.node.prefectures;
-  } else if (mainGroupIndirect) {
+  } else if (mainGroupIndirect && mainGroupIndirect.groupData) {
     mainGroupPrefecture = mainGroupIndirect.groupData.prefectures;
   } else {
     mainGroupPrefecture = "";
@@ -58,30 +62,25 @@ const ResultCard = (props: any) => {
   let businessCategoryLabel: string | undefined = "";
   if (business_category && business_category.code === 1) {
     businessCategoryLabel = business_category.subCode
-      ? businessCategoryProperty.find(
+      ? businessCategoryArray.find(
           (bcp) => business_category.subCode === bcp.subCode
         )?.label
       : "草の根活動支援事業";
   } else {
-    businessCategoryLabel = businessCategoryProperty.find(
+    businessCategoryLabel = businessCategoryArray.find(
       (bcp) => business_category && business_category.code === bcp.code
     )?.label;
   }
+
+  let supportCategoryLabel: string | undefined = "";
+  supportCategoryLabel = supportCategoryArray.find(
+    (scp) => support_category && support_category === scp.code.toString()
+  )?.label;
 
   const businessTypeNameLabel = business_type_name.label || business_type_name;
   const splitBusinessTypeName = businessTypeNameLabel.match(/(\d+年度)(.+)/);
   const businessTypeNameYear =
     splitBusinessTypeName && splitBusinessTypeName[1];
-
-  const businessTypeNameCategory =
-    (splitBusinessTypeName &&
-      splitBusinessTypeName.length >= 2 &&
-      splitBusinessTypeName[2].includes("通常枠") &&
-      "通常枠") ||
-    (splitBusinessTypeName &&
-      splitBusinessTypeName.length >= 2 &&
-      splitBusinessTypeName[2].includes("コロナ枠") &&
-      "緊急支援枠");
 
   return (
     <Link
@@ -90,19 +89,10 @@ const ResultCard = (props: any) => {
     >
       <div tw="flex gap-2 ">
         <div tw="w-[100px] h-[100px] shrink-0 lg:(w-[24%] h-auto)">
-          {business_org_type === "F" ? (
-            <StaticImage
-              src="../../images/thumbnail_shikinbunpai.png"
-              alt="サムネイル"
-              tw="w-full"
-            />
-          ) : (
-            <StaticImage
-              src="../../images/thumbnail_jikkou.png"
-              alt="サムネイル"
-              tw="w-full"
-            />
-          )}
+          <BusinessOrgTypeThumbnail
+            business_org_type={business_org_type}
+            business_type_name={business_type_name.label || business_type_name}
+          />
         </div>
         <div tw="">
           <div tw="flex gap-[5px]">
@@ -137,6 +127,16 @@ const ResultCard = (props: any) => {
                 <p>{businessCategoryLabel}</p>
               </div>
             )}
+            {supportCategoryLabel && (
+              <div css={hCenter} tw="gap-1.5 text-sm">
+                <StaticImage
+                  src="../../images/note.svg"
+                  alt="ノートアイコン"
+                  tw="w-4 h-4"
+                />
+                <p>{supportCategoryLabel}</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -159,6 +159,16 @@ const ResultCard = (props: any) => {
               tw="w-4 h-4"
             />
             <p>{businessCategoryLabel}</p>
+          </div>
+        )}
+        {supportCategoryLabel && (
+          <div css={hCenter} tw="gap-1.5 text-sm">
+            <StaticImage
+              src="../../images/note.svg"
+              alt="ノートアイコン"
+              tw="w-4 h-4"
+            />
+            <p>{supportCategoryLabel}</p>
           </div>
         )}
       </div>
