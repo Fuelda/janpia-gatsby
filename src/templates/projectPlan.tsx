@@ -1484,10 +1484,14 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                                     <p css={th}>初期値/初期状態</p>
                                     <p css={td}>{item.node.purpose_initial}</p>
                                   </div>
-                                  <div css={tr} tw="hidden lg:block">
-                                    <p css={th}>中間評価時の値/状態</p>
-                                    <p css={td}>{item.node.purpose_mid_eval}</p>
-                                  </div>
+                                  {item.node.purpose_mid_eval && (
+                                    <div css={tr} tw="hidden lg:block">
+                                      <p css={th}>中間評価時の値/状態</p>
+                                      <p css={td}>
+                                        {item.node.purpose_mid_eval}
+                                      </p>
+                                    </div>
+                                  )}
                                   <div css={tr} tw="hidden lg:block">
                                     <p css={th}>
                                       目標値/目標状態（目標達成時期）
