@@ -262,6 +262,55 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
                         {displayGroup.node.etc_web_url1}
                       </a>
                     </p>
+                    {displayGroup.node.etc_web_url2 && (
+                      <p css={td}>
+                        <a
+                          href={displayGroup.node.etc_web_url2}
+                          target="_blank"
+                          css={link}
+                        >
+                          {displayGroup.node.etc_web_url2}
+                        </a>
+                      </p>
+                    )}
+                    {displayGroup.node.etc_web_url3 && (
+                      <p css={td}>
+                        <a
+                          href={displayGroup.node.etc_web_url3}
+                          target="_blank"
+                          css={link}
+                        >
+                          {displayGroup.node.etc_web_url3}
+                        </a>
+                      </p>
+                    )}
+                    {displayGroup.node.etc_web_url4 && (
+                      <p css={td}>
+                        <a
+                          href={displayGroup.node.etc_web_url4}
+                          target="_blank"
+                          css={link}
+                        >
+                          {displayGroup.node.etc_web_url4}
+                        </a>
+                      </p>
+                    )}
+                  </div>
+                )}
+                {displayGroup.node.foundation_date && (
+                  <div>
+                    <p css={th}>設立年月日</p>
+                    <p css={td}>
+                      {formatDate(displayGroup.node.foundation_date)}
+                    </p>
+                  </div>
+                )}
+                {displayGroup.node.legal_personality_d && (
+                  <div>
+                    <p css={th}>法人格取得年月日</p>
+                    <p css={td}>
+                      {formatDate(displayGroup.node.legal_personality_d)}
+                    </p>
                   </div>
                 )}
               </div>
@@ -399,7 +448,7 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
                       </td>
                     </tr>
                   )}
-                  {displayGroup.node.vision && (
+                  {/* {displayGroup.node.vision && (
                     <tr css={tr}>
                       <th css={th}>団体の目的</th>
                       <td css={td}>
@@ -434,7 +483,7 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
                         )}
                       </td>
                     </tr>
-                  )}
+                  )} */}
                 </tbody>
               </table>
             </DetailItemWrapper>
