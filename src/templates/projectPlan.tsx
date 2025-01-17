@@ -1532,7 +1532,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                         </DetailItemWrapper>
                       </div>
                     )}
-                    <div id="six-secondItem">
+                    <div id="six-secondItem" tw="flex flex-col gap-4">
                       {shortOutcomeFinance.length !== 0 && (
                         <ShortOutcome
                           shortOutcome={shortOutcomeFinance}
@@ -1564,7 +1564,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                         />
                       )}
                     </div>
-                    <div id="six-thirdItem">
+                    <div id="six-thirdItem" tw="flex flex-col gap-4">
                       {outputFinance.length !== 0 && (
                         <Output
                           output={outputFinance}
@@ -4323,24 +4323,26 @@ const Activity = ({ activity, name }: { activity: any; name: string }) => {
                 </div>
               </td>
             </tr>
-            <tr tw="hidden lg:table-row">
-              <td>
-                <div>
-                  <p css={th}>時期</p>
-                  <p css={td}>
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html:
-                          item.node.activity_season.data.childMarkdownRemark.html.replace(
-                            /\n/g,
-                            "<br />"
-                          ),
-                      }}
-                    />
-                  </p>
-                </div>
-              </td>
-            </tr>
+            {item.node.activity_season.data.childMarkdownRemark.html !== "" && (
+              <tr tw="hidden lg:table-row">
+                <td>
+                  <div>
+                    <p css={th}>時期</p>
+                    <p css={td}>
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html:
+                            item.node.activity_season.data.childMarkdownRemark.html.replace(
+                              /\n/g,
+                              "<br />"
+                            ),
+                        }}
+                      />
+                    </p>
+                  </div>
+                </td>
+              </tr>
+            )}
 
             <tr css={tr} tw="lg:hidden">
               <th css={th2Sub} rowSpan={2}>
@@ -4359,20 +4361,22 @@ const Activity = ({ activity, name }: { activity: any; name: string }) => {
                 />
               </td>
             </tr>
-            <tr css={tr} tw="lg:hidden">
-              <th css={th}>時期</th>
-              <td css={td}>
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html:
-                      item.node.activity_season.data.childMarkdownRemark.html.replace(
-                        /\n/g,
-                        "<br />"
-                      ),
-                  }}
-                />
-              </td>
-            </tr>
+            {item.node.activity_season.data.childMarkdownRemark.html !== "" && (
+              <tr css={tr} tw="lg:hidden">
+                <th css={th}>時期</th>
+                <td css={td}>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html:
+                        item.node.activity_season.data.childMarkdownRemark.html.replace(
+                          /\n/g,
+                          "<br />"
+                        ),
+                    }}
+                  />
+                </td>
+              </tr>
+            )}
           </tbody>
         ))}
       </table>
