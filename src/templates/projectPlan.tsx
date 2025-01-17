@@ -1578,7 +1578,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                         />
                       )}
                       {outputAdo.length !== 0 && (
-                        <Output output={outputAdo} name="アウトプット (ADO)" />
+                        <Output output={outputAdo} name="アウトプット" />
                       )}
                       {outputActivitySupport.length !== 0 && (
                         <Output
@@ -2259,7 +2259,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                     />
                   )}
                   {activityAdo.length !== 0 && (
-                    <Activity activity={activityAdo} name="活動 (ADO)" />
+                    <Activity activity={activityAdo} name="活動" />
                   )}
                   {activityActivitySupport.length !== 0 && (
                     <Activity activity={activityActivitySupport} name="活動" />
