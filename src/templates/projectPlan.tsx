@@ -215,7 +215,11 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                       anchor={`/result/${slug}/project-plan/#seventhItem`}
                     />
                   )}
-                  {strapiBizPlan.total_business_cost && (
+                  {(strapiBizPlan.total_business_cost ||
+                    strapiBizPlan.human_resources.data.childMarkdownRemark
+                      .html !== "" ||
+                    strapiBizPlan.equipment.data.childMarkdownRemark.html !==
+                      "") && (
                     <DetailAnchor
                       title="インプット"
                       anchor={`/result/${slug}/project-plan/#eighthItem`}
@@ -2266,149 +2270,149 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                   )}
                 </div>
               )}
-              {!isSupportTarget && (
-                <>
-                  {strapiBizPlan.total_business_cost && (
-                    <div id="eighthItem">
-                      <DetailItemWrapper itemName="インプット">
-                        <div tw="hidden lg:block">
-                          {strapiBizPlan.total_business_cost && (
-                            <div>
-                              <p css={th}>総事業費</p>
-                              <p css={td}>
-                                {strapiBizPlan.total_business_cost == null
-                                  ? ""
-                                  : `${strapiBizPlan.total_business_cost.toLocaleString()}円`}
-                              </p>
-                            </div>
-                          )}
-                          {strapiBizPlan.human_resources &&
-                            strapiBizPlan.human_resources.data
-                              .childMarkdownRemark.html !== "" && (
-                              <div>
-                                <p css={th}>人材</p>
-                                <p css={td}>
-                                  <div
-                                    dangerouslySetInnerHTML={{
-                                      __html:
-                                        strapiBizPlan.human_resources.data.childMarkdownRemark.html.replace(
-                                          /\n/g,
-                                          "<br />"
-                                        ),
-                                    }}
-                                  />
-                                </p>
-                              </div>
-                            )}
-                          {strapiBizPlan.equipment &&
-                            strapiBizPlan.equipment.data.childMarkdownRemark
-                              .html !== "" && (
-                              <div>
-                                <p css={th}>資機材</p>
-                                <p css={td}>
-                                  <div
-                                    dangerouslySetInnerHTML={{
-                                      __html:
-                                        strapiBizPlan.equipment.data.childMarkdownRemark.html.replace(
-                                          /\n/g,
-                                          "<br />"
-                                        ),
-                                    }}
-                                  />
-                                </p>
-                              </div>
-                            )}
-                          {strapiBizPlan.etc_resources &&
-                            strapiBizPlan.etc_resources.data.childMarkdownRemark
-                              .html !== "" && (
-                              <div>
-                                <p css={th}>その他</p>
-                                <p css={td}>
-                                  <div
-                                    dangerouslySetInnerHTML={{
-                                      __html:
-                                        strapiBizPlan.etc_resources.data.childMarkdownRemark.html.replace(
-                                          /\n/g,
-                                          "<br />"
-                                        ),
-                                    }}
-                                  />
-                                </p>
-                              </div>
-                            )}
+              {(strapiBizPlan.total_business_cost ||
+                strapiBizPlan.human_resources.data.childMarkdownRemark.html !==
+                  "" ||
+                strapiBizPlan.equipment.data.childMarkdownRemark.html !==
+                  "") && (
+                <div id="eighthItem">
+                  <DetailItemWrapper itemName="インプット">
+                    <div tw="hidden lg:block">
+                      {strapiBizPlan.total_business_cost && (
+                        <div>
+                          <p css={th}>総事業費</p>
+                          <p css={td}>
+                            {strapiBizPlan.total_business_cost == null
+                              ? ""
+                              : `${strapiBizPlan.total_business_cost.toLocaleString()}円`}
+                          </p>
                         </div>
-                        <table css={table} tw="lg:hidden">
-                          <tbody>
-                            {strapiBizPlan.total_business_cost && (
-                              <tr css={tr}>
-                                <th css={th}>総事業費</th>
-                                <td css={td}>
-                                  {strapiBizPlan.total_business_cost == null
-                                    ? ""
-                                    : `${strapiBizPlan.total_business_cost.toLocaleString()}円`}
-                                </td>
-                              </tr>
-                            )}
-                            {strapiBizPlan.human_resources &&
-                              strapiBizPlan.human_resources.data
-                                .childMarkdownRemark.html !== "" && (
-                                <tr css={tr}>
-                                  <th css={th}>人材</th>
-                                  <td css={td}>
-                                    <div
-                                      dangerouslySetInnerHTML={{
-                                        __html:
-                                          strapiBizPlan.human_resources.data.childMarkdownRemark.html.replace(
-                                            /\n/g,
-                                            "<br />"
-                                          ),
-                                      }}
-                                    />
-                                  </td>
-                                </tr>
-                              )}
-                            {strapiBizPlan.equipment &&
-                              strapiBizPlan.equipment.data.childMarkdownRemark
-                                .html !== "" && (
-                                <tr css={tr}>
-                                  <th css={th}>資機材</th>
-                                  <td css={td}>
-                                    <div
-                                      dangerouslySetInnerHTML={{
-                                        __html:
-                                          strapiBizPlan.equipment.data.childMarkdownRemark.html.replace(
-                                            /\n/g,
-                                            "<br />"
-                                          ),
-                                      }}
-                                    />
-                                  </td>
-                                </tr>
-                              )}
-                            {strapiBizPlan.etc_resources &&
-                              strapiBizPlan.etc_resources.data
-                                .childMarkdownRemark.html !== "" && (
-                                <tr css={tr}>
-                                  <th css={th}>その他</th>
-                                  <td css={td}>
-                                    <div
-                                      dangerouslySetInnerHTML={{
-                                        __html:
-                                          strapiBizPlan.etc_resources.data.childMarkdownRemark.html.replace(
-                                            /\n/g,
-                                            "<br />"
-                                          ),
-                                      }}
-                                    />
-                                  </td>
-                                </tr>
-                              )}
-                          </tbody>
-                        </table>
-                      </DetailItemWrapper>
+                      )}
+                      {strapiBizPlan.human_resources &&
+                        strapiBizPlan.human_resources.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div>
+                            <p css={th}>人材</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.human_resources.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.equipment &&
+                        strapiBizPlan.equipment.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div>
+                            <p css={th}>資機材</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.equipment.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
+                      {strapiBizPlan.etc_resources &&
+                        strapiBizPlan.etc_resources.data.childMarkdownRemark
+                          .html !== "" && (
+                          <div>
+                            <p css={th}>その他</p>
+                            <p css={td}>
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    strapiBizPlan.etc_resources.data.childMarkdownRemark.html.replace(
+                                      /\n/g,
+                                      "<br />"
+                                    ),
+                                }}
+                              />
+                            </p>
+                          </div>
+                        )}
                     </div>
-                  )}
-                </>
+                    <table css={table} tw="lg:hidden">
+                      <tbody>
+                        {strapiBizPlan.total_business_cost && (
+                          <tr css={tr}>
+                            <th css={th}>総事業費</th>
+                            <td css={td}>
+                              {strapiBizPlan.total_business_cost == null
+                                ? ""
+                                : `${strapiBizPlan.total_business_cost.toLocaleString()}円`}
+                            </td>
+                          </tr>
+                        )}
+                        {strapiBizPlan.human_resources &&
+                          strapiBizPlan.human_resources.data.childMarkdownRemark
+                            .html !== "" && (
+                            <tr css={tr}>
+                              <th css={th}>人材</th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.human_resources.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                        {strapiBizPlan.equipment &&
+                          strapiBizPlan.equipment.data.childMarkdownRemark
+                            .html !== "" && (
+                            <tr css={tr}>
+                              <th css={th}>資機材</th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.equipment.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                        {strapiBizPlan.etc_resources &&
+                          strapiBizPlan.etc_resources.data.childMarkdownRemark
+                            .html !== "" && (
+                            <tr css={tr}>
+                              <th css={th}>その他</th>
+                              <td css={td}>
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      strapiBizPlan.etc_resources.data.childMarkdownRemark.html.replace(
+                                        /\n/g,
+                                        "<br />"
+                                      ),
+                                  }}
+                                />
+                              </td>
+                            </tr>
+                          )}
+                      </tbody>
+                    </table>
+                  </DetailItemWrapper>
+                </div>
               )}
               {!isActivitySupport && (
                 <>
