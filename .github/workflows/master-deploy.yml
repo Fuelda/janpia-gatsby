@@ -9,7 +9,6 @@ on:
   #     - webhook
   schedule:
     - cron: "0 8 * * *"
-    - timezone: "Asia/Tokyo"
 
 jobs:
   build-and-deploy:
