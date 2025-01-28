@@ -180,7 +180,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     createPage({
       path: `/result/${business_cd}/project-plan`,
       component: path.resolve("./src/templates/projectPlan.tsx"),
-      context: { slug: business_cd },
+      context: { slug: business_cd, insert_id: insert_id_bizplan },
     });
     createPage({
       path: `/result/${business_cd}/evaluation-plan`,
