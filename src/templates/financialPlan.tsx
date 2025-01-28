@@ -317,11 +317,11 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                         financePlan.po_sum_sum.toLocaleString()}
                     </td>
                     <td>
-                      {financePlan.po_c_sum !== null &&
+                      {financePlan.po_c_sum &&
                         financePlan.po_c_sum.toLocaleString()}
                     </td>
                     <td>
-                      {financePlan.po_sum !== null &&
+                      {financePlan.po_sum &&
                         financePlan.po_sum.toLocaleString()}
                     </td>
                   </tr>
