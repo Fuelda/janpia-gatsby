@@ -8,6 +8,7 @@ const nodeQuery = {
           biz_cd_fund_distr
           fund_distr_grp_cd
           executive_grp_cd
+          insert_id
         }
       }
     }

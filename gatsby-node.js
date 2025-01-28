@@ -35,6 +35,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       bizPlanItem.node.business_org_type === "F"
         ? bizPlanItem.node.fund_distr_grp_cd
         : bizPlanItem.node.executive_grp_cd;
+    const insert_id_bizplan = bizPlanItem.node.insert_id;
 
     const bizPlanGroupArray = bizPlanGroup.filter(
       (item) => item.node.business_cd === business_cd
@@ -76,7 +77,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     createPage({
       path: `/result/${business_cd}/project-plan`,
       component: path.resolve("./src/templates/projectPlan.tsx"),
-      context: { slug: business_cd },
+      context: { slug: business_cd, insert_id: insert_id_bizplan },
     });
     createPage({
       path: `/result/${business_cd}/evaluation-plan`,

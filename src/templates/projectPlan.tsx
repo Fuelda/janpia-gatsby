@@ -37,6 +37,7 @@ import {
   isEmergencySupportGroup,
   isSpecificBusinessTypeNameYear,
 } from "../util/businessTypeNameChecker";
+import AttachedFileLink from "../components/atoms/AttachedFileLink";
 
 const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
@@ -45,6 +46,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
     allStrapiBizPlanSub,
     strapiBizPlanManualFDO,
     strapiBizPlanManualADO,
+    allStrapiAttachedFile,
   } = data;
   const [updatedAt, setUpdatedAt] = useState("");
   const { business_type_name, business_org_type } = useBasicInfo(slug);
@@ -163,6 +165,11 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
           .filter((bps: any) => bps.node.info_type === "34")
           .sort((a: any, b: any) => a.node.row_no - b.node.row_no)
       : [];
+
+  // 添付ファイル
+  const keikaushoFile = allStrapiAttachedFile.edges.filter(
+    (af: any) => af.node.item_id === "activity_plan"
+  );
 
   useEffect(() => {
     strapiBizPlan && setUpdatedAt(strapiBizPlan.updatedAt);
@@ -3597,6 +3604,21 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                   </DetailItemWrapper>
                 </div>
               )}
+              {keikaushoFile.length !== 0 && (
+                <div id="">
+                  <DetailItemWrapper itemName="支援対象活動計画書">
+                    <div tw="flex gap-[5px] flex-wrap">
+                      {keikaushoFile.map((tf: any) => (
+                        <AttachedFileLink
+                          filePath={tf.node.data.url}
+                          fileName={tf.node.file_name}
+                          key={tf.node.data.url}
+                        />
+                      ))}
+                    </div>
+                  </DetailItemWrapper>
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -4389,7 +4411,7 @@ const Activity = ({ activity, name }: { activity: any; name: string }) => {
 };
 
 export const pageQuery = graphql`
-  query MyQuery($slug: String!) {
+  query MyQuery($slug: String!, $insert_id: String!) {
     strapiBizPlanManualFDO: strapiBizPlanManual(
       biz_cd_fund_distr: { eq: $slug }
       business_org_type: { eq: "F" }
@@ -5143,6 +5165,17 @@ export const pageQuery = graphql`
           purpose_initial
           purpose_mid_eval
           purpose_aft_eval
+        }
+      }
+    }
+    allStrapiAttachedFile(filter: { insert_id: { eq: $insert_id } }) {
+      edges {
+        node {
+          item_id
+          file_name
+          data {
+            url
+          }
         }
       }
     }
