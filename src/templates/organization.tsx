@@ -90,10 +90,14 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
   );
 
   const teikanFile = allStrapiAttachedFile.edges.filter(
-    (af: any) => af.node.item_id === "articles_of_incorporation"
+    (af: any) =>
+      af.node.item_id === "articles_of_incorporation" &&
+      af.node.insert_id === displayGroup.node.insert_id
   );
   const regulationFile = allStrapiAttachedFile.edges.filter(
-    (af: any) => af.node.item_id === "regulations"
+    (af: any) =>
+      af.node.item_id === "regulations" &&
+      af.node.insert_id === displayGroup.node.insert_id
   );
 
   const etcWebUrls = [];
@@ -892,6 +896,7 @@ export const pageQuery = graphql`
       edges {
         node {
           item_id
+          insert_id
           file_name
           data {
             url
