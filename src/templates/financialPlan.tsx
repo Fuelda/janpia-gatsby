@@ -134,7 +134,7 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                       financePlan.bis_manage_sum.toLocaleString()}
                   </td>
                 </tr>
-                {financePlan && financePlan.po_sum_sum && (
+                {financePlan && financePlan.po_sum_sum ? (
                   <tr>
                     <th colSpan={2} className="table__financialPlan--tbody-02">
                       プログラムオフィサー関連経費 (円)
@@ -144,6 +144,8 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                         financePlan.po_sum_sum.toLocaleString()}
                     </td>
                   </tr>
+                ) : (
+                  <></>
                 )}
                 {financePlan && financePlan.eval_sum_sum !== null ? (
                   <tr>
@@ -305,7 +307,7 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                       financePlan.bis_b_manage_sum.toLocaleString()}
                   </td>
                 </tr>
-                {financePlan && financePlan.po_sum_sum && (
+                {financePlan && financePlan.po_sum_sum ? (
                   <tr>
                     <th colSpan={2} className="table__financialPlan--tbody-02">
                       プログラムオフィサー関連経費 (円)
@@ -315,15 +317,16 @@ const FinancialPlan: React.FC<any> = ({ data, pageContext }) => {
                         financePlan.po_sum_sum.toLocaleString()}
                     </td>
                     <td>
-                      {financePlan.po_c_sum &&
+                      {financePlan.po_c_sum !== null &&
                         financePlan.po_c_sum.toLocaleString()}
                     </td>
                     <td>
-                      {financePlan.po_sum
-                        ? financePlan.po_sum.toLocaleString()
-                        : 0}
+                      {financePlan.po_sum !== null &&
+                        financePlan.po_sum.toLocaleString()}
                     </td>
                   </tr>
+                ) : (
+                  <></>
                 )}
                 {financePlan && financePlan.eval_sum_sum !== null ? (
                   <tr>
