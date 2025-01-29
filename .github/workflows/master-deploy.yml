@@ -1,5 +1,9 @@
 name: Trigger Test (No Build/Deploy)
 
+concurrency: 
+  group: "netlify-deploy"
+  cancel-in-progress: true
+
 on:
   repository_dispatch:
     types: [webhook]
