@@ -1,21 +1,28 @@
 name: Trigger Test (No Build/Deploy)
 
 on:
-  # StrapiからのWebhookトリガーを想定（repository_dispatchを使用）
   repository_dispatch:
     types: [webhook]
 
 jobs:
-  trigger-check:
+  debug-and-validate:
     runs-on: ubuntu-latest
     steps:
-      - name: Check Webhook Trigger
+      - name: Debug Event Information
         run: |
-          echo "✅ Webhook Trigger Received!"
-          echo "Event Type: ${{ github.event.action }}"
-          echo "Payload: ${{ toJson(github.event.client_payload) }}"
-
-      - name: Dummy Step for Logging
-        run: |
+          echo "=== Event Details ==="
+          echo "Event Name: ${{ github.event_name }}"
           echo "Trigger Time: ${{ github.event.timestamp }}"
+          echo "Action Type: ${{ github.event.action }}"
+          echo "Repository: ${{ github.repository }}"
+          
+      - name: Debug Webhook Payload
+        run: |
+          echo "=== Webhook Payload ==="
           echo "Sender: ${{ github.event.sender.login }}"
+          echo "Full Event: ${{ toJson(github.event) }}"
+          echo "Client Payload: ${{ toJson(github.event.client_payload) }}"
+
+      - name: Execution Timestamp
+        run: |
+          echo "Current Time: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
