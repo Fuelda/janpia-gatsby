@@ -1,7 +1,9 @@
+// 活動支援枠か否かを判断。
 export const isActivitySupportGroup = (business_type_name: string): boolean => {
   return business_type_name.includes("活動支援");
 };
 
+// 緊急支援枠か否かを判断。
 export const isEmergencySupportGroup = (
   business_type_name: string
 ): boolean => {
@@ -10,6 +12,7 @@ export const isEmergencySupportGroup = (
   );
 };
 
+// 緊急支援枠のラベルに集約する。
 export const convertBusinessTypeNameLabel = (label: string) => {
   if (label.includes("コロナ枠")) {
     return label.replace("コロナ枠", "緊急支援枠"); // コロナ枠は緊急支援枠に変換
@@ -20,6 +23,7 @@ export const convertBusinessTypeNameLabel = (label: string) => {
   }
 };
 
+// 例えば事業年度が2024年度以降のデータだけに適用する場合に、この関数を用いる。
 export const isSpecificBusinessTypeNameYear = (
   business_type_name: string,
   year: number

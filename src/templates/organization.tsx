@@ -31,6 +31,10 @@ import { formatDate } from "../util/formatDate";
 import { useConsortiumContext } from "../context/consortiumContext";
 import { link } from "../styles/base";
 import Seo from "../components/lauout/Seo";
+import {
+  createBusinessTypeNameLabel,
+  createGroupLabel,
+} from "../util/createLabel";
 
 const Organization: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
@@ -113,6 +117,14 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
   useEffect(() => {
     currentGroupCd === "" && setCurrentGroupCd(mainGroupCd);
   }, [mainGroupCd]);
+
+  const businessTypeNameLabel = createBusinessTypeNameLabel({
+    business_type_name: bizPlan.business_type_name,
+  });
+  const groupLabel = createGroupLabel({
+    business_org_type: bizPlan.business_org_type,
+    business_type_name: businessTypeNameLabel,
+  });
 
   return (
     <Layout>
@@ -199,11 +211,7 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
                   </div>
                 )}
                 <p css={th}>団体種別</p>
-                <p css={td}>
-                  {displayGroup.node.organization_type_cd === "F"
-                    ? "資金分配団体"
-                    : "実行団体"}
-                </p>
+                <p css={td}>{groupLabel}</p>
                 {displayGroup.node.organization_name && (
                   <div>
                     <p css={th}>団体名</p>
@@ -328,11 +336,7 @@ const Organization: React.FC<any> = ({ data, pageContext }) => {
                   )}
                   <tr css={tr}>
                     <th css={th}>団体種別</th>
-                    <td css={td}>
-                      {displayGroup.node.organization_type_cd === "F"
-                        ? "資金分配団体"
-                        : "実行団体"}
-                    </td>
+                    <td css={td}>{groupLabel}</td>
                   </tr>
                   {displayGroup.node.organization_name && (
                     <tr css={tr}>
@@ -828,6 +832,7 @@ export const pageQuery = graphql`
       business_org_type
       executive_grp_cd
       fund_distr_grp_cd
+      business_type_name
     }
     strapiBizPlanManualFDO: strapiBizPlanManual(
       biz_cd_fund_distr: { eq: $slug }
@@ -836,6 +841,9 @@ export const pageQuery = graphql`
       business_org_type
       executive_grp_cd
       fund_distr_grp_cd
+      business_type_name {
+        label
+      }
     }
     strapiBizPlanManualADO: strapiBizPlanManual(
       biz_cd_executive: { eq: $slug }
@@ -844,6 +852,9 @@ export const pageQuery = graphql`
       business_org_type
       executive_grp_cd
       fund_distr_grp_cd
+      business_type_name {
+        label
+      }
     }
     allStrapiBizPlanGroup(filter: { business_cd: { eq: $slug } }) {
       edges {

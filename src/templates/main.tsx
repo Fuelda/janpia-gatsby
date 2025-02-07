@@ -1,5 +1,5 @@
 import { Link, graphql } from "gatsby";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../components/lauout/Layout";
 import DetailHeader from "../components/lauout/DetailHeader";
 import "twin.macro";
@@ -12,12 +12,15 @@ import {
 import DetailAnchor from "../components/atoms/DetailAnchor";
 import { td, th } from "../styles/table";
 import { detailAnchor, detailBody } from "../styles/detailPage";
-
 import { useConsortiumContext } from "../context/consortiumContext";
 import { link } from "../styles/base";
 import Seo from "../components/lauout/Seo";
 import { linkCollectionTypes } from "../util/linkCollectionTypes";
 import { linkCollectionTypesManual } from "../util/linkCollectionTypesManual";
+import {
+  createAnothetGroupLabel,
+  createBusinessTypeNameLabel,
+} from "../util/createLabel";
 
 const Main: React.FC<any> = ({ data, pageContext }) => {
   const { setCurrentGroupCd } = useConsortiumContext();
@@ -39,19 +42,9 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
   const target_area = bizPlan?.target_area;
   const mainGroup = headerBizPlan?.mainGroup;
 
-  let businessTypeNameLabel = "";
-  if (business_type_name) {
-    if (typeof business_type_name === "string") {
-      businessTypeNameLabel = business_type_name;
-    } else if (
-      typeof business_type_name === "object" &&
-      business_type_name.label
-    ) {
-      businessTypeNameLabel = business_type_name.label;
-    }
-  } else {
-    businessTypeNameLabel = "";
-  }
+  const businessTypeNameLabel = createBusinessTypeNameLabel({
+    business_type_name: business_type_name || "",
+  });
 
   const {
     strapiBizPlan,
@@ -82,6 +75,7 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
     );
 
   let businessCategoryLabel: string | undefined = "";
+  console.log(business_category);
   if (business_category) {
     if (business_category.code === 1) {
       businessCategoryLabel = business_category.subCode
@@ -138,6 +132,11 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
     setCurrentGroupCd("");
   }, []);
 
+  const anothetGroupDetailAnchorLabel = createAnothetGroupLabel({
+    business_org_type: business_org_type || "",
+    business_type_name: businessTypeNameLabel,
+  });
+
   return (
     <Layout>
       <Seo title="事業詳細 | 休眠預金活用事業 情報公開サイト" />
@@ -156,7 +155,7 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
           )}
           {linkedAdo.length !== 0 && (
             <DetailAnchor
-              title={business_org_type === "F" ? "実行団体" : "資金分配団体"}
+              title={anothetGroupDetailAnchorLabel}
               anchor={`/result/${slug}/#secondItem`}
             />
           )}
@@ -177,9 +176,7 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
                 {business_type_name && (
                   <div>
                     <p css={th}>採択事業年度</p>
-                    <p css={td}>
-                      {businessTypeNameLabel && businessTypeNameLabel}
-                    </p>
+                    <p css={td}>{businessTypeNameLabel}</p>
                   </div>
                 )}
                 {businessCategoryLabel && (
@@ -236,14 +233,10 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
                       <td css={td}>{mainGroupName}</td>
                     </tr>
                   )}
-                  {businessTypeNameLabel && (
-                    <tr>
-                      <th css={th}>採択事業年度</th>
-                      <td css={td}>
-                        {businessTypeNameLabel && businessTypeNameLabel}
-                      </td>
-                    </tr>
-                  )}
+                  <tr>
+                    <th css={th}>採択事業年度</th>
+                    <td css={td}>{businessTypeNameLabel}</td>
+                  </tr>
                   {businessCategoryLabel && (
                     <tr>
                       <th css={th}>事業分類</th>
@@ -289,12 +282,7 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
                 <div tw="hidden lg:block">
                   {consortiumGroup.map((cg: any) => (
                     <div key={cg.node.organization_cd}>
-                      <p css={th}>
-                        {business_org_type === "F"
-                          ? "資金分配団体"
-                          : "実行団体"}
-                        名
-                      </p>
+                      <p css={th}>{anothetGroupDetailAnchorLabel}名</p>
                       <p css={td}>
                         <Link
                           to="organization"
@@ -313,12 +301,7 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
                   <tbody>
                     {consortiumGroup.map((cg: any) => (
                       <tr key={cg.node.organization_cd}>
-                        <th css={th}>
-                          {business_org_type === "F"
-                            ? "資金分配団体"
-                            : "実行団体"}
-                          名
-                        </th>
+                        <th css={th}>{anothetGroupDetailAnchorLabel}名</th>
                         <td css={td}>
                           <Link
                             to="organization"
@@ -340,21 +323,12 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
 
           <div id="secondItem">
             {linkedAdo.length !== 0 && (
-              <DetailItemWrapper
-                itemName={
-                  business_org_type === "F" ? "実行団体" : "資金分配団体"
-                }
-              >
+              <DetailItemWrapper itemName={anothetGroupDetailAnchorLabel}>
                 <div tw="flex flex-col gap-2.5">
                   {linkedAdo.map((item, i) => (
                     <div key={i}>
                       <div tw="hidden lg:(block)">
-                        <p css={th}>
-                          {business_org_type === "F"
-                            ? "実行団体"
-                            : "資金分配団体"}
-                          名
-                        </p>
+                        <p css={th}>{anothetGroupDetailAnchorLabel}名</p>
                         <p css={td}>
                           {pickupLinkedAdoGroupName(
                             item.node.executive_grp_cd ||
