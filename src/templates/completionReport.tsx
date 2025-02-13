@@ -12,6 +12,7 @@ import DetailAnchor from "../components/atoms/DetailAnchor";
 import { useAttachedFile } from "../hooks/useAttachedFile";
 import AttachedFileLink from "../components/atoms/AttachedFileLink";
 import { formatAndConvertNextDate } from "../util/formatDate";
+import { td, th } from "../styles/table";
 
 const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
@@ -218,6 +219,22 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                         <tr>
                           <Th>実行団体数</Th>
                           <Td colSpan={2}>{strapiCompleteReport.ado_count}</Td>
+                        </tr>
+                      )}
+                      {strapiCompleteReport.jigyoutaisyousya2 && (
+                        <tr>
+                          <Th>事業実績：直接的対象グループ</Th>
+                          <Td colSpan={2}>
+                            {strapiCompleteReport.jigyoutaisyousya2}
+                          </Td>
+                        </tr>
+                      )}
+                      {strapiCompleteReport.jigyoutaisyousya_n2 && (
+                        <tr>
+                          <Th>事業実績：人数</Th>
+                          <Td colSpan={2}>
+                            {strapiCompleteReport.jigyoutaisyousya_n2}
+                          </Td>
                         </tr>
                       )}
                     </table>
@@ -563,6 +580,11 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                               .childMarkdownRemark.html
                           }
                         />
+                        <LshapeTableRow
+                          heading="イベント開催等"
+                          status={strapiCompleteReport.joukyou_9_5}
+                          content={strapiCompleteReport.naiyou_9_5}
+                        />
                       </tbody>
                     </ScrollTable>
                   </div>
@@ -597,6 +619,11 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                             strapiCompleteReport.naiyou_10_1_3.data
                               .childMarkdownRemark.html
                           }
+                        />
+                        <LshapeTableRow
+                          heading="助成金の対象経費に人件費が含まれる場合、当該人件費の水準等を公開をしていますか"
+                          status={strapiCompleteReport.joukyou_10_1_4}
+                          content={strapiCompleteReport.naiyou_10_1_4}
                         />
                       </tbody>
                     </ScrollTable>
@@ -950,6 +977,12 @@ export const pageQuery = graphql`
         }
       }
       updatedAt(formatString: "YYYY/MM/DD")
+      jigyoutaisyousya2
+      jigyoutaisyousya_n2
+      joukyou_10_1_4
+      naiyou_10_1_4
+      joukyou_9_5
+      naiyou_9_5
     }
     allStrapiCompleteReportSub(filter: { business_cd: { eq: $slug } }) {
       edges {
