@@ -23,7 +23,7 @@ export const convertBusinessTypeNameLabel = (label: string) => {
   }
 };
 
-// 例えば事業年度が2024年度以降のデータだけに適用する場合に、この関数を用いる。
+// 例えば事業年度が2024年度"以降"のデータだけに適用する場合に、この関数を用いる。
 export const isSpecificBusinessTypeNameYear = (
   business_type_name: string,
   year: number
@@ -32,5 +32,20 @@ export const isSpecificBusinessTypeNameYear = (
   return (
     splitBusinessTypeName &&
     Number(splitBusinessTypeName[1].slice(0, 4)) >= year
+  );
+};
+
+// 例えば事業年度が"ちょうど"2024年度かつ通常枠のデータだけに適用する場合に、この関数を用いる。
+export const isSpecificBusinessTypeNameYearAndName = (
+  business_type_name: string,
+  year: number,
+  name: string
+) => {
+  const splitBusinessTypeName = business_type_name.match(/(\d+年度)(.+)/);
+  console.log(splitBusinessTypeName);
+  return (
+    splitBusinessTypeName &&
+    Number(splitBusinessTypeName[1].slice(0, 4)) == year &&
+    splitBusinessTypeName[2].includes(name)
   );
 };

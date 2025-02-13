@@ -12,7 +12,7 @@ import DetailAnchor from "../components/atoms/DetailAnchor";
 import { useAttachedFile } from "../hooks/useAttachedFile";
 import AttachedFileLink from "../components/atoms/AttachedFileLink";
 import { formatAndConvertNextDate } from "../util/formatDate";
-import { td, th } from "../styles/table";
+import { isSpecificBusinessTypeNameYearAndName } from "../util/businessTypeNameChecker";
 
 const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
   const { slug } = pageContext;
@@ -59,6 +59,13 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
     strapiCompleteReportManual.data &&
     `https://docs.google.com/viewer?url=${strapiCompleteReportManual.data.url}&embedded=true`;
 
+  console.log(
+    isSpecificBusinessTypeNameYearAndName(
+      strapiCompleteReport.business_type_name,
+      2022,
+      "通常枠"
+    )
+  );
   return (
     <Layout>
       <Seo title="事業完了報告 | 休眠預金活用事業 情報公開サイト" />
@@ -174,7 +181,15 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                         <Td colSpan={2}>{strapiCompleteReport.taisyoutiiki}</Td>
                       </tr>
                       <tr>
-                        <Th>事業対象者</Th>
+                        <Th>
+                          {isSpecificBusinessTypeNameYearAndName(
+                            strapiCompleteReport.business_type_name,
+                            2022,
+                            "通常枠"
+                          )
+                            ? "直接的対象グループ"
+                            : "事業対象者"}
+                        </Th>
                         <Td colSpan={2}>
                           <div
                             dangerouslySetInnerHTML={{
@@ -188,7 +203,15 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                         </Td>
                       </tr>
                       <tr>
-                        <Th>事業対象者人数</Th>
+                        <Th>
+                          {isSpecificBusinessTypeNameYearAndName(
+                            strapiCompleteReport.business_type_name,
+                            2023,
+                            "通常枠"
+                          )
+                            ? "人数"
+                            : "事業対象者人数"}
+                        </Th>
                         <Td colSpan={2}>
                           <div
                             dangerouslySetInnerHTML={{
@@ -685,7 +708,15 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
                         />
                         {strapiCompleteReport.joukyou_10_2_7_saisyuu && (
                           <LshapeTableRow
-                            heading="団体の決算書類に対する会計監査はどのように実施しましたか。本事業の最終年度の状況を選択してください（実施予定の場合含む）"
+                            heading={
+                              isSpecificBusinessTypeNameYearAndName(
+                                strapiCompleteReport.business_type_name,
+                                2022,
+                                "通常枠"
+                              )
+                                ? "本事業の総事業費使用状況に関して監査を実施しましたか。本事業の最終年度の状況を選択してください（実施予定の場合含む）"
+                                : "団体の決算書類に対する会計監査はどのように実施しましたか。本事業の最終年度の状況を選択してください（実施予定の場合含む）"
+                            }
                             status={strapiCompleteReport.joukyou_10_2_7_saisyuu}
                             content={
                               strapiCompleteReport.naiyou_10_2_7_saisyuu.data
