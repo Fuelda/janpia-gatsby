@@ -20,6 +20,7 @@ import { linkCollectionTypesManual } from "../util/linkCollectionTypesManual";
 import {
   createAnothetGroupLabel,
   createBusinessTypeNameLabel,
+  createGroupLabel,
 } from "../util/createLabel";
 import { isActivitySupportGroup } from "../util/businessTypeNameChecker";
 
@@ -133,6 +134,10 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
     setCurrentGroupCd("");
   }, []);
 
+  const groupDetailAnchorLabel = createGroupLabel({
+    business_org_type: business_org_type || "",
+    business_type_name: businessTypeNameLabel,
+  });
   const anothetGroupDetailAnchorLabel = createAnothetGroupLabel({
     business_org_type: business_org_type || "",
     business_type_name: businessTypeNameLabel,
@@ -283,7 +288,7 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
                 <div tw="hidden lg:block">
                   {consortiumGroup.map((cg: any) => (
                     <div key={cg.node.organization_cd}>
-                      <p css={th}>{anothetGroupDetailAnchorLabel}名</p>
+                      <p css={th}>{groupDetailAnchorLabel}名</p>
                       <p css={td}>
                         <Link
                           to="organization"
@@ -302,7 +307,7 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
                   <tbody>
                     {consortiumGroup.map((cg: any) => (
                       <tr key={cg.node.organization_cd}>
-                        <th css={th}>{anothetGroupDetailAnchorLabel}名</th>
+                        <th css={th}>{groupDetailAnchorLabel}名</th>
                         <td css={td}>
                           <Link
                             to="organization"
