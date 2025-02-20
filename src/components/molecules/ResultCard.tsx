@@ -10,6 +10,7 @@ import {
 } from "../../features/search/store/filterContents";
 import { BusinessOrgTypeThumbnail } from "../atoms/BusinessOrgTypeThumbnail";
 import { BusinessTypeNameCategoryIcon } from "../atoms/BusinessTypeNameCategoryIcon";
+import { isActivitySupportGroup } from "../../util/businessTypeNameChecker";
 
 const resultCardTip = tw`text-xs py-1 px-1.5 border border-gray-border`;
 
@@ -78,6 +79,7 @@ const ResultCard = (props: any) => {
   )?.label;
 
   const businessTypeNameLabel = business_type_name.label || business_type_name;
+  console.log(businessTypeNameLabel);
   const splitBusinessTypeName = businessTypeNameLabel.match(/(\d+年度)(.+)/);
   const businessTypeNameYear =
     splitBusinessTypeName && splitBusinessTypeName[1];
@@ -117,16 +119,18 @@ const ResultCard = (props: any) => {
                 <p>{mainGroupName}</p>
               </div>
             )}
-            {businessCategoryLabel && (
-              <div css={hCenter} tw="gap-1.5 text-sm">
-                <StaticImage
-                  src="../../images/note.svg"
-                  alt="ノートアイコン"
-                  tw="w-4 h-4"
-                />
-                <p>{businessCategoryLabel}</p>
-              </div>
-            )}
+            {/* 事業分類 */}
+            {businessCategoryLabel &&
+              !isActivitySupportGroup(businessTypeNameLabel) && (
+                <div css={hCenter} tw="gap-1.5 text-sm">
+                  <StaticImage
+                    src="../../images/note.svg"
+                    alt="ノートアイコン"
+                    tw="w-4 h-4"
+                  />
+                  <p>{businessCategoryLabel}</p>
+                </div>
+              )}
             {supportCategoryLabel && (
               <div css={hCenter} tw="gap-1.5 text-sm">
                 <StaticImage

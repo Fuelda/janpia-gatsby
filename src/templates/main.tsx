@@ -21,6 +21,7 @@ import {
   createAnothetGroupLabel,
   createBusinessTypeNameLabel,
 } from "../util/createLabel";
+import { isActivitySupportGroup } from "../util/businessTypeNameChecker";
 
 const Main: React.FC<any> = ({ data, pageContext }) => {
   const { setCurrentGroupCd } = useConsortiumContext();
@@ -45,6 +46,7 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
   const businessTypeNameLabel = createBusinessTypeNameLabel({
     business_type_name: business_type_name || "",
   });
+  const isActivitySupport = isActivitySupportGroup(businessTypeNameLabel);
 
   const {
     strapiBizPlan,
@@ -75,7 +77,6 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
     );
 
   let businessCategoryLabel: string | undefined = "";
-  console.log(business_category);
   if (business_category) {
     if (business_category.code === 1) {
       businessCategoryLabel = business_category.subCode
@@ -179,7 +180,7 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
                     <p css={td}>{businessTypeNameLabel}</p>
                   </div>
                 )}
-                {businessCategoryLabel && (
+                {businessCategoryLabel && !isActivitySupport && (
                   <div>
                     <p css={th}>事業分類</p>
                     <p css={td}>{businessCategoryLabel}</p>
@@ -237,7 +238,7 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
                     <th css={th}>採択事業年度</th>
                     <td css={td}>{businessTypeNameLabel}</td>
                   </tr>
-                  {businessCategoryLabel && (
+                  {businessCategoryLabel && !isActivitySupport && (
                     <tr>
                       <th css={th}>事業分類</th>
                       <td css={td}>{businessCategoryLabel}</td>

@@ -13,6 +13,7 @@ import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { BusinessOrgTypeThumbnail } from "../atoms/BusinessOrgTypeThumbnail";
 import { BusinessTypeNameCategoryIcon } from "../atoms/BusinessTypeNameCategoryIcon";
 import { useBasicInfo } from "../../hooks/useBasicInfo";
+import { isActivitySupportGroup } from "../../util/businessTypeNameChecker";
 
 export const resultCardTip = tw`text-xs py-1 px-1.5 border border-gray-base text-gray-base`;
 
@@ -128,16 +129,18 @@ const DetailHeader = (props: {
                 <p>{mainGroupName}</p>
               </div>
             )}
-            {businessCategoryLabel && (
-              <div css={hCenter} tw="gap-1.5">
-                <StaticImage
-                  src="../../images/note.svg"
-                  alt="ノートアイコン"
-                  tw="w-4 h-4"
-                />
-                <p>{businessCategoryLabel}</p>
-              </div>
-            )}
+            {/* 事業分類 */}
+            {businessCategoryLabel &&
+              !isActivitySupportGroup(business_type_name || "") && (
+                <div css={hCenter} tw="gap-1.5">
+                  <StaticImage
+                    src="../../images/note.svg"
+                    alt="ノートアイコン"
+                    tw="w-4 h-4"
+                  />
+                  <p>{businessCategoryLabel}</p>
+                </div>
+              )}
             {supportCategoryLabel && (
               <div css={hCenter} tw="gap-1.5">
                 <StaticImage
