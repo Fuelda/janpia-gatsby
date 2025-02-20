@@ -1107,7 +1107,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                           <div>
                             <p css={th}>
                               {isActivitySupport
-                                ? "課題に対する暁星や中間支援団体等による既存の取組み状況"
+                                ? "課題に対する行政や中間支援団体等による既存の取組み状況"
                                 : "課題に対する行政等による既存の取組み状況"}
                             </p>
                             <p css={td}>
@@ -1240,7 +1240,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                             <tr css={tr}>
                               <th css={th}>
                                 {isActivitySupport
-                                  ? "課題に対する暁星や中間支援団体等による既存の取組み状況"
+                                  ? "課題に対する行政や中間支援団体等による既存の取組み状況"
                                   : "課題に対する行政等による既存の取組み状況"}
                               </th>
                               <td css={td}>
@@ -1371,14 +1371,6 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                           <p css={td}>{strapiBizPlan.org_scale}</p>
                         </div>
                       )}
-                      {strapiBizPlan.org_impact && (
-                        <div>
-                          <p css={th}>
-                            活動支援プログラムによって支援を受けた団体が社会にもたらす変化/インパクト（中長期アウトカム）
-                          </p>
-                          <p css={td}>{strapiBizPlan.org_impact}</p>
-                        </div>
-                      )}
                     </div>
                     <table css={table} tw="lg:hidden">
                       <tbody>
@@ -1400,14 +1392,6 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                             <td css={td}>{strapiBizPlan.org_scale}</td>
                           </tr>
                         )}
-                        {strapiBizPlan.org_impact && (
-                          <tr css={tr}>
-                            <th css={th}>
-                              活動支援プログラムによって支援を受けた団体が社会にもたらす変化/インパクト（中長期アウトカム）
-                            </th>
-                            <td css={td}>{strapiBizPlan.org_impact}</td>
-                          </tr>
-                        )}
                       </tbody>
                     </table>
                   </DetailItemWrapper>
@@ -1425,6 +1409,12 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                             anchor={`/result/${slug}/project-plan/#six-firstItem`}
                           />
                         )}
+                      {strapiBizPlan.org_impact && (
+                        <DetailAnchor
+                          title="中長期アウトカム"
+                          anchor={`/result/${slug}/project-plan/#six-fifthItem`}
+                        />
+                      )}
                       {activitySupportPurpose.length !== 0 && (
                         <DetailAnchor
                           title="活動支援プログラムの目的"
@@ -1472,6 +1462,30 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                           </DetailItemWrapper>
                         </div>
                       )}
+                    {strapiBizPlan.org_impact && (
+                      <div id="six-fifthItem">
+                        <DetailItemWrapper itemName="中長期アウトカム">
+                          <div tw="hidden lg:block">
+                            <div>
+                              <p css={th}>
+                                活動支援プログラムによって支援を受けた団体が社会にもたらす変化/インパクト
+                              </p>
+                              <p css={td}>{strapiBizPlan.org_impact}</p>
+                            </div>
+                          </div>
+                          <table css={table} tw="lg:hidden">
+                            <tbody>
+                              <tr css={tr}>
+                                <th css={th}>
+                                  活動支援プログラムによって支援を受けた団体が社会にもたらす変化/インパクト
+                                </th>
+                                <td css={td}>{strapiBizPlan.org_impact}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </DetailItemWrapper>
+                      </div>
+                    )}
                     {activitySupportPurpose.length !== 0 && (
                       <div id="six-fourthItem">
                         <DetailItemWrapper itemName="活動支援プログラムの目的">
