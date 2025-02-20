@@ -79,7 +79,6 @@ const ResultCard = (props: any) => {
   )?.label;
 
   const businessTypeNameLabel = business_type_name.label || business_type_name;
-  console.log(businessTypeNameLabel);
   const splitBusinessTypeName = businessTypeNameLabel.match(/(\d+年度)(.+)/);
   const businessTypeNameYear =
     splitBusinessTypeName && splitBusinessTypeName[1];

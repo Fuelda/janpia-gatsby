@@ -42,7 +42,7 @@ export const isSpecificBusinessTypeNameYearAndName = (
   name: string
 ) => {
   const splitBusinessTypeName = business_type_name.match(/(\d+年度)(.+)/);
-  console.log(splitBusinessTypeName);
+
   return (
     splitBusinessTypeName &&
     Number(splitBusinessTypeName[1].slice(0, 4)) == year &&
