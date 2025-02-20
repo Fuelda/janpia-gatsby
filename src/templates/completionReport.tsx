@@ -59,13 +59,6 @@ const CompletionReport: React.FC<any> = ({ data, pageContext }) => {
     strapiCompleteReportManual.data &&
     `https://docs.google.com/viewer?url=${strapiCompleteReportManual.data.url}&embedded=true`;
 
-  console.log(
-    isSpecificBusinessTypeNameYearAndName(
-      strapiCompleteReport.business_type_name,
-      2022,
-      "通常枠"
-    )
-  );
   return (
     <Layout>
       <Seo title="事業完了報告 | 休眠預金活用事業 情報公開サイト" />

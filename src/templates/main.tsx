@@ -20,7 +20,9 @@ import { linkCollectionTypesManual } from "../util/linkCollectionTypesManual";
 import {
   createAnothetGroupLabel,
   createBusinessTypeNameLabel,
+  createGroupLabel,
 } from "../util/createLabel";
+import { isActivitySupportGroup } from "../util/businessTypeNameChecker";
 
 const Main: React.FC<any> = ({ data, pageContext }) => {
   const { setCurrentGroupCd } = useConsortiumContext();
@@ -45,6 +47,7 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
   const businessTypeNameLabel = createBusinessTypeNameLabel({
     business_type_name: business_type_name || "",
   });
+  const isActivitySupport = isActivitySupportGroup(businessTypeNameLabel);
 
   const {
     strapiBizPlan,
@@ -75,7 +78,6 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
     );
 
   let businessCategoryLabel: string | undefined = "";
-  console.log(business_category);
   if (business_category) {
     if (business_category.code === 1) {
       businessCategoryLabel = business_category.subCode
@@ -132,6 +134,10 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
     setCurrentGroupCd("");
   }, []);
 
+  const groupDetailAnchorLabel = createGroupLabel({
+    business_org_type: business_org_type || "",
+    business_type_name: businessTypeNameLabel,
+  });
   const anothetGroupDetailAnchorLabel = createAnothetGroupLabel({
     business_org_type: business_org_type || "",
     business_type_name: businessTypeNameLabel,
@@ -179,7 +185,7 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
                     <p css={td}>{businessTypeNameLabel}</p>
                   </div>
                 )}
-                {businessCategoryLabel && (
+                {businessCategoryLabel && !isActivitySupport && (
                   <div>
                     <p css={th}>事業分類</p>
                     <p css={td}>{businessCategoryLabel}</p>
@@ -237,7 +243,7 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
                     <th css={th}>採択事業年度</th>
                     <td css={td}>{businessTypeNameLabel}</td>
                   </tr>
-                  {businessCategoryLabel && (
+                  {businessCategoryLabel && !isActivitySupport && (
                     <tr>
                       <th css={th}>事業分類</th>
                       <td css={td}>{businessCategoryLabel}</td>
@@ -282,7 +288,7 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
                 <div tw="hidden lg:block">
                   {consortiumGroup.map((cg: any) => (
                     <div key={cg.node.organization_cd}>
-                      <p css={th}>{anothetGroupDetailAnchorLabel}名</p>
+                      <p css={th}>{groupDetailAnchorLabel}名</p>
                       <p css={td}>
                         <Link
                           to="organization"
@@ -301,7 +307,7 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
                   <tbody>
                     {consortiumGroup.map((cg: any) => (
                       <tr key={cg.node.organization_cd}>
-                        <th css={th}>{anothetGroupDetailAnchorLabel}名</th>
+                        <th css={th}>{groupDetailAnchorLabel}名</th>
                         <td css={td}>
                           <Link
                             to="organization"
