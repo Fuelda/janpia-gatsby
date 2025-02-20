@@ -357,12 +357,7 @@ const Main: React.FC<any> = ({ data, pageContext }) => {
                       <table tw="lg:hidden">
                         <tbody>
                           <tr>
-                            <th css={th}>
-                              {business_org_type === "F"
-                                ? "実行団体"
-                                : "資金分配団体"}
-                              名
-                            </th>
+                            <th css={th}>{anothetGroupDetailAnchorLabel}名</th>
                             <td css={td}>
                               {pickupLinkedAdoGroupName(
                                 item.node.executive_grp_cd ||
