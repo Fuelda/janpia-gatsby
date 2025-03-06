@@ -1468,7 +1468,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                           <div tw="hidden lg:block">
                             <div>
                               <p css={th}>
-                                活動支援プログラムによって支援を受けた団体が社会にもたらす変化/インパクト
+                                活動支援プログラムによって支援を受けた団体が社会にもたらす変化/インパクト(中長期アウトカム)
                               </p>
                               <p css={td}>{strapiBizPlan.org_impact}</p>
                             </div>
@@ -1477,7 +1477,7 @@ const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
                             <tbody>
                               <tr css={tr}>
                                 <th css={th}>
-                                  活動支援プログラムによって支援を受けた団体が社会にもたらす変化/インパクト
+                                  活動支援プログラムによって支援を受けた団体が社会にもたらす変化/インパクト(中長期アウトカム)
                                 </th>
                                 <td css={td}>{strapiBizPlan.org_impact}</td>
                               </tr>
