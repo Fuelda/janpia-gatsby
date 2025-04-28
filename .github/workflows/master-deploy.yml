@@ -1,4 +1,8 @@
-name: Deploy to Netlify
+name: Trigger Test (No Build/Deploy)
+
+concurrency:
+  group: "netlify-deploy"
+  cancel-in-progress: true
 
 on:
   push:
@@ -11,30 +15,19 @@ on:
     - cron: "0 23 * * *"
 
 jobs:
-  build-and-deploy:
+  debug-and-validate:
     runs-on: ubuntu-latest
     env:
       NODE_OPTIONS: "--max-old-space-size=4096"
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Check initial disk space
-        run: df -h
-
-      - name: Free disk space
+      - name: Debug Event Information
         run: |
-          sudo rm -rf /usr/share/dotnet
-          sudo rm -rf /opt/ghc
-          sudo rm -rf "/usr/local/share/boost"
-          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+          echo "=== Event Details ==="
+          echo "Event Name: ${{ github.event_name }}"
+          echo "Trigger Time: ${{ github.event.timestamp }}"
+          echo "Action Type: ${{ github.event.action }}"
+          echo "Repository: ${{ github.repository }}"
 
-      - name: Check disk space after cleanup
-        run: df -h
-
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "18"
 
       - name: Cache dependencies
         uses: actions/cache@v3
@@ -59,11 +52,6 @@ jobs:
           ALGOLIA_ADMIN_KEY: ${{ secrets.ALGOLIA_ADMIN_KEY }}
           GATSBY_TRACKING_ID: ${{ secrets.GATSBY_TRACKING_ID }}
 
-      - name: Deploy to Netlify
-        uses: netlify/actions/cli@master
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        with:
-          args: deploy --dir=public --prod
-          secrets: '["NETLIFY_AUTH_TOKEN", "NETLIFY_SITE_ID"]'
+      - name: Execution Timestamp
+        run: |
+          echo "Current Time: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
