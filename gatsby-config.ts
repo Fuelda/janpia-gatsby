@@ -1,5 +1,5 @@
 import type { GatsbyConfig } from "gatsby";
-const algoliaQuery = require("./src/gatsby/algoliaQuery.ts");
+// const algoliaQuery = require("./src/gatsby/algoliaQuery.ts");
 
 require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
@@ -112,86 +112,86 @@ const config: GatsbyConfig = {
       resolve: `gatsby-source-strapi`,
       options: strapiConfig,
     },
-    // TODO: Algoliaの様子を見て復旧する
-    {
-      resolve: `gatsby-plugin-algolia`,
-      options: {
-        appId: process.env.GATSBY_ALGOLIA_APP_ID,
-        apiKey: process.env.ALGOLIA_ADMIN_KEY,
-        indexName: "janpia-johokokai",
-        queries: [
-          // {
-          //   query: algoliaQuery.attachedFileText,
-          //   transformer: ({ data }: any) =>
-          //     data.allStrapiAttachedFileText.edges.map(({ node }: any) => {
-          //       return {
-          //         id: node.id,
-          //         insert_id: node.insert_id,
-          //         content: node.content.data.content.slice(0, 3000),
-          //         internal: { contentDigest: node.internal.contentDigest },
-          //       };
-          //     }),
-          // },
-          {
-            query: algoliaQuery.bizPlan,
-            transformer: ({ data }: any) =>
-              data.allStrapiBizPlan.edges.map(({ node }: any) => {
-                return {
-                  id: node.id,
-                  business_cd: node.business_cd,
-                  business_name: node.business_name,
-                  business_name_sub: node.business_name_sub,
-                  vision: node.vision.data.vision.slice(0, 1500),
-                  mission: node.mission.data.mission.slice(0, 1500),
-                  business_overview:
-                    node.business_overview.data.business_overview.slice(
-                      0,
-                      1500
-                    ),
-                  internal: { contentDigest: node.internal.contentDigest },
-                };
-              }),
-          },
-          {
-            query: algoliaQuery.group,
-            transformer: ({ data }: any) =>
-              data.allStrapiGroup.edges.map(({ node }: any) => {
-                return {
-                  id: node.id,
-                  ...node,
-                };
-              }),
-          },
-          {
-            query: algoliaQuery.bizPlanManual,
-            transformer: ({ data }: any) =>
-              data.allStrapiBizPlanManual.edges.map(({ node }: any) => {
-                return {
-                  id: node.id,
-                  biz_cd_executive: node.biz_cd_executive,
-                  biz_cd_fund_distr: node.biz_cd_fund_distr,
-                  business_name: node.business_name,
-                  business_overview:
-                    node.business_overview.data.business_overview.slice(
-                      0,
-                      3000
-                    ),
-                  topic_keywords: node.topic_keywords
-                    ? node.topic_keywords.label
-                    : "",
-                  internal: { contentDigest: node.internal.contentDigest },
-                };
-              }),
-          },
-        ],
-        chunkSize: 10000,
-        enablePartialUpdates: true,
-        skipIndexing: process.env.NODE_ENV !== "production",
-        settings: {
-          queryLanguages: ["ja"],
-        },
-      },
-    },
+    // // TODO: Algoliaの様子を見て復旧する
+    // {
+    //   resolve: `gatsby-plugin-algolia`,
+    //   options: {
+    //     appId: process.env.GATSBY_ALGOLIA_APP_ID,
+    //     apiKey: process.env.ALGOLIA_ADMIN_KEY,
+    //     indexName: "janpia-johokokai",
+    //     queries: [
+    //       // {
+    //       //   query: algoliaQuery.attachedFileText,
+    //       //   transformer: ({ data }: any) =>
+    //       //     data.allStrapiAttachedFileText.edges.map(({ node }: any) => {
+    //       //       return {
+    //       //         id: node.id,
+    //       //         insert_id: node.insert_id,
+    //       //         content: node.content.data.content.slice(0, 3000),
+    //       //         internal: { contentDigest: node.internal.contentDigest },
+    //       //       };
+    //       //     }),
+    //       // },
+    //       {
+    //         query: algoliaQuery.bizPlan,
+    //         transformer: ({ data }: any) =>
+    //           data.allStrapiBizPlan.edges.map(({ node }: any) => {
+    //             return {
+    //               id: node.id,
+    //               business_cd: node.business_cd,
+    //               business_name: node.business_name,
+    //               business_name_sub: node.business_name_sub,
+    //               vision: node.vision.data.vision.slice(0, 1500),
+    //               mission: node.mission.data.mission.slice(0, 1500),
+    //               business_overview:
+    //                 node.business_overview.data.business_overview.slice(
+    //                   0,
+    //                   1500
+    //                 ),
+    //               internal: { contentDigest: node.internal.contentDigest },
+    //             };
+    //           }),
+    //       },
+    //       {
+    //         query: algoliaQuery.group,
+    //         transformer: ({ data }: any) =>
+    //           data.allStrapiGroup.edges.map(({ node }: any) => {
+    //             return {
+    //               id: node.id,
+    //               ...node,
+    //             };
+    //           }),
+    //       },
+    //       {
+    //         query: algoliaQuery.bizPlanManual,
+    //         transformer: ({ data }: any) =>
+    //           data.allStrapiBizPlanManual.edges.map(({ node }: any) => {
+    //             return {
+    //               id: node.id,
+    //               biz_cd_executive: node.biz_cd_executive,
+    //               biz_cd_fund_distr: node.biz_cd_fund_distr,
+    //               business_name: node.business_name,
+    //               business_overview:
+    //                 node.business_overview.data.business_overview.slice(
+    //                   0,
+    //                   3000
+    //                 ),
+    //               topic_keywords: node.topic_keywords
+    //                 ? node.topic_keywords.label
+    //                 : "",
+    //               internal: { contentDigest: node.internal.contentDigest },
+    //             };
+    //           }),
+    //       },
+    //     ],
+    //     chunkSize: 10000,
+    //     enablePartialUpdates: true,
+    //     skipIndexing: process.env.NODE_ENV !== "production",
+    //     settings: {
+    //       queryLanguages: ["ja"],
+    //     },
+    //   },
+    // },
     `gatsby-plugin-styled-components`,
     `gatsby-plugin-emotion`,
     `gatsby-plugin-sass`,
