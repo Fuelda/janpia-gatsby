@@ -12,29 +12,35 @@ import DetailAnchor from "../components/atoms/DetailAnchor";
 import { useAttachedFile } from "../hooks/useAttachedFile";
 import AttachedFileLink from "../components/atoms/AttachedFileLink";
 import tw from "twin.macro";
+import { formatDate } from "../util/formatDate";
 
-const InterimReport: React.FC<any> = ({ data, pageContext }) => {
+const InterimReport: React.FC<any> = ({ data, serverData, pageContext }) => {
   const { slug } = pageContext;
   const {
     strapiMidReport,
-    allStrapiMidReportSub,
     strapiMidReportManualFDO,
     strapiMidReportManualADO,
   } = data;
   const insertId = strapiMidReport && strapiMidReport.insert_id;
   const { attachedFileData } = useAttachedFile(insertId);
 
+  // SSRで取得したデータを既存の変数名で扱う
+  const allStrapiMidReportSub = serverData?.ssrAllStrapiMidReportSub;
+
   const implementSystem =
+    allStrapiMidReportSub &&
     allStrapiMidReportSub.edges.length > 0 &&
     allStrapiMidReportSub.edges
       .filter((mrs: any) => mrs.node.info_type === "10")
       .sort((a: any, b: any) => a.node.row_no - b.node.row_no);
   const output =
+    allStrapiMidReportSub &&
     allStrapiMidReportSub.edges.length > 0 &&
     allStrapiMidReportSub.edges
       .filter((mrs: any) => mrs.node.info_type === "20")
       .sort((a: any, b: any) => a.node.row_no - b.node.row_no);
   const outcome =
+    allStrapiMidReportSub &&
     allStrapiMidReportSub.edges.length > 0 &&
     allStrapiMidReportSub.edges
       .filter((mrs: any) => mrs.node.info_type === "21")
@@ -847,37 +853,6 @@ export const pageQuery = graphql`
       }
       updatedAt(formatString: "YYYY/MM/DD")
     }
-    allStrapiMidReportSub(filter: { business_cd: { eq: $slug } }) {
-      edges {
-        node {
-          biz_cd_executive
-          biz_cd_fund_distr
-          business_cd
-          business_org_type
-          info_type
-          insert_id
-          oc_actor
-          oc_goal_aft
-          oc_goal_mid
-          oc_index
-          oc_sikinteki
-          oc_status
-          op_achieve
-          op_goal_aft
-          op_goal_mid
-          op_index
-          op_output
-          op_progress
-          op_sikinteki
-          row_no
-          str_area
-          str_inout
-          str_name
-          str_post
-          updatedAt(formatString: "YYYY/MM/DD")
-        }
-      }
-    }
     strapiMidReportManualFDO: strapiMidReportManual(
       biz_cd_fund_distr: { eq: $slug }
       business_org_type: { eq: "F" }
@@ -904,3 +879,62 @@ export const pageQuery = graphql`
     }
   }
 `;
+
+export async function getServerData(props: any): Promise<any> {
+  const slug = props.params.slug;
+  const apiUrl = process.env.STRAPI_API_URL;
+  const token = process.env.STRAPI_TOKEN;
+
+  if (!apiUrl || !token || !slug) {
+    console.error("Missing Strapi API URL, Token, or slug for SSR");
+    return {
+      status: 500,
+      props: {
+        ssrAllStrapiMidReportSub: { edges: [] },
+      },
+    };
+  }
+
+  const strapiApiEndpoint = `${apiUrl}/api/mid-report-subs?filters[business_cd][$eq]=${slug}&populate=*`;
+
+  try {
+    const response = await fetch(strapiApiEndpoint, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch Strapi data: ${response.statusText}`);
+    }
+
+    const json = await response.json();
+    const rawData = json.data;
+
+    const formattedData: any = {
+      edges: rawData.map((item: any) => {
+        const attributes = item.attributes;
+        const nodeData: any = { ...attributes };
+        // updatedAtのフォーマット
+        if (nodeData.updatedAt) {
+          nodeData.updatedAt = formatDate(nodeData.updatedAt);
+        }
+        return { node: nodeData };
+      }),
+    };
+
+    return {
+      props: {
+        ssrAllStrapiMidReportSub: formattedData,
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching Strapi data in getServerData:", error);
+    return {
+      status: 500,
+      props: {
+        ssrAllStrapiMidReportSub: { edges: [] },
+      },
+    };
+  }
+}

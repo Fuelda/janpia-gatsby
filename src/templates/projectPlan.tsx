@@ -39,11 +39,19 @@ import {
 } from "../util/businessTypeNameChecker";
 import AttachedFileLink from "../components/atoms/AttachedFileLink";
 
-const ProjectPlan: React.FC<any> = ({ data, pageContext }) => {
+// PagePropsにanyを適用
+type ProjectPlanProps = any;
+
+const ProjectPlan: React.FC<any> = ({
+  data,
+  serverData, // serverDataを受け取る
+  pageContext,
+}: any) => {
   const { slug } = pageContext;
+  // SSRデータを既存の変数名で扱えるようにする
+  const allStrapiBizPlanSub = serverData.ssrAllStrapiBizPlanSub;
   const {
     strapiBizPlan,
-    allStrapiBizPlanSub,
     strapiBizPlanManualFDO,
     strapiBizPlanManualADO,
     allStrapiAttachedFile,
@@ -4989,199 +4997,6 @@ export const pageQuery = graphql`
       kokugaikatudou
       ado_image
     }
-    allStrapiBizPlanSub(filter: { business_cd: { eq: $slug } }) {
-      edges {
-        node {
-          updatedAt
-          business_cd
-          business_org_type
-          biz_cd_fund_distr
-          biz_cd_executive
-          row_no
-          info_type
-          business_goals {
-            data {
-              childMarkdownRemark {
-                html
-              }
-            }
-          }
-          goals_monitoring {
-            data {
-              goals_monitoring
-            }
-          }
-          goals_index {
-            data {
-              childMarkdownRemark {
-                html
-              }
-            }
-          }
-          goals_index_arrival {
-            data {
-              childMarkdownRemark {
-                html
-              }
-            }
-          }
-          goals_grasp {
-            data {
-              childMarkdownRemark {
-                html
-              }
-            }
-          }
-          goals_initial {
-            data {
-              childMarkdownRemark {
-                html
-              }
-            }
-          }
-          goals_goal {
-            data {
-              childMarkdownRemark {
-                html
-              }
-            }
-          }
-          goals_achievement {
-            data {
-              childMarkdownRemark {
-                html
-              }
-            }
-          }
-          goals_mid_eval {
-            data {
-              childMarkdownRemark {
-                html
-              }
-            }
-          }
-          goals_aft_eval {
-            data {
-              childMarkdownRemark {
-                html
-              }
-            }
-          }
-          output {
-            data {
-              childMarkdownRemark {
-                html
-              }
-            }
-          }
-          output_monitor {
-            data {
-              output_monitor
-            }
-          }
-          output_index {
-            data {
-              childMarkdownRemark {
-                html
-              }
-            }
-          }
-          output_index_arrival {
-            data {
-              childMarkdownRemark {
-                html
-              }
-            }
-          }
-          output_grasp {
-            data {
-              childMarkdownRemark {
-                html
-              }
-            }
-          }
-          output_initial {
-            data {
-              childMarkdownRemark {
-                html
-              }
-            }
-          }
-          output_goal {
-            data {
-              childMarkdownRemark {
-                html
-              }
-            }
-          }
-          output_achievement {
-            data {
-              childMarkdownRemark {
-                html
-              }
-            }
-          }
-          output_activity {
-            data {
-              childMarkdownRemark {
-                html
-              }
-            }
-          }
-          output_season {
-            data {
-              childMarkdownRemark {
-                html
-              }
-            }
-          }
-          output_mid_eval {
-            data {
-              childMarkdownRemark {
-                html
-              }
-            }
-          }
-          output_aft_eval {
-            data {
-              childMarkdownRemark {
-                html
-              }
-            }
-          }
-          activity {
-            data {
-              childMarkdownRemark {
-                html
-              }
-            }
-          }
-          activity_season {
-            data {
-              childMarkdownRemark {
-                html
-              }
-            }
-          }
-          sdgs_goal
-          sdgs_target
-          sdgs_description {
-            data {
-              childMarkdownRemark {
-                html
-              }
-            }
-          }
-          create_date(formatString: "yyyy/mm/dd")
-          insert_id
-          purpose
-          purpose_index
-          purpose_initial
-          purpose_mid_eval
-          purpose_aft_eval
-        }
-      }
-    }
     allStrapiAttachedFile(filter: { insert_id: { eq: $insert_id } }) {
       edges {
         node {
@@ -5195,3 +5010,215 @@ export const pageQuery = graphql`
     }
   }
 `;
+
+// getServerData関数を追加
+export async function getServerData(props: any): Promise<any> {
+  const slug = props.params.slug;
+  const apiUrl = process.env.STRAPI_API_URL;
+  const token = process.env.STRAPI_TOKEN;
+
+  if (!apiUrl || !token || !slug) {
+    console.error("Missing Strapi API URL, Token, or slug for SSR");
+    return {
+      status: 500,
+      props: {
+        ssrAllStrapiBizPlanSub: { edges: [] }, // エラー時は空データを返す
+      },
+    };
+  }
+
+  // Strapi APIからbiz-plan-subsを取得 (フィルタリングと必要なフィールドを指定)
+  // 注意: Strapiのフィルタリング構文に合わせてください。下記は例です。
+  // populate=* で全ての関連データを取得するか、必要なフィールドを明示的に指定します。
+  // レスポンス形式に合わせてデータ整形が必要です。
+  const strapiApiEndpoint = `${apiUrl}/api/biz-plan-subs?filters[business_cd][$eq]=${slug}&populate=*`; // populateは必要に応じて調整
+
+  try {
+    const response = await fetch(strapiApiEndpoint, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch Strapi data: ${response.statusText}`);
+    }
+
+    const json = await response.json();
+    const rawData = json.data; // Strapiのレスポンス構造に合わせて調整
+
+    // Strapi APIのレスポンスをGraphQLの { edges: [{ node: ... }] } 形式に整形
+    const formattedData: any = {
+      edges: rawData.map((item: any) => ({
+        node: {
+          ...item.attributes,
+          business_goals: {
+            data: {
+              childMarkdownRemark: {
+                html: item.attributes.business_goals || "",
+              },
+            },
+          },
+          goals_monitoring: {
+            data: { goals_monitoring: item.attributes.goals_monitoring || "" },
+          },
+          goals_index: {
+            data: {
+              childMarkdownRemark: { html: item.attributes.goals_index || "" },
+            },
+          },
+          goals_index_arrival: {
+            data: {
+              childMarkdownRemark: {
+                html: item.attributes.goals_index_arrival || "",
+              },
+            },
+          },
+          goals_grasp: {
+            data: {
+              childMarkdownRemark: { html: item.attributes.goals_grasp || "" },
+            },
+          },
+          goals_initial: {
+            data: {
+              childMarkdownRemark: {
+                html: item.attributes.goals_initial || "",
+              },
+            },
+          },
+          goals_goal: {
+            data: {
+              childMarkdownRemark: { html: item.attributes.goals_goal || "" },
+            },
+          },
+          goals_achievement: {
+            data: {
+              childMarkdownRemark: {
+                html: item.attributes.goals_achievement || "",
+              },
+            },
+          },
+          goals_mid_eval: {
+            data: {
+              childMarkdownRemark: {
+                html: item.attributes.goals_mid_eval || "",
+              },
+            },
+          },
+          goals_aft_eval: {
+            data: {
+              childMarkdownRemark: {
+                html: item.attributes.goals_aft_eval || "",
+              },
+            },
+          },
+          output: {
+            data: {
+              childMarkdownRemark: { html: item.attributes.output || "" },
+            },
+          },
+          output_monitor: {
+            data: { output_monitor: item.attributes.output_monitor || "" },
+          },
+          output_index: {
+            data: {
+              childMarkdownRemark: { html: item.attributes.output_index || "" },
+            },
+          },
+          output_index_arrival: {
+            data: {
+              childMarkdownRemark: {
+                html: item.attributes.output_index_arrival || "",
+              },
+            },
+          },
+          output_grasp: {
+            data: {
+              childMarkdownRemark: { html: item.attributes.output_grasp || "" },
+            },
+          },
+          output_initial: {
+            data: {
+              childMarkdownRemark: {
+                html: item.attributes.output_initial || "",
+              },
+            },
+          },
+          output_goal: {
+            data: {
+              childMarkdownRemark: { html: item.attributes.output_goal || "" },
+            },
+          },
+          output_achievement: {
+            data: {
+              childMarkdownRemark: {
+                html: item.attributes.output_achievement || "",
+              },
+            },
+          },
+          output_activity: {
+            data: {
+              childMarkdownRemark: {
+                html: item.attributes.output_activity || "",
+              },
+            },
+          },
+          output_season: {
+            data: {
+              childMarkdownRemark: {
+                html: item.attributes.output_season || "",
+              },
+            },
+          },
+          output_mid_eval: {
+            data: {
+              childMarkdownRemark: {
+                html: item.attributes.output_mid_eval || "",
+              },
+            },
+          },
+          output_aft_eval: {
+            data: {
+              childMarkdownRemark: {
+                html: item.attributes.output_aft_eval || "",
+              },
+            },
+          },
+          activity: {
+            data: {
+              childMarkdownRemark: { html: item.attributes.activity || "" },
+            },
+          },
+          activity_season: {
+            data: {
+              childMarkdownRemark: {
+                html: item.attributes.activity_season || "",
+              },
+            },
+          },
+          sdgs_description: {
+            data: {
+              childMarkdownRemark: {
+                html: item.attributes.sdgs_description || "",
+              },
+            },
+          },
+        },
+      })),
+    };
+
+    return {
+      props: {
+        ssrAllStrapiBizPlanSub: formattedData,
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching Strapi data in getServerData:", error);
+    return {
+      status: 500,
+      props: {
+        ssrAllStrapiBizPlanSub: { edges: [] }, // エラー時は空データを返す
+      },
+    };
+  }
+}
