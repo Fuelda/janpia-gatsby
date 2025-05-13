@@ -68,6 +68,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         organization_cd: organization_cd,
         insert_id: insert_id_group,
       },
+      defer: true,
     });
     createPage({
       path: `/result/${business_cd}/selected-project`,
@@ -79,6 +80,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       path: `/result/${business_cd}/project-plan`,
       component: path.resolve("./src/templates/projectPlan.tsx"),
       context: { slug: business_cd, insert_id: insert_id_bizplan },
+      defer: true,
     });
     createPage({
       path: `/result/${business_cd}/evaluation-plan`,
