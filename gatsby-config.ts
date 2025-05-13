@@ -16,7 +16,7 @@ const strapiConfig = {
     "biz-plan-group",
     "biz-plan-group-manual",
     "biz-plan-manual",
-    // "biz-plan-sub",
+    "biz-plan-sub",
     "business-category",
     "business-type-name",
     "complete-report",
