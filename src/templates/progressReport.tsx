@@ -72,17 +72,162 @@ const regularTargetTermSet: TargetTermArrayType[] = [
   { value: 4, label: "進捗報告 (3年度目上期)" },
 ];
 
-const ProgressReport: React.FC<any> = ({ data, pageContext }) => {
+// getServerData関数を追加
+export async function getServerData(props: any): Promise<any> {
+  const slug = props.params.slug;
+  const apiUrl = process.env.STRAPI_API_URL;
+  const token = process.env.STRAPI_TOKEN;
+
+  if (!apiUrl || !token || !slug) {
+    console.error("Missing Strapi API URL, Token, or slug for SSR");
+    return {
+      status: 500,
+      props: {
+        ssrAllStrapiProgressReportSub: { edges: [] }, // エラー時は空データを返す
+      },
+    };
+  }
+
+  // Strapi APIからprogress-report-subsを取得
+  const strapiApiEndpoint = `${apiUrl}/api/progress-report-subs?filters[business_cd][$eq]=${slug}&populate=*`;
+
+  try {
+    const response = await fetch(strapiApiEndpoint, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch Strapi data: ${response.statusText}`);
+    }
+
+    const json = await response.json();
+    const rawData = json.data;
+
+    // GraphQLのedges形式に整形
+    const formattedData: any = {
+      edges: rawData.map((item: any) => ({
+        node: {
+          ...item.attributes,
+          act_k_gaiyou: {
+            data: {
+              childMarkdownRemark: {
+                html: item.attributes.act_k_gaiyou || "",
+              },
+            },
+          },
+          act_katudou: {
+            data: {
+              childMarkdownRemark: {
+                html: item.attributes.act_katudou || "",
+              },
+            },
+          },
+          out_gaiyou: {
+            data: {
+              childMarkdownRemark: {
+                html: item.attributes.out_gaiyou || "",
+              },
+            },
+          },
+          out_mokuhyou: {
+            data: {
+              childMarkdownRemark: {
+                html: item.attributes.out_mokuhyou || "",
+              },
+            },
+          },
+          out_output: {
+            data: {
+              childMarkdownRemark: {
+                html: item.attributes.out_output || "",
+              },
+            },
+          },
+          out_output_etc_index: {
+            data: {
+              childMarkdownRemark: {
+                html: item.attributes.out_output_etc_index || "",
+              },
+            },
+          },
+          output: {
+            data: {
+              childMarkdownRemark: {
+                html: item.attributes.output || "",
+              },
+            },
+          },
+          output_etc_index: {
+            data: {
+              childMarkdownRemark: {
+                html: item.attributes.output_etc_index || "",
+              },
+            },
+          },
+          mid_eval: {
+            data: {
+              childMarkdownRemark: {
+                html: item.attributes.mid_eval || "",
+              },
+            },
+          },
+          aft_eval: {
+            data: {
+              childMarkdownRemark: {
+                html: item.attributes.aft_eval || "",
+              },
+            },
+          },
+          tasseijoukyou: {
+            data: {
+              childMarkdownRemark: {
+                html: item.attributes.tasseijoukyou || "",
+              },
+            },
+          },
+          act_k_sintyoku: item.attributes.act_k_sintyoku,
+          act_k_sikintekisien: item.attributes.act_k_sikintekisien,
+          out_sikintekisien: item.attributes.out_sikintekisien,
+          out_sintyokujoukyou: item.attributes.out_sintyokujoukyou,
+          sikintekisien: item.attributes.sikintekisien,
+          sintyokujoukyou: item.attributes.sintyokujoukyou,
+          // その他のフィールドも必要に応じて追加
+        },
+      })),
+    };
+
+    return {
+      props: {
+        ssrAllStrapiProgressReportSub: formattedData,
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching Strapi data in getServerData:", error);
+    return {
+      status: 500,
+      props: {
+        ssrAllStrapiProgressReportSub: { edges: [] },
+      },
+    };
+  }
+}
+
+const ProgressReport: React.FC<any> = ({ data, pageContext, serverData }) => {
   const { slug } = pageContext;
   const [currentTab, setCurrentTab] = useState<0 | 1 | 2 | 3 | 4>();
   const [currentTabManual, setCurrentTabManual] = useState(1);
   const [loaded, setLoaded] = useState(false);
   const {
     allStrapiProgressReport,
-    allStrapiProgressReportSub,
     allStrapiProgressReportManualFDO,
     allStrapiProgressReportManualADO,
   } = data;
+
+  // SSRで取得したデータを利用
+  const allStrapiProgressReportSub =
+    serverData?.ssrAllStrapiProgressReportSub || { edges: [] };
 
   const allStrapiProgressReportManual = [
     ...allStrapiProgressReportManualFDO.edges,
@@ -1244,106 +1389,6 @@ export const pageQuery = graphql`
       }
     }
 
-    allStrapiProgressReportSub(filter: { business_cd: { eq: $slug } }) {
-      edges {
-        node {
-          act_k_gaiyou {
-            data {
-              childMarkdownRemark {
-                html
-              }
-            }
-          }
-          act_k_sintyoku
-          act_katudou {
-            data {
-              childMarkdownRemark {
-                html
-              }
-            }
-          }
-          act_k_sikintekisien
-          aft_eval {
-            data {
-              childMarkdownRemark {
-                html
-              }
-            }
-          }
-          biz_cd_executive
-          biz_cd_fund_distr
-          business_cd
-          business_org_type
-          create_date(formatString: "yyyy/mm/dd")
-          info_type
-          insert_id
-          mid_eval {
-            data {
-              childMarkdownRemark {
-                html
-              }
-            }
-          }
-          out_gaiyou {
-            data {
-              childMarkdownRemark {
-                html
-              }
-            }
-          }
-          out_mokuhyou {
-            data {
-              childMarkdownRemark {
-                html
-              }
-            }
-          }
-          out_output {
-            data {
-              childMarkdownRemark {
-                html
-              }
-            }
-          }
-          out_sikintekisien
-          out_output_etc_index {
-            data {
-              childMarkdownRemark {
-                html
-              }
-            }
-          }
-          out_sintyokujoukyou
-          output {
-            data {
-              childMarkdownRemark {
-                html
-              }
-            }
-          }
-          sikintekisien
-          output_etc_index {
-            data {
-              childMarkdownRemark {
-                html
-              }
-            }
-          }
-          row_no
-          sintyokujoukyou
-          strapi_id
-          target_term
-          tasseijoukyou {
-            data {
-              childMarkdownRemark {
-                html
-              }
-            }
-          }
-          updatedAt(formatString: "yyyy/mm/dd")
-        }
-      }
-    }
     allStrapiProgressReportManualFDO: allStrapiProgressReportManual(
       filter: {
         biz_cd_fund_distr: { eq: $slug }

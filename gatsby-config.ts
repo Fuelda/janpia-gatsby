@@ -37,7 +37,7 @@ const strapiConfig = {
     "post-report-manual",
     "pre-report-manual",
     "progress-report",
-    "progress-report-sub",
+    // "progress-report-sub",
     "progress-report-manual",
     "progress-round",
     "sdgs-goal",
